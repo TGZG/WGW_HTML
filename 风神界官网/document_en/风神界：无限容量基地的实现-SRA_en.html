@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fengshen World: Implementation of Infinite Capacity Base - Game Design Technical Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">Fengshen World</div>
+            </div>
+            <h1>Fengshen World: Implementation of Infinite Capacity Base</h1>
+            <div class="document-type">Game Design Technical Document</div>
+            <div class="document-version">Version: 1.0.0 | Confidentiality: Internal</div>
+        </header>
+        
+        <main>
+            <section id="principle">
+                <h2>Principle: Reasonable Worldview</h2>
+                <p>Fengshen World is a world, a novel, expressed as a game, but its essence is not a game. Therefore, anything that wouldn't exist in a novel will not exist in the game. If the game must have a certain function, then the novel must provide an explanation that aligns with the worldview. This article provides an explanation for a function needed in the game: "infinite capacity base storage" that aligns with the worldview.</p>
+            </section>
+
+            <section id="infinite-storage">
+                <h2>Infinite Capacity Storage: Sumeru Ring, Void Ring, Space Law</h2>
+                <p>Sumeru Ring: Mustard seed containing Mount Sumeru. The ring eye of a Sumeru Ring is a piece of distorted folded space, small as a bean but can unfold into a cubic meter or larger space, conveniently carrying large-volume supplies. Note that volume can be folded, but mass cannot; however, typically only Qi Refining or above cultivators can afford Sumeru Rings, and they can effortlessly carry tens of kilograms on their fingers, so mass is generally not an issue. (This also allows merchant caravans to exist, and consequently, bandits to flourish)</p>
+                <p>Void Ring: One flower, one world. A realm point (the smallest spatial point) expands into a plane where incomplete space laws and five element laws erode the void (the void is ten-dimensional space; planes plunder space from the void and detach independently, but the broken plane of a Void Ring hasn't yet detached from the void). Similar to Sumeru Rings, but with <strong>infinite capacity</strong>, though items may randomly be lost (law collapse, falling into the void); the more items stored, the higher the probability of loss.</p>
+                <p>Space Law - Personal Prison Art: Yuan Ying cultivators can learn after studying many space arts, or Golden Core cultivators can learn after fully focusing on space arts. Defines a spatial area (fixed relative to the plane, immovable), anchors a soul imprint; that soul can control the prison's on/off state in that area. When on, when soulless objects (like metal, stone, grass, wood, pills, artifacts, talismans, books) leave that area, they return to that area. (Yuan Ying cultivators can forcefully break space prisons)</p>
+                <p>Void Ring + Personal Prison Art can implement infinite capacity fixed storage: when items drift into the void, they return to the Void Ring.</p>
+            </section>
+
+            <section id="immortal-residence">
+                <h2>Immortal Residence: Impact of Infinite Capacity Storage</h2>
+                <p>This infinite capacity fixed storage, like real estate on Earth, is the lifelong pursuit of many Qi Refining cultivators. (Qi Refining: cyber mortals)</p>
+                <p>Since space law arts are difficult to perform, require extensive preparation, and are costly, they are typically not customized, but rather created in batches of infinite capacity storage facilities at fixed locations, with houses built based on these and sold at high prices.</p>
+                <p>Typically, only Foundation Establishment cultivators can customize caves.</p>
+                <p>That is, residences are divided into three levels:</p>
+                <ul>
+                    <li>Mortal Residence: For below Qi Refining, like Earth houses. Enter through security doors.</li>
+                    <li>Immortal Residence: For Qi Refining, with infinite capacity storage, equipped with spirit-gathering arrays, built-in spirit fields and pill-refining rooms. Entry has prohibitions (mini defense arrays. Intruders suffer spell attacks of unpredictable power).</li>
+                    <li>Cave Dwelling: For Foundation Establishment and above, customized in the wild. Besides immortal residence standards, usually equipped with concealment arrays, emergency teleportation arrays, illusion arrays, defense arrays, and larger spirit fields. (Tip: When you find yourself walking forward in the wild but returning to the starting point, there's an 80% chance a Foundation Establishment master's cave is nearby. Take a detour, or if you stubbornly trigger the defense array, you're done for)</li>
+                </ul>
+                <p>Above these three levels are typically sects established by Golden Core powerhouses, with mountain protection grand arrays (super defense arrays), realm gates (normal cross-realm teleportation arrays), herb gardens (super spirit fields, equipped with spirit-dispersing arrays: decomposing spirit stones to greatly enrich spirit energy), spirit veins (sects are usually built on spirit stone veins, equipped with spirit-nurturing arrays, absorbing heaven and earth's spirit energy to accelerate spirit vein growth), and various halls (treasure pavilions, schools, sect master's grand hall, etc.).</p>
+                <p>Specifically: Some Foundation Establishment cultivators also establish sects, and even Qi Refining cultivators can establish gangs and call them sects; some Golden Core cultivators remain as wandering cultivators, residing in cave dwellings.</p>
+            </section>
+
+            <section id="binary-combo">
+                <h2>Binary Combo Thinking: Method for Implementing True Infinity</h2>
+                <p>True infinity refers to concepts involving "infinity, absolute" in the real world (including reality and novels, not games), such as "infinite inventory" or "immune to all damage."</p>
+                <p>Directly claiming the existence of truly infinite things is too fake and forced, and doesn't trigger learning mechanisms, preventing readers/players from being amazed by it.</p>
+                <p>Based on this, binary combo thinking is needed: let the combination of two things create an infinite effect.</p>
+                <p>Such effects are common in card games, like the classic invincible combo in "Yu-Gi-Oh!":</p>
+                <ul>
+                    <li>When Monster A is on the field, opponent's attacks must target the player (not player's monsters)</li>
+                    <li>When Monster B is on the field, the player is immune to all damage</li>
+                </ul>
+                <p>Or the classic invincible combo in "Hearthstone": (I prefer this one)</p>
+                <ul>
+                    <li>Share Pain: When Minion A is on the field, damage received by the player is borne by A instead</li>
+                    <li>Desperate Stand: Spell. Discard your hand, destroy your deck, for the remainder of the game, all your minions are immune to all damage</li>
+                </ul>
+                <p>Here, the infinite capacity base is a similar combo:</p>
+                <ul>
+                    <li>Void Ring: Infinite capacity, but the more items stored, the higher probability of randomly losing items.</li>
+                    <li>Space Law - Personal Prison: Items won't be lost.</li>
+                </ul>
+            </section>
+
+            <section id="impact-thinking">
+                <h2>Impact Thinking: Method to Avoid Space Opera</h2>
+                <p>Space opera is a manifestation of impoverished imagination, like "police chase thieves in cars in cities, police chase thieves in starships in space."</p>
+                <p>Impact thinking is "after fantasizing/creating something, you think about its impact, how people view it, how they use it, how they invent things to mitigate its flaws."</p>
+                <p>For example, previously mentioned, "infinite capacity storage in immortal residences, equipped with spirit-gathering arrays and spirit fields" shows more imagination than "simply having infinite capacity storage."</p>
+                <p>Another example, "infinite capacity storage needs regular reinforcement of space law, thus giving rise to a batch of reinforcement masters. Late-stage Qi Refining space cultivators can reinforce, leading to industry prosperity, more cultivators of space law, resulting in falling reinforcement prices, idle space law cultivators, and decreased national/sect combat power (space law is not conducive to combat). To address this, countries developed space law restriction orders - learning space law without approval is a crime; sects also added space flow quotas, fierce competition, making storage reinforcement prices high again. Later generations only know space law is lucrative, with quotas monopolized by the upper echelons; space law's vested interest groups are also willing to use top-level concerns about 'countries/sects weakened by too much space law' to tightly lock and monopolize space law learning resources. Additionally, one sect invented combat space law arts, with most sect members being space law cultivators, rapidly accumulating wealth through expensive space law-related services; they're also hated by various space powerhouses, slandered and framed as a demonic sect." This way, we get impacts like "reinforcement masters, space law restriction orders, space combat demonic sects," which demonstrates more imagination.</p>
+            </section>
+
+            <section id="brain-principle">
+                <h2>Brain Principle: Learning Mechanism</h2>
+                <p>Three major human desires: survival (hunger), reproduction (sex drive), evolution (learning).</p>
+                <p>The essence of fun is learning, "unexpected but reasonable." (Off-topic: Enjoying teaching others is also a learning desire, learning that X+A=B, where A and B are the change in the other person, X is your speech)</p>
+                <p>Readers/players like works with high imagination, essentially liking to learn "it can be this way, it actually is this way."</p>
+                <p>Triggering learning desire requires three key elements:</p>
+                <ul>
+                    <li>The reader originally doesn't know this knowledge, or knows but doesn't believe it</li>
+                    <li>The reader now genuinely acknowledges this knowledge is correct</li>
+                    <li>The reader sincerely acknowledges this knowledge is meaningful.</li>
+                </ul>
+                <p>School learning is often boring because it doesn't satisfy "knowledge is correct" or "knowledge is meaningful."</p>
+                <ul>
+                    <li>For many pieces of knowledge, students believe because "textbooks don't lie," which isn't genuine acknowledgment of correctness.</li>
+                    <li>Mathematical knowledge, even if self-verified as correct, often feels meaningless and doesn't trigger automatic memory. (But if you're lost while sailing, try over ten methods (like looking for lighthouses, raising your phone for signal) without locating yourself, and in desperation try observing stars with mathematical calculations and successfully locate yourself, then you'll judge it as meaningful, triggering automatic memory. The key here is "over ten methods": mathematics should be the last resort, but schools teach it as the only resort)</li>
+                </ul>
+            </section>
+
+            <section id="conclusion">
+                <h2>Conclusion</h2>
+                <p>Authors: Muyi Guiren, Qianli Weilai, Zhuolang Shifeng</p>
+                <p>Corresponding Author: Zhibei Jine</p>
+                <p>Document Number: CMKZ-250129</p>
+                <p>Type: Game Setting-SRA (Game Setting-Upgrade to Thinking Method-Upgrade to Brain Principle-Upgrade to AI Evaluation)

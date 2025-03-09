@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fengshen World: Interview: Fengshen World Development Method - Software Engineering Technical Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">Fengshen World</div>
+            </div>
+            <h1>Fengshen World: Interview: Fengshen World Development Method</h1>
+            <div class="document-type">Software Engineering Technical Document</div>
+            <div class="document-version">Version: 1.0.0 | Confidentiality: Internal</div>
+        </header>
+        
+        <main>
+            <section id="player-timeline-driven">
+                <h2>Player Timeline-Driven Development</h2>
+                <p><strong>Q:</strong> Some companies use test-driven development, others use art-driven development. What's your development approach?</p>
+                <p><strong>A:</strong> Player timeline-driven development. That is, first design everything the player will see and experience while playing the game, then design the game.</p>
+
+                <p><strong>Q:</strong> You mean story-driven development? First design the game's story?</p>
+                <p><strong>A:</strong> No, we don't make story games. In story games, a thousand players have only one experience. In our game, a thousand players have a thousand experiences. We first design one experience, which is the player timeline.</p>
+                
+                <p><strong>Q:</strong> You're going to make a thousand stories?</p>
+                <p><strong>A:</strong> No... We design the underlying world rules, rules that can emerge countless stories. Similar to how League of Legends just has rules, a match is a player timeline, with countless player timelines possible. If we were to make League of Legends, we would first design the effect of a match, then develop the game.</p>
+            </section>
+
+            <section id="player-timeline-explanation">
+                <h2>Designing Player Experiences</h2>
+                <p><strong>Q:</strong> Huh? How is that possible? Without designing the game, how do you know what players will experience?</p>
+                <p><strong>A:</strong> Design player experiences like writing a novel. Many game-themed novelists invent a game and can still write player experiences.</p>
+
+                <p><strong>Q:</strong> Has anyone in the game industry used player timeline-driven development?</p>
+                <p><strong>A:</strong> Yes. A typical case is Yu-Gi-Oh!: Yu-Gi-Oh! first released an anime where characters play a card game that looks fun. Then they released physical cards. Here, "an exciting duel performed by anime characters using this card game" is the player timeline.</p>
+            </section>
+
+            <section id="disadvantages">
+                <h2>Method Disadvantages</h2>
+                <p><strong>Q:</strong> Are there any disadvantages to player timeline-driven development?</p>
+                <p><strong>A:</strong> Yes. For instance, deduction errors: those duels in the Yu-Gi-Oh! anime are almost impossible to happen. The champion decks in the anime are actually terrible. Also, the card settings in the anime have bugs, with many unbeatable combos the characters didn't discover. This led to a wave of nerfs and adjustments soon after the physical cards were released. Now the physical cards and anime are almost completely different games.</p>
+                <p>But we don't have this problem. For players to discover imbalances, they need at least dozens of hours of gameplay to familiarize themselves with the game; and we're making a single-player game with an expected lifespan of just dozens of hours.</p>
+            </section>
+
+            <section id="game-longevity">
+                <h2>Game Lifespan</h2>
+                <p><strong>Q:</strong> Huh? Only dozens of hours lifespan? Can such a game be fun?</p>
+                <p><strong>A:</strong> All single-player games are like this. Such games are the most fun because players can always encounter fresh things during these dozens of hours. Players are like Liu Laolao entering the Grand View Garden, seeing fresh and fun things, then getting tired after dozens of hours, which is normal.</p>
+                
+                <div class="comparison-box">
+                    <div class="comparison-column">
+                        <h4>Single-Player Game Experience</h4>
+                        <ul>
+                            <li>Fresh content within dozens of hours</li>
+                            <li>Feeling satisfied and fulfilled at the end</li>
+                            <li>Numerical design most aligned with player psychology</li>
+                            <li>Designers truly want players to be happy</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-column">
+                        <h4>Online Game Experience</h4>
+                        <ul>
+                            <li>Hundreds or thousands of hours but repetitive content</li>
+                            <li>Feeling empty at the end</li>
+                            <li>Pay-to-win mobile games make players waste life pursuing numbers</li>
+                            <li>Full of designers' malice toward players</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p>Those hundreds or thousands of hours eSports games are actually the least fun. Although addictive, they're not enjoyable. At the end of the game, you feel emptiness; while with these dozens of hours lifespan single-player games, you feel satisfaction and fulfillment at the end.</p>
+                <p>Those daily login pay-to-win mobile games are purely like serving jail time or working, grinding and paying, wasting your life just for increasing those meaningless numbers in the game. In single-player games, numbers best align with player psychology, allowing players to adjust values through the console freely, but players still don't want to adjust to invincible levels—because that wouldn't be fun. Single-player game numbers are perfect.</p>
+                <p>Communities for League of Legends, Yu-Gi-Oh!, StarCraft, CS, and other competitive games all have a saying: it's most fun when novices are battling each other; after skills improve and answer formulas emerge, it's no longer interesting. In single-player games, players are always in the novice battle state, with the game providing players dozens of hours of continuous various "fresh environments," rather than online games' "continuously polishing skills in familiar environments."</p>
+            </section>
+
+            <section id="environment-change">
+                <h2>Environment Changes</h2>
+                <p><strong>Q:</strong> Continuous new environments? How boring, I've just gotten familiar with one environment, and you make me change?</p>
+                <p><strong>A:</strong> This involves game design study. Complete environment changes would be boring, slight environment adjustments would be interesting, "based on neglect: discovering the environment's truth differs from your past understanding, requiring adjustment, and you should have realized this earlier" is most interesting. See [[Ordinary Game Design Concept]] [[Neglect]].</p>
+            </section>
+
+            <section id="more-disadvantages">
+                <h2>Other Disadvantages</h2>
+                <p><strong>Q:</strong> Alright, I didn't understand, let's not talk about this. New topic: Besides deduction errors, are there any other disadvantages?</p>
+                <p><strong>A:</strong> Yes. For instance, on-site card printing: the author designs a desperate situation where the protagonist can't turn the tide, so the author forcibly designs a new card for the protagonist, letting them use that card to reverse defeat into victory. Viewers criticize.</p>
+                <p>But we don't have this problem. Because our player timelines won't be released. Even for promotion, we'll record gameplay after the game is completed.</p>
+                <p>Similarly, if Yu-Gi-Oh! didn't exist now and we were designing it, we would internally write a Yu-Gi-Oh! anime script without releasing it, then develop Yu-Gi-Oh! based on that script, then after development and testing, create a new script based on Yu-Gi-Oh! and film it as an anime for release. This way, there wouldn't be on-site card printing scenes.</p>
+            </section>
+
+            <section id="advantages">
+                <h2>Method Advantages</h2>
+                <p><strong>Q:</strong> So, what are the advantages of player timeline-driven development?</p>
+                <p><strong>A:</strong> Of course there are. The most important advantage: understandability. <strong>Everyone can understand the meaning of their work, can discuss, can refuse unreasonable work.</strong></p>
+                
+                <div class="highlight-box">
+                    <h3>Development Method Comparison</h3>
+                    <p><strong>Traditional Development Method:</strong> Game companies must have many employees who aren't allowed to ask why, only allowed to execute superior's requirements. If you're told to change a feature, just change it, no talking back, don't ask why.</p>
+                    <p><strong>Player Timeline-Driven Development:</strong> Everyone can understand their work: it's needed to implement the player timeline. If you don't understand your work's meaning, the leader can explain specifically, detailing the logic of "deriving your task from the player timeline." All tasks can be derived from the player timeline based on logical deduction; game development is no longer a black box, no longer "only the game designer understands, others must unconditionally trust and follow their arrangements."</p>
+                </div>
+            </section>
+
+            <section id="work-meaning">
+                <h2>Work Meaning</h2>
+                <p><strong>Q:</strong> Why let employees understand work meaning?</p>
+                <p><strong>A:</strong> Because sometimes employees need to exercise discretion, and if they don't understand the work, they might make mistakes when adapting, leading to useless work results that need redoing.</p>
+                
+                <p><strong>Q:</strong> Giving employees clear tasks without letting them exercise discretion should be fine, right? This way costs aren't high.</p>
+                <p><strong>A:</strong> Okay, let me be honest. The real reason is: because we don't pay. No salary, working for love, so everyone must understand work meaning, otherwise if your requirements keep changing, engineers won't want to work anymore.</p>
+            </section>
+
+            <section id="method-origin">
+                <h2>Method Origin</h2>
+                <p><strong>Q:</strong> That's certainly true. New question: How did you come up with player timeline-driven development?</p>
+                <p><strong>A:</strong> Through analysis. I like logic, deduction, everything having certainty, everyone having consensus based on logic.</p>
+                <p>I like tracing the reason for reasons, the commonality of commonalities. For game design, tracing to the extreme, it's the player timeline: all work can be traced to it, it can expand into everything.</p>
+            </section>
+
+            <section id="player-timelines">
+                <h2>Current Player Timelines</h2>
+                <p><strong>Q:</strong> Very interesting. What are your current player timelines?</p>
+                <p><strong>A:</strong></p>
+                
+                <div class="player-timeline">
+                    <h3>Timeline One: From Mortal to Golden Core, From Solo to Force</h3>
+                    <ul>
+                        <li>Start as a mortal in the wild, chop trees mine ores one backpack. Pick fruits fetch water fill stomach, build walls roof block wind rain.</li>
+                        <li>Wild boar attacks wall-backed battle, kill dissect bones meat skin. Chance immortal gate trading token, sell meat buy spells start cultivation.</li>
+                        <li>Closed cultivation breakthrough to Body Tempering, kill pigs buy pills to Meridian Opening. One battle at Treasure Ruins to Acupoint Opening, ten battles at Treasure Ruins enter Qi Refining.</li>
+                        <li>Pills artifacts talismans arts well-configured, dao embryo crystal coffin backup. Ten dangers three deaths polish plan, hundred battles at Treasure Ruins enter Foundation Establishment.</li>
+                        <li>Secret realm treasure hunt gain treasures, suffer demonic cultivator attack soul barely escapes. Not accepting defeat fight again encounter danger, repeatedly defeated repeatedly fighting finally survive.</li>
+                        <li>Great sect invitation as guest elder, move change plane enter luxury home. Participate in commerce and battles, hundreds rescued express endless gratitude.</li>
+                        <li>Golden Core elder dies of old age, hall master colludes with enemies betrays sect leader. Player defends sect suffers assassination, gathers faction enters game divides city breaks.</li>
+                        <li>External enemies pirates come to dismember, internal cooperation then backstabbing. Killing array blood sacrifice enter Golden Core, command array defeat enemies internal allegiance.</li>
+                    </ul>
+                </div>
+                
+                <div class="player-timeline">
+                    <h3>Timeline Two: From Golden Core to Yuan Ying</h3>
+                    <p>Back then I was Golden Core, in the right dance built Sky Drive, renowned, but land poor people many, nowhere to expand.</p>
+                    <p>At that time, left Golden Core Sauron, right Golden Core Dawn, front Yuan Ying Silver, back Yuan Ying SG.</p>
+                    <p>Sauron, legendary genius, from Sacred Land, leading a group of talents, with Yuan Ying potential, just lacking allies.</p>
+                    <p>I wanted to join, but Sauron hard fought Silver, defeated and scattered, I instead swallowed his territory, recruited Phantom Moon—Sauron's capable talent, also with Yuan Ying potential.</p>
+                    <p>We respected Silver as leader, offered gold for territory, Silver permitted; we finished moving, greatly developing, Silver regretted, we dared be angry but not speak, yielded land and returned.</p>
+                    <p>Yuan Ying expedition war, Silver called us to assist, promised left dance. We tightened belts, exhausted minds, spared no effort, supplied frontlines. Victory, Silver regretted again, only compensated few immortal pills. We smiled, but revenge fire already burned in hearts.</p>
+                    <p>I pulled Dawn, built East Alliance. Yuan Ying war arose again, Silver invited my assistance; Dawn sent envoy to SG, SG agreed to support supplies, backstab Silver, I deliberated, agreed.</p>
+                    <p>Dawn wanted to lead East Alliance, actively diplomatically, militarily, I delegated command, but their tactics were a mess, many foolish major defeats. I took back command, great victory.</p>
+                    <p>Amid consecutive victories, Silver suddenly repeatedly raided supply convoys, intelligence accurate, attacking where Sky Drive was weak with no Dawn.</p>
+                    <p>I realized with shock: Dawn betrayed, probably jealous of my superior tactics. After deep thought, I decided to apologize, claiming Dawn paved the way with sacrifices, I shouldn't have taken battle merit. Meanwhile boldly declared: I won't force everyone to forgive me, but currently there's a spy, I don't want those with grudges hidden. Everyone voluntarily stay or leave, leavers' past investments in East Alliance I'll fully compensate. Part amicably, don't help Silver again.</p>
+                    <p>Sky and earth collapsed, Dawn nearly all left, Sky Drive fought Silver alone. Gritting teeth enduring, united as one, everyone donated resources, non-combatants also learned spells to fight. Territory continuously lost, we fought more bravely: treasures produced one by one, new soldiers graduated batch by batch, seventeen Golden Core dao embryos formed, Phantom Moon entered Yuan Ying. Counterattack destroyed Silver, liquidation destroyed Dawn, allied SG, Sky Drive king at dance.</p>
+                </div>
+                
+                <div class="player-timeline">
+                    <h3>Timeline Three: Divine Transformation</h3>
+                    <p>Customarily, top resources all seized by Great Emperors.</p>
+                    <p>In the current era, three hundred years without an emperor, so various Divine Transformation forces are wealthy, collectively accumulating nearly a thousand Yuan Ying dao embryos. However, daily conflict scale is limited to Foundation Establishment, myriad worlds openly having only around a hundred Yuan Ying. Yuan Ying dao embryos already stirring.</p>
+                    <p>Among twelve Sacred Lands, three Divine Transformation, outside world six, ABCDE and you. Finally chaos erupts, you battle A and destroy it. Rest and recover, then battle B and destroy it. CDE unite, you decisive battle and win, unifying myriad worlds (outside Sacred Lands).</p>
+                    <p>But internal chaos arises, pirates plunder within your borders, AB remnants and CDE surrendered armies seize opportunity to rebel, guerrilla warfare destroying workshops warehouses.</p>
+                    <p>You suppress and kill pirates, but pirates use new Yuan Ying dao embryos. You suppress and kill again, they revive again.</p>
+                    <p>You're shocked: where are they getting so many Yuan Ying dao embryos?</p>
+                    <p>Actually, it's the Merchant Alliance and Sacred Lands supporting pirates; they all don't want unification: unification means bandit suppression, bad for pirates; unification means no war damage, insufficient demand, falling prices, bad for merchants; unification means people respect you not Sacred Lands. (Though both Divine Transformation, Sacred Lands won't fight you. After you're a handful of dust in a thousand years, Sacred Lands still stand. Thus Sacred Lands allow people to respect you, but Sacred Lands don't want this, so they want to annoy you at small cost)</p>
+                    <p>Pirates endlessly coming, your side logistics struggling, fighting again risks annihilation. You timely withdraw, cede territory, let ABCDE restore nations. You keep five hundred planes. ABCDE agree, peace. You continue suppressing pirates. After this suppression ends, pirates stop attacking.</p>
+                    <p>After settling the five hundred planes, you design spy runes, making many NPCs become spies, infiltrating ABCDE, merchants, pirates, even some Sacred Lands. Spies steal intelligence, some become civil officials with voting rights, influencing other forces' decisions. Some spies even become generals of other forces, commanding battles. When time is ripe, close the net. You launch full-scale war again, destroying all non-Sacred Land super top-tier forces, unifying myriad worlds. Sacred Lands remain silent. (Super top-tier: forces or alliances with Divine Transformation or six or more Yuan Ying)</p>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">Fengshen World</div>
+                <div class="footer-info">
+                    <p>&copy; 2025 Fengshen World Studio - World's First Virtual Civilization Game</p>
+                    <p>Document ID: GDD-FJ-2025-005 | Last Updated: 2025-03-05</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

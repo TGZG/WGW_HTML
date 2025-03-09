@@ -1,0 +1,317 @@
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 字体和基础样式 */
+body {
+    font-family: 'Noto Sans SC', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.7;
+    color: #e0e0e0;
+    background-color: #121212;
+    font-weight: 300;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #1a1a1a;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #2a2a2a;
+}
+
+/* 标题样式 */
+h1, h2 {
+    color: #e0e0e0;
+    margin-bottom: 1.5rem;
+    position: relative;
+    font-weight: 500;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    padding-bottom: 0.8rem;
+    margin-top: 2.5rem;
+    border-bottom: 1px solid #333;
+}
+
+h2::before {
+    content: "§";
+    color: #4e9eff;
+    margin-right: 0.5rem;
+    font-weight: 400;
+}
+
+/* Logo 样式 */
+.logo-container {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #4e9eff;
+    letter-spacing: 3px;
+    padding: 0.5rem 1.5rem;
+    border: 2px solid #4e9eff;
+    border-radius: 4px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.document-type {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #aaa;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.document-version {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+/* 段落样式 */
+p {
+    margin-bottom: 1rem;
+    text-align: justify;
+    color: #bbb;
+}
+
+/* 区块样式 */
+section {
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+}
+
+/* 列表样式 */
+ul {
+    margin-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.8rem;
+    position: relative;
+    color: #bbb;
+}
+
+/* 高亮和特殊区块 */
+.highlight {
+    color: #4e9eff;
+    font-weight: 500;
+}
+
+.key-points {
+    background-color: #252525;
+    padding: 1.5rem;
+    border-left: 4px solid #4e9eff;
+    margin: 1.5rem 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.example {
+    background-color: #202830;
+    padding: 1.5rem;
+    border-left: 4px solid #3d5a80;
+    margin: 1.5rem 0;
+    border-radius: 0 5px 5px 0;
+    font-style: italic;
+}
+
+/* 页脚样式 */
+footer {
+    text-align: center;
+    padding-top: 2rem;
+    margin-top: 3rem;
+    border-top: 1px solid #333;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #4e9eff;
+    letter-spacing: 2px;
+}
+
+.footer-info p {
+    margin-bottom: 0.3rem;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* 链接样式 */
+a {
+    color: #4e9eff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #7fb5ff;
+    text-decoration: underline;
+}
+
+/* 特殊强调样式 */
+strong, b {
+    color: #fff;
+    font-weight: 500;
+}
+
+/* 优化排版 */
+#introduction p, 
+#rich-second-generation p,
+#ordinary-people p,
+#summary p {
+    text-indent: 2em;
+}
+
+#introduction p:first-of-type,
+#rich-second-generation p:first-of-type,
+#ordinary-people p:first-of-type,
+#summary p:first-of-type {
+    text-indent: 0;
+}
+
+/* 美化引用样式 */
+blockquote {
+    font-style: italic;
+    border-left: 3px solid #4e9eff;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: #999;
+}
+
+/* 技术文档特殊样式 */
+.key-points p {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.key-points p:before {
+    content: "►";
+    position: absolute;
+    left: 0;
+    color: #4e9eff;
+    font-size: 0.8rem;
+}
+
+/* 代码块样式 */
+code {
+    background-color: #252525;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    color: #4e9eff;
+}
+
+pre {
+    background-color: #252525;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    border-left: 4px solid #3d5a80;
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+/* 表格样式 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background-color: #222;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+th {
+    background-color: #1e1e1e;
+    color: #4e9eff;
+    font-weight: 500;
+}
+
+tr:nth-child(even) {
+    background-color: #1c1c1c;
+}
+
+/* 专业技术文档额外样式 */
+.technical-note {
+    background-color: rgba(78, 158, 255, 0.1);
+    border: 1px solid #2a2a2a;
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.technical-note:before {
+    content: "技术说明";
+    position: absolute;
+    top: -0.8rem;
+    left: 1rem;
+    background-color: #1a1a1a;
+    padding: 0 0.5rem;
+    font-size: 0.8rem;
+    color: #4e9eff;
+    font-weight: 500;
+}
+
+/* 润色效果 */
+::selection {
+    background-color: rgba(78, 158, 255, 0.3);
+    color: #fff;
+}
