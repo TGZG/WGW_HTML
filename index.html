@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>预约页面</title>
+</head>
+<body>
+    <h1>预约信息填写</h1>
+    <form action="save_appointment.php" method="post">
+        <label for="name">名字:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="email">邮箱:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <input type="submit" value="提交">
+    </form>
+    <h2>当前预约人数: 
+        <?php
+        $file = '单机预约.txt';
+        $line_count = 0;
+        if (file_exists($file)) {
+            $line_count = count(file($file));
+        }
+        echo $line_count;
+        ?>
+    </h2>
+</body>
+</html>
