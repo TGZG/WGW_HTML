@@ -464,138 +464,175 @@ function initParallaxEffect() {
   });
 }
 
-// 预约表单弹窗
+// 预购表单交互
 function initPreorderForm() {
-  const preorderButtons = document.querySelectorAll('.preorder-button');
+  const preorderLinks = document.querySelectorAll('a.preorder-button');
+  if (!preorderLinks.length) return;
 
-  preorderButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
+  preorderLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
       e.preventDefault();
 
-      // 创建模态框
+      // Create modal overlay
       const modal = document.createElement('div');
-      modal.className = 'preorder-modal';
-      modal.style.position = 'fixed';
-      modal.style.top = '0';
-      modal.style.left = '0';
-      modal.style.width = '100%';
-      modal.style.height = '100%';
-      modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-      modal.style.display = 'flex';
-      modal.style.alignItems = 'center';
-      modal.style.justifyContent = 'center';
-      modal.style.zIndex = '9999';
+      modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;';
 
-      // 创建表单容器
+      // Create form container
       const formContainer = document.createElement('div');
-      formContainer.className = 'form-container';
-      formContainer.style.backgroundColor = 'white';
-      formContainer.style.padding = '30px';
-      formContainer.style.borderRadius = '8px';
-      formContainer.style.width = '90%';
-      formContainer.style.maxWidth = '500px';
-      formContainer.style.boxShadow = '0 5px 30px rgba(0, 0, 0, 0.3)';
-      formContainer.style.position = 'relative';
-
-      // 设置表单标题
-      const buttonText = button.textContent.trim();
-      let formTitle = '预约表单';
-      if (buttonText.includes('预购')) {
-        formTitle = buttonText.includes('标准版') ? '预购标准版' : buttonText.includes('豪华版') ? '预购豪华版' : '预约/购买';
-      }
-
-      // 创建表单内容
-      formContainer.innerHTML = `
-          <button class="close-button" style="position:absolute;top:10px;right:10px;background:none;border:none;font-size:24px;cursor:pointer;">&times;</button>
-          <h3 style="text-align:center;margin-bottom:20px;color:#4e7cff;">${formTitle}</h3>
-          <form id="preorder-form">
-            <div style="margin-bottom:15px;">
-              <label for="name" style="display:block;margin-bottom:5px;">姓名</label>
-              <input type="text" id="name" name="name" required style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;">
-            </div>
-            <div style="margin-bottom:15px;">
-              <label for="email" style="display:block;margin-bottom:5px;">邮箱</label>
-              <input type="email" id="email" name="email" required style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;">
-            </div>
-            <div style="margin-bottom:15px;">
-              <label for="phone" style="display:block;margin-bottom:5px;">手机号码</label>
-              <input type="tel" id="phone" name="phone" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;">
-            </div>
-            <div style="margin-bottom:20px;">
-              <label style="display:block;margin-bottom:5px;">订阅资讯</label>
-              <label style="display:flex;align-items:center;">
-                <input type="checkbox" name="subscribe" checked style="margin-right:10px;">
-                我希望收到游戏更新和活动信息
-              </label>
-            </div>
-            <button type="submit" style="width:100%;padding:10px;background-color:#4e7cff;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;">提交</button>
-          </form>
-        `;
-
-      // 添加到页面
+      formContainer.style.cssText = 'background:white;padding:20px;border-radius:8px;width:90%;max-width:400px;';
       modal.appendChild(formContainer);
+
+      // Determine form type based on link class
+      console.log(Array.from(link.classList));
+      console.log(1);
+      const formType = link.classList.contains('online') ? '官网联机版预约' :
+        link.classList.contains('dlc') ? '大争之世DLC预约' : '单机模式预约';
+
+      const phpEndpoint = link.classList.contains('online') ? 'index.php' :
+        link.classList.contains('dlc') ? 'dlc.php' : 'danji.php';
+
+      // Create form HTML
+      formContainer.innerHTML = `
+        <form id="preorder-form">
+          <h3 style="margin-bottom:20px;color:#4e7cff;">${formType}</h3>
+          <div style="margin-bottom:15px;">
+            <label for="name">昵称（选填）:</label>
+            <input type="text" id="name" name="name" style="width:100%;padding:8px;margin-top:5px;border:1px solid #ddd;border-radius:4px;">
+          </div>
+          <div style="margin-bottom:15px;">
+            <label for="email">电子邮箱*:</label>
+            <input type="email" id="email" name="email" required style="width:100%;padding:8px;margin-top:5px;border:1px solid #ddd;border-radius:4px;">
+            <span class="error-message" style="color:red;font-size:12px;display:none;">请输入有效的邮箱地址</span>
+          </div>
+          <div style="margin-bottom:15px;">
+            <label for="phone">手机号码*:</label>
+            <input type="tel" id="phone" name="phone" required style="width:100%;padding:8px;margin-top:5px;border:1px solid #ddd;border-radius:4px;">
+            <span class="error-message" style="color:red;font-size:12px;display:none;">请输入有效的手机号码</span>
+          </div>
+          <button type="submit" style="width:100%;padding:10px;background-color:#4e7cff;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;">提交预约</button>
+          <button type="button" class="close-modal" style="width:100%;padding:10px;background-color:#ddd;color:#333;border:none;border-radius:4px;cursor:pointer;margin-top:10px;font-weight:bold;">取消</button>
+        </form>
+      `;
+
+      // Add modal to page
       document.body.appendChild(modal);
 
-      // 关闭按钮功能
-      const closeButton = modal.querySelector('.close-button');
+      // Close button handler
+      const closeButton = modal.querySelector('.close-modal');
       closeButton.addEventListener('click', () => {
         document.body.removeChild(modal);
       });
 
-      // 点击外部关闭
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          document.body.removeChild(modal);
-        }
-      });
-
-      // 表单提交处理
+      // Form submission handler
       const form = modal.querySelector('#preorder-form');
       form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // 收集表单数据
         const formData = new FormData(form);
-        const formObject = {};
-        formData.forEach((value, key) => {
-          formObject[key] = value;
-        });
+        const email = formData.get('email');
+        const phone = formData.get('phone');
 
-        // 在实际项目中这里会发送数据到服务器
-        // 发送数据到服务器
-        fetch('save_appointment.php', {
+        // Reset error messages
+        form.querySelectorAll('.error-message').forEach(msg => msg.style.display = 'none');
+
+        // Validate email and phone
+        let isValid = true;
+
+        if (!validateEmail(email)) {
+          const emailError = form.querySelector('#email').nextElementSibling;
+          emailError.style.display = 'block';
+          isValid = false;
+        }
+
+        if (!validatePhone(phone)) {
+          const phoneError = form.querySelector('#phone').nextElementSibling;
+          phoneError.style.display = 'block';
+          isValid = false;
+        }
+
+        if (!isValid) return;
+
+        // Submit form if validation passes
+        fetch(phpEndpoint, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formObject)
+          body: JSON.stringify({
+            name: formData.get('name'),
+            email: formData.get('email'),
+            phone: formData.get('phone')
+          })
         })
           .then(response => response.json())
           .then(data => {
-            console.log('服务器响应:', data);
+            if (data.success) {
+              alert('预约成功！');
+              document.body.removeChild(modal);
+            } else {
+              alert(data.message || '该用户已预约过，请勿重复预约');
+            }
           })
           .catch(error => {
-            console.error('提交出错:', error);
+            console.error('Error:', error);
+            alert('提交失败，请稍后再试');
           });
-
-        // 显示成功信息
-        formContainer.innerHTML = `
-            <h3 style="text-align:center;margin-bottom:20px;color:#4e7cff;">提交成功！</h3>
-            <p style="text-align:center;">感谢您的${buttonText.includes('预购') ? '预购' : '预约'}，我们将通过邮件向您发送后续信息。</p>
-            <button class="close-success" style="display:block;width:100%;padding:10px;background-color:#4e7cff;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;margin-top:20px;">关闭</button>
-          `;
-
-        // 关闭成功信息
-        const closeSuccess = formContainer.querySelector('.close-success');
-        closeSuccess.addEventListener('click', () => {
-          document.body.removeChild(modal);
-        });
       });
     });
   });
 }
 
-// 页面加载完成后初始化所有功能
+//辅助函数
+function validateEmail(email) {
+  return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+}
+
+function validatePhone(phone) {
+  return /^1[3-9]\d{9}$/.test(phone);
+}
+
+function submitForm(formData, phpEndpoint, formType, modal) {
+  const data = {
+    nickname: formData.get('name'),
+    email: formData.get('email'),
+    phone: formData.get('phone'),
+    formType: formType
+  };
+  console.log(data);
+  fetch(phpEndpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(data => {
+      showResult(data, formType, modal);
+    })
+    .catch(error => {
+      console.error('提交出错:', error);
+      alert('提交出错，请稍后再试');
+    });
+}
+
+function showResult(data, formType, modal) {
+  // conseole.log(data);
+  const formContainer = modal.querySelector('div');
+  if (data.success) {
+    formContainer.innerHTML = `
+      <h3 style="text-align:center;margin-bottom:20px;color:#4e7cff;">提交成功！</h3>
+      <p style="text-align:center;">感谢您预约${formType}，我们将通过邮件向您发送后续信息111。</p>
+      <button class="close-success" style="display:block;width:100%;padding:10px;background-color:#4e7cff;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;margin-top:20px;">关闭</button>
+    `;
+
+    const closeButton = formContainer.querySelector('.close-success');
+    closeButton.addEventListener('click', () => {
+      document.body.removeChild(modal);
+    });
+  } else {
+    alert('提交失败: ' + data.message);
+  }
+}
+//页面加载完成后初始化所有功能
 document.addEventListener("DOMContentLoaded", () => {
   // 先执行基础脚本的功能
 
