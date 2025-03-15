@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fengshen World: Interview: Fengshen World Power Distribution - Software Engineering Technical Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">Fengshen World</div>
+            </div>
+            <h1>Fengshen World: Interview: Fengshen World Power Distribution</h1>
+            <div class="document-type">Software Engineering Technical Document</div>
+            <div class="document-version">Version: 1.0.0 | Confidentiality: Internal</div>
+        </header>
+        
+        <main>
+            <section id="interview-content">
+                <h2>Power Classification</h2>
+                <p><strong>Q:</strong> Sacred Lands are essentially a type of sect, right? Are all forces in Fengshen World essentially sects?</p>
+                <p><strong>A:</strong> No. No.</p>
+                <p>There are four main categories of forces: Sacred Lands, Imperial Dynasties, Sects, and Alliances. Among these, the more important ones are Imperial Dynasties and Sects.</p>
+
+                <h2>Differences Between Imperial Dynasties and Sects</h2>
+                <p><strong>Q:</strong> What are the differences between these? Especially between Imperial Dynasties and Sects.</p>
+                <p><strong>A:</strong> The biggest difference between Imperial Dynasties and Sects is in the management of mortals.</p>
+                <p>Imperial Dynasties manage mortals, while Sects don't. Sects only need to recruit mortals during their enrollment. Comparing to Earth, Sects can be understood as a combination of families, schools, and companies.</p>
+
+                <h2>Setting of Sect Difficulty to Destroy</h2>
+                <p><strong>Q:</strong> Hmm, in Fengshen World, the strong can't destroy weak sects?</p>
+                <p><strong>A:</strong> Very difficult. I used two settings to implement this difficulty in destroying sects:</p>
+                <p>First, the Mountain Protection Grand Array. After the Mountain Protection Grand Array is activated, it can defend across two major realms. It requires crossing three major realms to forcibly break it.</p>
+                <p>Realms: Golden Core, Yuan Ying, Divine Transformation, Void Refinement Great Emperor, Dao Merging Saint. That is, after a Yuan Ying level force's Mountain Protection Grand Array is activated, it won't be possible to be forcibly annihilated. A Great Emperor can only mindlessly annihilate Golden Core sects.</p>
+                <p>Normally, to destroy a sect, the problem that must be solved is how to prevent the opponent's Mountain Protection Grand Array from activating.</p>
+                <p>There's also the Emergency Teleportation Array; even if headquarters are destroyed, core members and resources won't suffer fatal damage and can make a comeback.</p>
+                <p>Second, ordinary planes' highest cultivation is only Golden Core. Golden Core can rule a plane. If a plane has multiple major forces contending for hegemony, they're usually multiple Foundation Establishment level forces.</p>
+                <p>Although Golden Core can't directly control plane laws, by controlling all the population of a plane, they can slowly transform the world, slowly influence the laws. The older a Golden Core force is, the greater its arrangements and influence on its plane. With familiarity of plane laws, plus the Mountain Protection Grand Array and various array traps, Golden Core forces can even reverse-kill Yuan Ying; even Divine Transformation cultivators, if careless and directly attacking Golden Core forces without preparation, might not be able to fully withdraw, only fleeing with serious injuries. After all, the power of laws is at the Saint level.</p>
+                <p>Golden Core can master minor powers of laws, Yuan Ying slightly stronger, Divine Transformation can dabble in spacetime laws and divine the heavenly machine, Void Refinement can speak laws into reality, temporarily distorting laws, Dao Merging can fully control a plane's laws. But Golden Core, through their force's thousand-year layout, can partially rival Dao Merging in local plane laws. This is the function of forces.</p>
+                <p>To destroy a Golden Core or above sect, one must first thoroughly understand the opponent's intelligence, adapt to their plane laws, and destroy their Mountain Protection Grand Array or insert spies into the core member positions of the array.</p>
+                <p>Therefore, Golden Core level forces are entering-level forces in the myriad worlds (equivalent to world's top 500, sovereign nations), Yuan Ying level forces are top-tier forces in the myriad worlds. Divine Transformation level forces don't exist; besides Sacred Lands, throughout history, a force having two consecutive generations of Divine Transformation is extremely rare. Divine Transformation usually emerges when a Yuan Ying force, after ten thousand years, finally produces one Divine Transformation, dominating an era, then returning to a Yuan Ying force; thus, forces with Divine Transformation cultivators are still evaluated as Yuan Ying level forces. Only those that can guard Divine Transformation level wealth can be called true Divine Transformation level forces; and besides Sacred Lands, no force can guard Divine Transformation level wealth.</p>
+
+                <h2>Realms and Forces</h2>
+                <p><strong>Q:</strong> Wait, did I remember the realms wrong? If I remember correctly, there are still several realms above Yuan Ying, right? How is Yuan Ying already top-tier?</p>
+                <p><strong>A:</strong> You remembered correctly. Yuan Ying, Divine Transformation, Void Refinement (Great Emperor), Dao Merging (Saint).</p>
+                <p>You mean: There's a disconnect between Yuan Ying and Dao Merging, Divine Transformation and Void Refinement have no presence, as if Dao Merging is the next realm after Yuan Ying. Right?</p>
+                <p>If so, this is actually an important conclusion in cultivation society study: in the cultivation world, it's impossible to both "have only one cultivator at the highest realm, and divide realms proportionally."</p>
+                <p>Countless authors don't realize this, which is also the source of "Saint-level as common as dogs."</p>
+                <p>That is, if realm cultivation is completely proportional (proportional: each realm advancement increases strength by a factor, decreases population by a factor), then society should be: from first level to sixth level rising proportionally, after sixth level regardless of level. Six thousand sixth-level cultivators, all treating each other as equals, even if in strength some sixth level can instantly kill a group of sixth level (i.e.: their true level is ninth level).</p>
+                <p>If realm cultivation is completely proportional, then the highest few realms of this society must be flattened, viewed as one realm, not distinguished in society. Because as I said above about Yuan Ying Divine Transformation Void Refinement: even if Divine Transformation level cultivation exists, Divine Transformation level forces don't exist. Therefore, if there were no Dao Merging Saints, or if Saints weren't undying and indestructible, then "Yuan Ying, Divine Transformation, Void Refinement, Dao Merging" would all be collectively called Yuan Ying, not distinguished in society.</p>
+                <p>To ensure the existence of realm names, I added the setting "Saints are undying and indestructible," making "the current era has twelve Saints, more Saints than Void Refinement," which is enough to support the existence of the Saint realm name, and based on this, force the existence of Divine Transformation and Void Refinement realm names. At the same time, to balance combat power and maintain the prestige of Void Refinement Great Emperors, I added the setting "Saints cannot leave Sacred Domains." Plus the name Dao Merging, the ability to make mortals live forever, ultimately all this I used "Saints merge with Heavenly Dao, control a plane's laws" to uniformly explain, forming a self-consistent worldview (rather than rigid settings).</p>
+
+                <h2>Mathematical Modeling and Realm Distribution</h2>
+                <p><strong>Q:</strong> Damn, I'm a bit dizzy. I previously thought cultivation society study was simple; you mentioned researching so many disciplines, I thought it unnecessary. Now I know I was wrong, cultivation society study is indeed complex, and Fengshen World's Saint setting was designed this way, it's terrifying. But I'm curious: is there anything more terrifying? Show me something, demonstrate the hardcore of cultivation society study.</p>
+                <p><strong>A:</strong> Sure. Let me talk about mathematics. Although there aren't any profound mathematical operations, it requires mathematical modeling ability.</p>
+                <p>For example, many authors don't realize the power of proportionality, don't realize the power of time. They casually write things like "one tenth-level in a million years," then the current era has a large group of ninth-level. Do you know what this means? It means a million years produced ten thousand times this large group of ninth-level, so many ninth-level producing one tenth-level? These numbers are astronomically broken.</p>
+                <p>If you want to maintain proportionality, then "one tenth-level in a million years" should mean the current era doesn't have a single ninth-level, or only has one ninth-level.</p>
+                <p>Fengshen World is like this: one Dao Merging Saint every 100,000 years, so on average one era only has one Void Refinement, lifespan 3,000 years. Specific numerical calculation:</p>
+                <pre><code>All historical population = Dao Merging number * proportion^(Dao Merging level-1)
+Annual birth population = All historical population/historical years = current population * annual birth population proportion of current total population
+Void Refinement witness population = proportion^(Void Refinement level-1)
+Void Refinement lifespan = Void Refinement witness population/annual birth population</code></pre>
+                <p>Substituting: Dao Merging number = 12, Dao Merging level = 11, proportion = 30, annual birth population proportion of current total population = 1%, historical years = 1,000,000 years, Void Refinement level = 10.</p>
+                <p>Solving the equation gives:</p>
+                <pre><code>Current population = 708,588,000,000 (708 billion)
+Void Refinement lifespan = 2,777 years</code></pre>
+                <p>Settings: Divine Transformation lifespan = 1,000 years, Yuan Ying lifespan = 500 years, Qi Refining lifespan = 150 years, mortal lifespan = 80 years, Divine Transformation level = 9, Yuan Ying level = 8, Qi Refining level = 5, mortal level = 1. Formulating:</p>
+                <pre><code>Void Refinement witness Divine Transformation number = proportion^(Void Refinement level-Divine Transformation level)
+Current Divine Transformation = Void Refinement witness Divine Transformation number/(Void Refinement lifespan/Divine Transformation lifespan)
+Void Refinement witness Yuan Ying number = proportion^(Void Refinement level-Yuan Ying level)
+Current Yuan Ying = Void Refinement witness Yuan Ying number/(Void Refinement lifespan/Yuan Ying lifespan)
+Void Refinement witness Qi Refining number = proportion^(Void Refinement level-Qi Refining level)
+Current Qi Refining = Void Refinement witness Qi Refining number/(Void Refinement lifespan/Qi Refining lifespan)
+Void Refinement witness mortal number = proportion^(Void Refinement level-mortal level)
+Current mortal = Void Refinement witness mortal number/(Void Refinement lifespan/mortal lifespan)</code></pre>
+                <p>Calculation results:</p>
+                <pre><code>Current Divine Transformation = 10
+Current Yuan Ying = 162
+Current Qi Refining = 1,312,803 (one million people)
+Current mortal = 567,233,429,394 (567 billion)</code></pre>
+
+                <h2>Qi Refining Numbers and Proportion</h2>
+                <p><strong>Q:</strong> Wait, only one million Qi Refining in the myriad worlds currently? That's too few!</p>
+                <p><strong>A:</strong> If we want to increase Qi Refining numbers, we can only increase the proportion, which would further reduce Void Refinement lifespan. The current 2,777 is already very pitiful, can't be reduced.</p>
+                <p>Unless we further increase historical years. But a million years is already very high, and considering conversion to a game, for future online games I need "one new Dao Merging per year," with a million years of history, one Dao Merging every 100,000 years, game time flow rate 1:100,000, a mortal's life corresponding to eight Earth hours. This is already the limit.</p>
+                <p>With ten million years of history, time flow rate 1:1,000,000, a mortal's life corresponding to one Earth hour, players fight one battle and half the character's life is gone, unplayable.</p>
+                <p>Also, one million Qi Refining isn't few. Many people have no concept of this number because they know Earth's population is seven billion. But in reality, people have no concept of seven billion either, or rather, people have no concept of anything above a thousand, because most people in their lifetime only know about a thousand people.</p>
+                <p>567 billion mortals is enough to support the myriad worlds. Average five hundred million people per plane. At its peak, the Han Dynasty had forty million people, equivalent to each plane having a peak Han Dynasty population, enough for random city massacres without extinction: if the Han Dynasty had cultivation, cultivators destroying two cities per year on average, the death toll from cultivation wars would still be less than from famines and plagues: every year several cities suffer famines and plagues, killing half a city at a time.</p>
+                <p>One more thing. Many people don't understand proportionality, or rather, don't understand the terror of exponential growth. For example, in Battle Through the Heavens, three nine-star Dou Saints, three eight-star Dou Saints producing one nine-star, three seven-star Dou Saints producing one eight-star... What concept is this? Calculating from one-star Dou Venerable to nine-star Dou Saint, this means there are three billion Dou Venerables! And that's not counting those nine-revolution Dou Venerables, half-Saints, early/mid/late one-star Dou Saints and the like, counting those the number is even more terrifying.</p>
+                <p>Calculating at one star equals three times, the Battle Through the Heavens world has a total of 515,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000 people (5.15 * 10^47). What concept is this? Our universe has one hundred billion galaxy systems like the Milky Way, one galaxy system has one hundred billion stars like the sun, assuming each stellar system has one hundred billion people, then the entire universe's population wouldn't match a fraction of a fraction of Battle Through the Heavens. Is this possible? A Gamma Empire with 2,500,000,000,000,000,000,000,000,000,000,000 people (2.5 * 10^33)? Does the Gamma Empire look like it has that many people?</p>
+                <p>One major realm equals thirty times, this is a reasonable value. And it must be noted that the difficulty ratio of realms doesn't equal the current population ratio, because current population is also related to factors like lifespan. Therefore, according to the above mathematical calculation, thirty Yuan Ying produces one Divine Transformation, but currently one Divine Transformation only corresponds to 16 Yuan Ying.</p>
+            </section>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">Fengshen World</div>
+                <div class="footer-info">
+                    <p>&copy; 2025 Fengshen World Studio - World's First Virtual Civilization Game</p>
+                    <p>Document ID: GDD-FJ-2025-005 | Last Updated: 2025-03-05</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

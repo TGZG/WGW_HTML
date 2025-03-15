@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>风神界 - 开启尊重业时代的玄幻战略RPG</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+</head>
+
+<body>
+    <header id="home">
+        <nav>
+            <div class="logo">风神界</div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#introduction">游戏介绍</a></li>
+                <li><a href="#worldview">世界观</a></li>
+                <li><a href="#system">游戏系统</a></li>
+                <li><a href="#versions">版本计划</a></li>
+                <li><a href="#versions" class="cta-button">预约/购买</a></li>
+            </ul>
+            <!-- 添加语言切换按钮 -->
+            <div class="language-switcher">
+                <a href="index.html">中文</a> | <a href="index_en.html">English</a>
+            </div>
+        </nav>
+
+        <div class="hero">
+            <div class="hero-content">
+                <h1>风神界</h1>
+                <h2>开启尊重业时代的玄幻战略RPG</h2>
+                <p class="tagline">百亿AI驱动的永恒世界，由你谱写历史</p>
+                <div class="hero-buttons">
+                    <a href="#versions" class="primary-button">立即预约</a>
+                    <a href="#introduction" class="secondary-button">了解更多</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="introduction" class="section-light">
+        <div class="container">
+            <h2 class="section-title">游戏介绍</h2>
+
+            <div class="game-definition-container">
+                <div class="game-definition-left">
+                    <h3>基本信息</h3>
+                    <p>基本：单机PC游戏，1.2GB，Steam发布</p>
+                    <p>美术：玄幻修真，2D非像素，网格地图，正俯视角</p>
+                    <p>大类：开放世界，RPG，战术，战略，沙盒，模拟</p>
+                    <p>小类：生存，建造，经营，自动化，跑商，金融，征服</p>
+                </div>
+                <div class="game-definition-right">
+                    <h3>游戏定位</h3>
+                    <p>《风神界》，全球首款虚拟文明游戏，玄幻战略RPG游戏，单机买断制。</p>
+                    <p>百亿AI角色基于生存需求，后天形成分工分级的社会；经济与交通高度发达，所有AI的行为实时演算、影响世界的物价与势力版图。</p>
+                    <p>发布之前，世界由AI演变百万年。百万年后，玩家进入世界。</p>
+                </div>
+            </div>
+            
+
+            <div class="features">
+                <h3>游戏特色</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon world-icon"></div>
+                        <h4>修真社会学</h4>
+                        <p>玄幻世界观。诸天万界，千亿NPC。整个世界即便没有玩家，也可以自发运转、王朝更迭。各势力人文制度自发演变，形成真实的修真社会，而非修真歌剧。</p>
+                        <a href="document/风神界：无限容量基地的实现-SRA.html">风神界：无限容量基地的实现-SRA</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon freedom-icon"></div>
+                        <h4>沙盒模拟</h4>
+                        <p>随机世界，开局演变百万年。没有剧情，没有任务，你可以做任何事。刷怪、工业、商业、战略……一个子集就足够有趣。一千个玩家眼中有一千个风神界。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon respect-icon"></div>
+                        <h4>尊重需求</h4>
+                        <p>装逼打脸，扬眉吐气，无人敢欺，万国来朝。让本不尊敬你的人变得尊敬，让本高高在上的人变得点头哈腰。战力的提升不再只是数值的变化，更是人文的升华。</p>
+                        <a href="document/风神界：尊敬感.html">风神界：尊敬感</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon path-icon"></div>
+                        <h4>认知过滤</h4>
+                        <p>世界的设定极其复杂，但我们会让玩家用一种简单的方式去近似地认知、在八成以上的场景中等价于真相。如此，既好入门上手，又可深入探索。</p>
+                        <a href="document/风神界：伪圣之路 (1).html">风神界：伪圣之路</a>
+                    </div>
+                </div>
+            </div>
+            <div class="features">
+                <h3>AI特色</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon world-icon"></div>
+                        <h4>自主生存</h4>
+                        <p>将AI放在野外，因为饥饿需求，他会采集果实食用，采集木头搭建房屋，种植农田。当遇到敌人时，会躲在房屋里。</p>
+                        <br>
+                        <p>AI必须自己养活自己。他的饥饿度不会刷新，他的金钱不会刷新，他必须有自己谋生的手段、即便玩家没有注视着他。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon freedom-icon"></div>
+                        <h4>听驱不听使</h4>
+                        <p>我们控制一个新的角色，对AI提议让他跟我们走，他不听。攻击他、禁锢他，再提议让他跟我们走，他表示会听。解除禁锢后，他会跟我们走，但随时可能逃跑。</p>
+                        <br>
+                        <p>当你要建立势力时，你必须意识到：AI不是棋子，他有自己的想法。小提示：大棒加甜枣是一个简单有效的管理办法。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon respect-icon"></div>
+                        <h4>学习与记忆</h4>
+                        <p>我们带着AI来到城市，购买了优质的食物，给他吃。他表示非常开心。然后我们将AI带到野外、放他自由。AI不再盖楼种地，而是采集了一些食物后就开始四处移动，寻找城市。他记得之前城市中有美食。</p>
+                        <br>
+                        <p>AI会有短期记忆与长期记忆，可以如猫狗一样简单学习，而不再是僵硬的傻子。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon path-icon"></div>
+                        <h4>后天职业</h4>
+                        <p>如果一个商人AI的货物被海盗打劫了，那么这个商人可能崩溃之下转行做海盗；如果一个猎魔人AI受伤后发现疗伤药很贵，那么这个猎魔人可能转行学炼丹。大量AI在细分领域工作，通过社会贸易来合作，贸易中心的每日商品交易量数以亿计，价格由市场决定。这又催生出一批投机AI，低买高卖来盈利。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="respect-experience">
+                <blockquote>
+                    无需担心性能问题。AI非大模型。开局前可以调整世界尺寸与AI智力，4060显卡即可在小型世界下流畅运行。
+                    为了节约性能，开局时只有十万名具象NPC，其余千亿名以统计的形式群体演算，仅当被玩家观测到时具象化。
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <section id="worldview" class="section-dark">
+        <div class="container">
+            <h2 class="section-title">世界观</h2>
+
+            <div class="realm-system">
+                <h3>境界系统</h3>
+                <div class="realm-chart">
+                    <div class="realm-group mortal">
+                        <h4>凡人</h4>
+                        <div class="realm-levels">
+                            <div class="realm-level">
+                                <span class="level-name">凡境</span>
+                                <span class="level-lifespan no-scrollbar">人们大多在此境界。五千亿凡人。</span>
+                            </div>
+                            <div class="realm-level">
+                                <span class="level-name">炼体</span>
+                                <span class="level-lifespan no-scrollbar">身强体壮，拳可碎石。强于奥运冠军。</span>
+                            </div>
+                            <div class="realm-level">
+                                <span class="level-name">通脉</span>
+                                <span class="level-lifespan no-scrollbar">气血可运转调控，爆发如超人。</span>
+                            </div>
+                            <div class="realm-level">
+                                <span class="level-name">开窍</span>
+                                <span class="level-lifespan no-scrollbar">灵气可入体运转，可以释放简单法术。</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="realm-group immortal">
+                        <h4>仙人</h4>
+                        <div class="realm-levels">
+                            <div class="realm-level">
+                                <span class="level-name">炼气</span>
+                                <span class="level-lifespan no-scrollbar">炼气之下皆蝼蚁。炼气为仙人，可隔空杀人、御剑飞行。</span>
+                            </div>
+                            <div class="realm-level">
+                                <span class="level-name">筑基</span>
+                                <span class="level-lifespan no-scrollbar">通常富可敌国，有自己的洞府、布置各种阵法。位面内争霸时的一流强者。</span>
+                            </div>
+                            <div class="realm-level">
+                                <span class="level-name">金丹</span>
+                                <span class="level-lifespan no-scrollbar">寻常位面的最强者。金丹及以上修士，入万界天榜。有金丹修士坐镇的势力，乃万界入流势力。</span>
+                            </div>
+                            <div class="realm-level">
+                                <span class="level-name">元婴</span>
+                                <span class="level-lifespan no-scrollbar">有元婴修士坐镇的势力，乃万界一流势力。丹宗，器宗，万宝楼，都在此行列。</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="realm-group true-immortal">
+                        <h4>真人</h4>
+                        <div class="realm-levels">
+                            <div class="realm-level">
+                                <span class="level-name">化神</span>
+                                <span class="level-lifespan no-scrollbar">见时空法则，知因果天命。除圣地外，没有一个宗门能连续两个时代皆出化神修士。</span>
+                            </div>
+                            <div class="realm-level">
+                                <span class="level-name">炼虚</span>
+                                <span class="level-lifespan no-scrollbar">亦称大帝，寿元三千载，言出法随。一个时代通常只有一名大帝，万界共尊，大帝在他的时代无敌（在圣域外）。</span>
+                            </div>
+                            <div class="realm-level">
+                                <span class="level-name">合道</span>
+                                <span class="level-lifespan no-scrollbar">亦称圣人，以身合一界天道，不死不灭。其所在位面为圣域，圣人于圣域内无敌、可断生死逆阴阳，但圣人无法离开其圣域。每十万年一次成圣机缘；百万年来，万界共出十二圣人。</span>
+                            </div>
+                            <div class="realm-level">
+                                <span class="level-name">大乘</span>
+                                <span class="level-lifespan no-scrollbar">前不见古人，后不见来者，百万年来万界从未有人踏入此境。</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-objective">
+                    <div class="objective-card">
+                        <p class="objective-text">玩家从<span class="highlight">凡人</span>开始，最终目标是成就<span class="highlight">炼虚</span>，铲除旧帝陵，然后耗尽一个时代的资源，打造出最豪华的帝棺帝陵，沉睡。</p>
+                        
+                        <div class="notes-section">
+                            <p><span class="note-tag">注</span> 沉睡是为了节约寿元，为了让自己能安然沉睡至<span class="highlight">大争之世</span>（十万年一次）后苏醒、角逐成圣机缘。</p>
+                            <p><span class="note-tag">注</span> 单机版游戏内玩家无法等到大争之世，联机版一年一次。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="power-system">
+                <h3>大争之世</h3>
+                <div class="power-types">
+                    <div class="power-type">
+                        <h4>基本设定</h4>
+                        <p>十万年一次大争之世，大争之世中会有一个进阶合道圣人的机缘（天道轮回破缺）。</p>
+                        <p>天地初开时，有原初天道与深渊意志两位先天大道圣人。加上大争之世的十万年一次后天合道圣人，百万年来，万界共出十二圣人。</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>沉睡与苏醒</h4>
+                        <p>昔年那些寿元将尽的高阶修士会自我封印，等待大争之世到来之时苏醒。</p>
+                        <p>平日里万界之中通常只有一名炼虚、十名化神、百名元婴，而在大争之世中苏醒的炼虚有三十多名、元婴三万多名。他们将燃尽最后的寿元，激烈的交锋，缔造璀璨的时代，最终的赢家将进阶合道。</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>遗迹禁地</h4>
+                        <p>基于大争之世，游戏内可见许多上古遗迹：</p>
+                        <p style="margin-top: 4px;margin-bottom: 4px;">两个炼虚大帝的大战会打得一个位面赤地千里、寸草不生，在一些小位面甚至打得时空破碎、化作千万时间碎片、流传百万年。</p>
+                        <p>高阶修士寿元将尽、自我封印之时，会将全部身家带在身边，并且在周围布置凶阵、养殖凶兽、设置诅咒，将一片地区化为凶险禁地，从而保护灵棺渡过万年。玩家可以看到许多这样的凶地，并可以尝试去探险、盗墓。</p>
+                    </div>
+                    <a href="document/风神界：大争之世.html">风神界：大争之世</a>
+                </div>
+            </div>
+
+            <div class="power-system">
+                <h3>主要势力类型</h3>
+                <div class="power-types">
+                    <div class="power-type">
+                        <h4>宗门</h4>
+                        <p>修真者组织，是家族、学校、公司的结合体。宗门通常坐落在山脉之中，依附于皇朝；超级宗门会控制皇朝。</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>皇朝</h4>
+                        <p>管理凡人与宗门，疆土广阔。宗门的实力在临近其所在皇朝时几乎必然会与皇朝爆发一场冲突。</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>联盟</h4>
+                        <p>例如，魔道联盟为超一流势力，不再如单个魔宗那样人人喊打。一些正道大典也会邀请魔盟代表出席。</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>圣地</h4>
+                        <p>圣人掌控，绝对安全，法则变更。圣地里的聪明凡人会被赋予永生，圣地宗主无实权、仅为外交最高官。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="power-system">
+                <h3>超一流联盟名录</h3>
+                <div class="power-types">
+                    <div class="power-type">
+                        <h4>魔盟</h4>
+                        <p>魔道联盟，打家劫舍</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>商盟</h4>
+                        <p>商业联盟，坐于圣地，低买高卖</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>奇盟</h4>
+                        <p>丹器符阵，生产销售，暴利垄断</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>源盟</h4>
+                        <p>学院联盟，桃李满天下，中立</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>道盟</h4>
+                        <p>无认知过滤，直面世界真相。万法本源，五维空间。天地如牌，他人只玩同花顺，而我直面混沌。百万年来，化神以上者大半出自道盟。</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>侠盟</h4>
+                        <p>侠客联盟，散修公朝。战魔兽，闯秘境，分享经验，互帮互助。</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>国盟</h4>
+                        <p>皇朝联盟。被宗门控制的皇朝没资格加入，国盟成员必须有独立主权。国盟内皇权威严，国盟外皇权笑话。</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>妖盟</h4>
+                        <p>万族联盟，实力强大，领土辽阔。有外敌则越战越勇，无外敌则内部分裂。</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>龙盟</h4>
+                        <p>龙族联盟。天下才十斗，人八我一余共一。</p>
+                    </div>
+                    <div class="power-type">
+                        <h4>圣盟</h4>
+                        <p>圣地联盟。圣地之人，蔑视天下，视万界为下界，圈地自萌。</p>
+                    </div>
+                    <a href="document/【修真社会学】采访：风神界势力分布.html">【修真社会学】采访：风神界势力分布</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="system" class="section-light">
+        <div class="container">
+            <h2 class="section-title">认知过滤</h2>
+
+            <div class="vector-system">
+                <h3>术法系统</h3>
+                <div class="vector-content">
+                    <div class="vector-text">
+                        <p>玩家可以学习无限的术法。但在使用术法时需要考虑五维向量。</p>
+                        <p>角色的状态由五个参数构成。每一次释放技能，五个参数同时变化；每个技能的释放条件，都是这五个参数满足某条件。</p>                        
+                        <p><strong>伪圣之路</strong>：伪圣之路，是实现术法认知过滤的办法，让玩家无需理解复杂的五维变化也能畅玩游戏。每一个功法都是一条伪圣之路，对应一个独特的UI面板，除非修神道功法、否则玩家不会知晓五维向量的存在。</p>
+                        <p>伪圣之路的修士会将【混乱术：随机打乱对手的五维状态】称之为【封魔术：效果近似视为让一个修士从此无法再使用技能】。只有神道功法的修士才无惧混乱术。</p>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="spell-system">
+                
+                <div class="spell-comparison">
+                    <div class="traditional">
+                        <h4>伪圣之路：阴阳功法</h4>
+                        <p>近似认知：角色有阴阳值，每一个技能的释放条件都是需要角色阴阳值在某个范畴内，每个技能释放后都会改变角色阴阳值。同时还有两个技能分别是【阳化】【阴化】，CD一秒，使用无限制，效果除了阴阳值+1/-1之外没有任何其他效果。</p>
+                        <P>缺陷：只能修炼阴阳系列术法，不能修炼其他术法。</P>
+                        <P>真相：阴阳值不存在，阴阳值本质是五维向量空间中的一个偏序。</P>
+                    </div>
+                    <div class="our-approach">
+                        <h4>伪圣之路：轮回功法</h4>
+                        <p>近似认知：存在七族技能，称之为ABCDEFG族。释放一个A族技能后，下一个技能只能释放B族的，B之后是C……ABCDEFG一轮放完后回到A。</p>
+                        <P>缺陷：只能修炼七族术法。</P>
+                        <P>真相：一族技能本质是一类【使用条件】相同、【使用效果】相同的术法，这七族本质是五维空间中的一个环路。</P>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rune-system">
+                <h3>符文系统</h3>
+                <div class="rune-content">
+                    <div class="rune-editor">
+                        <pre class="code-example">
+//自动销售符文
+定义 待售商品列表：玄铁矿石、凝血草、洗骨花、肉、骨、皮。
+
+定义指令 快捷出售 某道具：
+    要求：背包中有此道具。当前位于交易处。当前交易处存在此道具的收单。
+    效果：持续执行指令、直到要求不满足：出售 X Y，其中，X为此道具，Y为此道具在当前交易处的最高收单价格。
+
+定义指令 批量出售：
+    要求：当前位于交易处。
+    效果：检查背包中的每组道具：如果此组道具的道具名在待售商品列表中，那么执行指令：快捷出售 X，其中，X为此组道具的道具名。
+
+每当我进入平等圣地贸易中心时，执行指令：批量出售。
+                        </pre>
+                    </div>
+                    <div class="rune-text">
+                        <p>风神界内置编程语言，比Python更符合自然语言语法。</p>
+                        <p>符文有众多作用：可以自动战斗、自动探险、自动采矿、自动出售、自动管理势力、自定义职位、自定义功法……</p>
+                        <p>为了实现认知过滤，风神界中内置大量符文，且玩家通常感受不到符文的存在。例如，阴阳功法与轮回功法都是使用符文书写的，而不是代码书写的。（当然，玩家也可以使用符文来发明新的功法、新的面板。）</p>
+                        <p>很多面板也是符文书写的，例如统一的仓库面板：左侧列表中有储物戒、箱子、交易中心寄存处、面前尸体等条目，右侧是选中条目里的道具网格。游戏会直接提供给玩家这个面板，但玩家可以手动查看这个面板的源符文、可以编辑与重置。游戏后台只用C#定义了各道具的独立面板（例如单独的储物戒面板），统一仓库面板是使用符文定义的，但玩家即便不知道符文、也可以正常使用统一仓库面板。这就是认知过滤。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="versions" class="section-dark">
+        <div class="container">
+            <h2 class="section-title">游戏版本</h2>
+
+            <div class="version-comparison">
+                <div class="version singleplayer">
+                    <div class="version-header">
+                        <h3>单机模式（2026）</h3>
+                        <div class="price">¥100 一次买断</div>
+                    </div>
+                    <ul class="version-features">
+                        <li>随机生成世界，完整游戏体验</li>
+                        <li>十多种开局选择，从凡人到皇子</li>
+                        <li>bug迅速维修，持续更新支持</li>
+                        <li>实时演算，自由调控时间流速</li>
+                        <li>RPG式成长，几十小时即可登临元婴</li>
+                    </ul>
+                    <p class="version-note">默认开局演变百万年。默认时间流速一比六十：地球一秒钟，游戏一分钟。</p>
+                    <a href="#" class="preorder-button danji">立即预约</a>
+                </div>
+                <div class="version dlc">
+                    <div class="version-header">
+                        <h3>大争之世DLC（2027）</h3>
+                        <div class="price">价格待定</div>
+                    </div>
+                    <ul class="version-features">
+                        <li>多种特定世界：大争之世、暴君纪元</li>
+                        <li>多种特定开局：当代大帝、远古大帝</li>
+                        <li>开局夺舍NPC，继承资源与人脉</li>
+                        <li>参与大争之世，争夺合道机缘</li>
+                        <li>体验固定世界中的特殊剧情</li>
+                    </ul>
+                    <p class="version-note">原版风神界会夺舍随机满足条件的NPC，而DLC中的每个特定开局会夺舍一个固定NPC、其资源与人脉经过我们精心设计。</p>
+                    <a href="#" class="preorder-button dlc">关注动态</a>
+                </div>
+                <div class="version online">
+                    <div class="version-header">
+                        <h3>官服联机版（2029）</h3>
+                        <div class="price">¥100/月 订阅制</div>
+                    </div>
+                    <ul class="version-features">
+                        <li>超算支持，百亿可交互NPC实时演算</li>
+                        <li>时间流速一比十万，每年一次大争之世</li>
+                        <li>凡人寿八小时，大帝寿十天，势力永生</li>
+                        <li>NPC经营势力，祭祀玩家为老祖</li>
+                        <li>新角色加入旧势力，跨角色经营同势力</li>
+                    </ul>
+                    <p class="version-note">单机版偏向于RPG，联机版偏向于势力经营。物价稳定，支持玩家间RMB交易。</p>
+                    <a href="#" class="preorder-button online">关注动态</a>
+                </div>
+            </div>
+            
+            <!-- <div class="preorder-cta">
+                <h3>现在预约，获得发售优惠与独家内容</h3>
+                <a href="#" class="main-preorder-button">立即预约</a>
+            </div> -->
+        </div>
+    </section>
+
+
+    <section id="faq" class="section-dark">
+        <div class="container">
+            <h2 class="section-title">常见问题</h2>
+
+            <!-- FAQ部分完整内容 -->
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>游戏性能需求如何？</h3>
+                    <div class="faq-content">
+                        <p><strong>推荐配置：</strong>i9-14900CPU，192GB内存，RTX 4090显卡，500GB硬盘。（存档上百G）</p>
+                        <p><strong>最低配置：</strong>i5-12400CPU，16GB内存，RTX 1060显卡，20GB硬盘。</p>
+                        <p>满配需要超算，家用电脑不可能实现。不过，在最低配置下在游戏设置中选择【大比例量子演算】【小型地图】，依然可以有不错的体验。</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3>游戏寿命有多长？</h3>
+                    <div class="faq-content">
+                        <p>单机模式，预期游戏时间为50-100小时，此时大约会达到元婴级别、多数玩家会在此结束。</p>
+                        <P>有更高追求的玩家会在1000小时左右时，精通五维与符文，成就炼虚。</P>
+                        <p>官服网游模式，预计10年以上长期运营，玩家所建设的势力可以长期存在。</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3>游戏是否有内购？</h3>
+                    <div class="faq-content">
+                        <P>没有。</P>
+                        <p><strong>单机版：</strong>一次性买断价格100元，无任何内购，后续DLC另行购买。</p>
+                        <p><strong>网游版：</strong>每月订阅100元，无游戏内商城、无道具内购。但游戏内支持玩家间使用人民币交易物资，平台收取1%交易税。</p>
+                        <p>我们承诺：除无关平衡的皮肤之外，永不出售任何游戏内资源，所有资源必须由玩家或NPC通过游戏规则获取。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="preorder" class="section-light">
+
+        <div class="container">
+            <!-- 增加特别板块：玩家故事 -->
+            <section id="player-stories" class="section-light">
+                <div class="container">
+                    <h2 class="section-title">玩家故事</h2>
+
+                    <div class="stories-introduction">
+                        <p>每个风神界玩家都有自己独特的游戏体验。以下是一些能够发生的玩家时间线，展示了风神界丰富多彩的游戏可能性。</p>
+                        <a href="document/【软件工程】采访：风神界开发方式.html">【软件工程】采访：风神界开发方式</a>
+                    </div>
+
+                    <div class="story-cards">
+                        <div class="story-card">
+                            <div class="story-header">
+                                <h3>从凡人到金丹</h3>
+                            </div>
+                            <div class="story-content">
+                                <p> 开局凡人在野外，砍树挖矿一背包。<br>摘果取水填肚子，砌墙盖楼挡风雨。<br>
+                                    野猪袭击倚墙战，击杀分尸骨肉皮。<br>偶得仙门交易符，卖肉换法始修仙。<br>
+                                    闭关突破至炼体，杀猪买丹至通脉。<br>宝墟一战至开窍，十战宝墟入炼气。<br>
+                                    丹器符术配置好，道胎晶棺后手足。<br>十险三死磨方案，百战宝墟入筑基。<br>
+                                    秘境寻宝得珍宝，惨遭魔修残魂逃。<br>不服再战又遇险，屡败屡战终生存。<br>
+                                    大宗邀约为供奉，搬家换界入豪宅。<br>跑商战役皆参与，所救百人谢不尽。<br>
+                                    金丹老祖迟暮死，堂主勾敌反宗主。<br>玩家站宗遭刺杀，聚党入局分城破。<br>
+                                    外敌海盗来分尸，内部合作再背刺。<br>杀阵血祭入金丹，御阵破敌内归心。</p>
+                            </div>
+                        </div>
+
+                        <div class="story-card">
+                            <div class="story-header">
+                                <h3>从金丹到元婴</h3>
+                            </div>
+                            <div class="story-content">
+                                <T2>当年我金丹，在右无相建七杀，声名显赫，但地穷人多，无处扩张。<br>
+                                    当此之时，左金丹T1，右金丹C宗，前元婴A宗，后元婴B宗。 <br>
+                                    T1，传奇天才，从圣地走出，带一群天骄，有元婴之姿，正缺盟友。<br>
+                                    我欲投靠，但T1硬撼A宗，败而逃散，我转而吞其领土、收T2——T1手下得力天骄，亦有元婴之姿。 <br>
+                                    我等尊A宗为首，献金取领土，A宗许；我等搬迁结束，大兴土木，A宗转而悔，我等敢怒不敢言，让地而归。 <br>
+                                    元婴远征战，A宗拉我等相助，许以左无相。我等缩衣节食、殚精竭虑、不辞辛劳、供应前线。胜，A宗再悔，仅补偿几枚仙丹。我等赔笑，然复仇之火已燃于心。<br>
+                                    我拉C宗，建联盟。元婴战再起，A宗邀我相助；C宗出使B宗，B宗同意支援物资、背刺A宗，我抉择、许。<br>
+                                    C宗欲主导联盟，积极外交、军事，我放权指挥，然而他们战术一团糟，多场愚蠢的大败。我拿回指挥权，大胜。 <br>
+                                    连胜之中，A宗突然多次奇袭辎重队，情报准确，且攻击之处皆七杀薄弱而无C宗。<br>
+                                    我惊觉：C宗背叛，大概因嫉妒我战术优越。冥思苦想，我决定负荆请罪，称C宗以众牺牲铺路、我不该夺取战功。同时豪言：我不逼迫大家原谅我，但目前有间谍，我不希望心存芥蒂者暗藏。大家自愿去留，离开者过去在联盟投资我全额补偿。好聚好散，别再助A宗。<br>
+                                    天崩地裂，C宗几乎全走，七杀独战A宗。咬牙强撑，众志成城，大家捐资源，非战斗人员亦修法参战。领土不断沦陷，我等越战越勇：法宝件件产出，新兵批批毕业，十七金丹道胎成，T2进元婴。反攻灭A宗，清算灭C宗，盟B宗，七杀于无相称王。</T2>
+                            </div>
+                        </div>
+
+                        <div class="story-card">
+                            <div class="story-header">
+                                <h3>化神</h3>
+                            </div>
+                            <div class="story-content">
+                                <p> 惯例，顶尖资源皆为大帝所夺。<br>
+                                    当今时代，三百年无帝，故各大化神势力富裕，共积累了近千具元婴道胎。然而平日里冲突规模却限于筑基，万界明面元婴仅百余人。元婴道胎已蠢蠢欲动。<br>
+                                    十二圣地中三个化神，外界六个，ABCDE与你。终于乱战爆发，你战A而灭之。休养生息，再战B而灭之。CDE联手，你决战而胜之，一统万界（圣地外）。<br>
+                                    然而内乱起，魔修在你境内掠夺，AB余党与CDE降军趁乱反叛，游击摧毁工坊仓库。<br>
+                                    你镇压灭杀魔修，然而魔修使用新的元婴道胎。你再次镇压灭杀，他们再次复活。<br>
+                                    你惊疑：他们哪来这么多元婴道胎？<br>
+                                    实际上，是商盟与圣地在支持魔修，他们都不希望统一：统一则剿匪，魔修不利；统一则无战损，需求不足，物价下跌，商人不利；统一则人们尊你而不尊圣地。（虽然同为化神，但圣地犯不着跟你拼。等你千年后一捧黄土、圣地依然屹立。因此圣地允许人们尊你，但圣地也不希望如此，因此想用小代价恶心你）<br>
+                                    魔修源源不断，你方后勤乏力，再战易覆灭。你及时收手，割让领土，给ABCDE复国。你保留五百位面。 ABCDE同意，议和。 你继续镇压魔修。这一次镇压结束后，魔修没再继续进攻。<br>
+                                    安顿好五百位面之后，你设计间谍符文，让大量NPC成为间谍、渗透进入ABCDE与商人与魔修，甚至部分圣地。 间谍们窃取情报，还有的成为文官、有投票权、从而干预其他势力决策。有些间谍甚至成为了其他势力的将军，负责指挥作战。<br>
+                                    时机成熟，收网。你再次发动全面战争，摧毁所有非圣地超一流势力，统一万界。圣地沉默。（超一流：拥有化神或六名元婴以上的势力或联盟）</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 开发团队介绍部分 -->
+                    
+
+                </div>
+
+            </section>
+        </div>
+        <section id="team" class="section-dark">
+            <div class="container">
+                <h2 class="section-title">关于我们</h2>
+                <a href="http://123.57.35.16/" class="community-link weibo">轲目苦津博客（开发团队）</a>
+
+                <div class="community-section">
+                    <h3>加入风神界社区</h3>
+                    <p>与开发团队和其他玩家互动，获取最新资讯，参与游戏功能投票，共同影响风神界的未来发展。</p>
+                    <div class="community-links">
+                        <a href="https://qm.qq.com/q/YeWfBbcgOQ" class="community-link discord">QQ群</a>
+                        <a href="https://discord.gg/eg5uPkbfH3" class="community-link weibo">Discord</a>
+                    </div>
+                    <p style="margin-top: 20px;">关注我们，即可获得最新的开发日志、游戏内容预览和社区活动信息。</p>
+                </div>
+
+                <div class="join-team">
+                    <h3>加入开发团队</h3>
+                    <div class="open-positions">
+                        <div class="position">
+                            <h4>编程工程师</h4>
+                            <p>负责游戏开发</p>
+                        </div>
+                        <div class="position">
+                            <h4>美术设计师</h4>
+                            <p>负责绘制概念图</p>
+                        </div>
+                        <div class="position">
+                            <h4>UI/UX设计师</h4>
+                            <p>优化游戏界面与用户体验</p>
+                        </div>
+                    </div>
+                    <p>联系方式：a1181807822@gmail.com</p>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="images/logo-white.png" alt="风神界">
+                    <p>开启尊重业时代的玄幻战略RPG</p>
+                </div>
+                <div class="footer-links">
+                    <div class="links-group">
+                        <h4>关于我们</h4>
+                        <ul>
+                            <li><a href="#">团队介绍</a></li>
+                            <li><a href="#">开发日志</a></li>
+                            <li><a href="#">加入我们</a></li>
+                            <li><a href="#">联系方式</a></li>
+                        </ul>
+                    </div>
+                    <div class="links-group">
+                        <h4>支持</h4>
+                        <ul>
+                            <li><a href="#">常见问题</a></li>
+                            <li><a href="#">用户反馈</a></li>
+                            <li><a href="#">Bug报告</a></li>
+                            <li><a href="#">社区守则</a></li>
+                        </ul>
+                    </div>
+                    <div class="links-group">
+                        <h4>法律</h4>
+                        <ul>
+                            <li><a href="#">用户协议</a></li>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">退款政策</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 风神界开发团队. 保留所有权利。</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon weibo"></a>
+                    <a href="#" class="social-icon wechat"></a>
+                    <a href="#" class="social-icon qq"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="back-to-top">↑</div>
+</body>
+
+</html>
