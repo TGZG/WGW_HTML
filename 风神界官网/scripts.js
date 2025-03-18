@@ -569,6 +569,8 @@ function initPreorderForm() {
             if (data.success) {
               alert('预约成功！');
               document.body.removeChild(modal);
+              // getUserCount('单机.txt','.reservation-counter');
+
             } else {
               alert(data.message || '该用户已预约过，请勿重复预约');
             }

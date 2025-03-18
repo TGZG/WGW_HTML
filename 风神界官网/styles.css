@@ -1941,3 +1941,38 @@ footer {
 
 
 
+/* .reservation-counter {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #f8f8f8;
+    background: linear-gradient(135deg, rgba(66, 39, 90, 0.8) 0%, rgba(115, 75, 109, 0.9) 100%);
+    border-radius: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    animation: pulse 2s infinite;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.reservation-counter strong {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffd700;
+    margin-left: 5px;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+} */
+
+
+
+
+
