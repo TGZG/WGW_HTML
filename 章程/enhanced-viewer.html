@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智慧集增强查看器</title>
+  <!-- 引入React库 -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background-color: #f9f9f9;
+    }
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-size: 1.5rem;
+      color: #3498db;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="loading">加载中...</div>
+  </div>
+  
+  <script type="text/babel">
+    // 使用React hooks
+    const { useState, useEffect } = React;
+    
+    // 主要组件
+    function CompanyWisdomPortal() {
+      // 状态变量
+      const [categories, setCategories] = useState([]);
+      const [cards, setCards] = useState({});
+      const [editingTitle, setEditingTitle] = useState(null);
+      const [editingContent, setEditingContent] = useState(null);
+      const [newSectionTitle, setNewSectionTitle] = useState('');
+      const [showNewSectionForm, setShowNewSectionForm] = useState(false);
+      const [draggingCard, setDraggingCard] = useState(null);
+      const [dragOverCategory, setDragOverCategory] = useState(null);
+      const [loading, setLoading] = useState(true);
+      const [error, setError] = useState(null);
+
+      // 初始化内容 - 从外部HTML文件加载
+      useEffect(() => {
+        const fetchOriginalContent = async () => {
+          try {
+            // 从文件中加载内容 - 确保新人必读.html与此文件在同一目录
+            const response = await fetch('新人必读.html');
+            if (!response.ok) {
+              throw new Error('无法加载文件，请确保"新人必读.html"文件在同一目录下');
+            }
+            const originalHtml = await response.text();
+            
+            // 解析HTML
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(originalHtml, 'text/html');
+            
+            // 提取分类和卡片
+            const categoryElements = doc.querySelectorAll('.category');
+            const parsedCategories = [];
+            const parsedCards = {};
+            
+            categoryElements.forEach((category, categoryIndex) => {
+              const titleElement = category.querySelector('.category-title');
+              if (!titleElement) return;
+              
+              const title = titleElement.textContent;
+              const categoryId = `category-${categoryIndex}`;
+              parsedCategories.push({ id: categoryId, title });
+              
+              const cardElements = category.querySelectorAll('.card');
+              parsedCards[categoryId] = [];
+              
+              cardElements.forEach((card, cardIndex) => {
+                const cardHeader = card.querySelector('.card-header');
+                const cardContent = card.querySelector('.card-content');
+                if (!cardHeader || !cardContent) return;
+                
+                const cardId = `card-${categoryIndex}-${cardIndex}`;
+                const cardTitle = cardHeader.textContent;
+                const content = cardContent.innerHTML;
+                
+                parsedCards[categoryId].push({ 
+                  id: cardId, 
+                  title: cardTitle, 
+                  content: content,
+                  categoryId: categoryId
+                });
+              });
+            });
+            
+            setCategories(parsedCategories);
+            setCards(parsedCards);
+            setLoading(false);
+          } catch (error) {
+            console.error('Error loading original content:', error);
+            setError(error.message);
+            setLoading(false);
+          }
+        };
+        
+        fetchOriginalContent();
+      }, []);
+
+      // 如果正在加载或有错误，显示相应提示
+      if (loading) {
+        return <div className="loading">正在加载智慧集内容...</div>;
+      }
+      
+      if (error) {
+        return <div className="loading error">错误: {error}</div>;
+      }
+
+      // 处理拖动开始
+      const handleDragStart = (e, cardId, categoryId) => {
+        setDraggingCard({ cardId, categoryId });
+        // 使拖动图像透明
+        const img = new Image();
+        img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+        e.dataTransfer.setDragImage(img, 0, 0);
+      };
+
+      // 处理拖动经过区域
+      const handleDragOver = (e, categoryId) => {
+        e.preventDefault();
+        setDragOverCategory(categoryId);
+      };
+
+      // 处理放置卡片
+      const handleDrop = (e, targetCategoryId) => {
+        e.preventDefault();
+        
+        if (!draggingCard) return;
+        
+        const { cardId, categoryId: sourceCategoryId } = draggingCard;
+        
+        // 如果放在同一个区域，不做任何处理
+        if (sourceCategoryId === targetCategoryId) {
+          setDraggingCard(null);
+          setDragOverCategory(null);
+          return;
+        }
+        
+        // 在源区域找到卡片
+        const sourceCards = [...cards[sourceCategoryId]];
+        const cardIndex = sourceCards.findIndex(card => card.id === cardId);
+        
+        if (cardIndex === -1) {
+          setDraggingCard(null);
+          setDragOverCategory(null);
+          return;
+        }
+        
+        // 从源区域移除卡片
+        const [movedCard] = sourceCards.splice(cardIndex, 1);
+        
+        // 添加到目标区域
+        const targetCards = [...(cards[targetCategoryId] || [])];
+        const updatedMovedCard = { ...movedCard, categoryId: targetCategoryId };
+        targetCards.push(updatedMovedCard);
+        
+        // 更新状态
+        setCards({
+          ...cards,
+          [sourceCategoryId]: sourceCards,
+          [targetCategoryId]: targetCards
+        });
+        
+        setDraggingCard(null);
+        setDragOverCategory(null);
+      };
+
+      // 处理标题编辑
+      const handleTitleEdit = (id, newTitle) => {
+        if (id.startsWith('category')) {
+          setCategories(categories.map(category => 
+            category.id === id ? { ...category, title: newTitle } : category
+          ));
+        } else {
+          // 找出卡片所属的区域
+          Object.keys(cards).forEach(categoryId => {
+            setCards({
+              ...cards,
+              [categoryId]: cards[categoryId].map(card => 
+                card.id === id ? { ...card, title: newTitle } : card
+              )
+            });
+          });
+        }
+        setEditingTitle(null);
+      };
+
+      // 处理内容编辑
+      const handleContentEdit = (cardId, categoryId, newContent) => {
+        setCards({
+          ...cards,
+          [categoryId]: cards[categoryId].map(card => 
+            card.id === cardId ? { ...card, content: newContent } : card
+          )
+        });
+        setEditingContent(null);
+      };
+
+      // 添加新卡片
+      const addNewCard = (categoryId) => {
+        const newCardId = `card-new-${Date.now()}`;
+        setCards({
+          ...cards,
+          [categoryId]: [
+            ...(cards[categoryId] || []),
+            { id: newCardId, title: '新卡片', content: '<p>点击此处编辑内容</p>', categoryId }
+          ]
+        });
+      };
+
+      // 添加新区块
+      const addNewSection = () => {
+        if (!newSectionTitle.trim()) return;
+        
+        const newCategoryId = `category-new-${Date.now()}`;
+        setCategories([...categories, { id: newCategoryId, title: newSectionTitle }]);
+        setCards({ ...cards, [newCategoryId]: [] });
+        setNewSectionTitle('');
+        setShowNewSectionForm(false);
+      };
+
+      // 切换卡片内容显示/隐藏
+      const toggleCardContent = (cardId) => {
+        // 如果正在编辑，不切换
+        if (editingContent || editingTitle) return;
+
+        const cardElements = document.querySelectorAll('.card-content');
+        cardElements.forEach(content => {
+          if (content.id === `content-${cardId}`) {
+            content.classList.toggle('active');
+          } else {
+            content.classList.remove('active');
+          }
+        });
+      };
+
+      // 导出当前内容为HTML
+      const exportToHtml = () => {
+        // 创建HTML结构
+        let html = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新人必读：公司智慧集</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --bg-color: #f9f9f9;
+            --card-bg: white;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --highlight-color: #f1f8fe;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        p{
+            line-height:1.2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .category {
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            padding: 1rem;
+            cursor: pointer;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .card-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.1s ease, padding 0.1s ease;
+        }
+
+        .card-content.active {
+            padding: 1.5rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .card-keywords {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>新人必读：公司智慧集</h1>
+            <p class="subtitle">这些经验与感悟将帮助你更好地融入团队，提升工作效率</p>
+        </header>`;
+        
+        // 添加所有区块
+        categories.forEach(category => {
+          html += `
+        <section class="category">
+            <h2 class="category-title">${category.title}</h2>
+            <div class="cards">`;
+            
+          // 添加该区块的所有卡片
+          if (cards[category.id]) {
+            cards[category.id].forEach(card => {
+              html += `
+                <div class="card">
+                    <div class="card-header">${card.title}</div>
+                    <div class="card-content">
+                        ${card.content}
+                    </div>
+                </div>`;
+            });
+          }
+            
+          html += `
+            </div>
+        </section>`;
+        });
+        
+        // 添加页脚和JavaScript
+        html += `
+        <footer>
+            <p>© 2025 公司智慧集 | 由执悲今厄收集整理</p>
+        </footer>
+        
+        <script>
+            // 点击卡片头部时展开/收起卡片内容
+            document.querySelectorAll('.card-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const isActive = content.classList.contains('active');
+                    
+                    // 先关闭所有打开的卡片
+                    document.querySelectorAll('.card-content.active').forEach(openContent => {
+                        openContent.classList.remove('active');
+                    });
+                    
+                    // 如果当前卡片是关闭的，则打开它
+                    if (!isActive) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>`;
+        
+        // 创建下载链接
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = '新人必读_更新版.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      };
+
+      // 渲染组件
+      return (
+        <div className="container">
+          <header>
+            <h1>新人必读：公司智慧集</h1>
+            <p className="subtitle">这些经验与感悟将帮助你更好地融入团队，提升工作效率</p>
+            
+            <div className="control-panel">
+              <button 
+                className="control-button"
+                onClick={() => setShowNewSectionForm(!showNewSectionForm)}
+              >
+                {showNewSectionForm ? '取消' : '添加新区块'}
+              </button>
+              
+              <button className="control-button export" onClick={exportToHtml}>
+                导出为HTML
+              </button>
+              
+              {showNewSectionForm && (
+                <div className="new-section-form">
+                  <input
+                    type="text"
+                    value={newSectionTitle}
+                    onChange={(e) => setNewSectionTitle(e.target.value)}
+                    placeholder="输入新区块标题"
+                  />
+                  <button onClick={addNewSection}>确认</button>
+                </div>
+              )}
+            </div>
+          </header>
+
+          {categories.map((category) => (
+            <section 
+              key={category.id} 
+              className={`category ${dragOverCategory === category.id ? 'drag-over' : ''}`}
+              onDragOver={(e) => handleDragOver(e, category.id)}
+              onDrop={(e) => handleDrop(e, category.id)}
+            >
+              {editingTitle === category.id ? (
+                <div className="edit-title">
+                  <input
+                    type="text"
+                    value={category.title}
+                    onChange={(e) => {
+                      setCategories(categories.map(cat => 
+                        cat.id === category.id ? { ...cat, title: e.target.value } : cat
+                      ));
+                    }}
+                    onBlur={() => handleTitleEdit(category.id, category.title)}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        handleTitleEdit(category.id, category.title);
+                      }
+                    }}
+                    autoFocus
+                  />
+                </div>
+              ) : (
+                <h2 
+                  className="category-title" 
+                  onClick={() => setEditingTitle(category.id)}
+                >
+                  {category.title}
+                </h2>
+              )}
+              
+              <div className="cards">
+                {cards[category.id] && cards[category.id].map((card) => (
+                  <div
+                    key={card.id}
+                    className={`card ${draggingCard && draggingCard.cardId === card.id ? 'dragging' : ''}`}
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, card.id, category.id)}
+                  >
+                    {editingTitle === card.id ? (
+                      <div className="edit-card-title">
+                        <input
+                          type="text"
+                          value={card.title}
+                          onChange={(e) => {
+                            setCards({
+                              ...cards,
+                              [category.id]: cards[category.id].map(c => 
+                                c.id === card.id ? { ...c, title: e.target.value } : c
+                              )
+                            });
+                          }}
+                          onBlur={() => handleTitleEdit(card.id, card.title)}
+                          onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                              handleTitleEdit(card.id, card.title);
+                            }
+                          }}
+                          autoFocus
+                        />
+                      </div>
+                    ) : (
+                      <div 
+                        className="card-header" 
+                        onClick={() => toggleCardContent(card.id)}
+                        onDoubleClick={() => setEditingTitle(card.id)}
+                      >
+                        {card.title}
+                      </div>
+                    )}
+                    
+                    <div id={`content-${card.id}`} className="card-content">
+                      {editingContent === card.id ? (
+                        <textarea
+                          value={card.content.replace(/<[^>]*>?/gm, '')}
+                          onChange={(e) => {
+                            setCards({
+                              ...cards,
+                              [category.id]: cards[category.id].map(c => 
+                                c.id === card.id ? { ...c, content: e.target.value } : c
+                              )
+                            });
+                          }}
+                          onBlur={() => handleContentEdit(card.id, category.id, card.content)}
+                          autoFocus
+                          style={{ width: '100%', minHeight: '200px' }}
+                        />
+                      ) : (
+                        <div 
+                          dangerouslySetInnerHTML={{ __html: card.content }}
+                          onDoubleClick={() => setEditingContent(card.id)}
+                        />
+                      )}
+                    </div>
+                  </div>
+                ))}
+                
+                {/* 添加新卡片按钮 */}
+                <div className="add-card">
+                  <button onClick={() => addNewCard(category.id)}>
+                    + 添加新卡片
+                  </button>
+                </div>
+              </div>
+            </section>
+          ))}
+
+          <footer>
+            <p>© 2025 公司智慧集 | 由执悲今厄收集整理</p>
+          </footer>
+
+          <style jsx>{`
+            :root {
+              --primary-color: #3498db;
+              --secondary-color: #2980b9;
+              --bg-color: #f9f9f9;
+              --card-bg: white;
+              --text-color: #333;
+              --border-color: #e0e0e0;
+              --highlight-color: #f1f8fe;
+            }
+
+            .container {
+              max-width: 1200px;
+              margin: 0 auto;
+              padding: 2rem;
+              font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+              color: var(--text-color);
+              background-color: var(--bg-color);
+            }
+
+            header {
+              text-align: center;
+              margin-bottom: 3rem;
+              padding-bottom: 1rem;
+              border-bottom: 1px solid var(--border-color);
+            }
+
+            h1 {
+              color: var(--primary-color);
+              margin-bottom: 0.5rem;
+            }
+
+            .subtitle {
+              font-size: 1.2rem;
+              color: #666;
+              margin-bottom: 2rem;
+              line-height: 1.6;
+            }
+
+            .control-panel {
+              margin-top: 1rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-wrap: wrap;
+            }
+
+            .control-button {
+              background-color: var(--primary-color);
+              color: white;
+              border: none;
+              padding: 0.5rem 1rem;
+              border-radius: 4px;
+              cursor: pointer;
+              margin: 0 0.5rem;
+            }
+
+            .control-button.export {
+              background-color: #27ae60;
+            }
+
+            .new-section-form {
+              margin-top: 1rem;
+              display: flex;
+              justify-content: center;
+              width: 100%;
+            }
+
+            .new-section-form input {
+              padding: 0.5rem;
+              width: 60%;
+              max-width: 400px;
+            }
+
+            .new-section-form button {
+              background-color: var(--secondary-color);
+              color: white;
+              border: none;
+              padding: 0.5rem 1rem;
+              cursor: pointer;
+            }
+
+            .category {
+              margin-bottom: 3rem;
+              padding: 1rem;
+              border-radius: 8px;
+            }
+
+            .category.drag-over {
+              background-color: var(--highlight-color);
+            }
+
+            .category-title {
+              color: var(--secondary-color);
+              margin-bottom: 1.5rem;
+              padding-bottom: 0.5rem;
+              border-bottom: 2px solid var(--secondary-color);
+              cursor: pointer;
+            }
+
+            .cards {
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+              gap: 1.5rem;
+            }
+
+            .card {
+              background-color: var(--card-bg);
+              border-radius: 8px;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              overflow: hidden;
+              transition: transform 0.3s ease;
+            }
+
+            .card:hover {
+              transform: translateY(-5px);
+            }
+
+            .card.dragging {
+              opacity: 0.5;
+            }
+
+            .card-header {
+              padding: 1rem;
+              cursor: pointer;
+              background-color: var(--primary-color);
+              color: white;
+              font-weight: bold;
+            }
+
+            .card-content {
+              padding: 0;
+              max-height: 0;
+              overflow: hidden;
+              transition: max-height 0.3s ease, padding 0.3s ease;
+            }
+
+            .card-content.active {
+              padding: 1.5rem;
+              max-height: 500px;
+              overflow-y: auto;
+            }
+
+            .card-content p {
+              line-height: 1.2;
+              margin: 0.5rem 0;
+            }
+
+            .edit-title input, .edit-card-title input {
+              width: 100%;
+              padding: 0.5rem;
+              font-size: 1.2rem;
+              border: 2px solid var(--primary-color);
+            }
+
+            .add-card {
+              display: flex;
+              justify-content: center;
+              padding: 1rem;
+            }
+
+            .add-card button {
+              background-color: var(--secondary-color);
+              color: white;
+              border: none;
+              padding: 0.5rem 1rem;
+              border-radius: 4px;
+              cursor: pointer;
+              opacity: 0.8;
+            }
+
+            .add-card button:hover {
+              opacity: 1;
+            }
+
+            footer {
+              text-align: center;
+              margin-top: 3rem;
+              padding-top: 1rem;
+              border-top: 1px solid var(--border-color);
+              color: #666;
+            }
+
+            .loading {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 80vh;
+              font-size: 1.5rem;
+              color: var(--primary-color);
+            }
+
+            .loading.error {
+              color: #e74c3c;
+            }
+
+            @media (max-width: 768px) {
+              .container {
+                padding: 1rem;
+              }
+              
+              .cards {
+                grid-template-columns: 1fr;
+              }
+            }
+          `}</style>
+        </div>
+      );
+    }
+
+    // 渲染组件到页面
+    ReactDOM.render(<CompanyWisdomPortal />, document.getElementById('root'));
+  </script>
+</body>
+</html>
