@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D俯视角网格游戏</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            overflow: hidden;
+            border: 3px solid #000;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        #gameWorld {
+            position: absolute;
+            transform-origin: top left;
+            transition: transform 0.15s ease-out;
+        }
+
+        .tile {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            z-index: 1;
+        }
+
+        .entity {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            z-index: 10;
+            transition: left 0.15s ease-out, top 0.15s ease-out;
+        }
+
+        .player {
+            z-index: 20;
+        }
+
+        .beast {
+            z-index: 15;
+        }
+
+        .healthBar {
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 32px;
+            height: 3px;
+            background-color: #aaa;
+        }
+
+        .healthBarFill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: #f00;
+        }
+
+        .game-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background-color: rgba(0,0,0,0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="gameWorld"></div>
+        <div class="game-info">
+            <p>使用 WASD 移动，鼠标左键攻击</p>
+        </div>
+    </div>
+
+    <script>
+        // 游戏常量
+        const TILE_SIZE = 32;
+        const MAP_SIZE = 100;
+        const VIEWPORT_WIDTH = 800;
+        const VIEWPORT_HEIGHT = 600;
+        const BEAST_COUNT = 15;
+        const FORTRESS_SIZE = 5;
+
+        // 游戏状态
+        const gameWorld = document.getElementById('gameWorld');
+        const gameContainer = document.getElementById('gameContainer');
+        let worldMap = [];
+        let entities = [];
+        let player = null;
+
+        // 资源预加载
+        const images = {
+            desert: 'Image/沙漠.png',
+            grass: 'Image/草地.png',
+            water: 'Image/淡水.png',
+            wall: 'Image/墙壁.png',
+            gate: 'Image/大门.png',
+            tower: 'Image/炮塔.png',
+            box: 'Image/箱子.png',
+            playerLeft: 'Image/角色左.png',
+            playerRight: 'Image/角色右.png',
+            playerUp: 'Image/角色上.png',
+            playerDown: 'Image/角色下.png',
+            beastLeft: 'Image/野兽左.png',
+            beastRight: 'Image/野兽右.png',
+            beastUp: 'Image/野兽上.png',
+            beastDown: 'Image/野兽下.png'
+        };
+
+        // 地图图块类型
+        const TileType = {
+            DESERT: 0,
+            GRASS: 1,
+            WATER: 2,
+            WALL: 3,
+            GATE: 4
+        };
+
+        // 实体类型
+        const EntityType = {
+            PLAYER: 0,
+            BEAST: 1,
+            TOWER: 2,
+            BOX: 3
+        };
+
+        // 方向
+        const Direction = {
+            UP: 0,
+            RIGHT: 1,
+            DOWN: 2,
+            LEFT: 3
+        };
+
+        // 初始化游戏
+        function initGame() {
+            // 生成地图
+            generateWorld();
+
+            // 创建玩家
+            createPlayer();
+
+            // 生成野兽
+            for (let i = 0; i < BEAST_COUNT; i++) {
+                createBeast();
+            }
+
+            // 渲染地图和实体
+            renderWorld();
+            renderEntities();
+
+            // 设置视口初始位置
+            updateViewport();
+
+            // 更新游戏信息
+            updateGameInfo();
+
+            // 设置游戏循环
+            setInterval(gameLoop, 100);
+
+            // 添加事件监听
+            setupEventListeners();
+        }
+
+        // 生成世界地图
+        function generateWorld() {
+            // 初始化为沙漠
+            for (let y = 0; y < MAP_SIZE; y++) {
+                worldMap[y] = [];
+                for (let x = 0; x < MAP_SIZE; x++) {
+                    worldMap[y][x] = TileType.DESERT;
+                }
+            }
+
+            // 生成河流和绿洲
+            generateRiverAndOasis();
+
+            // 生成堡垒
+            generateFortress();
+        }
+
+        // 生成河流和绿洲
+        function generateRiverAndOasis() {
+            // 河流路径点
+            const riverPoints = [];
+            const startX = Math.floor(Math.random() * MAP_SIZE);
+            let x = startX;
+            let y = 0;
+
+            // 蜿蜒的河流从上到下
+            while (y < MAP_SIZE) {
+                riverPoints.push({ x, y });
+                worldMap[y][x] = TileType.WATER;
+
+                // 扩展河流宽度
+                for (let i = -1; i <= 1; i++) {
+                    for (let j = -1; j <= 1; j++) {
+                        const nx = x + i;
+                        const ny = y + j;
+                        if (nx >= 0 && nx < MAP_SIZE && ny >= 0 && ny < MAP_SIZE) {
+                            if (Math.random() < 0.7) {
+                                worldMap[ny][nx] = TileType.WATER;
+                            }
+                        }
+                    }
+                }
+
+                // 河流方向变化
+                const direction = Math.random();
+                if (direction < 0.3) x = Math.max(0, x - 1);
+                else if (direction < 0.6) x = Math.min(MAP_SIZE - 1, x + 1);
+                y++;
+            }
+
+            // 创建几个绿洲
+            const oasisCount = 3 + Math.floor(Math.random() * 3);
+            for (let i = 0; i < oasisCount; i++) {
+                // 选择河流上的一个点
+                const riverPoint = riverPoints[Math.floor(Math.random() * riverPoints.length)];
+                const oasisX = riverPoint.x;
+                const oasisY = riverPoint.y;
+                const oasisSize = 5 + Math.floor(Math.random() * 10);
+
+                // 创建不规则圆形绿洲
+                for (let y = oasisY - oasisSize; y <= oasisY + oasisSize; y++) {
+                    for (let x = oasisX - oasisSize; x <= oasisX + oasisSize; x++) {
+                        if (x >= 0 && x < MAP_SIZE && y >= 0 && y < MAP_SIZE) {
+                            const distance = Math.sqrt(Math.pow(x - oasisX, 2) + Math.pow(y - oasisY, 2));
+                            if (distance <= oasisSize * (0.7 + Math.random() * 0.3)) {
+                                // 水域保持不变
+                                if (worldMap[y][x] !== TileType.WATER) {
+                                    worldMap[y][x] = TileType.GRASS;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // 生成堡垒
+        function generateFortress() {
+            // 寻找适合放置堡垒的绿洲位置
+            let fortressX = Math.floor(MAP_SIZE / 2);
+            let fortressY = Math.floor(MAP_SIZE / 2);
+            let placed = false;
+
+            // 尝试找个绿洲放置
+            for (let attempt = 0; attempt < 100 && !placed; attempt++) {
+                const x = Math.floor(Math.random() * (MAP_SIZE - FORTRESS_SIZE * 2)) + FORTRESS_SIZE;
+                const y = Math.floor(Math.random() * (MAP_SIZE - FORTRESS_SIZE * 2)) + FORTRESS_SIZE;
+
+                let isGrass = true;
+                for (let i = -FORTRESS_SIZE; i <= FORTRESS_SIZE; i++) {
+                    for (let j = -FORTRESS_SIZE; j <= FORTRESS_SIZE; j++) {
+                        if (x + i < 0 || x + i >= MAP_SIZE || y + j < 0 || y + j >= MAP_SIZE) {
+                            isGrass = false;
+                            break;
+                        }
+                        if (worldMap[y + j][x + i] !== TileType.GRASS) {
+                            isGrass = false;
+                            break;
+                        }
+                    }
+                    if (!isGrass) break;
+                }
+
+                if (isGrass) {
+                    fortressX = x;
+                    fortressY = y;
+                    placed = true;
+                }
+            }
+
+            // 创建堡垒围墙
+            for (let i = -Math.floor(FORTRESS_SIZE / 2); i <= Math.floor(FORTRESS_SIZE / 2); i++) {
+                for (let j = -Math.floor(FORTRESS_SIZE / 2); j <= Math.floor(FORTRESS_SIZE / 2); j++) {
+                    // 只在边缘创建墙
+                    if (i === -Math.floor(FORTRESS_SIZE / 2) || i === Math.floor(FORTRESS_SIZE / 2) ||
+                        j === -Math.floor(FORTRESS_SIZE / 2) || j === Math.floor(FORTRESS_SIZE / 2)) {
+                        worldMap[fortressY + j][fortressX + i] = TileType.WALL;
+                    }
+                }
+            }
+
+            // 放置大门（随机一侧）
+            const gateSide = Math.floor(Math.random() * 4);
+            let gateX, gateY;
+
+            switch (gateSide) {
+                case 0: // 上
+                    gateX = fortressX;
+                    gateY = fortressY - Math.floor(FORTRESS_SIZE / 2);
+                    break;
+                case 1: // 右
+                    gateX = fortressX + Math.floor(FORTRESS_SIZE / 2);
+                    gateY = fortressY;
+                    break;
+                case 2: // 下
+                    gateX = fortressX;
+                    gateY = fortressY + Math.floor(FORTRESS_SIZE / 2);
+                    break;
+                case 3: // 左
+                    gateX = fortressX - Math.floor(FORTRESS_SIZE / 2);
+                    gateY = fortressY;
+                    break;
+            }
+
+            worldMap[gateY][gateX] = TileType.GATE;
+
+            // 放置两个炮塔
+            for (let i = 0; i < 2; i++) {
+                let towerPlaced = false;
+                while (!towerPlaced) {
+                    const offsetX = Math.floor(Math.random() * (FORTRESS_SIZE - 2)) - Math.floor((FORTRESS_SIZE - 2) / 2);
+                    const offsetY = Math.floor(Math.random() * (FORTRESS_SIZE - 2)) - Math.floor((FORTRESS_SIZE - 2) / 2);
+                    const towerX = fortressX + offsetX;
+                    const towerY = fortressY + offsetY;
+
+                    // 确保不在墙上或门上
+                    if (worldMap[towerY][towerX] !== TileType.WALL && worldMap[towerY][towerX] !== TileType.GATE) {
+                        // 检查是否已有实体
+                        let entityExists = false;
+                        for (const entity of entities) {
+                            if (entity.x === towerX && entity.y === towerY) {
+                                entityExists = true;
+                                break;
+                            }
+                        }
+
+                        if (!entityExists) {
+                            entities.push({
+                                type: EntityType.TOWER,
+                                x: towerX,
+                                y: towerY
+                            });
+                            towerPlaced = true;
+                        }
+                    }
+                }
+            }
+
+            // 放置一个箱子
+            let boxPlaced = false;
+            while (!boxPlaced) {
+                const offsetX = Math.floor(Math.random() * (FORTRESS_SIZE - 2)) - Math.floor((FORTRESS_SIZE - 2) / 2);
+                const offsetY = Math.floor(Math.random() * (FORTRESS_SIZE - 2)) - Math.floor((FORTRESS_SIZE - 2) / 2);
+                const boxX = fortressX + offsetX;
+                const boxY = fortressY + offsetY;
+
+                // 确保不在墙上或门上
+                if (worldMap[boxY][boxX] !== TileType.WALL && worldMap[boxY][boxX] !== TileType.GATE) {
+                    // 检查是否已有实体
+                    let entityExists = false;
+                    for (const entity of entities) {
+                        if (entity.x === boxX && entity.y === boxY) {
+                            entityExists = true;
+                            break;
+                        }
+                    }
+
+                    if (!entityExists) {
+                        entities.push({
+                            type: EntityType.BOX,
+                            x: boxX,
+                            y: boxY
+                        });
+                        boxPlaced = true;
+                    }
+                }
+            }
+        }
+
+        // 创建玩家
+        function createPlayer() {
+            // 找一个草地位置放置玩家
+            let playerX, playerY;
+            let placed = false;
+
+            while (!placed) {
+                playerX = Math.floor(Math.random() * MAP_SIZE);
+                playerY = Math.floor(Math.random() * MAP_SIZE);
+
+                if (worldMap[playerY][playerX] === TileType.GRASS) {
+                    // 检查是否有其他实体
+                    let entityExists = false;
+                    for (const entity of entities) {
+                        if (entity.x === playerX && entity.y === playerY) {
+                            entityExists = true;
+                            break;
+                        }
+                    }
+
+                    if (!entityExists) {
+                        placed = true;
+                    }
+                }
+            }
+
+            player = {
+                type: EntityType.PLAYER,
+                x: playerX,
+                y: playerY,
+                direction: Direction.DOWN,
+                element: null
+            };
+
+            entities.push(player);
+        }
+
+        // 创建野兽
+        function createBeast() {
+            // 找一个草地位置放置野兽
+            let beastX, beastY;
+            let placed = false;
+
+            while (!placed) {
+                beastX = Math.floor(Math.random() * MAP_SIZE);
+                beastY = Math.floor(Math.random() * MAP_SIZE);
+
+                if (worldMap[beastY][beastX] === TileType.GRASS) {
+                    // 检查是否有其他实体
+                    let entityExists = false;
+                    for (const entity of entities) {
+                        if (entity.x === beastX && entity.y === beastY) {
+                            entityExists = true;
+                            break;
+                        }
+                    }
+
+                    // 确保与玩家的距离足够远
+                    const distanceToPlayer = player ?
+                        Math.sqrt(Math.pow(beastX - player.x, 2) + Math.pow(beastY - player.y, 2)) :
+                        Infinity;
+
+                    if (!entityExists && distanceToPlayer > 10) {
+                        placed = true;
+                    }
+                }
+            }
+
+            const beast = {
+                type: EntityType.BEAST,
+                x: beastX,
+                y: beastY,
+                direction: Math.floor(Math.random() * 4),
+                health: 3,
+                element: null,
+                healthBar: null,
+                healthBarFill: null,
+                moveTimer: 0
+            };
+
+            entities.push(beast);
+        }
+
+        // 渲染世界地图
+        function renderWorld() {
+            gameWorld.innerHTML = '';
+            gameWorld.style.width = `${MAP_SIZE * TILE_SIZE}px`;
+            gameWorld.style.height = `${MAP_SIZE * TILE_SIZE}px`;
+
+            for (let y = 0; y < MAP_SIZE; y++) {
+                for (let x = 0; x < MAP_SIZE; x++) {
+                    const tile = document.createElement('div');
+                    tile.className = 'tile';
+                    tile.style.left = `${x * TILE_SIZE}px`;
+                    tile.style.top = `${y * TILE_SIZE}px`;
+
+                    switch (worldMap[y][x]) {
+                        case TileType.DESERT:
+                            tile.style.backgroundImage = `url('${images.desert}')`;
+                            break;
+                        case TileType.GRASS:
+                            tile.style.backgroundImage = `url('${images.grass}')`;
+                            break;
+                        case TileType.WATER:
+                            tile.style.backgroundImage = `url('${images.water}')`;
+                            break;
+                        case TileType.WALL:
+                            tile.style.backgroundImage = `url('${images.wall}')`;
+                            break;
+                        case TileType.GATE:
+                            tile.style.backgroundImage = `url('${images.gate}')`;
+                            break;
+                    }
+
+                    gameWorld.appendChild(tile);
+                }
+            }
+        }
+
+        // 渲染游戏实体
+        function renderEntities() {
+            for (const entity of entities) {
+                const entityElement = document.createElement('div');
+                entityElement.className = 'entity';
+                entityElement.style.left = `${entity.x * TILE_SIZE}px`;
+                entityElement.style.top = `${entity.y * TILE_SIZE}px`;
+
+                switch (entity.type) {
+                    case EntityType.PLAYER:
+                        entityElement.className += ' player';
+                        switch (entity.direction) {
+                            case Direction.UP:
+                                entityElement.style.backgroundImage = `url('${images.playerUp}')`;
+                                break;
+                            case Direction.RIGHT:
+                                entityElement.style.backgroundImage = `url('${images.playerRight}')`;
+                                break;
+                            case Direction.DOWN:
+                                entityElement.style.backgroundImage = `url('${images.playerDown}')`;
+                                break;
+                            case Direction.LEFT:
+                                entityElement.style.backgroundImage = `url('${images.playerLeft}')`;
+                                break;
+                        }
+                        entity.element = entityElement;
+                        break;
+                    case EntityType.BEAST:
+                        entityElement.className += ' beast';
+                        switch (entity.direction) {
+                            case Direction.UP:
+                                entityElement.style.backgroundImage = `url('${images.beastUp}')`;
+                                break;
+                            case Direction.RIGHT:
+                                entityElement.style.backgroundImage = `url('${images.beastRight}')`;
+                                break;
+                            case Direction.DOWN:
+                                entityElement.style.backgroundImage = `url('${images.beastDown}')`;
+                                break;
+                            case Direction.LEFT:
+                                entityElement.style.backgroundImage = `url('${images.beastLeft}')`;
+                                break;
+                        }
+                        entity.element = entityElement;
+
+                        // 添加血条
+                        const healthBar = document.createElement('div');
+                        healthBar.className = 'healthBar';
+                        entityElement.appendChild(healthBar);
+                        entity.healthBar = healthBar;
+
+                        const healthBarFill = document.createElement('div');
+                        healthBarFill.className = 'healthBarFill';
+                        healthBarFill.style.width = `${(entity.health / 3) * 100}%`;
+                        healthBar.appendChild(healthBarFill);
+                        entity.healthBarFill = healthBarFill;
+                        break;
+                    case EntityType.TOWER:
+                        entityElement.style.backgroundImage = `url('${images.tower}')`;
+                        entity.element = entityElement;
+                        break;
+                    case EntityType.BOX:
+                        entityElement.style.backgroundImage = `url('${images.box}')`;
+                        entity.element = entityElement;
+                        break;
+                }
+
+                gameWorld.appendChild(entityElement);
+            }
+        }
+
+        // 更新视口位置
+        function updateViewport() {
+            if (!player) return;
+
+            // 确保zoomLevel已定义
+            const currentZoom = typeof zoomLevel !== 'undefined' ? zoomLevel : 1.0;
+
+            const centerX = player.x * TILE_SIZE + TILE_SIZE / 2;
+            const centerY = player.y * TILE_SIZE + TILE_SIZE / 2;
+
+            // 计算带缩放的视口尺寸
+            const scaledViewportWidth = VIEWPORT_WIDTH / currentZoom;
+            const scaledViewportHeight = VIEWPORT_HEIGHT / currentZoom;
+
+            const viewportX = centerX - scaledViewportWidth / 2;
+            const viewportY = centerY - scaledViewportHeight / 2;
+
+            // 确保视口不会超出地图边界
+            const maxX = MAP_SIZE * TILE_SIZE - scaledViewportWidth;
+            const maxY = MAP_SIZE * TILE_SIZE - scaledViewportHeight;
+
+            const clampedX = Math.max(0, Math.min(viewportX, maxX));
+            const clampedY = Math.max(0, Math.min(viewportY, maxY));
+
+            gameWorld.style.transform = `translate(${-clampedX}px, ${-clampedY}px) scale(${currentZoom})`;
+        }
+
+        // 游戏主循环
+        function gameLoop() {
+            // 确保beastsMoving已定义
+            if (typeof beastsMoving === 'undefined') {
+                window.beastsMoving = false;
+            }
+
+            // 只有当野兽不在移动中时才进行新的移动
+            if (!window.beastsMoving) {
+                window.beastsMoving = true;
+                moveBeast();
+                // 等待移动动画完成后，重置移动状态
+                setTimeout(() => {
+                    window.beastsMoving = false;
+                }, 150);
+            }
+            updateViewport();
+        }
+
+        // 野兽移动逻辑
+        function moveBeast() {
+            for (const entity of entities) {
+                if (entity.type === EntityType.BEAST) {
+                    entity.moveTimer++;
+
+                    // 每隔一段时间移动或改变方向
+                    if (entity.moveTimer >= 5) {
+                        entity.moveTimer = 0;
+
+                        // 有一定几率改变方向
+                        if (Math.random() < 0.3) {
+                            entity.direction = Math.floor(Math.random() * 4);
+                        }
+
+                        // 尝试移动
+                        let newX = entity.x;
+                        let newY = entity.y;
+
+                        switch (entity.direction) {
+                            case Direction.UP:
+                                newY--;
+                                break;
+                            case Direction.RIGHT:
+                                newX++;
+                                break;
+                            case Direction.DOWN:
+                                newY++;
+                                break;
+                            case Direction.LEFT:
+                                newX--;
+                                break;
+                        }
+
+                        // 检查新位置是否有效
+                        if (newX >= 0 && newX < MAP_SIZE && newY >= 0 && newY < MAP_SIZE) {
+                            // 检查新位置是否是可行走地形
+                            if (worldMap[newY][newX] !== TileType.WALL && worldMap[newY][newX] !== TileType.WATER) {
+                                // 检查新位置是否有其他实体
+                                let entityExists = false;
+                                for (const otherEntity of entities) {
+                                    if (otherEntity !== entity && otherEntity.x === newX && otherEntity.y === newY) {
+                                        entityExists = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!entityExists) {
+                                    entity.x = newX;
+                                    entity.y = newY;
+                                }
+                            }
+                        }
+
+                        // 更新野兽图像和位置
+                        if (entity.element) {
+                            switch (entity.direction) {
+                                case Direction.UP:
+                                    entity.element.style.backgroundImage = `url('${images.beastUp}')`;
+                                    break;
+                                case Direction.RIGHT:
+                                    entity.element.style.backgroundImage = `url('${images.beastRight}')`;
+                                    break;
+                                case Direction.DOWN:
+                                    entity.element.style.backgroundImage = `url('${images.beastDown}')`;
+                                    break;
+                                case Direction.LEFT:
+                                    entity.element.style.backgroundImage = `url('${images.beastLeft}')`;
+                                    break;
+                            }
+                            entity.element.style.left = `${entity.x * TILE_SIZE}px`;
+                            entity.element.style.top = `${entity.y * TILE_SIZE}px`;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 设置事件监听
+        function setupEventListeners() {
+            // 键盘控制
+            document.addEventListener('keydown', handleKeyDown);
+
+            // 鼠标控制
+            gameContainer.addEventListener('mousedown', handleMouseDown);
+
+            // 滚轮缩放
+            gameContainer.addEventListener('wheel', handleWheel);
+        }
+
+        // 处理滚轮事件
+        function handleWheel(event) {
+            // 阻止默认滚动行为
+            event.preventDefault();
+
+            // 确保常量和变量已定义
+            const minZoom = typeof MIN_ZOOM !== 'undefined' ? MIN_ZOOM : 0.5;
+            const maxZoom = typeof MAX_ZOOM !== 'undefined' ? MAX_ZOOM : 2.0;
+            const zoomStep = typeof ZOOM_STEP !== 'undefined' ? ZOOM_STEP : 0.1;
+
+            // 确保zoomLevel已定义
+            if (typeof zoomLevel === 'undefined') {
+                window.zoomLevel = 1.0;
+            }
+
+            // 确定滚轮方向
+            const delta = Math.sign(event.deltaY);
+
+            // 更新缩放级别
+            if (delta > 0) {
+                // 缩小
+                window.zoomLevel = Math.max(minZoom, window.zoomLevel - zoomStep);
+            } else {
+                // 放大
+                window.zoomLevel = Math.min(maxZoom, window.zoomLevel + zoomStep);
+            }
+
+            // 更新视口
+            updateViewport();
+
+            // 更新游戏信息显示
+            updateGameInfo();
+        }
+
+        // 更新游戏信息
+        function updateGameInfo() {
+            const gameInfo = document.querySelector('.game-info');
+            const currentZoom = typeof zoomLevel !== 'undefined' ? zoomLevel : 1.0;
+
+            if (gameInfo) {
+                gameInfo.innerHTML = `
+                        <p>使用 WASD 移动，鼠标左键攻击</p>
+                        <p>使用鼠标滚轮缩放 (${Math.round(currentZoom * 100)}%)</p>
+                    `;
+            }
+        }
+
+        // 处理键盘输入
+        function handleKeyDown(event) {
+            if (!player) return;
+
+            let newX = player.x;
+            let newY = player.y;
+            let newDirection = player.direction;
+
+            switch (event.key.toLowerCase()) {
+                case 'w':
+                    newY--;
+                    newDirection = Direction.UP;
+                    break;
+                case 's':
+                    newY++;
+                    newDirection = Direction.DOWN;
+                    break;
+                case 'a':
+                    newX--;
+                    newDirection = Direction.LEFT;
+                    break;
+                case 'd':
+                    newX++;
+                    newDirection = Direction.RIGHT;
+                    break;
+                default:
+                    return;
+            }
+
+            // 更新玩家方向
+            player.direction = newDirection;
+
+            // 检查新位置是否有效
+            if (newX >= 0 && newX < MAP_SIZE && newY >= 0 && newY < MAP_SIZE) {
+                // 检查新位置是否是可行走地形
+                if (worldMap[newY][newX] !== TileType.WALL) {
+                    // 检查新位置是否有其他实体
+                    let entityExists = false;
+                    for (const entity of entities) {
+                        if (entity !== player && entity.x === newX && entity.y === newY) {
+                            entityExists = true;
+                            break;
+                        }
+                    }
+
+                    if (!entityExists) {
+                        player.x = newX;
+                        player.y = newY;
+                    }
+                }
+            }
+
+            // 更新玩家图像和位置
+            if (player.element) {
+                switch (player.direction) {
+                    case Direction.UP:
+                        player.element.style.backgroundImage = `url('${images.playerUp}')`;
+                        break;
+                    case Direction.RIGHT:
+                        player.element.style.backgroundImage = `url('${images.playerRight}')`;
+                        break;
+                    case Direction.DOWN:
+                        player.element.style.backgroundImage = `url('${images.playerDown}')`;
+                        break;
+                    case Direction.LEFT:
+                        player.element.style.backgroundImage = `url('${images.playerLeft}')`;
+                        break;
+                }
+                player.element.style.left = `${player.x * TILE_SIZE}px`;
+                player.element.style.top = `${player.y * TILE_SIZE}px`;
+            }
+
+            // 更新视口
+            updateViewport();
+        }
+
+        // 处理鼠标点击
+        function handleMouseDown(event) {
+            if (event.button === 0) { // 左键
+                attackInDirection(event);
+            }
+        }
+
+        // 朝着鼠标方向攻击
+        function attackInDirection(event) {
+            if (!player) return;
+
+            // 确保zoomLevel已定义
+            const currentZoom = typeof zoomLevel !== 'undefined' ? zoomLevel : 1.0;
+
+            // 计算鼠标位置相对于游戏世界的坐标
+            const rect = gameContainer.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            // 计算玩家在视口中的位置（考虑缩放）
+            const centerX = VIEWPORT_WIDTH / 2;
+            const centerY = VIEWPORT_HEIGHT / 2;
+
+            // 调整鼠标坐标以考虑缩放
+            const adjustedMouseX = (mouseX - centerX) / currentZoom + centerX;
+            const adjustedMouseY = (mouseY - centerY) / currentZoom + centerY;
+
+            // 计算鼠标与玩家之间的向量
+            const vectorX = adjustedMouseX - centerX;
+            const vectorY = adjustedMouseY - centerY;
+
+            // 计算攻击方向
+            const angle = Math.atan2(vectorY, vectorX);
+
+            // 将角度转换为欧几里得方向（0-2π）
+            const direction = (angle + 2 * Math.PI) % (2 * Math.PI);
+
+            // 攻击范围（2格）
+            const attackRange = 2;
+
+            // 检查是否有野兽在攻击范围内
+            for (const entity of entities) {
+                if (entity.type === EntityType.BEAST) {
+                    // 计算野兽与玩家之间的距离
+                    const distance = Math.sqrt(Math.pow(entity.x - player.x, 2) + Math.pow(entity.y - player.y, 2));
+
+                    // 如果野兽在攻击范围内
+                    if (distance <= attackRange) {
+                        // 计算与野兽的角度
+                        const beastAngle = Math.atan2(entity.y - player.y, entity.x - player.x);
+                        const beastDirection = (beastAngle + 2 * Math.PI) % (2 * Math.PI);
+
+                        // 计算角度差
+                        const angleDiff = Math.abs(direction - beastDirection);
+                        const normalizedAngleDiff = Math.min(angleDiff, 2 * Math.PI - angleDiff);
+
+                        // 如果在攻击扇形区域内（90度扇区）
+                        if (normalizedAngleDiff < Math.PI / 4) {
+                            // 对野兽造成伤害
+                            entity.health--;
+
+                            // 更新血条
+                            if (entity.healthBarFill) {
+                                entity.healthBarFill.style.width = `${(entity.health / 3) * 100}%`;
+                            }
+
+                            // 如果野兽死亡
+                            if (entity.health <= 0) {
+                                // 从游戏世界中移除
+                                gameWorld.removeChild(entity.element);
+
+                                // 从实体列表中移除
+                                const index = entities.indexOf(entity);
+                                if (index > -1) {
+                                    entities.splice(index, 1);
+                                }
+                            }
+
+                            // 创建攻击效果
+                            const attackEffect = document.createElement('div');
+                            attackEffect.className = 'entity';
+                            attackEffect.style.left = `${entity.x * TILE_SIZE}px`;
+                            attackEffect.style.top = `${entity.y * TILE_SIZE}px`;
+                            attackEffect.style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+                            attackEffect.style.zIndex = '30';
+                            gameWorld.appendChild(attackEffect);
+
+                            // 移除攻击效果
+                            setTimeout(() => {
+                                gameWorld.removeChild(attackEffect);
+                            }, 200);
+                        }
+                    }
+                }
+            }
+        }
+
+        // 加载所有图片后开始游戏
+        let loadedImages = 0;
+        const totalImages = Object.keys(images).length;
+
+        for (const key in images) {
+            const img = new Image();
+            img.onload = () => {
+                loadedImages++;
+                if (loadedImages === totalImages) {
+                    initGame();
+                }
+            };
+            img.onerror = () => {
+                console.error(`Failed to load image: ${images[key]}`);
+                // 使用占位符替代无法加载的图片
+                images[key] = '/api/placeholder/32/32';
+                loadedImages++;
+                if (loadedImages === totalImages) {
+                    initGame();
+                }
+            };
+            img.src = images[key];
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+/* 详细信息面板样式 */
+.detailed-panel {
+    display: none;
+    background: rgba(12, 12, 20, 0.95);
+    border: 2px solid #8b5a2b;
+    border-radius: 10px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 101;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.detailed-panel-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(139, 90, 43, 0.5);
+}
+
+.detailed-img {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #8b5a2b;
+    border-radius: 8px;
+    margin-right: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.detailed-title {
+    flex: 1;
+}
+
+.detailed-name {
+    font-size: 24px;
+    color: #ffcc00;
+    margin-bottom: 5px;
+    text-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
+}
+
+.detailed-type {
+    font-size: 16px;
+    color: #a89874;
+    margin-bottom: 15px;
+}
+
+.detailed-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.detailed-stat {
+    background: rgba(139, 90, 43, 0.3);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.detailed-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: rgba(139, 90, 43, 0.3);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.detailed-close:hover {
+    background: rgba(255, 204, 0, 0.3);
+}
+
+.detailed-close:before, .detailed-close:after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 2px;
+    background: #ffcc00;
+}
+
+.detailed-close:before {
+    transform: rotate(45deg);
+}
+
+.detailed-close:after {
+    transform: rotate(-45deg);
+}
+
+.detailed-section {
+    margin-bottom: 20px;
+}
+
+/* 不同类型的详细信息板块样式 */
+.detailed-section.combat-section {
+    background: linear-gradient(to right, rgba(140, 60, 40, 0.1), rgba(140, 60, 40, 0.05));
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.detailed-section.industry-section {
+    background: linear-gradient(to right, rgba(60, 100, 140, 0.1), rgba(60, 100, 140, 0.05));
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.detailed-section.social-section {
+    background: linear-gradient(to right, rgba(80, 120, 60, 0.1), rgba(80, 120, 60, 0.05));
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.detailed-section-title {
+    font-size: 18px;
+    color: #ffcc00;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(139, 90, 43, 0.3);
+}
+
+.detailed-params {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.param-group {
+    background: rgba(50, 50, 50, 0.3);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.param-group-title {
+    font-size: 15px;
+    color: #ffcc00;
+    margin-bottom: 8px;
+}
+
+.param-list {
+    list-style: none;
+    font-size: 13px;
+}
+
+.param-list li {
+    display: flex;
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.param-name {
+    flex: 0 0 150px;
+    color: #a89874;
+}
+
+.param-value {
+    flex: 1;
+    color: #e1dac0;
+}

@@ -3,230 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>玄幻世界 - 储物戒面板</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Microsoft YaHei', '宋体', sans-serif;
-        }
-        
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #0c0c14;
-            color: #e1dac0;
-            background-image: url('/api/placeholder/800/600');
-            background-size: cover;
-            background-attachment: fixed;
-        }
-        
-        .container {
-            max-width: 1400px;
-            height: 100vh;
-            margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #8b5a2b;
-            padding-bottom: 15px;
-            position: relative;
-            flex-shrink: 0;
-        }
-        
-        header h1 {
-            font-size: 36px;
-            color: #ffcc00;
-            text-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.5);
-            margin-bottom: 10px;
-        }
-        
-        header p {
-            font-size: 16px;
-            color: #a89874;
-        }
-        
-        .main-content {
-            display: flex;
-            gap: 20px;
-            flex: 1;
-            overflow: hidden;
-        }
-        
-        .sidebar {
-            min-width: 200px;
-            flex: 0 0 200px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid #8b5a2b;
-            border-radius: 8px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            max-height: 100%;
-        }
-        
-        .sidebar h2 {
-            color: #ffcc00;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 18px;
-        }
-        
-        .space-list {
-            list-style: none;
-            overflow-y: auto;
-            flex: 1;
-        }
-        
-        .space-list li {
-            padding: 10px;
-            margin-bottom: 8px;
-            background: rgba(139, 90, 43, 0.3);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        /* 自定义滚动条样式 */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: rgba(139, 90, 43, 0.6);
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 204, 0, 0.6);
-        }
-        
-        .space-list li:hover {
-            background: rgba(139, 90, 43, 0.5);
-        }
-        
-        .space-list li.active {
-            background: rgba(255, 204, 0, 0.3);
-            border-left: 3px solid #ffcc00;
-        }
-        
-        .content {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
-        .item-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 10px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid #8b5a2b;
-            border-radius: 8px;
-            overflow-y: auto;
-            flex: 1;
-            align-content: start;
-        }
-        
-        .item {
-            background: rgba(139, 90, 43, 0.2);
-            border: 1px solid #8b5a2b;
-            border-radius: 8px;
-            padding: 5px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: all 0.3s;
-            width: 100px;
-            height: 120px;
-        }
-        
-        .item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 3px 10px rgba(255, 204, 0, 0.3);
-        }
-        
-        .item-img {
-            width: 64px;
-            height: 64px;
-            margin-bottom: 3px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-        
-        .item-name {
-            font-size: 12px;
-            text-align: center;
-            margin-bottom: 3px;
-            color: #e1dac0;
-            max-width: 90px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .item-count {
-            font-size: 11px;
-            color: #ffcc00;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 1px 6px;
-            border-radius: 8px;
-        }
-        
-        .space-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-            flex-shrink: 0;
-        }
-        
-        .space-title {
-            font-size: 18px;
-            color: #ffcc00;
-        }
-        
-        .space-capacity {
-            font-size: 14px;
-            color: #a89874;
-        }
-        
-        .mystical-effect {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ffcc00, transparent);
-            bottom: -1px;
-            left: 0;
-            animation: glow 3s infinite;
-        }
-        
-        @keyframes glow {
-            0% { opacity: 0.3; }
-            50% { opacity: 1; }
-            100% { opacity: 0.3; }
-        }
-    </style>
+    <title>风神界 - 九天玄灵戒</title>
+    <!-- 引入CSS文件 -->
+    <link rel="stylesheet" href="css/storage-ring-styles.css">
+    <link rel="stylesheet" href="css/item-styles.css">
+    <link rel="stylesheet" href="css/details-styles.css">
 </head>
 <body>
     <div class="container">
@@ -235,157 +16,55 @@
             <p>洞天福地，包罗万象</p>
             <div class="mystical-effect"></div>
         </header>
-        
+       
         <div class="main-content">
+            <!-- 左侧空间分区侧边栏 -->
             <div class="sidebar">
                 <h2>空间分区</h2>
                 <ul class="space-list">
-                    <li class="active" data-space="gongfa">功法区</li>
-                    <li data-space="danyao">丹药区</li>
-                    <li data-space="fubao">符宝区</li>
-                    <li data-space="weapon">兵器区</li>
-                    <li data-space="herb">灵草区</li>
-                    <li data-space="material">材料区</li>
+                    <li data-space="survival">生存</li>
+                    <li class="active" data-space="battle">战斗</li>
+                    <li data-space="cultivation">修炼</li>
+                    <li data-space="economy">经济</li>
+                    <li data-space="industry">工业</li>
+                    <li data-space="sect">宗门</li>
+                    <li data-space="elixir">丹药</li>
+                    <li data-space="artifact">法宝</li>
+                    <li data-space="skill">功法</li>
                 </ul>
             </div>
-            
+           
+            <!-- 右侧内容区 -->
             <div class="content">
                 <div class="space-info">
-                    <div class="space-title">功法区</div>
-                    <div class="space-capacity">已用: 12/100</div>
+                    <div class="space-title">战斗</div>
+                    <div class="space-capacity">已用: 17/100</div>
                 </div>
-                
+               
                 <div class="item-grid" id="items-container">
-                    <!-- 功法区物品 -->
+                    <!-- 物品将由JS动态生成 -->
                 </div>
             </div>
         </div>
     </div>
-    
-    <script>
-        // 定义各区域的物品数据
-        const itemData = {
-            gongfa: [
-                { name: "九阳真经", count: 1, image: "Image/功法.png" },
-                { name: "玄冰诀", count: 1, image: "Image/功法.png" },
-                { name: "太极剑法", count: 1, image: "Image/功法.png" },
-                { name: "五行遁法", count: 1, image: "Image/功法.png" },
-                { name: "御剑术", count: 2, image: "Image/功法.png" },
-                { name: "龙象般若功", count: 1, image: "Image/功法.png" },
-                { name: "八荒六合掌", count: 1, image: "Image/功法.png" },
-                { name: "天罡北斗阵", count: 1, image: "Image/功法.png" },
-                { name: "紫霞神功", count: 1, image: "Image/功法.png" },
-                { name: "幽冥鬼步", count: 1, image: "Image/功法.png" },
-                { name: "炼神还虚", count: 1, image: "Image/功法.png" },
-            ],
-            danyao: [
-                { name: "筑基丹", count: 15, image: "Image/丹药.png" },
-                { name: "培元丹", count: 8, image: "Image/丹药.png" },
-                { name: "聚气散", count: 23, image: "Image/丹药.png" },
-                { name: "回春丹", count: 7, image: "Image/丹药.png" },
-                { name: "固元丹", count: 12, image: "Image/丹药.png" },
-                { name: "九转还魂丹", count: 1, image: "Image/丹药.png" },
-                { name: "养神丹", count: 9, image: "Image/丹药.png" },
-                { name: "金髓丸", count: 5, image: "Image/丹药.png" },
-            ],
-            fubao: [
-                { name: "五雷符", count: 12, image: "Image/符箓.png" },
-                { name: "定身符", count: 8, image: "Image/符箓.png" },
-                { name: "隐身符", count: 3, image: "Image/符箓.png" },
-                { name: "传送符", count: 2, image: "Image/符箓.png" },
-                { name: "紫金葫芦", count: 1, image: "Image/符箓.png" },
-                { name: "玄阴镜", count: 1, image: "Image/符箓.png" },
-            ],
-            weapon: [
-                { name: "青锋剑", count: 1, image: "Image/仙剑.png" },
-                { name: "雷鸣剑", count: 1, image: "Image/仙剑.png" },
-                { name: "玄铁剑", count: 1, image: "Image/仙剑.png" },
-                { name: "斩龙剑", count: 1, image: "Image/仙剑.png" },
-                { name: "龙吟刀", count: 1, image: "Image/仙剑.png" },
-                { name: "乾坤扇", count: 1, image: "Image/仙剑.png" },
-                { name: "混元伞", count: 1, image: "Image/仙剑.png" },
-                { name: "金蛟剪", count: 1, image: "Image/仙剑.png" },
-                { name: "太清阁大型凡品灵笼", count: 142, image: "Image/仙剑.png" , 注释:"30*30" },
-                { name: "太清阁大型灵品灵笼", count: 34, image: "Image/仙剑.png" , 注释:"30*30" },
-                { name: "太清阁大型上品灵笼", count: 14, image: "Image/仙剑.png" , 注释:"30*30" },
-                { name: "太清阁大型极品灵笼", count: 5, image: "Image/仙剑.png" , 注释:"30*30" },
-                { name: "太清阁大型仙品灵笼", count: 1, image: "Image/仙剑.png" , 注释:"30*30" },
-            ],
-            herb: [
-                { name: "凝血草", count: 3,  image: "Image/仙草.png" },
-                { name: "洗骨花", count: 5,  image: "Image/仙草.png" },
-                { name: "龙息叶", count: 2,  image: "Image/仙草.png" },
-                { name: "冰心草", count: 17, image: "Image/仙草.png" },
-                { name: "火灵叶", count: 1,  image: "Image/仙草.png" },
-                { name: "九阴藤", count: 4,  image: "Image/仙草.png" },
-                { name: "天星果", count: 1,  image: "Image/仙草.png" },
-            ],
-            material: [
-                { name: "玄铁矿", count: 25, image: "Image/玄铁.png" },
-                { name: "天星石", count: 3,  image: "Image/玄铁.png" },
-                { name: "凤血石", count: 2,  image: "Image/玄铁.png" },
-                { name: "玄冰髓", count: 18, image: "Image/玄铁.png" },
-                { name: "五色石", count: 7,  image: "Image/玄铁.png" },
-                { name: "混沌石", count: 1,  image: "Image/玄铁.png" },
-            ]
-        };
-        
-        // 空间容量信息
-        const spaceCapacity = {
-            gongfa: { used: 12, total: 100 },
-            danyao: { used: 80, total: 200 },
-            fubao: { used: 27, total: 50 },
-            weapon: { used: 6, total: 20 },
-            herb: { used: 34, total: 100 },
-            material: { used: 56, total: 150 }
-        };
-        
-        // 切换空间区域的函数
-        function switchSpace(spaceId) {
-            // 更新活跃状态
-            document.querySelectorAll('.space-list li').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.querySelector(`[data-space="${spaceId}"]`).classList.add('active');
-            
-            // 更新空间信息
-            const spaceInfo = spaceCapacity[spaceId];
-            document.querySelector('.space-title').textContent = document.querySelector(`[data-space="${spaceId}"]`).textContent;
-            document.querySelector('.space-capacity').textContent = `已用: ${spaceInfo.used}/${spaceInfo.total}`;
-            
-            // 清空并填充物品
-            const container = document.getElementById('items-container');
-            container.innerHTML = '';
-            
-            itemData[spaceId].forEach(item => {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'item';
-                
-                // 使用占位图片替代缺失的图像
-                const imgUrl = '/api/placeholder/64/64';
-                
-                itemElement.innerHTML = `
-                    <div class="item-img" style="background-image: url('${item.image}')"></div>
-                    <div class="item-name">${item.name}</div>
-                    <div class="item-count">×${item.count}</div>
-                `;
-                container.appendChild(itemElement);
-            });
-        }
-        
-        // 初始化页面
-        document.addEventListener('DOMContentLoaded', () => {
-            // 设置初始区域为功法区
-            switchSpace('gongfa');
-            
-            // 绑定点击事件
-            document.querySelectorAll('.space-list li').forEach(item => {
-                item.addEventListener('click', () => {
-                    const spaceId = item.getAttribute('data-space');
-                    switchSpace(spaceId);
-                });
-            });
-        });
-    </script>
+   
+    <!-- 道具悬浮提示 -->
+    <div class="tooltip" id="tooltip"></div>
+   
+    <!-- 一级道具介绍面板 - 以太清阁长剑为例 -->
+    <div id="item-panels">
+        <!-- 长剑详情面板将由JS加载 -->
+    </div>
+   
+    <!-- 遮罩层 -->
+    <div class="overlay" id="overlay"></div>
+   
+    <!-- 引入数据文件 -->
+    <script src="js/data/storage-ring-data.js"></script>
+    <script src="js/data/longsword-data.js"></script>
+    <!-- 引入物品详情模板JS -->
+    <script src="js/item-templates.js"></script>
+    <!-- 引入主要功能JS -->
+    <script src="js/storage-ring-main.js"></script>
 </body>
 </html>
