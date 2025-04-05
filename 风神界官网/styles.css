@@ -2570,84 +2570,6 @@ footer {
 }
 
 
-/* 境界系统现代布局样式 - 添加到你的 styles.css 文件中 */
-
-/* 主容器 */
-.realm-system.modern-layout {
-    margin-bottom: 60px;
-}
-
-.realm-system.modern-layout .section-title {
-    text-align: center;
-    margin-bottom: 40px;
-    position: relative;
-}
-
-.realm-system.modern-layout .section-title:after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-}
-
-/* 类别容器 */
-.realm-categories {
-    display: flex;
-    gap: 25px;
-    margin-bottom: 60px;
-}
-
-.realm-category {
-    flex: 1;
-    background-color: rgba(30, 32, 40, 0.6);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* 类别标题 */
-.category-header {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    background-color: rgba(40, 42, 58, 0.6);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.category-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-    font-weight: bold;
-    font-size: 20px;
-    color: white;
-}
-
-.mortal-icon {
-    background: linear-gradient(135deg, #6a82fb, #8e9efc);
-}
-
-.immortal-icon {
-    background: linear-gradient(135deg, #ffa62e, #ffce2e);
-}
-
-.true-immortal-icon {
-    background: linear-gradient(135deg, #f05f57, #c83d5c);
-}
-
-.category-header h4 {
-    color: white;
-    margin: 0;
-    font-size: 1.4rem;
-}
 /* 世界观和境界系统样式 */
 
 /* 主容器 */
@@ -2687,6 +2609,7 @@ footer {
     justify-content: space-between;
     gap: 30px;
     min-width: 800px;
+    min-height: 700px; /* 确保整个图表有固定最小高度 */
 }
 
 /* 境界组样式 */
@@ -2698,6 +2621,8 @@ footer {
     transition: all 0.3s ease;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex; /* 使用弹性布局 */
+    flex-direction: column; /* 垂直排列子元素 */
 }
 
 .realm-group:hover {
@@ -2752,6 +2677,9 @@ footer {
 /* 境界等级列表 */
 .realm-levels {
     padding: 15px;
+    flex: 1; /* 让列表容器占据剩余空间 */
+    display: flex; /* 使用弹性布局 */
+    flex-direction: column; /* 垂直排列子元素 */
 }
 
 /* 单个境界等级 */
@@ -2759,8 +2687,9 @@ footer {
     padding: 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     transition: all 0.3s ease;
-    height: auto;
-    min-height: 100px;
+    flex: 1; /* 让每个子卡片平均分配空间 */
+    display: flex; /* 使用弹性布局 */
+    flex-direction: column; /* 垂直排列内容 */
 }
 
 .realm-level:last-child {
@@ -2810,7 +2739,9 @@ footer {
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
     overflow-y: auto;
-    max-height: 100px;
+    flex: 1; /* 让描述文本占据剩余空间 */
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中文本 */
 }
 
 /* 游戏目标部分 */
@@ -2908,3 +2839,128 @@ footer {
     }
 }
 
+/* 玩家目标部分的样式 */
+.main-objective {
+    margin-bottom: 60px;
+    background-color: rgba(30, 32, 40, 0.7);
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 900px;
+    margin: 0 auto 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.main-objective:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.main-objective .objective-content {
+    text-align: center;
+}
+
+.main-objective .objective-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: white;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, #ff7e5f, #d94233);
+    box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+}
+
+.main-objective .objective-text {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.main-objective .highlight {
+    color: #ff7e5f;
+    font-weight: bold;
+}
+
+.main-objective .notes-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.main-objective .notes-section p {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.main-objective .notes-section p:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+}
+
+.main-objective .note-tag {
+    background: linear-gradient(135deg, #4e7cff, #7e57c2);
+    color: white;
+    font-size: 0.8rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-right: 10px;
+    box-shadow: 0 2px 5px rgba(78, 124, 255, 0.3);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .main-objective {
+        padding: 20px;
+        margin-bottom: 40px;
+    }
+    
+    .main-objective .notes-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .main-objective .objective-text {
+        font-size: 1.1rem;
+    }
+}
+
+/* 特色卡片内的文档链接位置固定 */
+.feature-card {
+    position: relative;
+    padding-bottom: 70px;
+    min-height: 380px;
+}
+
+.feature-card .document-link {
+    position: absolute;
+    bottom: 20px;
+    left: 25px;
+    margin-top: 0;
+}
+
+/* 游戏特色部分的文档链接特殊样式 */
+.feature-card .elegant-link {
+    color: #8c82fc;
+    border-color: rgba(140, 130, 252, 0.3);
+    background-color: rgba(140, 130, 252, 0.05);
+}
+
+.feature-card .elegant-link:hover {
+    background-color: rgba(140, 130, 252, 0.15);
+    color: #a494ff;
+}
+
+.feature-card .link-icon {
+    color: #8c82fc;
+}
