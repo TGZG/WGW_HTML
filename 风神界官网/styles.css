@@ -1973,6 +1973,938 @@ footer {
 } */
 
 
+/* 世界观模块*/
+
+#worldview {
+    background: #0f0f1a;
+    color: #fff;
+    padding: 4rem 2rem;
+  }
+  
+  .realm-system {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  
+  .realm-system h2,
+  .realm-system h3 {
+    text-align: center;
+    color: #8c82fc;
+    font-weight: 600;
+  }
+  
+  .realm-chart {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  
+  .realm-group {
+    background: #1a1b27;
+    border-radius: 1.2rem;
+    padding: 2rem;
+    flex: 1 1 300px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .realm-group h4 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  .realm-levels {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .realm-level {
+    background: #222330;
+    border-left: 4px solid #8c82fc;
+    border-radius: 0.75rem;
+    padding: 1rem 1.2rem;
+    transition: all 0.3s ease;
+  }
+  
+  .realm-level:hover {
+    background: #2a2b3a;
+  }
+  
+  .level-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #e6e6ff;
+    margin-bottom: 0.3rem;
+  }
+  
+  .level-lifespan {
+    font-size: 0.9rem;
+    color: #aaa;
+    line-height: 1.5;
+  }
+  
+  /* 世界观下方目标说明卡片 */
+  .game-objective {
+    background: #1f2030;
+    padding: 2rem;
+    border-radius: 1rem;
+    color: #eee;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  }
+  
+  .objective-text {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  
+  .note-tag {
+    background: #8c82fc;
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.5rem;
+    margin-right: 0.4rem;
+  }
+  
+  /* 势力介绍 */
+  .power-system {
+    margin-top: 3rem;
+  }
+  
+  .power-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .power-type {
+    background: #1a1b27;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .power-type h4 {
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 0.6rem;
+  }
+  
+  .power-type p {
+    color: #ccc;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  .power-type a {
+    color: #8c82fc;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 0.4rem;
+  }
+  
+  .power-type a:hover {
+    text-decoration: underline;
+  }
+
+  /* 新的势力布局样式 - 添加到你的 styles.css 文件末尾 */
+
+/* 主容器 */
+.power-system.new-layout {
+    margin-bottom: 60px;
+}
+
+.power-system.new-layout h3 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--secondary-color);
+    position: relative;
+}
+
+.power-system.new-layout h3:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+
+/* 势力容器 */
+.faction-container {
+    display: flex;
+    background-color: var(--dark-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    margin-top: 30px;
+}
+
+/* 左侧网格 */
+.faction-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    width: 280px;
+}
+
+.faction-grid.large-grid {
+    grid-template-columns: repeat(2, 1fr);
+    width: 280px;
+}
+
+/* 势力项目 */
+.faction-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.faction-item:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.faction-item.active {
+    transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.faction-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.faction-name {
+    font-size: 14px;
+    color: var(--text-light);
+    text-align: center;
+    font-weight: 500;
+}
+
+/* 右侧详情 */
+.faction-detail {
+    flex: 1;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.detail-content {
+    display: none;
+    height: 100%;
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.detail-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-right: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.detail-header h4 {
+    font-size: 24px;
+    color: var(--text-light);
+    margin: 0;
+}
+
+.detail-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-light);
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.detail-decorations {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+
+.decoration-item {
+    width: 35px;
+    height: 35px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .faction-container {
+        flex-direction: column;
+    }
+    
+    .faction-grid, .faction-grid.large-grid {
+        width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .faction-detail {
+        padding: 20px;
+    }
+    
+    .detail-decorations {
+        position: static;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .faction-grid, .faction-grid.large-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .faction-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .detail-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .detail-header h4 {
+        font-size: 20px;
+    }
+}
+
+/*大争之世*/
+
+/* 内容容器 */
+.elegant-content {
+    padding: 60px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 装饰标题 */
+.decorated-title {
+    text-align: center;
+    position: relative;
+    padding: 20px 0;
+    margin-bottom: 50px;
+}
+
+.gold-title {
+    color: #d5c172 !important;
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin: 30px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ornament-line {
+    height: 2px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="20" viewBox="0 0 600 20"><path d="M9.5,1.5c0,0,6,6,14,5s14-7,24-5s14,9,24,7s18-10,26-7s14.2,8.4,23.2,7.7c9-0.8,15-10.5,24.8-9.5s14,7.9,25,8.1c11,0.1,14.6-10.6,24.6-8.6s18.3,11.4,25.3,8.9s15-12,24-9s15,12,25,9s15-10,25-9s17,9,25,8s16-9,25-8s15,10,25,9s14-9,24-8s15,9,24,8s17-9,24-8s14,10,24,9s15-7,26-7s13,6,20,6" fill="none" stroke="%23d5c172" stroke-width="2" stroke-opacity="0.8"/></svg>') no-repeat center center;
+    background-size: contain;
+    margin: 20px auto;
+    max-width: 80%;
+    opacity: 0.8;
+}
+
+.ornament-line.top {
+    transform: rotateZ(180deg);
+}
+
+.ornament-line.bottom-full {
+    max-width: 90%;
+    margin: 60px auto 20px;
+}
+
+/* 文本内容 */
+.elegant-text-content {
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.8;
+    color: #e0e0e0;
+    font-size: 1.05rem;
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    color: #f0f0f0;
+    margin-bottom: 30px;
+    position: relative;
+    padding-left: 25px;
+    border-left: 3px solid rgba(213, 193, 114, 0.4);
+}
+
+.content-text {
+    margin-bottom: 25px;
+    text-align: justify;
+}
+
+/* 文档链接 */
+.document-link {
+    text-align: right;
+    margin-top: 40px;
+}
+
+.elegant-link {
+    display: inline-flex;
+    align-items: center;
+    color: #d5c172;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border: 1px solid rgba(213, 193, 114, 0.3);
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    background-color: rgba(213, 193, 114, 0.05);
+}
+
+.elegant-link:hover {
+    background-color: rgba(213, 193, 114, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: #ffd700;
+}
+
+.link-icon {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .gold-title {
+        font-size: 2rem;
+    }
+    
+    .ornament-line {
+        max-width: 95%;
+    }
+    
+    .elegant-text-content {
+        padding: 0 15px;
+    }
+    
+    .intro-text {
+        padding-left: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .gold-title {
+        font-size: 1.8rem;
+    }
+    
+    .intro-text {
+        font-size: 1rem;
+    }
+}
+
+/* 世界观标题部分升级样式 - 添加到你的 styles.css 文件中 */
+
+/* 世界观头部容器 */
+.worldview-header {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 20px 0 40px;
+    position: relative;
+}
+
+.worldview-header:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+/* 世界观简介 */
+.worldview-intro {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+/* 分类容器 */
+.worldview-categories {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+/* 分类项目 */
+.category-item {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 30px 20px;
+    width: 280px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.category-item:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: inherit;
+    opacity: 0.7;
+}
+
+.category-item:hover {
+    transform: translateY(-10px);
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* 分类图标 */
+.worldview-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.worldview-icon .icon {
+    font-size: 34px;
+    line-height: 1;
+    transform: translateY(-1px);
+}
 
 
+/* 分类标题和描述 */
+.category-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.category-item p {
+    font-size: 0.95rem;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .worldview-categories {
+        flex-wrap: wrap;
+    }
+    
+    .category-item {
+        width: calc(50% - 15px);
+    }
+}
+
+@media (max-width: 768px) {
+    .category-item {
+        width: 100%;
+    }
+    
+    .worldview-intro {
+        padding: 0 20px;
+        font-size: 1rem;
+    }
+}
+
+
+/* 境界系统现代布局样式 - 添加到你的 styles.css 文件中 */
+
+/* 主容器 */
+.realm-system.modern-layout {
+    margin-bottom: 60px;
+}
+
+.realm-system.modern-layout .section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.realm-system.modern-layout .section-title:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+/* 类别容器 */
+.realm-categories {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 60px;
+}
+
+.realm-category {
+    flex: 1;
+    background-color: rgba(30, 32, 40, 0.6);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 类别标题 */
+.category-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(40, 42, 58, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+}
+
+.mortal-icon {
+    background: linear-gradient(135deg, #6a82fb, #8e9efc);
+}
+
+.immortal-icon {
+    background: linear-gradient(135deg, #ffa62e, #ffce2e);
+}
+
+.true-immortal-icon {
+    background: linear-gradient(135deg, #f05f57, #c83d5c);
+}
+
+.category-header h4 {
+    color: white;
+    margin: 0;
+    font-size: 1.4rem;
+}
+/* 世界观和境界系统样式 */
+
+/* 主容器 */
+.realm-system {
+    margin-bottom: 80px;
+    position: relative;
+}
+
+/* 标题部分 */
+.realm-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.realm-title {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.realm-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+}
+
+/* 图表容器 */
+.realm-chart-container {
+    margin-bottom: 40px;
+    overflow-x: auto;
+    padding: 20px 0;
+}
+
+/* 图表布局 */
+.realm-chart {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    min-width: 800px;
+}
+
+/* 境界组样式 */
+.realm-group {
+    flex: 1;
+    background-color: rgba(30, 32, 40, 0.6);
+    border-radius: 12px;
+    padding: 0;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.realm-group:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* 境界组标题 */
+.realm-group-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(40, 42, 58, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.realm-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* 不同境界组的图标颜色 */
+.mortal .realm-icon {
+    background: linear-gradient(135deg, #4ecca3, #2c7c64);
+    box-shadow: 0 2px 10px rgba(78, 204, 163, 0.3);
+}
+
+.immortal .realm-icon {
+    background: linear-gradient(135deg, #ffcc29, #d9a400);
+    box-shadow: 0 2px 10px rgba(255, 204, 41, 0.3);
+}
+
+.true-immortal .realm-icon {
+    background: linear-gradient(135deg, #fe7e6d, #d94233);
+    box-shadow: 0 2px 10px rgba(254, 126, 109, 0.3);
+}
+
+.realm-group-title {
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* 境界等级列表 */
+.realm-levels {
+    padding: 15px;
+}
+
+/* 单个境界等级 */
+.realm-level {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    height: auto;
+    min-height: 100px;
+}
+
+.realm-level:last-child {
+    border-bottom: none;
+}
+
+.realm-level:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 境界名称和指示器 */
+.level-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.level-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.level-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+/* 不同境界组的指示器颜色 */
+.mortal .level-indicator {
+    background-color: #4ecca3;
+}
+
+.immortal .level-indicator {
+    background-color: #ffcc29;
+}
+
+.true-immortal .level-indicator {
+    background-color: #fe7e6d;
+}
+
+/* 境界描述 */
+.level-description {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    overflow-y: auto;
+    max-height: 100px;
+}
+
+/* 游戏目标部分 */
+.game-objective {
+    background-color: rgba(30, 32, 40, 0.7);
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.objective-content {
+    text-align: center;
+}
+
+.objective-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: white;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, #ff7e5f, #d94233);
+    box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+}
+
+.objective-text {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.highlight {
+    color: #ff7e5f;
+    font-weight: bold;
+}
+
+.notes-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    text-align: left;
+}
+
+.notes-section p {
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: flex-start;
+}
+
+.note-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #7e57c2, #5e35b1);
+    color: white;
+    font-size: 0.8rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 5px rgba(126, 87, 194, 0.3);
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .realm-chart {
+        flex-direction: column;
+        min-width: auto;
+    }
+    
+    .realm-level {
+        min-height: auto;
+    }
+    
+    .level-description {
+        max-height: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .realm-title {
+        font-size: 1.8rem;
+    }
+    
+    .objective-text {
+        font-size: 1.1rem;
+    }
+    
+    .game-objective {
+        padding: 20px;
+    }
+}
 
