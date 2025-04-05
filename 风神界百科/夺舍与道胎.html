@@ -1,0 +1,527 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>风神界百科 - 夺舍与道胎</title>
+    <style>
+        :root {
+            --primary-black: #121212;
+            --primary-white: #f0f0f0;
+            --primary-gold: #d4af37;
+            --primary-blue: #1e3a8a;
+            --primary-cyan: #0891b2;
+            --gradient-bg: linear-gradient(135deg, var(--primary-black) 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", "STXihei", "华文细黑", sans-serif;
+            background: var(--gradient-bg);
+            color: var(--primary-white);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 0;
+            background-attachment: fixed;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+
+        .main-header {
+            text-align: center;
+            padding: 30px 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23d4af37' fill-opacity='0.1' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z'%3E%3C/path%3E%3C/svg%3E");
+            position: relative;
+            border-bottom: 2px solid var(--primary-gold);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .title-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        h1 {
+            color: var(--primary-gold);
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
+            letter-spacing: 10px;
+        }
+
+        .subtitle {
+            color: var(--primary-cyan);
+            font-size: 1.5em;
+            text-shadow: 0 0 10px rgba(8, 145, 178, 0.7);
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .nav-tab {
+            padding: 10px 30px;
+            margin: 0 10px;
+            background-color: rgba(30, 58, 138, 0.3);
+            border: 1px solid var(--primary-gold);
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-size: 1.2em;
+            color: var(--primary-gold);
+            position: relative;
+            z-index: 1;
+        }
+
+            .nav-tab.active {
+                background-color: rgba(212, 175, 55, 0.1);
+                border-color: var(--primary-cyan);
+                color: var(--primary-cyan);
+            }
+
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .horizontal-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+            padding-bottom: 15px;
+        }
+
+        .info-card {
+            min-height: 200px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--primary-gold);
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+            .info-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+            }
+
+            .info-card h3 {
+                color: var(--primary-gold);
+                border-bottom: 1px solid var(--primary-gold);
+                padding-bottom: 10px;
+                margin-bottom: 15px;
+                text-align: center;
+                font-size: 1.4em;
+            }
+
+        p {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        .boundary-level {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--primary-gold);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .boundary-note {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background-color: var(--primary-gold);
+            color: var(--primary-black);
+            padding: 0 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .level-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .level-item {
+            padding: 0 5px;
+        }
+
+        .level-arrow {
+            color: var(--primary-gold);
+            margin: 0 5px;
+        }
+
+        .case-study {
+            background-color: rgba(8, 145, 178, 0.2);
+            border-left: 3px solid var(--primary-cyan);
+            padding: 15px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+            .case-study::before {
+                content: "案例";
+                position: absolute;
+                top: -10px;
+                left: 20px;
+                background-color: var(--primary-cyan);
+                color: var(--primary-black);
+                padding: 0 10px;
+                border-radius: 3px;
+                font-size: 0.9em;
+            }
+
+            .case-study h4 {
+                color: var(--primary-cyan);
+                margin: 10px 0;
+                font-size: 1.2em;
+            }
+
+        .killing-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .kill-method {
+            background-color: rgba(30, 58, 138, 0.3);
+            border: 1px solid var(--primary-gold);
+            border-radius: 5px;
+            padding: 15px;
+            position: relative;
+        }
+
+            .kill-method h4 {
+                color: var(--primary-cyan);
+                margin-bottom: 10px;
+                text-align: center;
+            }
+
+        .dao-embryo-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .dao-method {
+            background-color: rgba(30, 58, 138, 0.3);
+            border: 1px solid var(--primary-gold);
+            border-radius: 5px;
+            padding: 15px;
+            position: relative;
+        }
+
+            .dao-method h4 {
+                color: var(--primary-cyan);
+                margin-bottom: 10px;
+                text-align: center;
+            }
+
+        .crystal-coffin {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 300px;
+        }
+
+        .section-title {
+            color: var(--primary-gold);
+            text-align: center;
+            margin: 30px 0 20px;
+            font-size: 1.6em;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 1px solid var(--primary-gold);
+            color: var(--primary-gold);
+            font-size: 0.9em;
+        }
+
+        /* Decorative elements */
+        .corner-decoration {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23d4af37'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.5;
+        }
+
+        .top-left {
+            top: 10px;
+            left: 10px;
+        }
+
+        .top-right {
+            top: 10px;
+            right: 10px;
+            transform: rotate(90deg);
+        }
+
+        .bottom-left {
+            bottom: 10px;
+            left: 10px;
+            transform: rotate(270deg);
+        }
+
+        .bottom-right {
+            bottom: 10px;
+            right: 10px;
+            transform: rotate(180deg);
+        }
+
+        .glowing-text {
+            color: var(--primary-cyan);
+            text-shadow: 0 0 5px rgba(8, 145, 178, 0.7);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .horizontal-section {
+                grid-template-columns: 1fr;
+            }
+
+            .killing-methods, .dao-embryo-methods {
+                grid-template-columns: 1fr;
+            }
+
+            .level-wrapper {
+                flex-direction: column;
+            }
+
+            .level-arrow {
+                transform: rotate(90deg);
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="title-container">
+            <div class="corner-decoration top-left"></div>
+            <div class="corner-decoration top-right"></div>
+            <h1>风神界百科</h1>
+            <div class="subtitle">夺舍与道胎 - 修士长生之道</div>
+            <div class="nav-tabs">
+                <div class="nav-tab active">夺舍</div>
+                <div class="nav-tab">道胎</div>
+            </div>
+            <div class="corner-decoration bottom-left"></div>
+            <div class="corner-decoration bottom-right"></div>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <!-- 夺舍部分 -->
+        <div id="duoshe-section">
+            <!-- 夺舍案例 -->
+            <div class="case-study">
+                <h4>修士夺舍凡人，重获新生</h4>
+                <p>修士甲乙大战，甲被一刀斩首。</p>
+                <p>甲的灵魂从尸体上升起，然后冲向一旁的一名路人。路人和乙看不到。</p>
+                <p>路人突然觉得头痛欲裂，刚要抱头，然而仅一秒后，路人的目光恢复平静。</p>
+                <p>甲已经夺舍了路人。路人的灵魂已死，从此甲将以路人的身份继续生活。</p>
+            </div>
+
+            <!-- 夺舍概念卡片区 -->
+            <div class="horizontal-section">
+                <div class="info-card">
+                    <h3>定义</h3>
+                    <p>夺舍，是指灵魂出窍后进入他人躯体之中，与他人灵魂争夺躯体控制权。败者往往灵魂消散。</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>危险性</h3>
+                    <p>夺舍非常凶险，一般需高三个大境界才能确保成功。即，即便是元婴残魂夺舍筑基躯体，都可能失败、被筑基反杀。</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>灵魂境界</h3>
+                    <p>灵魂有灵魂境界，一般与肉身共同成长，夺舍后灵魂境界不降（但也将长期不升）。灵魂境界越高，灵魂可以离体存在时间越久。</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>灵魂寿元</h3>
+                    <p>灵魂寿元无限，只要灵魂在，那么修士可以一直夺舍从而不死。但灵魂并非无敌，有多种彻底灭杀修士灵魂的方法。</p>
+                </div>
+            </div>
+
+            <!-- 修真境界展示 -->
+            <div class="boundary-level">
+                <div class="boundary-note">注</div>
+                <div class="level-wrapper">
+                    <div class="level-item">凡境</div>
+                    <div class="level-arrow">→</div>
+                    <div class="level-item">炼体</div>
+                    <div class="level-arrow">→</div>
+                    <div class="level-item">通脉</div>
+                    <div class="level-arrow">→</div>
+                    <div class="level-item">开窍</div>
+                    <div class="level-arrow">→</div>
+                    <div class="level-item">炼气</div>
+                    <div class="level-arrow">→</div>
+                    <div class="level-item">筑基</div>
+                    <div class="level-arrow">→</div>
+                    <div class="level-item">金丹</div>
+                    <div class="level-arrow">→</div>
+                    <div class="level-item">元婴</div>
+                </div>
+            </div>
+
+            <!-- 杀死修士的方法 -->
+            <div class="section-title">灭杀灵魂之法</div>
+            <div class="killing-methods">
+                <div class="kill-method">
+                    <h4>清明目/往生咒</h4>
+                    <p>清明目：看到离体的灵魂。</p>
+                    <p>往生咒：对于一个离体的灵魂，将其超度（灭杀）。</p>
+                </div>
+
+                <div class="kill-method">
+                    <h4>业火/劫雷</h4>
+                    <p>对于灵魂未离体的人，直接令其神形俱灭，连灵魂带躯体一起击杀。业火慢杀，劫雷瞬杀。</p>
+                </div>
+
+                <div class="kill-method">
+                    <h4>碎魂</h4>
+                    <p>通过类似强制夺舍的方式，直接抹杀对方灵魂。需要高境界，并且也危险：若对方带有护魂法宝、或者弱小的肉身中藏着强大的灵魂，那么你可能会被反噬。</p>
+                </div>
+
+                <div class="kill-method">
+                    <h4>荒芜之地</h4>
+                    <p>击杀修士，且修士周围百里无人可夺舍。修士灵魂将逸散在天地间。（灵魂无法长期离体）</p>
+                </div>
+
+                <div class="kill-method">
+                    <h4>拘魂器</h4>
+                    <p>囚禁灵魂，然后可以用上述各种办法慢慢灭杀灵魂。但拘魂器价格昂贵，且使用需献祭，且未必成功，因此也少有使用。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 道胎部分 -->
+        <div id="daotai-section">
+            <!-- 道胎案例 -->
+            <div class="case-study">
+                <h4>修士夺舍道胎，重获修为</h4>
+                <p>接前文。甲原本是炼气修士，如今夺舍了一具凡人躯体，虽然活命、但实力大降。</p>
+                <p>兜圈子确认无跟踪后，甲控制新的躯体前往自己过去的洞府，闭眼凭记忆的身法破了幻阵，又使用神魂印记解开禁制，进入洞府内部。</p>
+                <p>洞府里，除了诸多宝物与家具之外，还摆着三口水晶棺。甲打开其中一口，里面躺着一个人，那人闭目、呼吸均匀，炼气境的威压从其身上向外笼罩开来。</p>
+                <p>甲灵魂离体，夺舍那人，迅速成功。甲原本的路人躯体瘫倒在地。</p>
+                <p>水晶棺中的那人，也就是如今的甲，睁眼，起身走出水晶棺。活动两下脖子，甲恢复炼气修为。</p>
+            </div>
+
+            <!-- 道胎概念卡片区 -->
+            <div class="horizontal-section">
+                <div class="info-card">
+                    <h3>定义</h3>
+                    <p>道胎，又名沉睡之躯、无魂之体。被誉为修士的第二条命。</p>
+                    <p>道胎，只有躯体、没有灵魂，保存在水晶棺中，可维持其生命不死、寿元冻结。</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>境界限制</h3>
+                    <p>夺舍道胎时，无境界限制，任何可以灵魂离体的修士都可以夺舍任何境界的道胎。</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>地位</h3>
+                    <p>道胎价格昂贵，但修士大多会购置至少一个道胎，以便于东山再起。</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>生产</h3>
+                    <p>每一个道胎，都至少曾是一个人。道胎需炼制产生，其材料为修士的气血魂魄；由于材料多半取自重伤的修士、气血亏空，因此往往需要多份修士的气血才能炼制出一份道胎。</p>
+                </div>
+            </div>
+
+            <!-- 道胎生产方式 -->
+            <div class="section-title">道胎材料来源</div>
+            <div class="dao-embryo-methods">
+                <div class="dao-method">
+                    <h4>遗体捐献</h4>
+                    <p>大势力在招收新弟子时，会明确告知弟子：当弟子寿元将尽或重伤将死之时，肉身需捐给势力用于炼制道胎。不容拒绝。</p>
+                </div>
+
+                <div class="dao-method">
+                    <h4>战争</h4>
+                    <p>势力战争时产生的尸体属于胜者。此外，俘虏中不听话的也会被杀死。</p>
+                </div>
+
+                <div class="dao-method">
+                    <h4>魔修杀戮</h4>
+                    <p>魔修会杀人炼制道胎。由于炼制道胎还需要少量魂魄用于赋灵、见证天地，因此魔修通常还会携带拘魂器。（一份灵魂可以炼制接近十份同境界道胎）</p>
+                </div>
+
+                <div class="dao-method">
+                    <h4>圈养血奴</h4>
+                    <p>有的魔修会圈养血奴：让他们没日没夜的修炼，修炼到一定境界之后去夺舍凡人重新修炼，那个修炼出来的高境界躯体用于炼制道胎来卖、或者直接把躯体气血批量卖给奇盟（专门炼制道胎）。</p>
+                </div>
+
+                <div class="dao-method">
+                    <h4>自愿卖血</h4>
+                    <p>一些穷困而又为情所困的修士自愿卖血：把自己当下的肉身卖掉，换钱买药给还不足炼气的孩子治病。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            风神界百科 · 修真传承 · 上古密卷
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const duosheSection = document.getElementById('duoshe-section');
+            const daotaiSection = document.getElementById('daotai-section');
+
+            // Initially hide the second section
+            daotaiSection.style.display = 'none';
+
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => {
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    // Show/hide sections based on active tab
+                    if (index === 0) {
+                        duosheSection.style.display = '';
+                        daotaiSection.style.display = 'none';
+                    } else {
+                        duosheSection.style.display = 'none';
+                        daotaiSection.style.display = '';
+                    }
+                });
+            });
+        });
+    </script>
