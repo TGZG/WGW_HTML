@@ -1,6 +1,6 @@
 /* ==========================================================================
    风神界游戏官网样式表
-   重构版本 | 2025-04-07
+   重构版本 | 2025-04-10
    ========================================================================== */
 
 /* ==========================================================================
@@ -10,19 +10,23 @@
 :root {
     /* 颜色变量 */
     --primary-color: #4e7cff;
+    --primary-dark: #3a68e0;
     --secondary-color: #ff7e5f;
     --accent-color: #7e57c2;
     --dark-bg: #1a1c2a;
     --light-bg: #f5f7ff;
     --text-light: #ffffff;
     --text-dark: #333444;
+    --text-muted: #8b8fa3;
     
     /* 布局变量 */
     --border-radius: 8px;
+    --card-radius: 12px;
     --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
     --container-width: 1200px;
 }
+
 
 * {
     margin: 0;
@@ -95,6 +99,53 @@ img {
     bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
+}
+
+/* 主标题统一风格 - 使用装饰线 */
+.section-heading-primary {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-align: center;
+    position: relative;
+    padding: 20px 0;
+    margin-bottom: 40px;
+}
+
+.section-heading-primary .ornament-line {
+    height: 2px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="20" viewBox="0 0 600 20"><path d="M9.5,1.5c0,0,6,6,14,5s14-7,24-5s14,9,24,7s18-10,26-7s14.2,8.4,23.2,7.7c9-0.8,15-10.5,24.8-9.5s14,7.9,25,8.1c11,0.1,14.6-10.6,24.6-8.6s18.3,11.4,25.3,8.9s15-12,24-9s15,12,25,9s15-10,25-9s17,9,25,8s16-9,25-8s15,10,25,9s14-9,24-8s15,9,24,8s17-9,24-8s14,10,24,9s15-7,26-7s13,6,20,6" fill="none" stroke="%23d5c172" stroke-width="2" stroke-opacity="0.8"/></svg>') no-repeat center center;
+    background-size: contain;
+    margin: 20px auto;
+    max-width: 80%;
+    opacity: 0.8;
+}
+
+.section-heading-primary .ornament-line.top {
+    transform: rotateZ(180deg);
+}
+
+/* 次级标题统一风格 - 使用渐变下划线 */
+.section-heading-secondary {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--text-light);
+    position: relative;
+    padding-bottom: 15px;
+    font-weight: 600;
+}
+
+.section-heading-secondary:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(255, 126, 95, 0), rgba(255, 126, 95, 1), rgba(255, 126, 95, 0));
+    border-radius: 3px;
 }
 
 /* ==========================================================================
@@ -229,7 +280,7 @@ nav.scrolled {
 }
 
 .primary-button:hover {
-    background-color: #3a68e0;
+    background-color: var(--primary-dark);
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
@@ -249,14 +300,12 @@ nav.scrolled {
 /* ==========================================================================
    4. 游戏介绍
    ========================================================================== */
-
 /* 游戏定义容器 */
 .game-definition-container {
     display: flex;
     gap: 40px;
     margin-bottom: 60px;
 }
-
 .game-definition-left,
 .game-definition-right {
     flex: 1;
@@ -266,13 +315,11 @@ nav.scrolled {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .game-definition-left:hover,
 .game-definition-right:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
-
 .game-definition-left h3,
 .game-definition-right h3 {
     color: #2c3e50;
@@ -280,7 +327,6 @@ nav.scrolled {
     font-size: 1.5rem;
     font-weight: 600;
 }
-
 .game-definition-left p,
 .game-definition-right p {
     color: #555;
@@ -289,24 +335,246 @@ nav.scrolled {
     font-size: 1rem;
 }
 
+/* 游戏对比模块样式 */
+.game-comparison {
+    margin: 60px 0;
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.game-comparison h3 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--accent-color);
+}
+
+.comparison-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.comparison-slogan {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin: 15px 0;
+}
+
+.comparison-table {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* 表头样式 */
+.comparison-header {
+    display: flex;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+}
+
+/* 左上角空白单元格 */
+.corner-cell {
+    width: 150px;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.game-column {
+    flex: 1;
+    padding: 20px 15px;
+    text-align: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 120px;
+}
+
+.game-column:last-child {
+    border-right: none;
+}
+
+.game-column.main-game {
+    /* 移除阴影效果 */
+    background-color: transparent;
+    position: relative;
+}
+
+.game-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+}
+
+.game-logo i {
+    font-size: 1.4rem;
+    color: white;
+}
+
+/* 特别为Kenshi调整图标 */
+.game-column:nth-child(6) .game-logo i {
+    /* 从城市图标(fa-city)改为剑图标 */
+    content: "\f6cb"; /* FontAwesome的khanda(剑)图标代码 */
+}
+
+.comparison-header h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* 行样式 */
+.comparison-row {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: white;
+}
+
+.comparison-row:last-child {
+    border-bottom: none;
+}
+
+.comparison-row:nth-child(odd) {
+    background-color: #f9fafc;
+}
+
+/* 特性名称列样式 */
+.feature-name {
+    width: 150px;
+    padding: 15px;
+    background-color: #f0f3ff;
+    font-weight: 600;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+/* 特性值样式 */
+.game-column .feature-value {
+    padding: 15px 10px;
+    font-size: 0.95rem;
+    color: #555;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-right: 1px solid #e0e0e0;
+    text-shadow: none;
+}
+
+.game-column:last-child .feature-value {
+    border-right: none;
+}
+
+/* 移除different类的粉底色 */
+.game-column .feature-value.different {
+    background-color: transparent;
+}
+
+/* 风神界列的特性值样式 - 保留颜色但减弱背景 */
+.game-column.main-game .feature-value {
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: rgba(78, 124, 255, 0.03);
+    border-bottom: 1px solid rgba(78, 124, 255, 0.1);
+}
+
+/* 核心差异部分 */
+.key-difference {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(78, 124, 255, 0.1), rgba(126, 87, 194, 0.1));
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.difference-icon {
+    min-width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 25px;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.difference-content h4 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.difference-content p {
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* 响应式调整 */
+@media (max-width: 1200px) {
+    .comparison-table {
+        overflow-x: auto;
+    }
+    
+    .comparison-header,
+    .comparison-row {
+        min-width: 900px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-comparison {
+        padding: 30px 20px;
+    }
+    
+    .key-difference {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .difference-icon {
+        margin: 0 auto 20px;
+    }
+}
+
 /* 游戏特色 */
 .features {
     margin-bottom: 60px;
 }
-
 .features h3 {
     font-size: 1.8rem;
     text-align: center;
     margin-bottom: 40px;
     color: var(--accent-color);
 }
-
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
 }
-
 .feature-card {
     background-color: white;
     padding: 30px 25px;
@@ -317,12 +585,10 @@ nav.scrolled {
     padding-bottom: 70px;
     min-height: 380px;
 }
-
 .feature-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
-
 .feature-icon {
     width: 60px;
     height: 60px;
@@ -333,40 +599,115 @@ nav.scrolled {
     align-items: center;
     justify-content: center;
 }
-
 .feature-icon i {
     font-size: 24px;
     color: var(--primary-color);
 }
-
 .feature-card h4 {
     font-size: 1.3rem;
     margin-bottom: 15px;
     color: var(--accent-color);
 }
 
-/* 特色卡片内的文档链接位置固定 */
+/* 特性卡片图标的特定类样式 */
+.feature-icon.world-icon {
+    background-color: #e0f7fa; /* 浅蓝绿色 */
+}
+
+.feature-icon.freedom-icon {
+    background-color: #e8f5e9; /* 浅绿色 */
+}
+
+.feature-icon.respect-icon {
+    background-color: #fff3e0; /* 浅橙色 */
+}
+
+.feature-icon.mind-icon {
+    background-color: #f3e5f5; /* 浅紫色 */
+}
+
+/* 图标颜色 */
+.feature-icon.world-icon i {
+    color: #00bcd4; /* 蓝绿色 */
+}
+
+.feature-icon.freedom-icon i {
+    color: #4caf50; /* 绿色 */
+}
+
+.feature-icon.respect-icon i {
+    color: #ff9800; /* 橙色 */
+}
+
+.feature-icon.mind-icon i {
+    color: #9c27b0; /* 紫色 */
+}
+
+/* 统一的文档链接样式 */
+.document-link {
+    text-align: right;
+    margin-top: 30px;
+}
+.elegant-link {
+    display: inline-flex;
+    align-items: center;
+    color: #d5c172;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border: 1px solid rgba(213, 193, 114, 0.3);
+    border-radius: 30px;
+    transition: var(--transition);
+    background-color: rgba(213, 193, 114, 0.05);
+}
+.elegant-link:hover {
+    background-color: rgba(213, 193, 114, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: #ffd700;
+}
+.link-icon {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+/* 特色卡片内的文档链接样式 - 更新为蓝色主题 */
 .feature-card .document-link {
     position: absolute;
     bottom: 20px;
     left: 25px;
     margin-top: 0;
 }
-
-/* 游戏特色部分的文档链接特殊样式 */
 .feature-card .elegant-link {
-    color: #8c82fc;
-    border-color: rgba(140, 130, 252, 0.3);
-    background-color: rgba(140, 130, 252, 0.05);
+    color: var(--primary-color);
+    border-color: rgba(78, 124, 255, 0.3);
+    background-color: rgba(78, 124, 255, 0.08);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    transition: var(--transition); 
 }
-
 .feature-card .elegant-link:hover {
-    background-color: rgba(140, 130, 252, 0.15);
-    color: #a494ff;
+    background-color: rgba(78, 124, 255, 0.15);
+    color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(78, 124, 255, 0.15);
 }
 
 .feature-card .link-icon {
-    color: #8c82fc;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-right: 6px;
+    transition: color 0.3s ease;
+}
+
+.feature-card .elegant-link:hover .link-icon {
+    color: var(--primary-dark);
+} 
+
+/* 控制尊敬感超链接与上方文本的间距 */
+.feature-card:nth-child(3) p:last-of-type {
+    margin-bottom: 30px;
 }
 
 /* ==========================================================================
@@ -402,7 +743,7 @@ nav.scrolled {
     opacity: 0.9;
 }
 
-/* 玩家目标部分 */
+/* 游戏目标部分 */
 .main-objective {
     margin-bottom: 60px;
     background-color: rgba(30, 32, 40, 0.7);
@@ -423,24 +764,32 @@ nav.scrolled {
     text-align: center;
 }
 
-.main-objective .objective-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    color: white;
+/* 游戏目标标题 - 更新为次级标题统一样式 */
+.main-objective .objective-heading {
     font-size: 1.8rem;
-    background: linear-gradient(135deg, #ff7e5f, #d94233);
-    box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 15px;
+}
+
+.main-objective .objective-heading:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(255, 126, 95, 0), rgba(255, 126, 95, 1), rgba(255, 126, 95, 0));
+    border-radius: 3px;
 }
 
 .main-objective .objective-text {
     font-size: 1.2rem;
     line-height: 1.7;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     color: #fff;
 }
 
@@ -449,36 +798,128 @@ nav.scrolled {
     font-weight: bold;
 }
 
+/* 改进的笔记卡片 */
 .main-objective .notes-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 25px;
+    margin-top: 30px;
 }
 
-.main-objective .notes-section p {
+.main-objective .notes-section .notes-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.main-objective .note-card {
+    flex: 1;
     background-color: rgba(255, 255, 255, 0.05);
-    padding: 10px 15px;
     border-radius: 8px;
-    margin: 0;
     transition: var(--transition);
     cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
 }
 
-.main-objective .notes-section p:hover {
+.main-objective .note-card:hover {
     background-color: rgba(255, 255, 255, 0.1);
     transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.main-objective .note-header {
+    background-color: rgba(78, 124, 255, 0.15);
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(78, 124, 255, 0.2);
 }
 
 .main-objective .note-tag {
     background: linear-gradient(135deg, #4e7cff, #7e57c2);
     color: white;
-    font-size: 0.8rem;
-    padding: 3px 8px;
+    font-size: 0.9rem;
+    padding: 3px 10px;
     border-radius: 4px;
-    margin-right: 10px;
+    font-weight: 500;
+    display: inline-block;
     box-shadow: 0 2px 5px rgba(78, 124, 255, 0.3);
+}
+
+.main-objective .note-body {
+    padding: 12px 15px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* 游戏过程部分 */
+.game-process {
+    margin: 60px auto;
+    max-width: 1000px;
+    position: relative;
+}
+
+/* 游戏过程标题 - 更新为次级标题统一样式 */
+.process-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.process-heading {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 15px;
+}
+
+.process-heading:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(255, 126, 95, 0), rgba(255, 126, 95, 1), rgba(255, 126, 95, 0));
+    border-radius: 3px;
+}
+
+.process-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    width: 200px;
+    margin: 0 auto;
+}
+
+/* 故事容器设置，从原本的玩家故事部分迁移过来 */
+.stories-container {
+    margin-top: 40px;
+}
+
+/* 确保这部分样式与原先的玩家故事部分保持一致 */
+.stories-introduction {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* 故事滑块在世界观部分的特殊样式 */
+.game-process .story-slider {
+    background-color: rgba(26, 28, 42, 0.5);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    margin: 30px 0;
+}
+
+/* 适配故事容器在新位置的样式 */
+.game-process .story-container {
+    background-color: transparent;
+    box-shadow: none;
 }
 
 /* 境界系统 */
@@ -491,16 +932,31 @@ nav.scrolled {
     position: relative;
 }
 
+/* 境界系统标题 - 更新为次级标题统一样式 */
 .realm-header {
     text-align: center;
     margin-bottom: 40px;
 }
 
 .realm-title {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     margin-bottom: 10px;
     color: #fff;
     font-weight: 600;
+    position: relative;
+    padding-bottom: 15px;
+    display: inline-block;
+}
+
+.realm-title:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(255, 126, 95, 0), rgba(255, 126, 95, 1), rgba(255, 126, 95, 0));
+    border-radius: 3px;
 }
 
 .realm-chart-container {
@@ -643,6 +1099,7 @@ nav.scrolled {
 }
 
 /* 势力样式 */
+/* 主要势力类型标题 - 更新为次级标题统一样式 */
 .power-system.new-layout {
     margin-bottom: 60px;
 }
@@ -651,19 +1108,22 @@ nav.scrolled {
     font-size: 1.8rem;
     text-align: center;
     margin-bottom: 30px;
-    color: var(--secondary-color);
+    color: var(--text-light);
     position: relative;
+    padding-bottom: 15px;
+    display: inline-block;
+    margin: 0 auto 30px;
 }
 
 .power-system.new-layout h3:after {
     content: "";
     position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
+    bottom: 0;
+    left: 0;
+    right: 0;
     height: 3px;
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(90deg, rgba(255, 126, 95, 0), rgba(255, 126, 95, 1), rgba(255, 126, 95, 0));
+    border-radius: 3px;
 }
 
 /* 势力容器 */
@@ -792,7 +1252,14 @@ nav.scrolled {
     right: 30px;
 }
 
-/* 大争之世 */
+.decoration-item {
+    width: 35px;
+    height: 35px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+/* 大争之世 - 使用主标题统一样式 */
 .elegant-content {
     padding: 60px 0;
     position: relative;
@@ -808,7 +1275,7 @@ nav.scrolled {
 
 .gold-title {
     color: #d5c172 !important;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 600;
     letter-spacing: 2px;
     margin: 30px 0;
@@ -855,169 +1322,11 @@ nav.scrolled {
     text-align: justify;
 }
 
-.document-link {
-    text-align: right;
-    margin-top: 40px;
-}
-
-.elegant-link {
-    display: inline-flex;
-    align-items: center;
-    color: #d5c172;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 8px 16px;
-    border: 1px solid rgba(213, 193, 114, 0.3);
-    border-radius: 30px;
-    transition: var(--transition);
-    background-color: rgba(213, 193, 114, 0.05);
-}
-
-.elegant-link:hover {
-    background-color: rgba(213, 193, 114, 0.15);
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    color: #ffd700;
-}
-
-.link-icon {
-    margin-right: 8px;
-    font-size: 1.2rem;
-}
-
 /* ==========================================================================
    6. 游戏系统
    ========================================================================== */
 
-/* 向量系统 */
-.vector-system {
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: var(--transition);
-    border: 1px solid #e0e0e0;
-    max-width: 800px;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.vector-system:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-}
-
-.vector-system h3 {
-    font-size: 1.8rem;
-    color: #333333;
-    margin-bottom: 20px;
-    position: relative;
-}
-
-.vector-system h3::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 3px;
-    background-color: #007bff;
-    margin: 10px auto 0;
-    border-radius: 2px;
-}
-
-.vector-content {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.vector-text {
-    max-width: 700px;
-    text-align: center;
-}
-
-.vector-text p {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: #555555;
-    margin-bottom: 15px;
-}
-
-.vector-text strong {
-    color: #007bff;
-    font-weight: bold;
-    background-color: rgba(0, 123, 255, 0.1);
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-/* 法术系统 */
-.spell-system {
-    margin-bottom: 60px;
-}
-
-.spell-comparison {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    margin-top: 30px;
-}
-
-.traditional,
-.our-approach {
-    background-color: white;
-    border-radius: var(--border-radius);
-    padding: 25px;
-    box-shadow: var(--box-shadow);
-}
-
-.traditional h4,
-.our-approach h4 {
-    color: var(--accent-color);
-    margin-bottom: 15px;
-    font-size: 1.3rem;
-}
-
-/* 符文系统 */
-.rune-content {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 40px;
-    margin-bottom: 60px;
-}
-
-.rune-editor {
-    background-color: var(--dark-bg);
-    border-radius: var(--border-radius);
-    padding: 20px;
-    overflow: hidden;
-}
-
-.code-example {
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: #d4d4d4;
-    white-space: pre-wrap;
-}
-/* ==========================================================================
-   游戏系统部分 - 新样式
-   ========================================================================== */
-
-   .system-section {
-    background-color: var(--light-bg);
-    padding: 80px 0;
-}
-
+/* 游戏系统部分的CSS样式 */
 .section-header {
     text-align: center;
     margin-bottom: 60px;
@@ -1052,16 +1361,15 @@ nav.scrolled {
 }
 
 .system-section .intro-text {
-    /* 游戏系统部分特定的样式 */
     font-size: 1.2rem;
     color: var(--text-dark);
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.8;
-    text-align: left; /* 从center改为left，因为有左边框 */
+    text-align: left;
     position: relative;
-    padding-left: 25px; /* 为左侧线条留出空间 */
-    border-left: 3px solid rgba(78, 124, 255, 0.4); /* 使用蓝色系(主题色) */
+    padding-left: 25px;
+    border-left: 3px solid rgba(78, 124, 255, 0.4);
 }
 
 .spell-system, .rune-system {
@@ -1254,49 +1562,26 @@ nav.scrolled {
     line-height: 1.7;
 }
 
-/* 响应式设计 */
-@media (max-width: 992px) {
-    .path-comparison {
-        grid-template-columns: 1fr;
-    }
-    
-    .rune-content {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 768px) {
-    .system-header {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .system-icon {
-        margin: 0 auto 15px;
-    }
-    
-    .path-header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-    
-    .path-icon {
-        margin: 0 auto;
-    }
+/* 符文编辑器代码示例 */
+.code-example {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #d4d4d4;
+    white-space: pre-wrap;
 }
 
 /* ==========================================================================
    7. 游戏版本
    ========================================================================== */
 
-/* 游戏版本卡片样式 - 新布局 */
+/* 游戏版本卡片样式 */
 .version-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 30px;
     margin-top: 60px;
-    align-items: stretch; /* 确保所有卡片拉伸到相同高度 */
+    align-items: stretch;
 }
 
 .version-card {
@@ -1309,7 +1594,7 @@ nav.scrolled {
     display: flex;
     flex-direction: column;
     height: 100%; 
-    min-height: 750px; /* 添加最小高度确保卡片有足够空间 */
+    min-height: 750px;
 }
 
 .version-card:hover {
@@ -1423,7 +1708,7 @@ nav.scrolled {
 
 .version-features {
     margin-bottom: 30px;
-    flex: 1; /* 添加flex属性使其占用可用空间 */
+    flex: 1;
 }
 
 .feature-list {
@@ -1464,7 +1749,7 @@ nav.scrolled {
 
 .version-cta {
     text-align: center;
-    margin-top: auto; /* 将CTA区域推到底部 */
+    margin-top: auto;
 }
 
 .preorder-button {
@@ -1507,36 +1792,26 @@ nav.scrolled {
     color: var(--text-muted);
 }
 
-/* 添加必要的变量 */
-:root {
-    /* 如果还没有定义这些颜色变量，需要添加 */
-    --primary-dark: #3a68e0;
-    --text-muted: #8b8fa3;
-    --card-radius: 12px;
-}
-
 /* ==========================================================================
-   8. FAQ部分
+   8. FAQ 部分
    ========================================================================== */
 
+/* FAQ 可折叠项样式 */
 .faq-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
 }
-
 .faq-item {
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: var(--border-radius);
     padding: 25px;
     transition: var(--transition);
 }
-
 .faq-item:hover {
     background-color: rgba(255, 255, 255, 0.1);
     transform: translateY(-5px);
 }
-
 .faq-item h3 {
     color: var(--secondary-color);
     margin-bottom: 15px;
@@ -1544,7 +1819,6 @@ nav.scrolled {
     cursor: pointer;
     position: relative;
 }
-
 .faq-item h3:after {
     content: "+";
     position: absolute;
@@ -1552,24 +1826,191 @@ nav.scrolled {
     top: 0;
     transition: var(--transition);
 }
-
 .faq-item.active h3:after {
     transform: rotate(45deg);
 }
-
 .faq-content {
     margin-top: 10px;
 }
-
 .faq-content p {
     margin-bottom: 10px;
     line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 集成内容项容器样式 */
+.faq-integrated-item {
+    border-radius: var(--border-radius);
+    padding: 30px 0;
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.faq-integrated-item > h3 {
+    color: var(--secondary-color);
+    margin-bottom: 25px;
+    font-size: 1.4rem;
+    padding-left: 15px;
+}
+.faq-integrated-item .faq-integrated-content {
+    padding: 0 15px;
+}
+.faq-integrated-item .faq-integrated-content > p:first-child {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.7;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+/* 覆盖集成内容的通用样式 */
+.faq-integrated-item .section-header .section-subtitle,
+.faq-integrated-item .system-title,
+.faq-integrated-item .rune-title {
+    color: var(--text-light);
+}
+.faq-integrated-item .section-header .section-title {
+     color: var(--text-light);
+}
+.faq-integrated-item .section-header .section-title:after {
+    background: var(--secondary-color);
+}
+.faq-integrated-item .intro-text-moved,
+.faq-integrated-item .system-content p,
+.faq-integrated-item .path-desc,
+.faq-integrated-item .path-flaw,
+.faq-integrated-item .path-truth,
+.faq-integrated-item .rune-desc {
+    color: rgba(255, 255, 255, 0.8);
+}
+.faq-integrated-item .system-content strong,
+.faq-integrated-item .path-desc strong,
+.faq-integrated-item .path-flaw strong,
+.faq-integrated-item .path-truth strong {
+    color: var(--primary-color);
+    font-weight: 600;
+    background-color: rgba(78, 124, 255, 0.1);
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+.faq-integrated-item .path-flaw strong {
+    color: var(--secondary-color);
+    background-color: rgba(255, 126, 95, 0.1);
+}
+.faq-integrated-item .system-content,
+.faq-integrated-item .pseudo-path,
+.faq-integrated-item .rune-explanation {
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+}
+.faq-integrated-item .pseudo-path:hover {
+     background-color: rgba(255, 255, 255, 0.08);
+     transform: translateY(-5px);
+}
+
+/* 符文系统样式重构 */
+.faq-integrated-item .rune-content {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 36px;
+    align-items: flex-start;
+    margin-bottom: 72px;
+    max-width: 90%;
+    margin-left: 0;
+    margin-right: auto;
+    position: relative;
+}
+
+.faq-integrated-item .rune-editor {
+    background-color: #ffffff;
+    border-radius: var(--border-radius);
+    padding: 24px 30px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+    margin-top: 96px;
+    width: 110%; 
+    margin-left: 0;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.faq-integrated-item .rune-editor pre.code-example {
+    color: var(--text-dark);
+    font-family: 'Courier New', monospace;
+    font-size: 1.08rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    margin: 0;
+    text-align: left;
+}
+
+.faq-integrated-item .rune-explanation {
+    border-radius: var(--border-radius);
+    padding: 24px;
+    margin-top: 0;
+    text-align: left;
+    width: 95%;
+    margin-left: 100px;
+    min-height: 320px;
+    position: relative;
+    z-index: 0;
+}
+
+/* 系统相关文本左对齐 */
+.faq-integrated-item .system-content {
+    text-align: left;
+}
+
+.faq-integrated-item .system-content p {
+    text-align: left;
+}
+
+.faq-integrated-item .path-explanation {
+    text-align: left;
+}
+
+.faq-integrated-item .path-desc,
+.faq-integrated-item .path-flaw,
+.faq-integrated-item .path-truth {
+    text-align: left;
+}
+
+.faq-integrated-item .rune-explanation .rune-title {
+    color: var(--text-light);
+    font-size: 1.56rem;
+    margin-top: 0;
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.faq-integrated-item .rune-explanation .rune-desc {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.14rem;
+    line-height: 1.8;
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .faq-integrated-item .rune-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .faq-integrated-item .rune-editor {
+        margin-top: 30px;
+        width: 100%;
+        order: 2;
+    }
+    
+    .faq-integrated-item .rune-explanation {
+        order: 1;
+    }
 }
 
 /* ==========================================================================
    9. 玩家故事
    ========================================================================== */
-/* 玩家故事部分的CSS样式 */
 
 /* 故事部分整体 */
 #player-stories {
@@ -1646,8 +2087,6 @@ nav.scrolled {
     margin-left: 10px;
 }
 
-/* 玩家故事部分的CSS样式 */
-
 /* 故事容器 */
 .story-container {
     flex: 1;
@@ -1656,8 +2095,8 @@ nav.scrolled {
     border-radius: 8px;
     background-color: rgba(30, 35, 40, 0.5);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    min-height: 550px; /* 添加明确的最小高度 */
-    height: auto; /* 允许根据内容自动调整高度 */
+    min-height: 550px;
+    height: auto;
 }
 
 /* 故事幻灯片 */
@@ -1667,19 +2106,19 @@ nav.scrolled {
     left: 0;
     width: 100%;
     height: 100%;
-    min-height: 500px; /* 确保每个幻灯片有足够的高度 */
+    min-height: 500px;
     opacity: 0;
     visibility: hidden;
     transition: all 0.5s ease;
     transform: translateX(50px);
-    z-index: 1; /* 确保正确的层叠顺序 */
+    z-index: 1;
 }
 
 .story-slide.active {
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
-    z-index: 2; /* 活动幻灯片应该在其他幻灯片之上 */
+    z-index: 2;
 }
 
 .story-content {
@@ -1839,45 +2278,46 @@ nav.scrolled {
 
 /* 故事视觉区域内的采访链接专用样式 */
 .story-visual .elegant-link {
-    color: #ff5e94; /* 鲜艳的粉红色文字 */
-    border-color: rgba(255, 94, 148, 0.5); /* 粉红色边框 */
-    background-color: rgba(255, 94, 148, 0.1); /* 淡粉色背景 */
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08); /* 轻微阴影增加深度 */
-    padding: 10px 18px; /* 更大的内边距 */
-    transition: all 0.25s ease; /* 平滑过渡效果 */
+    color: #ff5e94;
+    border-color: rgba(255, 94, 148, 0.5);
+    background-color: rgba(255, 94, 148, 0.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    padding: 10px 18px;
+    transition: all 0.25s ease;
 }
 
 .story-visual .elegant-link:hover {
-    background-color: rgba(255, 94, 148, 0.2); /* 悬停时背景色加深 */
-    color: #ff4081; /* 悬停时文字颜色变为更亮的粉色 */
-    transform: translateY(-4px); /* 向上浮动效果 */
-    box-shadow: 0 6px 15px rgba(255, 94, 148, 0.3); /* 更明显的阴影效果 */
-    border-color: rgba(255, 94, 148, 0.7); /* 更深的边框 */
+    background-color: rgba(255, 94, 148, 0.2);
+    color: #ff4081;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(255, 94, 148, 0.3);
+    border-color: rgba(255, 94, 148, 0.7);
 }
 
 .story-visual .link-icon {
-    color: #ff4081; /* 亮粉色图标 */
-    font-size: 1.3rem; /* 稍大的图标 */
-    transition: transform 0.3s ease; /* 图标的单独过渡效果 */
+    color: #ff4081;
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
 }
 
 .story-visual .elegant-link:hover .link-icon {
-    color: #ff80ab; /* 悬停时图标颜色变为更亮的粉色 */
-    transform: scale(1.15); /* 图标稍微放大，增加动感 */
+    color: #ff80ab;
+    transform: scale(1.15);
 }
 
 .story-visual .elegant-link i {
-    margin-right: 8px; /* 增加图标与文字之间的间距 */
+    margin-right: 8px;
 }
 
 .story-visual .elegant-link span {
-    font-size: 0.95rem; /* 稍大的链接文字 */
-    letter-spacing: 0.5px; /* 字母间距增加可读性 */
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
 }
 
 .story-visual .elegant-link:hover span {
-    font-weight: 600; /* 悬停时加粗文字 */
+    font-weight: 600;
 }
+
 /* 响应式设计 */
 @media (max-width: 992px) {
     .story-narrative {
@@ -2332,6 +2772,25 @@ footer {
     
     .intro-text {
         padding-left: 15px;
+    }
+    
+    .system-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .system-icon {
+        margin: 0 auto 15px;
+    }
+    
+    .path-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .path-icon {
+        margin: 0 auto;
     }
 }
 
