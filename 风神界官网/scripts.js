@@ -646,3 +646,51 @@ document.addEventListener("DOMContentLoaded", () => {
   initParallaxEffect();
   initPreorderForm();
 });
+
+// 等待整个 HTML 文档加载完成后执行
+document.addEventListener('DOMContentLoaded', function() {
+  // 获取所有的世界观选项卡按钮
+  const worldviewTabs = document.querySelectorAll('#worldview .note-card');
+  // 获取所有的世界观内容区域
+  const worldviewContentAreas = document.querySelectorAll('#worldview .worldview-content-area');
+
+  // 定义一个函数，用于激活指定的选项卡及其对应的内容区域
+  function activateTab(tabToActivate) {
+      // 从被点击的选项卡的 data-target 属性获取目标内容区域的 ID
+      const targetId = tabToActivate.dataset.target;
+      // 根据 ID 找到目标内容区域元素
+      const contentToActivate = document.getElementById(targetId);
+
+      // --- 首先，取消所有选项卡和内容区域的激活状态 ---
+      // 移除所有选项卡的 'active' 类
+      worldviewTabs.forEach(tab => {
+          tab.classList.remove('active');
+      });
+      // 移除所有内容区域的 'active' 类（我们用 .active 类来控制 CSS 中的 display）
+      worldviewContentAreas.forEach(content => {
+          content.classList.remove('active');
+      });
+
+      // --- 然后，激活被点击的选项卡和它对应的内容区域 ---
+      // 给被点击的选项卡添加 'active' 类
+      tabToActivate.classList.add('active');
+      // 如果找到了对应的内容区域，也给它添加 'active' 类
+      if (contentToActivate) {
+          contentToActivate.classList.add('active');
+      }
+  }
+
+  // --- 设置初始状态 ---
+  // 默认激活第一个选项卡（如果存在的话）
+  if (worldviewTabs.length > 0) {
+      activateTab(worldviewTabs[0]); // 页面加载时，默认显示第一个选项卡的内容
+  }
+
+  // --- 为所有选项卡添加点击事件监听器 ---
+  worldviewTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+          // 当选项卡被点击时，调用 activateTab 函数，并把当前被点击的选项卡 (this) 传进去
+          activateTab(this);
+      });
+  });
+});

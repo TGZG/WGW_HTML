@@ -921,6 +921,132 @@ nav.scrolled {
     background-color: transparent;
     box-shadow: none;
 }
+/* 添加到 style.css 文件中 */
+
+/* 添加活跃笔记卡片样式 */
+.main-objective .note-card.active {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-left: 3px solid #ff7e5f;
+}
+
+/* 平滑过渡效果 */
+.worldview-content-area {
+    transition: all 0.5s ease;
+    overflow: hidden;
+}
+
+/* 为笔记卡片添加更明显的可点击样式 */
+.main-objective .note-card {
+    position: relative;
+}
+
+.main-objective .note-card::after {
+    content: "点击展开";
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.main-objective .note-card.active::after {
+    content: "点击收起";
+}
+
+.main-objective .note-card:hover::after {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 内容区域视觉反馈 */
+.worldview-content-area {
+    margin: 30px 0;
+    padding-top: 20px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* 内容区域标题 */
+.content-area-title {
+    font-size: 1.4rem;
+    color: #ff7e5f;
+    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 3px solid #ff7e5f;
+}
+
+/* 添加活跃笔记卡片样式 */
+.main-objective .note-card.active {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-left: 3px solid #ff7e5f;
+}
+
+/* 为笔记卡片添加更明显的可点击样式 */
+.main-objective .note-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.main-objective .note-card::after {
+    content: "点击展开";
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.main-objective .note-card.active::after {
+    content: "点击收起";
+}
+
+.main-objective .note-card:hover::after {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 内容区域视觉反馈 */
+.worldview-content-area {
+    margin: 30px 0;
+    padding-top: 20px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.worldview-content-area {
+    transition: all 0.5s ease; /* 可以保留，用于未来可能的过渡效果 */
+    overflow: hidden;          /* 可以保留 */
+    margin: 30px 0;
+    padding-top: 20px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+
+    /* --- 新增 --- */
+    display: none; /* 默认隐藏 */
+}
+
+/* --- 新增 --- */
+/* 用于显示被激活的内容区域的规则 */
+.worldview-content-area.active {
+    display: block; /* 设置为 block 使其显示出来 */
+}
+
+/* 保留您已有的 .note-card.active 样式，用于选项卡本身的视觉反馈 */
+.main-objective .note-card.active {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-left: 3px solid #ff7e5f;
+}
+/* 您可以根据需要保留或修改 :after 伪元素的内容 */
+.main-objective .note-card::after { /* 保留或修改 */
+    content: "点击展开";
+    /* ... 其他样式 ... */
+}
+.main-objective .note-card.active::after { /* 保留或修改 */
+    content: "点击收起";
+}
 
 /* 境界系统 */
 .realm-system {
@@ -2006,6 +2132,48 @@ nav.scrolled {
     .faq-integrated-item .rune-explanation {
         order: 1;
     }
+}
+
+/* 新增高亮样式 */
+.highlight-filter {
+    background-color: rgba(255, 126, 95, 0.2); /* 使用次要颜色作背景 */
+    color: #ff7e5f; /* 次要颜色 */
+    padding: 0 5px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+/* 术法系统标题样式修改 */
+.faq-integrated-item .system-header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-left: 3px solid rgba(78, 124, 255, 0.5);
+    padding-left: 15px;
+}
+
+.faq-integrated-item .system-title {
+    font-size: 1.5rem; /* 减小字体大小 */
+    color: #4e7cff; /* 使用主色调 */
+}
+
+/* 增加子回答的缩进和样式 */
+.faq-integrated-item .spell-system {
+    margin-left: 15px;
+    padding-left: 15px;
+}
+
+/* 移除图片但保留高度 */
+.yin-yang-visual::before,
+.reincarnation-visual::before {
+    display: none;
+}
+
+.yin-yang-visual,
+.reincarnation-visual {
+    background: rgba(255, 255, 255, 0.03);
+    height: 30px; /* 减小高度 */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* ==========================================================================
