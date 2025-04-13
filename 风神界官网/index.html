@@ -542,6 +542,9 @@
         
         <!-- 境界系统部分 -->
         <div id="realm-content-area" class="worldview-content-area">
+            <div class="back-button-container">
+                <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>返回选项</a>
+            </div>
             <!-- 保留原有境界系统的内容，不修改标题样式 -->
             <div class="realm-system">  <!-- Start of realm-system -->
                 <div class="realm-header">
@@ -665,6 +668,9 @@
         
         <!-- 势力分布部分 -->
         <div id="faction-content-area" class="worldview-content-area">
+            <div class="back-button-container">
+                <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>返回选项</a>
+            </div>
             <!-- 主要势力类型部分 -->
             <div class="power-system new-layout">
                 <h3>主要势力类型</h3>
@@ -844,6 +850,9 @@
 
        <!-- 大争之世部分 -->
        <div id="conflict-content-area" class="worldview-content-area">
+            <div class="back-button-container">
+                <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>返回选项</a>
+            </div>
            <!-- 保留原有大争之世的内容，不修改标题样式 -->
            <div class="elegant-content">
                <div class="decorated-title">
@@ -936,7 +945,7 @@
             <div class="spell-system">
                 <div class="system-header">
                     <div class="system-icon"><i class="fas fa-hat-wizard"></i></div>
-                    <h3 class="system-title">术法系统中的认知过滤</h3>
+                    <h3 class="system-title">术法系统中的<span class="highlight-filter-text">认知过滤</span></h3>
                 </div>
                 <div class="system-content">
                     <p>玩家可以学习无限的术法。但在使用术法时需要考虑五维向量。角色的状态由五个参数构成。每一次释放技能，五个参数同时变化；每个技能的释放条件，都是这五个参数满足某条件。</p>
@@ -980,7 +989,7 @@
             <div class="rune-system">
                 <div class="system-header">
                     <div class="system-icon"><i class="fas fa-scroll"></i></div>
-                    <h3 class="system-title">符文系统</h3>
+                    <h3 class="system-title">符文系统中的<span class="highlight-filter-text">认知过滤</span></h3>
                 </div>
                 <div class="rune-content">
                     <div class="rune-editor">
@@ -1004,6 +1013,20 @@
                         <p class="rune-desc">风神界内置编程语言，比Python更符合自然语言语法。符文有众多作用：可以自动战斗、自动探险、自动采矿、自动出售、自动管理势力、自定义职位、自定义功法等。</p>
                         <p class="rune-desc">为了实现认知过滤，风神界中内置大量符文，且玩家通常感受不到符文的存在。例如，阴阳功法与轮回功法都是使用符文书写的，而不是代码书写的。（当然，玩家也可以使用符文来发明新的功法、新的面板。）</p>
                         <p class="rune-desc">很多面板也是符文书写的，例如统一的仓库面板：左侧列表中有储物戒、箱子、交易中心寄存处、面前尸体等条目，右侧是选中条目里的道具网格。游戏会直接提供给玩家这个面板，但玩家可以手动查看这个面板的源符文、可以编辑与重置。游戏后台只用C#定义了各道具的独立面板（例如单独的储物戒面板），统一仓库面板是使用符文定义的，但玩家即便不知道符文、也可以正常使用统一仓库面板。这就是认知过滤。</p>
+                    </div>
+                </div>
+                <!-- 认知过滤总结段落 HTML -->
+                <div class="filter-conclusion">
+                    <div class="conclusion-divider"></div>
+                    <div class="conclusion-content">
+                        <div class="conclusion-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="conclusion-text">
+                            <h4>认知过滤：复杂性的完美解决方案</h4>
+                            <p>通过术法系统和符文系统的认知过滤机制，我们成功将风神界高度复杂的玩法和机制封装起来，实现了丰富多样的伪圣之路。每个玩家都能在不同的功法和系统中找到适合自己的特例，轻松上手并逐渐深入。</p>
+                            <p>有了伪圣之路，复杂性永远不会是风神界的缺点，反而成为了优势——玩家可以从简单特例入手，循序渐进地探索更深层次的玩法。事实上，在我们的设计哲学中，<span class="highlight-text">游戏越复杂越好</span>，因为复杂度带来的是无尽可能性，而认知过滤确保了这种复杂性不会成为新玩家的障碍。</p>
+                        </div>
                     </div>
                 </div>
             </div>

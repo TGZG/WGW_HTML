@@ -1048,6 +1048,45 @@ nav.scrolled {
     content: "点击收起";
 }
 
+/* 返回按钮样式 */
+.back-to-notes {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: rgba(255, 126, 95, 0.2);
+    color: #ff7e5f;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 126, 95, 0.3);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.back-to-notes:hover {
+    background-color: rgba(255, 126, 95, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 126, 95, 0.2);
+}
+
+.back-to-notes i {
+    margin-right: 8px;
+}
+
+/* 确保内容区域有足够的上边距，以便返回按钮有空间 */
+.worldview-content-area {
+    padding-top: 30px;
+}
+
+/* 返回按钮容器 */
+.back-button-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
 /* 境界系统 */
 .realm-system {
     max-width: 1200px;
@@ -1524,6 +1563,15 @@ nav.scrolled {
 .system-title {
     font-size: 2rem;
     color: var(--text-dark);
+}
+
+/* 标题中认知过滤高亮样式 */
+.system-title .highlight-filter-text {
+    color: #ff7e5f;
+    font-weight: 600;
+    background-color: rgba(255, 126, 95, 0.2);
+    padding: 0 5px;
+    border-radius: 3px;
 }
 
 .system-content {
@@ -2174,6 +2222,257 @@ nav.scrolled {
     height: 30px; /* 减小高度 */
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 术法系统宽度对齐样式 */
+
+/* 确保术法系统容器有一个固定的最大宽度 */
+.faq-integrated-item .spell-system {
+    max-width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 路径比较卡片（两个卡片）宽度对齐 */
+.faq-integrated-item .path-comparison {
+    max-width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 符文系统宽度对齐 */
+.faq-integrated-item .rune-system {
+    max-width: 94%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 确保路径比较两个卡片的大小一致 */
+.faq-integrated-item .pseudo-path {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 确保符文编辑器和符文解释区域宽度比例合适 */
+.faq-integrated-item .rune-content {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 确保符文编辑器不会超出容器 */
+.faq-integrated-item .rune-editor {
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* 确保符文解释区域的宽度合适 */
+.faq-integrated-item .rune-explanation {
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 0;
+}
+
+/* 对齐两个伪圣之路卡片的高度 */
+.faq-integrated-item .path-content {
+    height: 100%;
+}
+
+/* 移动设备上的调整 */
+@media (max-width: 992px) {
+    .faq-integrated-item .path-comparison {
+        grid-template-columns: 1fr;
+    }
+    
+    .faq-integrated-item .rune-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .faq-integrated-item .rune-explanation {
+        margin-left: 0;
+    }
+}
+
+/* 阴阳功法卡片对齐修复 */
+
+/* 确保路径比较容器有正确的宽度和内边距 */
+.faq-integrated-item .path-comparison {
+    width: 94%;
+    margin: 0 auto 60px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+/* 专门针对阴阳功法卡片的修复 */
+.faq-integrated-item .pseudo-path:first-of-type {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 轮回功法卡片的修复，保持一致性 */
+.faq-integrated-item .pseudo-path:last-of-type {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 修复卡片头部区域 */
+.faq-integrated-item .path-header {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 修复阴阳功法标题 */
+.faq-integrated-item .pseudo-path:first-of-type .path-title {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+/* 修复阴阳符号视觉元素 */
+.faq-integrated-item .yin-yang-visual {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* 确保卡片内容区域正确对齐 */
+.faq-integrated-item .path-content {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 确保文字说明区域样式一致 */
+.faq-integrated-item .path-explanation {
+    padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* 确保两个卡片高度一致 */
+.faq-integrated-item .pseudo-path {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+/* 移动设备响应式调整 */
+@media (max-width: 992px) {
+    .faq-integrated-item .path-comparison {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .faq-integrated-item .pseudo-path:first-of-type,
+    .faq-integrated-item .pseudo-path:last-of-type {
+        margin-bottom: 20px;
+    }
+}
+
+/* 认知过滤总结段落样式 */
+.filter-conclusion {
+    max-width: 96%;
+    margin: 60px auto 40px;
+    box-sizing: border-box;
+}
+
+.conclusion-divider {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.01));
+    width: 100%;
+    margin: 15px 0 30px;
+}
+
+.conclusion-content {
+    display: flex;
+    align-items: flex-start;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 30px;
+    border-left: 3px solid rgba(255, 126, 95, 0.6);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.conclusion-icon {
+    flex-shrink: 0;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff7e5f, rgba(255, 126, 95, 0.7));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 25px;
+    color: white;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+}
+
+.conclusion-text {
+    flex: 1;
+}
+
+.conclusion-text h4 {
+    color: #ff7e5f;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.conclusion-text p {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.7;
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+}
+
+.conclusion-text p:last-child {
+    margin-bottom: 0;
+}
+
+.highlight-text {
+    background-color: rgba(255, 126, 95, 0.2);
+    color: #ff7e5f;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .conclusion-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 25px 20px;
+    }
+    
+    .conclusion-icon {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    
+    .conclusion-text h4 {
+        font-size: 1.3rem;
+    }
 }
 
 /* ==========================================================================
