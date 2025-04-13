@@ -34,6 +34,8 @@
                 <h1>风神界</h1>
                 <h2>开启尊重业时代的玄幻战略RPG</h2>
                 <p class="tagline">百亿AI驱动的永恒世界，由你谱写历史</p>
+                <h2>玄幻战略RPG游戏，全球首款虚拟文明游戏</h2>
+                <p class="tagline">随机世界，百亿AI，开局演变百万年，无需玩家也可王朝更迭。无限精彩等你体验</p>
                 <div class="hero-buttons">
                     <a href="#versions" class="primary-button">立即预约</a>
                     <a href="#introduction" class="secondary-button">了解更多</a>
@@ -55,16 +57,18 @@
                     <p>小类：生存，建造，经营，自动化，跑商，金融，征服</p>
                 </div>
                 <div class="game-definition-right">
-                    <h3>游戏定位</h3>
-                    <p>《风神界》，全球首款虚拟文明游戏，玄幻战略RPG游戏，单机买断制。</p>
-                    <p>百亿AI角色基于生存需求，后天形成分工分级的社会；经济与交通高度发达，所有AI的行为实时演算、影响世界的物价与势力版图。</p>
-                    <p>发布之前，世界由AI演变百万年。百万年后，玩家进入世界。</p>
+                    <h3>游戏简介</h3>
+                    <p>风神界，玄幻战略RPG游戏，真正的开放世界游戏。</p>
+                    <p>百亿AI-NPC，随机世界，开局演变百万年，无需玩家也可王朝更迭，堪称虚拟文明。</p>
+                    <p>金融贸易高度繁荣，无《矮人要塞》之社会孤岛，无《MC》之举目孤独。</p>
+                    <p>百亿NPC都基于生存需求、独立意志，无《文明》之士兵机械，无《KenShi》之AI僵化。</p>
+                    <p>无缝地图、心流曲线，沉浸式体验，无《骑砍》之场景割裂，无《EVE》之凡人牛马。</p>
                 </div>
             </div>
             <!-- 游戏对比模块 -->
             <div class="game-comparison">
-                <h3>风神界 VS 开放世界游戏</h3>
-                
+                <h3>风神界 VS 其他的类虚拟文明游戏</h3>
+
                 <div class="comparison-intro">
                     <p>无《Kenshi》之AI僵化<br>
                     无《EVE》之凡人牛马<br>
@@ -75,7 +79,7 @@
                     
                     <p>与其他游戏相比，风神界的AI驱动文明模拟和玄幻战略RPG设计提供了前所未有的游戏体验。</p>
                 </div>
-                
+
                 <div class="comparison-table">
                     <div class="comparison-header">
                         <div class="corner-cell">
@@ -263,8 +267,8 @@
                         <i class="fas fa-lightbulb"></i>
                     </div>
                     <div class="difference-content">
-                        <h4>核心差异：真正的活体世界</h4>
-                        <p>风神界中的每个角色都是有自我意识的个体，不是简单的脚本控制，而是真正基于生存需求而自发行动。他们会因环境变化调整行为，形成不同的社会分工，甚至在玩家不在场时也会继续发展演化。这创造了一个真正活着的游戏世界，每次游戏体验都截然不同。</p>
+                        <h4>核心差异：风神界是真正的虚拟文明</h4>
+                        <p>风神界中，玩家不是主角，只是众生之一。每个NPC都是自己的主角，上至帝尊、下至凡人，都按马斯洛需求层次自我驱动行动。物价动荡、王朝更迭、仙神陨落、凡人逆袭，在玩家不在场时也依然演变。玩家进入的是一个真正的虚拟社会，而不是一个静态土木世界。</p>
                     </div>
                 </div>
             </div>
@@ -1220,7 +1224,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 风神界开发团队. 保留所有权利。</p>
+                <p>© 2024 风神界开发团队. 保留所有权利。</p>
                 <div class="footer-social">
                     <a href="#" class="social-icon weibo"></a>
                     <a href="#" class="social-icon wechat"></a>
@@ -1332,6 +1336,12 @@
         
         // 显示特定故事
         function showStory(index) {
+            // 检查索引是否有效
+            if (index < 0 || index >= totalStories) {
+                 console.error("Invalid story index:", index);
+                 return; // 防止无效索引导致错误
+             }
+
             // 隐藏所有故事
             storySlides.forEach(slide => {
                 slide.classList.remove('active');
@@ -1346,7 +1356,9 @@
             storySlides[index].classList.add('active');
             
             // 激活对应的导航点
-            navDots[index].classList.add('active');
+             if (navDots[index]) { // 添加检查确保导航点存在
+                 navDots[index].classList.add('active');
+             }
             
             // 更新当前索引
             currentStoryIndex = index;
@@ -1382,54 +1394,57 @@
         
         // 添加键盘导航支持
         document.addEventListener('keydown', (e) => {
-            // 在故事部分可见时才响应键盘事件
-            const storySection = document.getElementById('player-stories');
-            const rect = storySection.getBoundingClientRect();
-            const isVisible = (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
-            
-            if (isVisible) {
-                if (e.key === 'ArrowRight') {
-                    showNextStory();
-                } else if (e.key === 'ArrowLeft') {
-                    showPrevStory();
-                }
-            }
+             // 检查故事部分是否存在
+             const storySection = document.querySelector('.stories-container'); // 使用更具体的选择器
+             if (!storySection) return; // 如果故事部分不存在，则不执行键盘导航
+
+             const rect = storySection.getBoundingClientRect();
+             const isVisible = (
+                 rect.top < window.innerHeight && rect.bottom >= 0 // 检查是否在视口内
+             );
+             
+             if (isVisible) {
+                 if (e.key === 'ArrowRight') {
+                     showNextStory();
+                 } else if (e.key === 'ArrowLeft') {
+                     showPrevStory();
+                 }
+             }
         });
         
         // 添加触摸滑动支持
         const storyContainer = document.querySelector('.story-container');
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        storyContainer.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-        
-        storyContainer.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-        
-        function handleSwipe() {
-            const minSwipeDistance = 50;
-            if (touchStartX - touchEndX > minSwipeDistance) {
-                // 向左滑动，显示下一个故事
-                showNextStory();
-            } else if (touchEndX - touchStartX > minSwipeDistance) {
-                // 向右滑动，显示上一个故事
-                showPrevStory();
-            }
-        }
+         if (storyContainer) { // 添加检查确保容器存在
+             let touchStartX = 0;
+             let touchEndX = 0;
+             
+             storyContainer.addEventListener('touchstart', (e) => {
+                 touchStartX = e.changedTouches[0].screenX;
+             });
+             
+             storyContainer.addEventListener('touchend', (e) => {
+                 touchEndX = e.changedTouches[0].screenX;
+                 handleSwipe();
+             });
+             
+             function handleSwipe() {
+                 const minSwipeDistance = 50;
+                 if (touchStartX - touchEndX > minSwipeDistance) {
+                     // 向左滑动，显示下一个故事
+                     showNextStory();
+                 } else if (touchEndX - touchStartX > minSwipeDistance) {
+                     // 向右滑动，显示上一个故事
+                     showPrevStory();
+                 }
+             }
+         }
         
         // 自动切换故事（可选）
         let autoSlideInterval;
         
         function startAutoSlide() {
+             // 停止任何现有的计时器
+             stopAutoSlide();
             autoSlideInterval = setInterval(() => {
                 showNextStory();
             }, 10000); // 每10秒切换一次
@@ -1439,23 +1454,17 @@
             clearInterval(autoSlideInterval);
         }
         
-        // 当鼠标悬停在故事上时暂停自动切换
-        storyContainer.addEventListener('mouseenter', stopAutoSlide);
-        storyContainer.addEventListener('touchstart', stopAutoSlide);
-        
-        // 当鼠标离开故事时恢复自动切换
-        storyContainer.addEventListener('mouseleave', startAutoSlide);
-        storyContainer.addEventListener('touchend', startAutoSlide);
+         // 当鼠标悬停在故事上时暂停自动切换
+         if (storyContainer) { // 再次检查
+             storyContainer.addEventListener('mouseenter', stopAutoSlide);
+             storyContainer.addEventListener('touchstart', stopAutoSlide);
+             
+             // 当鼠标离开故事时恢复自动切换
+             storyContainer.addEventListener('mouseleave', startAutoSlide);
+             storyContainer.addEventListener('touchend', startAutoSlide);
+         }
     
         // 启动自动切换
         startAutoSlide();
     });
     </script>
-
-
-    
-    
-    
-    
- 
-    
