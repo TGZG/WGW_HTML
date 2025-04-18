@@ -1,7 +1,8 @@
 /* ==========================================================================
    风神界游戏官网样式表
    重构版本 | 2025-04-10
-   Aesthetic Update based on Previews | 2024-XX-XX
+   Aesthetic Update based on Previews
+   Revision 7: Final Icon & Alignment Fixes
    ========================================================================== */
 
 /* ==========================================================================
@@ -13,7 +14,7 @@
     --primary-color: #4A63B5;       /* Bright Blue */
     --primary-dark: #3A4E8A;        /* Dark Blue */
     --secondary-color: #E6D58A;     /* Bright Gold */
-    --accent-color: #4A63B5;        /* Blue Accent (can reuse primary) */
+    /* --accent-color: #4A63B5;  Using specific colors now, removing generic accent */
     --dark-bg: #0D1019;             /* Very Dark Blue/Black */
     --light-bg: #1a1c2a; /* Keeping original dark, might need adjustment */
     --card-bg: rgba(16, 32, 47, 0.7); /* Semi-transparent card background */
@@ -27,7 +28,7 @@
     --text-muted: #A0B3C6;
 
     /* Supporting Colors */
-    --blood-red: #E74C3C;
+    --blood-red: #E74C3C;           /* Blood Red (for DLC) */
     --emerald: #4ECCA3;
     --ice-blue: #3498DB;
 
@@ -104,32 +105,6 @@ body::after {
    from { background-position: 0 0; }
    to { background-position: -100px 100px; }
 }
-
-/* Optional: Nebula Overlay (if desired, uncomment) */
-/*
-.nebula-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background:
-        radial-gradient(circle at 20% 20%, rgba(74, 99, 181, 0.15), transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(230, 213, 138, 0.1), transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(62, 20, 82, 0.05), transparent 60%);
-    mix-blend-mode: screen;
-    z-index: -8;
-    pointer-events: none;
-}
-*/
-
-/* Optional: Light Spots (if desired, uncomment and add div in HTML) */
-/*
-.light-spots { ... }
-.light-spot { ... }
-@keyframes pulse-fade { ... }
-*/
-
 
 .container {
     width: 100%;
@@ -619,9 +594,6 @@ nav.scrolled {
 
 .game-column .feature-value.different {
     color: var(--text-secondary); /* Slightly brighter for different values */
-    /* Optional: Add a subtle indicator */
-    /* position: relative; */
-    /* &::after { content:'*'; position:absolute; top: 5px; right: 5px; font-size: 0.8em; opacity: 0.5; } */
 }
 
 .game-column.main-game .feature-value {
@@ -696,9 +668,15 @@ nav.scrolled {
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted minmax */
     gap: 30px;
 }
+
+@media (min-width: 769px) { /* Apply only on wider screens */
+    #introduction .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 
 .feature-card {
     background: var(--card-bg); /* Use variable */
@@ -773,12 +751,11 @@ nav.scrolled {
 
 /* Themed Document Link */
 .document-link {
-    text-align: right; /* Keep alignment */
     position: absolute;
-    bottom: 25px; /* Adjusted position */
-    left: 25px;
-    right: 25px;
+    bottom: 25px;
+    right: 25px; /* Back to right */
     margin-top: 0;
+    text-align: right; /* Align text right */
 }
 .elegant-link {
     display: inline-flex;
@@ -825,17 +802,18 @@ nav.scrolled {
     display: inline-block; /* Ensure icon is treated like text */
 }
 
-.feature-card .elegant-link { /* Override specific card link style */
-    padding: 8px 16px; /* Restore general elegant link padding */
-    font-size: 1rem; /* Restore general font size */
-    bottom: 25px; left: 25px; right: 25px; /* Consistent positioning */
+.feature-card .elegant-link { /* Style specifically for feature cards */
+    padding: 8px 16px;
+    font-size: 1rem;
+    bottom: 25px;
+    right: 25px; /* Ensure it's positioned correctly */
+    left: auto; /* Explicitly remove left positioning */
 }
 .feature-card .link-icon { font-size: 1.2rem; }
 
 /* ==========================================================================
    5. Worldview - Themed
    ========================================================================== */
-/* Worldview header needs styling if it exists as a separate block */
 /* Apply Glass effect to content blocks */
 #worldview .main-objective,
 #worldview .game-process,
@@ -952,14 +930,18 @@ nav.scrolled {
     position: relative;
     border: 1px solid rgba(230, 213, 138, 0.1);
     backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
 }
 .slider-arrow { /* Themed arrows */
     display: flex; align-items: center; justify-content: center;
     width: 40px; height: 40px; border-radius: 50%;
-    background-color: rgba(230, 213, 138, 0.1); /* Faint gold */
-    color: var(--secondary-color); /* Gold icon */
+    background-color: rgba(230, 213, 138, 0.1);
+    color: var(--secondary-color);
     cursor: pointer; z-index: 10; transition: all 0.3s ease;
     border: 1px solid rgba(230, 213, 138, 0.2);
+    transform: none; /* Ensure no rotation */
+    margin: 0; /* Reset margins */
 }
 .slider-arrow:hover {
     background-color: rgba(230, 213, 138, 0.2);
@@ -967,8 +949,8 @@ nav.scrolled {
     box-shadow: 0 0 10px rgba(230, 213, 138, 0.3);
 }
 .slider-arrow i { font-size: 1rem; }
-.prev-arrow { margin-right: 10px; }
-.next-arrow { margin-left: 10px; }
+.prev-arrow { margin-right: 15px; } /* Spacing */
+.next-arrow { margin-left: 15px; } /* Spacing */
 
 .story-container { /* Container inside slider */
     flex: 1; position: relative; overflow: hidden;
@@ -1008,10 +990,11 @@ nav.scrolled {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.05);
 }
 .story-icon { font-size: 55px; color: var(--secondary-color); text-shadow: 0 0 15px rgba(230, 213, 138, 0.5); }
-.story-text { flex: 1; overflow-y: auto; padding-right: 15px; scrollbar-width: thin; scrollbar-color: var(--glass-border) transparent; }
-.story-text::-webkit-scrollbar { width: 6px; }
-.story-text::-webkit-scrollbar-track { background: transparent; }
-.story-text::-webkit-scrollbar-thumb { background-color: var(--glass-border); border-radius: 3px; }
+.story-text {
+    flex: 1;
+    padding-right: 15px;
+    /* Removed scrollbar */
+}
 .story-text p { margin-bottom: 10px; line-height: 1.6; font-size: 0.95rem; color: var(--text-secondary); text-shadow: var(--text-shadow); }
 #story-1 .story-text p { margin-bottom: 8px; } /* Keep specific story style */
 
@@ -1025,10 +1008,71 @@ nav.scrolled {
 .nav-dot:hover { background-color: rgba(230, 213, 138, 0.4); transform: scale(1.2); }
 .nav-dot.active { background-color: var(--secondary-color); box-shadow: 0 0 8px rgba(230, 213, 138, 0.6); transform: scale(1.2); border-color: var(--secondary-color); }
 
-/* Interview link in story visual */
-.story-visual .elegant-link { /* Make it fit the main elegant-link style */
-    margin-top: 10px; /* Adjust spacing */
+/* FIX: Interview link styling */
+.story-visual .document-link {
+    position: static;
+    text-align: center;
+    margin-top: 10px;
 }
+/* FIX: Interview link styling - Make it FULLY Gold */
+.story-visual .document-link {
+    position: static; /* Keep positioning */
+    text-align: center;
+    margin-top: 10px;
+}
+
+.story-visual .document-link .elegant-link {
+    /* Apply standard Gold theme visuals */
+    color: var(--secondary-color);
+    border-color: rgba(230, 213, 138, 0.3);
+    background: linear-gradient(135deg, rgba(230, 213, 138, 0.05), rgba(230, 213, 138, 0.1));
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 0 0 5px rgba(230, 213, 138, 0.1);
+
+    /* Keep specific size/layout properties if desired, or revert to general */
+    padding: 10px 18px; /* Or revert to 8px 16px like others */
+    font-size: 0.95rem; /* Or revert to 1rem like others */
+    letter-spacing: 0.5px; /* Optional */
+
+    /* Inherit base elegant-link properties */
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 30px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    text-shadow: none;
+}
+
+.story-visual .document-link .elegant-link:hover {
+    /* Standard Gold hover */
+    background: linear-gradient(135deg, rgba(230, 213, 138, 0.1), rgba(230, 213, 138, 0.15));
+    transform: translateY(-3px); /* Consistent hover effect */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(230, 213, 138, 0.2);
+    color: var(--secondary-color);
+    border-color: rgba(230, 213, 138, 0.5);
+}
+
+/* Explicitly set icon color to Gold */
+.story-visual .document-link .elegant-link .link-icon {
+    color: var(--secondary-color);
+    font-size: 1.3rem; /* Keep specific size or revert to 1.2rem */
+    transition: transform 0.3s ease;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.story-visual .document-link .elegant-link:hover .link-icon {
+    color: var(--secondary-color); /* Keep icon gold on hover */
+    transform: scale(1.15);
+}
+
+/* Remove specific text hover style if not needed for gold link */
+.story-visual .document-link .elegant-link:hover span:not(.link-icon) {
+   font-weight: normal; /* Revert potential bolding */
+}
+
 
 /* Active content area display */
 .worldview-content-area { display: none; /* Hide by default */ }
@@ -1062,7 +1106,7 @@ nav.scrolled {
     background: linear-gradient(90deg, rgba(230, 213, 138, 0), var(--secondary-color), rgba(230, 213, 138, 0));
     border-radius: 3px; box-shadow: 0 0 10px rgba(230, 213, 138, 0.3);
 }
-.realm-header p { color: var(--text-secondary); margin-top: 5px; } /* Add styling for description */
+.realm-header p { color: var(--text-secondary); margin-top: 5px; text-shadow: var(--text-shadow); } /* Add styling for description */
 
 .realm-chart-container { /* Container for the chart */
     margin: 30px 0; background: rgba(13, 16, 25, 0.3);
@@ -1186,7 +1230,7 @@ nav.scrolled {
 .ornament-line::before { left: 25%; }
 .ornament-line::after { right: 25%; }
 .ornament-line.top { transform: translateY(-10px); /* Adjust spacing */}
-.ornament-line.bottom-full { max-width: 70%; margin: 40px auto 10px; }
+.ornament-line.bottom, .ornament-line.bottom-full { display: none; } /* Hidden */
 
 .elegant-text-content { max-width: 900px; margin: 0 auto; line-height: 1.8; color: var(--text-secondary); font-size: 1.05rem; text-shadow: var(--text-shadow); }
 .intro-text { /* Indented intro text */
@@ -1217,6 +1261,7 @@ nav.scrolled {
 }
 .faq-item.active h3:after { transform: rotate(45deg); }
 .faq-content { margin-top: 10px; display: none; /* Controlled by JS */ }
+.faq-item.active .faq-content { display: block; }
 .faq-content p { margin-bottom: 10px; line-height: 1.6; color: var(--text-secondary); text-shadow: var(--text-shadow); }
 
 /* Integrated Cognitive Filtering Section */
@@ -1284,24 +1329,30 @@ nav.scrolled {
 }
 .faq-integrated-item .pseudo-path:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); border-color: var(--glass-border-hover); }
 .faq-integrated-item .path-header { /* Themed header */
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; justify-content: center; /* Center title */
     background: linear-gradient(135deg, rgba(74, 99, 181, 0.5), rgba(58, 78, 138, 0.4));
     color: white; padding: 15px 20px; position: relative; z-index: 1;
 }
 .faq-integrated-item .path-title { font-size: 1.3rem; font-weight: 500; margin: 0; text-shadow: var(--text-shadow); }
-.faq-integrated-item .path-icon { /* Themed icon */
-    width: 36px; height: 36px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
+.faq-integrated-item .path-icon { display: none; }
+
 .faq-integrated-item .path-content { padding: 0; display: flex; flex-direction: column; flex-grow: 1; z-index: 1; }
-.faq-integrated-item .path-visual { /* Simplified visual */
-    height: 40px; background: linear-gradient(135deg, rgba(16, 32, 47, 0.2), rgba(13, 16, 25, 0.1));
-    border-bottom: 1px solid rgba(230, 213, 138, 0.05); display: flex; align-items: center; justify-content: center;
+.faq-integrated-item .path-visual { display: none; } /* Removed visual block */
+
+.faq-integrated-item .path-explanation {
+    padding: 20px; background: rgba(16, 32, 47, 0.15);
+    flex-grow: 1; /* Allow filling space */
+    text-align: left;
+    /* FIX: Align content using flex */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensure top description stays top */
 }
-.faq-integrated-item .yin-yang-visual::after { content: "☯"; font-size: 1.5rem; color: rgba(230, 213, 138, 0.4); animation: slow-spin 20s linear infinite; }
-.faq-integrated-item .reincarnation-visual::after { content: "↻"; font-size: 1.5rem; color: rgba(230, 213, 138, 0.4); animation: pulse 4s ease-in-out infinite; }
-.faq-integrated-item .path-explanation { padding: 20px; background: rgba(16, 32, 47, 0.15); flex-grow: 1; text-align: left; }
+/* FIX: Wrapper for bottom details */
+.faq-integrated-item .path-details-bottom {
+     margin-top: auto; /* Pushes this block to the bottom */
+}
+
 .faq-integrated-item .path-desc, .faq-integrated-item .path-flaw, .faq-integrated-item .path-truth { margin-bottom: 12px; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; text-shadow: var(--text-shadow); text-align: left; }
 .faq-integrated-item .path-desc strong, .faq-integrated-item .path-flaw strong, .faq-integrated-item .path-truth strong { display: inline-block; margin-right: 5px; padding: 1px 5px; border-radius: 3px; }
 .faq-integrated-item .path-desc strong { background: rgba(74, 99, 181, 0.2); color: var(--text-light); }
@@ -1315,12 +1366,8 @@ nav.scrolled {
     backdrop-filter: blur(5px); box-shadow: var(--box-shadow);
     border: 1px solid rgba(74, 99, 181, 0.2); /* Blueish border */
     position: relative;
-    max-height: 400px; overflow-y: auto; /* Scroll for long code */
-    scrollbar-width: thin; scrollbar-color: var(--glass-border) transparent;
+    /* Removed scrollbar */
 }
-.faq-integrated-item .rune-editor::-webkit-scrollbar { width: 6px; }
-.faq-integrated-item .rune-editor::-webkit-scrollbar-track { background: transparent; }
-.faq-integrated-item .rune-editor::-webkit-scrollbar-thumb { background-color: var(--glass-border); border-radius: 3px; }
 .faq-integrated-item .rune-editor pre.code-example { /* Code text style */
     color: #d4d4d4; /* Light grey for code */ font-family: 'Courier New', monospace;
     font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap; margin: 0;
@@ -1344,11 +1391,14 @@ nav.scrolled {
     box-shadow: var(--box-shadow); border: 1px solid var(--glass-border);
     position: relative; border-left: 3px solid var(--secondary-color); /* Gold left border */
 }
-.faq-integrated-item .conclusion-icon { /* Themed icon */
+.faq-integrated-item .conclusion-icon { /* FIX: Themed icon consistent with difference-icon */
     flex-shrink: 0; width: 55px; height: 55px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--secondary-color), rgba(230, 213, 138, 0.7));
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); /* Match difference-icon background */
     display: flex; align-items: center; justify-content: center; margin-right: 20px;
-    color: var(--dark-bg); font-size: 1.5rem; box-shadow: 0 4px 15px rgba(230, 213, 138, 0.3);
+    color: white; /* Match difference-icon color */
+    font-size: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(230, 213, 138, 0.3); /* Keep shadow similar */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 .faq-integrated-item .conclusion-text { flex: 1; }
 .faq-integrated-item .conclusion-text h4 { color: var(--secondary-color); font-size: 1.4rem; margin-bottom: 15px; font-weight: 600; text-shadow: var(--text-shadow); }
@@ -1361,7 +1411,7 @@ nav.scrolled {
 }
 
 /* ==========================================================================
-   7. Game Versions - Themed
+   7. Game Versions - Themed (Revised Colors)
    ========================================================================== */
 .version-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 40px; align-items: stretch; }
 .version-card { /* Glassy version cards */
@@ -1373,14 +1423,19 @@ nav.scrolled {
 .version-card:hover { transform: translateY(-8px); background: var(--card-bg-hover); border-color: var(--glass-border-hover); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); }
 .version-card::before { /* Top border highlight based on type */ content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--glass-border); transition: background-color 0.3s ease; }
 .version-card.singleplayer::before { background: var(--primary-color); box-shadow: 0 0 10px rgba(74, 99, 181, 0.5); }
-.version-card.dlc::before { background: var(--accent-color); box-shadow: 0 0 10px rgba(74, 99, 181, 0.5); } /* Using Blue for accent */
-.version-card.online::before { background: var(--secondary-color); box-shadow: 0 0 10px rgba(230, 213, 138, 0.5); } /* Using Gold for online */
+.version-card.dlc::before { background: var(--blood-red); box-shadow: 0 0 10px rgba(231, 76, 60, 0.5); } /* Use Blood Red for DLC */
+.version-card.online::before { background: var(--secondary-color); box-shadow: 0 0 10px rgba(230, 213, 138, 0.5); } /* Gold for Online */
 
 .version-badge { /* Themed badge */
     position: absolute; top: 15px; right: 15px; background: rgba(13, 16, 25, 0.7); color: var(--secondary-color);
     font-size: 0.8rem; font-weight: 500; padding: 4px 10px; border-radius: 20px;
     border: 1px solid var(--glass-border); backdrop-filter: blur(3px);
 }
+/* Specific badge colors */
+.version-card.dlc .version-badge { color: var(--blood-red); border-color: rgba(231, 76, 60, 0.3); }
+.version-card.online .version-badge { color: var(--secondary-color); border-color: rgba(230, 213, 138, 0.3); }
+
+
 .version-header { text-align: center; margin-bottom: 25px; }
 .version-logo { /* Themed logo */
     width: 55px; height: 55px; background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
@@ -1391,8 +1446,8 @@ nav.scrolled {
 }
 /* Specific logo colors */
 .version-card.singleplayer .version-logo i { color: var(--primary-color); text-shadow: 0 0 8px rgba(74, 99, 181, 0.5); }
-.version-card.dlc .version-logo i { color: var(--accent-color); text-shadow: 0 0 8px rgba(74, 99, 181, 0.5); } /* Blue accent */
-.version-card.online .version-logo i { color: var(--secondary-color); text-shadow: 0 0 8px rgba(230, 213, 138, 0.5); } /* Gold online */
+.version-card.dlc .version-logo i { color: var(--blood-red); text-shadow: 0 0 8px rgba(231, 76, 60, 0.5); } /* Blood Red Icon */
+.version-card.online .version-logo i { color: var(--secondary-color); text-shadow: 0 0 8px rgba(230, 213, 138, 0.5); } /* Gold Icon */
 
 .version-title { font-size: 1.8rem; margin-bottom: 5px; color: var(--text-light); text-shadow: var(--text-shadow); }
 .version-release { font-size: 1rem; color: var(--text-muted); }
@@ -1403,8 +1458,8 @@ nav.scrolled {
 .price-amount { font-size: 2rem; font-weight: bold; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); }
 /* Specific price colors */
 .version-card.singleplayer .price-amount { color: var(--primary-color); }
-.version-card.dlc .price-amount { color: var(--accent-color); } /* Blue */
-.version-card.online .price-amount { color: var(--secondary-color); } /* Gold */
+.version-card.dlc .price-amount { color: var(--blood-red); } /* Blood Red Price */
+.version-card.online .price-amount { color: var(--secondary-color); } /* Gold Price */
 .price-type { font-size: 0.9rem; color: var(--text-muted); }
 .version-features { margin-bottom: 25px; flex-grow: 1; }
 .feature-list { display: flex; flex-direction: column; gap: 12px; } /* Reduced gap */
@@ -1415,8 +1470,8 @@ nav.scrolled {
 }
 /* Specific check icon colors */
 .version-card.singleplayer .feature-list li i { color: var(--primary-color); }
-.version-card.dlc .feature-list li i { color: var(--accent-color); } /* Blue */
-.version-card.online .feature-list li i { color: var(--secondary-color); } /* Gold */
+.version-card.dlc .feature-list li i { color: var(--blood-red); } /* Blood Red Check */
+.version-card.online .feature-list li i { color: var(--secondary-color); } /* Gold Check */
 .version-note { margin-bottom: 25px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; text-shadow: var(--text-shadow); }
 .version-cta { text-align: center; margin-top: auto; }
 
@@ -1431,8 +1486,8 @@ nav.scrolled {
 /* Specific button colors */
 .preorder-button.singleplayer { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); border-color: rgba(74, 99, 181, 0.5); }
 .preorder-button.singleplayer:hover { box-shadow: 0 6px 15px rgba(74, 99, 181, 0.3); }
-.preorder-button.dlc { background: linear-gradient(135deg, var(--accent-color), var(--primary-dark)); border-color: rgba(74, 99, 181, 0.5); } /* Blue Accent */
-.preorder-button.dlc:hover { box-shadow: 0 6px 15px rgba(74, 99, 181, 0.3); }
+.preorder-button.dlc { background: linear-gradient(135deg, var(--blood-red), #c13b2d); border-color: rgba(231, 76, 60, 0.5); } /* Blood Red Button */
+.preorder-button.dlc:hover { box-shadow: 0 6px 15px rgba(231, 76, 60, 0.3); }
 .preorder-button.online { background: linear-gradient(135deg, var(--secondary-color), #b8a45e); border-color: rgba(230, 213, 138, 0.5); color: var(--dark-bg); /* Dark text on gold */}
 .preorder-button.online:hover { box-shadow: 0 6px 15px rgba(230, 213, 138, 0.3); color: var(--dark-bg); }
 
@@ -1442,13 +1497,13 @@ nav.scrolled {
    9. Team & Community - Themed
    ========================================================================== */
 /* Apply Glass effect to container */
-#team .container > div:not(.join-team) { /* Target community section */
+#team .community-section { /* Target community section */
     text-align: center; margin-top: 60px; padding: 30px;
     background: rgba(13, 16, 25, 0.6); border-radius: var(--card-radius);
     backdrop-filter: blur(8px); box-shadow: var(--box-shadow);
     border: 1px solid var(--glass-border); position: relative; overflow: hidden;
 }
-#team .container > div:not(.join-team)::before {
+#team .community-section::before {
     content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
 }
@@ -1580,11 +1635,11 @@ footer::before {
 /* ==========================================================================
    13. Responsive Design (Keep existing, review overrides)
    ========================================================================== */
-/* Review existing media queries and adjust themed styles if they conflict */
 @media (max-width: 992px) {
     .faq-integrated-item .rune-content { grid-template-columns: 1fr; }
     .faq-integrated-item .rune-editor, .faq-integrated-item .rune-explanation { transform: translateY(0); }
     .footer-content { grid-template-columns: 1fr; }
+    #introduction .features-grid { grid-template-columns: 1fr; } /* Stack features on smaller screens */
 }
 
 @media (max-width: 768px) {
@@ -1595,7 +1650,7 @@ footer::before {
     .hero-content h2 { font-size: 1.5rem; }
     .hero-buttons { flex-direction: column; gap: 15px; align-items: center; }
     .primary-button, .secondary-button { width: 80%; max-width: 300px; }
-    .game-definition-container { flex-direction: column; gap: 20px; padding: 20px; }
+    #introduction .game-definition-container { flex-direction: column; gap: 20px; padding: 20px; }
     .faction-container { flex-direction: column; }
     .faction-grid { width: 100%; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); } /* Fit more icons */
     .footer-links { grid-template-columns: 1fr 1fr; } /* Two columns on smaller screens */
@@ -1605,6 +1660,17 @@ footer::before {
     .faq-integrated-item .system-icon { margin-bottom: 15px; }
     .main-objective .notes-row { flex-direction: column; gap: 15px; }
     .realm-chart { flex-direction: column; min-width: unset; gap: 20px;}
+
+    /* Ensure story slider arrows are horizontal on mobile */
+    #worldview .story-slider { flex-direction: row; }
+    #worldview .slider-arrow { transform: none; margin: 0; }
+    #worldview .prev-arrow { margin-right: 10px; order: -1; }
+    #worldview .next-arrow { margin-left: 10px; order: 1; }
+    #worldview .story-container { order: 0; }
+
+     /* Adjust 2x2 feature grid for smaller tablets */
+    #introduction .features-grid { grid-template-columns: 1fr; }
+
 }
 
 @media (max-width: 576px) {
@@ -1621,4 +1687,7 @@ footer::before {
     .faq-integrated-item > h3 { font-size: 1.4rem; }
     .main-objective .objective-heading, .process-heading, .realm-title { font-size: 1.6rem; }
     .gold-title { font-size: 1.8rem; }
+    #introduction .features-grid { grid-template-columns: 1fr; } /* Stack features */
+    .faq-integrated-item .path-comparison { grid-template-columns: 1fr; } /* Stack path comparison */
+    .faq-integrated-item .rune-content { grid-template-columns: 1fr; } /* Stack rune editor/explanation */
 }
