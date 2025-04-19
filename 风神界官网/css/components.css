@@ -1,0 +1,253 @@
+/* ==========================================================
+   components.css: 可复用 UI 组件
+   ========================================================== */
+
+/* --- 按钮 --- */
+.cta-button { /* 导航栏按钮 */
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: white !important;
+    transition: var(--transition);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(74, 99, 181, 0.5);
+    text-shadow: var(--text-shadow);
+}
+.cta-button:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(74, 99, 181, 0.3);
+}
+
+.primary-button,
+.secondary-button { /* Hero 区域按钮 */
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: var(--transition);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.primary-button {
+    background: linear-gradient(135deg, var(--secondary-color), #b8a45e); /* 金色渐变 */
+    color: #111; /* 深色文字 */
+    border: none;
+    box-shadow: 0 5px 15px rgba(230, 213, 138, 0.3);
+}
+.primary-button:hover {
+    background: linear-gradient(135deg, #f0e09b, var(--secondary-color));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(230, 213, 138, 0.4);
+}
+.secondary-button {
+    background-color: transparent;
+    color: var(--secondary-color); /* 金色文字 */
+    border: 2px solid var(--secondary-color); /* 金色边框 */
+}
+.secondary-button:hover {
+    background-color: rgba(230, 213, 138, 0.1); /* 微弱金色背景 */
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.preorder-button { /* 版本按钮 */
+    display: inline-block; width: 100%; padding: 12px 0;
+    border-radius: 30px; font-weight: 500; text-align: center;
+    margin-bottom: 15px; transition: var(--transition); color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); border: 1px solid transparent;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.preorder-button:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); color: white; }
+/* 具体版本按钮颜色在 section-versions.css 中定义 */
+
+.elegant-link { /* 文档链接 */
+    display: inline-flex; align-items: center; color: var(--secondary-color);
+    text-decoration: none; font-weight: 500; padding: 8px 16px;
+    border: 1px solid rgba(230, 213, 138, 0.3); border-radius: 30px;
+    transition: var(--transition);
+    background: linear-gradient(135deg, rgba(230, 213, 138, 0.05), rgba(230, 213, 138, 0.1));
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 0 0 5px rgba(230, 213, 138, 0.1);
+    position: relative; overflow: hidden; text-shadow: none;
+}
+.elegant-link:hover {
+    background: linear-gradient(135deg, rgba(230, 213, 138, 0.1), rgba(230, 213, 138, 0.15));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(230, 213, 138, 0.2);
+    color: var(--secondary-color); border-color: rgba(230, 213, 138, 0.5);
+}
+.elegant-link::before { /* 悬停光泽效果 */
+    content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+.elegant-link:hover::before { left: 100%; }
+.link-icon {
+    margin-right: 8px; font-size: 1.2rem; color: var(--secondary-color);
+    display: inline-block;
+}
+
+.community-link { /* 社区链接按钮 */
+    display: inline-block; padding: 10px 25px; border-radius: 5px; font-weight: bold;
+    transition: var(--transition); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    color: white; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    border: 1px solid transparent;
+}
+.community-link:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); }
+/* 具体社区链接颜色在 section-team.css 中定义 */
+
+.back-to-notes { /* 世界观返回按钮 */
+    display: inline-flex; align-items: center; padding: 8px 16px;
+    background: rgba(230, 213, 138, 0.1); color: var(--secondary-color);
+    border-radius: 20px; font-weight: 500; font-size: 0.9rem;
+    transition: all 0.3s ease; border: 1px solid rgba(230, 213, 138, 0.2);
+    text-decoration: none; cursor: pointer;
+}
+.back-to-notes:hover {
+    background: rgba(230, 213, 138, 0.2); transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-color: rgba(230, 213, 138, 0.4);
+}
+.back-to-notes i { margin-right: 8px; }
+
+.social-icon { /* 页脚社交图标 */
+    width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.05);
+    display: flex; align-items: center; justify-content: center; transition: var(--transition);
+    position: relative; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-muted);
+}
+.social-icon:hover { background: var(--secondary-color); transform: translateY(-3px); color: var(--dark-bg); border-color: var(--secondary-color); }
+.social-icon.weibo:before { content: "微"; }
+.social-icon.wechat:before { content: "信"; }
+.social-icon.qq:before { content: "Q"; }
+
+#back-to-top { /* 返回顶部按钮 */
+    position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; opacity: 0; transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); z-index: 100;
+    border: 1px solid rgba(74, 99, 181, 0.5);
+    font-size: 1.2rem;
+}
+#back-to-top.visible { opacity: 1; }
+#back-to-top:hover {
+    background: linear-gradient(135deg, var(--secondary-color), #b8a45e); /* 金色悬停 */
+    transform: translateY(-3px) scale(1.05); color: var(--dark-bg);
+    border-color: var(--secondary-color);
+    box-shadow: 0 6px 20px rgba(230, 213, 138, 0.4);
+}
+
+/* --- 卡片 (基础样式) --- */
+/* 应用通用的卡片视觉效果 */
+.feature-card, .version-card, .faq-item, .note-card, .pseudo-path, .position, .key-difference, .faq-integrated-item .conclusion-content {
+    background: var(--card-bg);
+    border-radius: var(--card-radius); /* 更圆润的卡片 */
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(5px); /* 背景模糊 */
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden; /* 对伪元素或效果很重要 */
+}
+.feature-card:hover, .version-card:hover, .faq-item:hover, .note-card:hover, .pseudo-path:hover {
+    background: var(--card-bg-hover);
+    transform: translateY(-5px); /* 统一悬停效果 */
+    border-color: var(--glass-border-hover);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); /* 更强的悬停阴影 */
+}
+/* 卡片顶部高光 (可选) */
+.feature-card::before, .version-card::before, .faq-item::before, .note-card::before, .pseudo-path::before, .position::before, .key-difference::before, .faq-integrated-item .conclusion-content::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    opacity: 0.7;
+}
+/* 特定的卡片样式 (如彩色边框) 在各自的 section 文件中定义 */
+
+/* --- 导航栏 --- */
+nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 50px; background-color: rgba(13, 16, 25, 0.7);
+    backdrop-filter: blur(10px); border-bottom: 1px solid rgba(230, 213, 138, 0.1);
+    position: fixed; width: 100%; top: 0; z-index: 1000;
+    transition: padding 0.3s ease, background-color 0.3s ease;
+}
+nav.scrolled { padding: 10px 50px; background-color: rgba(13, 16, 25, 0.85); }
+.logo { font-size: 1.8rem; font-weight: bold; color: var(--secondary-color); text-shadow: 0 0 8px rgba(230, 213, 138, 0.5); }
+.nav-links { display: flex; gap: 30px; }
+.nav-links a { color: var(--text-secondary); font-weight: 500; transition: var(--transition); text-shadow: var(--text-shadow); }
+.nav-links a:hover { color: var(--secondary-color); }
+.language-switcher { margin-left: 20px; color: var(--text-muted); }
+.language-switcher a { color: var(--text-muted); opacity: 0.8; transition: var(--transition); }
+.language-switcher a:hover { opacity: 1; color: var(--secondary-color); }
+
+/* --- 页脚 --- */
+footer {
+    background: linear-gradient(to bottom, var(--dark-bg), var(--space-black));
+    color: var(--text-light); padding: 60px 0 30px;
+    border-top: 1px solid rgba(230, 213, 138, 0.15); position: relative;
+}
+footer::before { /* 顶部光晕 */
+    content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(230, 213, 138, 0.3), transparent);
+    box-shadow: 0 0 15px rgba(230, 213, 138, 0.3); opacity: 0.7;
+}
+.footer-content { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; margin-bottom: 40px; }
+.footer-logo img { max-width: 150px; margin-bottom: 15px; filter: brightness(0.9); }
+.footer-logo p { opacity: 0.8; max-width: 200px; color: var(--text-secondary); }
+.footer-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.links-group h4 { color: var(--secondary-color); margin-bottom: 15px; font-size: 1.1rem; text-shadow: var(--text-shadow); }
+.links-group ul li { margin-bottom: 10px; }
+.links-group a { color: var(--text-muted); transition: var(--transition); }
+.links-group a:hover { color: var(--secondary-color); }
+.footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 25px; display: flex; justify-content: space-between; align-items: center; }
+.footer-bottom p { opacity: 0.7; color: var(--text-muted); }
+.footer-social { display: flex; gap: 15px; }
+
+/* --- 故事滑块 --- */
+.story-slider {
+    position: relative; display: flex; align-items: center;
+    margin: 30px 0; /* 调整外边距 */
+    min-height: 500px; /* 确保有足够高度 */
+     /* 玻璃效果在 section-worldview.css 中应用 */
+}
+.slider-arrow {
+    display: flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    background-color: rgba(230, 213, 138, 0.1); color: var(--secondary-color);
+    cursor: pointer; z-index: 10; transition: all 0.3s ease;
+    border: 1px solid rgba(230, 213, 138, 0.2);
+}
+.slider-arrow:hover { background-color: rgba(230, 213, 138, 0.2); transform: scale(1.1); box-shadow: 0 0 10px rgba(230, 213, 138, 0.3); }
+.slider-arrow i { font-size: 1rem; }
+.prev-arrow { margin-right: 15px; }
+.next-arrow { margin-left: 15px; }
+.story-container { flex: 1; position: relative; overflow: hidden; min-height: 550px; height: auto; }
+.story-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 500px; opacity: 0; visibility: hidden; transition: all 0.5s ease; transform: translateX(50px); z-index: 1; }
+.story-slide.active { opacity: 1; visibility: visible; transform: translateX(0); z-index: 2; }
+.story-navigation { display: flex; justify-content: center; margin-top: 20px; gap: 12px; }
+.nav-dot { width: 10px; height: 10px; border-radius: 50%; background-color: rgba(230, 213, 138, 0.2); border: 1px solid rgba(230, 213, 138, 0.3); cursor: pointer; transition: all 0.3s ease; }
+.nav-dot:hover { background-color: rgba(230, 213, 138, 0.4); transform: scale(1.2); }
+.nav-dot.active { background-color: var(--secondary-color); box-shadow: 0 0 8px rgba(230, 213, 138, 0.6); transform: scale(1.2); border-color: var(--secondary-color); }
+
+/* --- 对比表格 --- */
+.comparison-table { border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 40px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+.comparison-header { display: flex; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: white; text-shadow: var(--text-shadow); }
+.corner-cell { width: 150px; border-right: 1px solid rgba(255, 255, 255, 0.15); background-color: rgba(0, 0, 0, 0.2); }
+.game-column { flex: 1; padding: 20px 15px; text-align: center; border-right: 1px solid rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; justify-content: center; min-height: 120px; position: relative; }
+.game-column:last-child { border-right: none; }
+.game-column.main-game { background: linear-gradient(to bottom, rgba(230, 213, 138, 0.15), rgba(230, 213, 138, 0.05)); box-shadow: inset 0 0 15px rgba(230, 213, 138, 0.1); position: relative; }
+.game-column.main-game::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--secondary-color); box-shadow: 0 0 10px rgba(230, 213, 138, 0.5); }
+.game-logo { width: 50px; height: 50px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)); display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.1); }
+.game-logo i { font-size: 1.4rem; color: var(--text-light); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); }
+.game-column.main-game .game-logo i { color: var(--secondary-color); }
+.comparison-header h4 { font-size: 1.1rem; font-weight: 600; margin: 0; color: var(--text-light); }
+.comparison-row { display: flex; border-bottom: 1px solid rgba(255, 255, 255, 0.1); background: rgba(13, 16, 25, 0.5); transition: background-color 0.2s ease; }
+.comparison-row:last-child { border-bottom: none; }
+.comparison-row:nth-child(odd) { background: rgba(13, 16, 25, 0.6); }
+.comparison-row:hover { background: rgba(74, 99, 181, 0.1); }
+.feature-name { width: 150px; padding: 15px; background: rgba(230, 213, 138, 0.05); font-weight: 600; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; border-right: 1px solid rgba(255, 255, 255, 0.1); text-align: center; text-shadow: var(--text-shadow); }
+.game-column .feature-value { padding: 15px 10px; font-size: 0.95rem; color: var(--text-muted); min-height: 60px; display: flex; align-items: center; justify-content: center; text-align: center; border-right: 1px solid rgba(255, 255, 255, 0.1); text-shadow: var(--text-shadow); background-color: transparent; }
+.game-column:last-child .feature-value { border-right: none; }
+.game-column .feature-value.different { color: var(--text-secondary); }
+.game-column.main-game .feature-value { font-weight: 600; color: var(--secondary-color); background: rgba(230, 213, 138, 0.05); text-shadow: 0 0 5px rgba(230, 213, 138, 0.2); }

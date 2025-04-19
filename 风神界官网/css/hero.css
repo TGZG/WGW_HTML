@@ -1,0 +1,64 @@
+/* ==========================================================
+   3. 首页英雄区
+   section-hero.css: Hero Section Styles
+   ========================================================== */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(9, 13, 31, 0.7), rgba(13, 16, 25, 0.9)), url('../风神界主页背景.png'); /* 检查路径 */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-light);
+    padding-top: 70px; /* 导航栏高度 */
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::after { /* 渐晕效果 */
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(13, 16, 25, 0) 50%, rgba(13, 16, 25, 0.5) 100%);
+    pointer-events: none;
+}
+
+.hero-content {
+    max-width: 800px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    color: var(--secondary-color); /* 金色主标题 */
+    text-shadow: 0 0 10px rgba(230, 213, 138, 0.5), 0 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: 400;
+    color: var(--text-light);
+    text-shadow: var(--text-shadow);
+}
+
+.tagline {
+    font-size: 1.3rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    color: var(--text-secondary);
+    text-shadow: var(--text-shadow);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+/* 按钮样式在 components.css 或 components/buttons.css 中 */

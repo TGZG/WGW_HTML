@@ -1,0 +1,31 @@
+/* ==========================================================
+   02-base.css: 基础 HTML 元素样式
+   ========================================================== */
+a {
+    color: var(--primary-color); /* 链接使用亮蓝色 */
+    text-decoration: none; /* 去除下划线 */
+    transition: var(--transition); /* 平滑过渡 */
+}
+
+a:hover {
+    color: var(--secondary-color); /* 鼠标悬停时变为金色 */
+}
+
+ul {
+    list-style: none; /* 去除列表项符号 */
+}
+
+img {
+    max-width: 100%; /* 图片最大宽度不超过父容器 */
+    height: auto;    /* 高度自动，保持比例 */
+}
+
+/* 基础段落样式 (如果需要) */
+p {
+   /* 可在此添加基础 margin/padding */
+}
+
+/* 基础标题样式 (如果需要) */
+h1, h2, h3, h4, h5, h6 {
+   /* 可在此添加基础 margin/padding */
+}

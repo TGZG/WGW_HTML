@@ -1,0 +1,17 @@
+/* ==========================================================
+   01-generic.css: 重置与 Body 默认样式
+   ========================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 使用 border-box 模型 */
+}
+
+body {
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif; /* 字体栈 */
+    line-height: 1.6; /* 行高 */
+    color: var(--text-secondary); /* 默认文字颜色 */
+    background-color: var(--dark-bg); /* 基础深色背景 */
+    overflow-x: hidden; /* 防止水平滚动 */
+    position: relative; /* 为伪元素定位提供基础 */
+}

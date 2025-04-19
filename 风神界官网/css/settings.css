@@ -1,0 +1,45 @@
+/* ==========================================================
+   00-settings.css: 全局变量
+   ========================================================== */
+:root {
+    /* 颜色主题 - 星云金 */
+    --primary-color: #4A63B5;       /* 亮蓝色 */
+    --primary-dark: #3A4E8A;        /* 深蓝色 */
+    --secondary-color: #E6D58A;     /* 亮金色 */
+    /* --accent-color: #4A63B5;  不再使用通用强调色，改为具体颜色 */
+    --dark-bg: #0D1019;             /* 极深蓝/近黑 */
+    --light-bg: #1a1c2a;            /* 保留原深色，或需调整 */
+    --card-bg: rgba(16, 32, 47, 0.7); /* 半透明卡片背景 */
+    --card-bg-hover: rgba(23, 25, 48, 0.8);
+    --glass-border: rgba(230, 213, 138, 0.15); /* 玻璃效果的金色边框 */
+    --glass-border-hover: rgba(230, 213, 138, 0.3);
+
+    --text-light: #FFFFFF;          /* 亮色文字 (白) */
+    --text-secondary: #F5F7FF;      /* 次要文字 (浅灰) */
+    --text-dark: #F5F7FF;           /* 深色主题下的主要文字 (改为浅色) */
+    --text-muted: #A0B3C6;           /* 柔和文字 (浅青灰) */
+
+    /* 辅助颜色 */
+    --blood-red: #E74C3C;           /* 血红色 (用于 DLC) */
+    --emerald: #4ECCA3;             /* 翡翠绿 */
+    --ice-blue: #3498DB;            /* 冰蓝色 */
+
+    /* 粉色 (用于采访链接) */
+    --interview-pink: #ff5e94;
+    --interview-pink-dark: #ff4081;
+    --interview-pink-light: #ff80ab;
+
+    /* 星云/太空颜色 */
+    --nebula-blue: #0B1E3B;
+    --nebula-purple: #1B0B3B;
+    --space-black: #000510;
+
+    /* 布局变量 */
+    --border-radius: 8px;
+    --card-radius: 12px;
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* 较深的阴影 */
+    --text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); /* 文字阴影 */
+    --title-text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 15px rgba(230, 213, 138, 0.2); /* 标题文字阴影 */
+    --transition: all 0.3s ease;        /* 过渡效果 */
+    --container-width: 1200px;          /* 内容最大宽度 */
+}

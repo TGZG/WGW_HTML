@@ -1,0 +1,83 @@
+/* ==========================================================
+   13. 响应式设计
+   responsive.css: Media Queries
+   ========================================================== */
+
+@media (max-width: 1200px) {
+    .container { max-width: 960px; }
+}
+
+@media (max-width: 992px) {
+    .container { max-width: 720px; }
+    .footer-content { grid-template-columns: 1fr; }
+    /* 在较小屏幕上堆叠网格布局 */
+    #introduction .features-grid,
+    .faq-integrated-item .path-comparison,
+    .faq-integrated-item .rune-content,
+    .realm-chart,
+    .main-objective .notes-row,
+    .version-cards,
+    .footer-links {
+        grid-template-columns: 1fr;
+        flex-direction: column; /* 对 Flex 布局生效 */
+    }
+     /* 堆叠后的网格调整 */
+    .realm-chart { min-width: unset; gap: 20px;}
+    .faq-integrated-item .rune-editor, .faq-integrated-item .rune-explanation { transform: translateY(0); }
+    .main-objective .notes-row { gap: 15px; }
+}
+
+@media (max-width: 768px) {
+    .container { max-width: 540px; }
+    nav { padding: 10px 20px; flex-direction: column; }
+    nav.scrolled { padding: 8px 20px; }
+    .nav-links { margin-top: 15px; flex-wrap: wrap; justify-content: center; gap: 15px; }
+    .hero-content h1 { font-size: 3rem; }
+    .hero-content h2 { font-size: 1.5rem; }
+    .hero-buttons { flex-direction: column; gap: 15px; align-items: center; }
+    .primary-button, .secondary-button { width: 80%; max-width: 300px; }
+    #introduction .game-definition-container { flex-direction: column; gap: 20px; padding: 20px; }
+    .faction-container { flex-direction: column; }
+    .faction-grid { width: 100%; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); border-right: none; border-bottom: 1px solid rgba(230, 213, 138, 0.1);}
+    .footer-links { grid-template-columns: 1fr 1fr; } /* 小屏幕页脚两列 */
+    .footer-bottom { flex-direction: column; gap: 15px; text-align: center;}
+    .version-cards { grid-template-columns: 1fr; } /* 版本卡片堆叠 */
+    .faq-integrated-item .system-header { flex-direction: column; align-items: flex-start; }
+    .faq-integrated-item .system-icon { margin-bottom: 15px; }
+    .main-objective .notes-row { flex-direction: column; gap: 15px; }
+    .realm-chart { flex-direction: column; min-width: unset; gap: 20px;}
+
+    /* 确保故事滑块箭头在移动端保持水平 */
+    #worldview .story-slider { flex-direction: row; }
+    #worldview .slider-arrow { transform: none; margin: 0; }
+    #worldview .prev-arrow { margin-right: 10px; order: -1; }
+    #worldview .next-arrow { margin-left: 10px; order: 1; }
+    #worldview .story-container { order: 0; }
+
+     /* 在平板等小屏幕上堆叠特色网格 */
+    #introduction .features-grid { grid-template-columns: 1fr; }
+
+}
+
+@media (max-width: 576px) {
+    .section-title { font-size: 2rem; }
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-content h2 { font-size: 1.3rem; }
+    .tagline { font-size: 1.1rem; }
+    nav { padding: 10px 15px; }
+    .logo { font-size: 1.5rem; }
+    .footer-links { grid-template-columns: 1fr; }
+    .faction-grid { grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); }
+    .feature-card { padding: 25px 20px 70px; min-height: auto; } /* 允许高度自适应 */
+    .faq-item h3 { font-size: 1.1rem; }
+    .faq-integrated-item > h3 { font-size: 1.4rem; }
+    .main-objective .objective-heading, .process-heading, .realm-title { font-size: 1.6rem; }
+    .gold-title { font-size: 1.8rem; }
+    #introduction .features-grid,
+    .faq-integrated-item .path-comparison,
+    .faq-integrated-item .rune-content {
+        grid-template-columns: 1fr; /* 确保堆叠 */
+    }
+    .footer-content { grid-template-columns: 1fr; }
+    .comparison-table { min-width: unset; } /* 允许表格收缩 */
+}

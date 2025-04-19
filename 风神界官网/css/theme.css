@@ -1,0 +1,123 @@
+/* ==========================================================
+   04-theme.css: 背景、效果、全局视觉样式
+   ========================================================== */
+
+/* 星云/星空背景效果 */
+body::before {
+    content: "";
+    position: fixed; /* 固定背景 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at top, var(--nebula-blue), transparent 70%), /* 顶部星云蓝 */
+                radial-gradient(ellipse at bottom, var(--nebula-purple), transparent 70%), /* 底部星云紫 */
+                linear-gradient(to right, var(--space-black) 0%, var(--dark-bg) 50%, var(--space-black) 100%); /* 基础深色渐变 */
+    z-index: -10; /* 置于最底层 */
+    pointer-events: none; /* 不干扰鼠标事件 */
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(0, 0, 0, 0) 100%),
+        radial-gradient(1px 1px at 40% 70%, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%),
+        radial-gradient(2px 2px at 50% 50%, rgba(255, 255, 255, 0.7) 0%, rgba(0, 0, 0, 0) 100%),
+        radial-gradient(1px 1px at 30% 20%, rgba(255, 255, 255, 0.7) 0%, rgba(0, 0, 0, 0) 100%),
+        radial-gradient(1px 1px at 70% 90%, rgba(255, 255, 255, 0.9) 0%, rgba(0, 0, 0, 0) 100%),
+        radial-gradient(1px 1px at 90% 15%, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%),
+        radial-gradient(1px 1px at 15% 80%, rgba(255, 255, 255, 0.7) 0%, rgba(0, 0, 0, 0) 100%),
+        radial-gradient(1px 1px at 60% 85%, rgba(255, 255, 255, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+    background-repeat: repeat;
+    background-size: 800px 800px; /* 星星重复的尺寸 */
+    opacity: 0.15; /* 星星透明度 */
+    z-index: -9; /* 在背景之上，内容之下 */
+    pointer-events: none;
+    animation: twinkle 60s linear infinite alternate; /* 星星闪烁动画 */
+}
+
+@keyframes twinkle { /* 星星位移动画 */
+   from { background-position: 0 0; }
+   to { background-position: -100px 100px; }
+}
+
+/* 基础 Section 主题 (现在依赖 body 背景) */
+.section-dark,
+.section-light {
+    background-color: transparent; /* 透明背景 */
+    color: var(--text-light); /* 亮色文字 */
+}
+
+/* 标题样式 (全局) */
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    color: var(--secondary-color); /* 金色标题 */
+    text-shadow: var(--title-text-shadow); /* 标题阴影 */
+}
+
+.section-title:after { /* 标题下划线装饰 */
+    content: "";
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(230, 213, 138, 0.3), var(--secondary-color), rgba(230, 213, 138, 0.3)); /* 金色渐变 */
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    box-shadow: 0 0 15px rgba(230, 213, 138, 0.5); /* 增强光晕 */
+}
+
+/* 玻璃容器效果 (可按需应用) */
+.glass-container-effect {
+    background: rgba(13, 16, 25, 0.6); /* 深色半透明背景 */
+    border-radius: var(--card-radius); /* 圆角 */
+    backdrop-filter: blur(8px); /* 背景模糊 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), /* 外阴影 */
+                inset 0 1px 1px rgba(255, 255, 255, 0.05); /* 内阴影 */
+    border: 1px solid var(--glass-border); /* 金色边框 */
+    padding: 30px; /* 内边距 */
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px; /* 与下方元素的间距 */
+}
+
+.glass-container-effect::before { /* 顶部高光 */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar { /* Webkit 浏览器 (Chrome, Safari) */
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(13, 16, 25, 0.5); /* 滚动条轨道背景 */
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--glass-border); /* 滚动条滑块颜色 */
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--glass-border-hover); /* 悬停时颜色 */
+}
+* { /* Firefox 浏览器 */
+  scrollbar-width: thin; /* 细滚动条 */
+  scrollbar-color: var(--glass-border) rgba(13, 16, 25, 0.5); /* 滑块和轨道颜色 */
+}

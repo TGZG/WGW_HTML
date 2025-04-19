@@ -1,0 +1,27 @@
+/* ==========================================================
+   03-layout.css: 基本布局结构
+   ========================================================== */
+.container {
+    width: 100%;
+    max-width: var(--container-width); /* 内容最大宽度 */
+    margin: 0 auto; /* 水平居中 */
+    padding: 0 20px; /* 左右内边距 */
+    position: relative; /* 确保内容在背景效果之上 */
+    z-index: 1;
+}
+
+/* Section 基础内边距 */
+.section-dark,
+.section-light {
+    padding: 80px 0; /* 上下内边距 */
+    position: relative; /* 为可能的伪元素提供定位上下文 */
+    z-index: 1; /* 确保在背景之上 */
+}
+
+/* 基础网格布局 (如果足够通用) */
+.features-grid { /* 特色网格的基础布局示例 */
+    display: grid;
+    gap: 30px;
+     /* 默认列设置，可能是一列？在各 section 中会被覆盖 */
+    grid-template-columns: 1fr;
+}
