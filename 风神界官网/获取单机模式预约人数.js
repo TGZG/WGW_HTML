@@ -20,7 +20,7 @@
 //         .catch(error => { console.error('获取预约人数时出错：', error); });
 // }
 
-
+//本函数用于获取所有的模式的预约人数，并将其显示在页面上，并不只是获取单机模式的预约人数。因为代码是一坨屎山，所以我也不敢改名字，怕引起bug。
 
 function getUserCount(url,className) {
     

@@ -483,8 +483,8 @@ function initPreorderForm() {
       modal.appendChild(formContainer);
 
       // Determine form type based on link class
-      console.log(Array.from(link.classList));
-      console.log(1);
+      // console.log(Array.from(link.classList));
+      // console.log(1);
       const formType = link.classList.contains('online') ? '官网联机版预约' :
         link.classList.contains('dlc') ? '大争之世DLC预约' : '单机模式预约';
 
@@ -509,10 +509,24 @@ function initPreorderForm() {
             <input type="tel" id="phone" name="phone" required style="width:100%;padding:8px;margin-top:5px;border:1px solid #ddd;border-radius:4px;">
             <span class="error-message" style="color:red;font-size:12px;display:none;">请输入有效的手机号码</span>
           </div>
-          <button type="submit" style="width:100%;padding:10px;background-color:#4e7cff;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;">提交预约</button>
+          <button class="update" type="submit"  style="width:100%;padding:10px;background-color:#4e7cff;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;">提交预约</button>
           <button type="button" class="close-modal" style="width:100%;padding:10px;background-color:#ddd;color:#333;border:none;border-radius:4px;cursor:pointer;margin-top:10px;font-weight:bold;">取消</button>
         </form>
       `;
+
+      // 获取所有类名为 'update' 的按钮
+      // formContainer.addEventListener('click', function(e) {
+      //   if(e.target && e.target.classList.contains('update')) {
+      //     e.preventDefault(); // 阻止表单默认提交
+      //     // 你的逻辑代码
+      //     getUserCount('单机.txt', '.reservation-counter');
+      //     getUserCount('DLC.txt', '.DLC');
+      //     getUserCount('online.txt', '.Online');
+          
+      //     // 注意：location.reload()会立即刷新，可能来不及执行上面的函数
+      //     setTimeout(() => location.reload(), 100); // 延迟100ms确保函数执行
+      //   }
+      // });
 
       // Add modal to page
       document.body.appendChild(modal);
@@ -569,12 +583,14 @@ function initPreorderForm() {
             if (data.success) {
               alert('预约成功！');
               document.body.removeChild(modal);
-              // getUserCount('单机.txt','.reservation-counter');
+              getUserCount('单机.txt','.reservation-counter');
+              getUserCount('DLC.txt','.DLC');
+              getUserCount('online.txt','.Online');
 
             } else {
               alert(data.message || '该用户已预约过，请勿重复预约');
             }
-          })
+          }).then(() => {location.reload();})
           .catch(error => {
             console.error('Error:', error);
             alert('提交失败，请稍后再试');
@@ -647,73 +663,73 @@ document.addEventListener("DOMContentLoaded", () => {
   initPreorderForm();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   // 获取所有笔记卡片和内容区域
   const noteCards = document.querySelectorAll('.note-card');
   const contentAreas = document.querySelectorAll('.worldview-content-area');
-  
+
   // 为每个笔记卡片添加点击事件
   noteCards.forEach(card => {
-      card.addEventListener('click', function() {
-          // 获取目标内容区域的ID
-          const targetId = this.getAttribute('data-target');
-          const targetContent = document.getElementById(targetId);
-          
-          // 隐藏所有内容区域，移除active类
-          contentAreas.forEach(area => {
-              area.classList.remove('active');
-          });
-          
-          // 移除所有卡片的active类
-          noteCards.forEach(c => {
-              c.classList.remove('active');
-          });
-          
-          // 显示目标内容区域，添加active类
-          if (targetContent) {
-              targetContent.classList.add('active');
-              this.classList.add('active');
-              
-              // 滚动到内容区域，添加平滑滚动效果和上方偏移
-              setTimeout(() => {
-                  const yOffset = -80; // 偏移量，给导航栏留出空间
-                  const y = targetContent.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                  window.scrollTo({top: y, behavior: 'smooth'});
-              }, 100);
-          }
+    card.addEventListener('click', function () {
+      // 获取目标内容区域的ID
+      const targetId = this.getAttribute('data-target');
+      const targetContent = document.getElementById(targetId);
+
+      // 隐藏所有内容区域，移除active类
+      contentAreas.forEach(area => {
+        area.classList.remove('active');
       });
+
+      // 移除所有卡片的active类
+      noteCards.forEach(c => {
+        c.classList.remove('active');
+      });
+
+      // 显示目标内容区域，添加active类
+      if (targetContent) {
+        targetContent.classList.add('active');
+        this.classList.add('active');
+
+        // 滚动到内容区域，添加平滑滚动效果和上方偏移
+        setTimeout(() => {
+          const yOffset = -80; // 偏移量，给导航栏留出空间
+          const y = targetContent.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }, 100);
+      }
+    });
   });
-  
+
   // 为所有返回按钮添加点击事件
   const backButtons = document.querySelectorAll('.back-to-notes');
   backButtons.forEach(button => {
-      button.addEventListener('click', function(e) {
-          e.preventDefault(); // 防止默认链接行为
-          
-          // 找到游戏目标区域并滚动到那里，添加上方偏移
-          const objectiveSection = document.querySelector('.main-objective');
-          if (objectiveSection) {
-              const yOffset = -80; // 偏移量，给导航栏留出空间
-              const y = objectiveSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-              window.scrollTo({top: y, behavior: 'smooth'});
-          }
-          
-          // 可选：关闭当前打开的内容区域
-          const parentContentArea = this.closest('.worldview-content-area');
-          if (parentContentArea) {
-              // 延迟一下关闭，这样用户可以看到滚动效果
-              setTimeout(() => {
-                  parentContentArea.classList.remove('active');
-                  
-                  // 移除对应笔记卡片的active类
-                  const noteCards = document.querySelectorAll('.note-card');
-                  noteCards.forEach(card => {
-                      if (card.getAttribute('data-target') === parentContentArea.id) {
-                          card.classList.remove('active');
-                      }
-                  });
-              }, 800);
-          }
-      });
+    button.addEventListener('click', function (e) {
+      e.preventDefault(); // 防止默认链接行为
+
+      // 找到游戏目标区域并滚动到那里，添加上方偏移
+      const objectiveSection = document.querySelector('.main-objective');
+      if (objectiveSection) {
+        const yOffset = -80; // 偏移量，给导航栏留出空间
+        const y = objectiveSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+
+      // 可选：关闭当前打开的内容区域
+      const parentContentArea = this.closest('.worldview-content-area');
+      if (parentContentArea) {
+        // 延迟一下关闭，这样用户可以看到滚动效果
+        setTimeout(() => {
+          parentContentArea.classList.remove('active');
+
+          // 移除对应笔记卡片的active类
+          const noteCards = document.querySelectorAll('.note-card');
+          noteCards.forEach(card => {
+            if (card.getAttribute('data-target') === parentContentArea.id) {
+              card.classList.remove('active');
+            }
+          });
+        }, 800);
+      }
+    });
   });
 });
