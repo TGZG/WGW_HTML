@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-$file = 'DLC.txt';
+$file = '../Data/DLC.txt';
 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);

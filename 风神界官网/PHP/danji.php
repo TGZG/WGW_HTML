@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-$file = 'online.txt';
+$file = '../Data/单机.txt';
 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);

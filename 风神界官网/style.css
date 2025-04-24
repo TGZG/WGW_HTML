@@ -1405,6 +1405,7 @@ nav.scrolled {
     color: var(--text-light);
     opacity: 0.9;
     margin-bottom: 20px;
+    white-space: pre-line;
 }
 
 .detail-decorations {
@@ -2694,8 +2695,9 @@ nav.scrolled {
 /* 故事文本 */
 .story-text {
     flex: 1;
-    overflow-y: visible;
+    overflow-y: auto;
     padding-right: 15px;
+    padding-bottom:45px;
     scrollbar-width: none;
 }
 

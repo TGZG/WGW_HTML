@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>风神界 - 开启尊重业时代的玄幻战略RPG</title>
     <link rel="stylesheet" href="style.css">
-    <script src="scripts.js" defer></script>
-    <script src="获取单机模式预约人数.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="JS/Faction.js" defer></script>
+    <script src="JS/OnLoadAnimation.js" defer></script>
+    <script src="JS/OnLoadPhp.js" defer></script>
+    <script src="JS/PlayerStory.js" defer></script>
 </head>
 
 <body>
@@ -37,7 +39,6 @@
                 <div class="hero-buttons">
                     <a href="#versions" class="primary-button">立即预约</a>
                     <a href="#introduction" class="secondary-button">了解更多</a>
-                    
                 </div>
             </div>
         </div>
@@ -108,7 +109,7 @@
                             <h4>Kenshi</h4>
                         </div>
                     </div>
-                    
+
                     <!-- 世界驱动 -->
                     <div class="comparison-row">
                         <div class="feature-name">世界驱动</div>
@@ -131,7 +132,7 @@
                             <div class="feature-value">AI驱动</div>
                         </div>
                     </div>
-                    
+
                     <!-- 经济系统 -->
                     <div class="comparison-row">
                         <div class="feature-name">经济系统</div>
@@ -154,7 +155,7 @@
                             <div class="feature-value different">临时定价</div>
                         </div>
                     </div>
-                    
+
                     <!-- 权力结构 -->
                     <div class="comparison-row">
                         <div class="feature-name">权力结构</div>
@@ -177,7 +178,7 @@
                             <div class="feature-value different">士兵机械</div>
                         </div>
                     </div>
-                    
+
                     <!-- 设定风格 -->
                     <div class="comparison-row">
                         <div class="feature-name">设定风格</div>
@@ -200,7 +201,7 @@
                             <div class="feature-value different">废土科幻</div>
                         </div>
                     </div>
-                    
+
                     <!-- 玩家身份 -->
                     <div class="comparison-row">
                         <div class="feature-name">玩家身份</div>
@@ -223,7 +224,7 @@
                             <div class="feature-value">众生之一</div>
                         </div>
                     </div>
-                    
+
                     <!-- 异国人民 -->
                     <div class="comparison-row">
                         <div class="feature-name">异国人民</div>
@@ -247,7 +248,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="key-difference">
                     <div class="difference-icon">
                         <i class="fas fa-lightbulb"></i>
@@ -272,13 +273,13 @@
                             </a>
                         </div>
                     </div>
-                    
+
                     <div class="feature-card">
                         <div class="feature-icon freedom-icon"><i class="fas fa-cube"></i></div>
                         <h4>沙盒模拟</h4>
                         <p>随机世界，开局演变百万年。没有剧情，没有任务，你可以做任何事。刷怪、工业、商业、战略……一个子集就足够有趣。一千个玩家眼中有一千个风神界。</p>
                     </div>
-                    
+
                     <div class="feature-card">
                         <div class="feature-icon respect-icon"><i class="fas fa-crown"></i></div>
                         <h4>尊重需求</h4>
@@ -290,7 +291,7 @@
                             </a>
                         </div>
                     </div>
-                    
+
                     <div class="feature-card">
                         <div class="feature-icon mind-icon"><i class="fas fa-route"></i></div>
                         <h4>认知过滤</h4>
@@ -338,652 +339,773 @@
         </div>
     </section>
 
-<!-- 世界观部分升级版头部 -->
-<section id="worldview" class="section-dark">
-    <div class="container">
-        <!-- 世界观部分升级版头部 -->
-        <div class="game-objective main-objective">
-            <div class="objective-content">
-                <h3 class="objective-heading">游戏目标</h3>
-                <p class="objective-text">玩家从<span class="highlight">凡人</span>开始，最终目标是成就<span class="highlight">炼虚</span>，征服世界、万宗臣服，然后耗尽一个时代的资源，打造出最豪华的帝棺帝陵，沉睡。</p>
-                
-                <div class="notes-section">
-                    <div class="notes-row">
-                        <div class="note-card" data-target="realm-content-area">
-                            <div class="note-header">
-                                <span class="note-tag">境界</span>
+    <!-- 世界观部分升级版头部 -->
+    <section id="worldview" class="section-dark">
+        <div class="container">
+            <!-- 世界观部分升级版头部 -->
+            <div class="game-objective main-objective">
+                <div class="objective-content">
+                    <h3 class="objective-heading">游戏目标</h3>
+                    <p class="objective-text">玩家从<span class="highlight">凡人</span>开始，最终目标是成就<span class="highlight">炼虚</span>，征服世界、万宗臣服，然后耗尽一个时代的资源，打造出最豪华的帝棺帝陵，沉睡。</p>
+
+                    <div class="notes-section">
+                        <div class="notes-row">
+                            <div class="note-card" data-target="realm-content-area" id="世界观：境界按钮">
+                                <div class="note-header">
+                                    <span class="note-tag">境界</span>
+                                </div>
+                                <div class="note-body">
+                                    什么是凡人、炼虚？从最弱小到强大无比的境界体系。
+                                </div>
                             </div>
-                            <div class="note-body">
-                                什么是凡人、炼虚？从最弱小到强大无比的境界体系。
+                            <div class="note-card" data-target="faction-content-area">
+                                <div class="note-header">
+                                    <span class="note-tag">势力</span>
+                                </div>
+                                <div class="note-body">
+                                    什么是万宗？世界上的各类修真组织与势力。
+                                </div>
+                            </div>
+                            <div class="note-card" data-target="conflict-content-area">
+                                <div class="note-header">
+                                    <span class="note-tag">大争</span>
+                                </div>
+                                <div class="note-body">
+                                    为何沉睡？十万年一次大争之世，角逐成圣机缘。
+                                </div>
                             </div>
                         </div>
-                        <div class="note-card" data-target="faction-content-area">
-                            <div class="note-header">
-                                <span class="note-tag">势力</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 境界系统部分 -->
+            <div id="realm-content-area" class="worldview-content-area">
+                <!--<div class="back-button-container">
+                    <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>返回选项</a>
+                </div>-->
+                <!-- 保留原有境界系统的内容，不修改标题样式 -->
+                <div class="realm-system">
+                    <!-- Start of realm-system -->
+                    <div class="realm-header">
+                        <h3 class="realm-title">境界系统</h3>
+                    </div>
+                    <!-- realm-chart-container is now correctly INSIDE realm-system -->
+                    <div class="realm-chart-container">
+                        <div class="realm-chart">
+                            <div class="realm-group mortal">
+                                <div class="realm-group-header">
+                                    <div class="realm-icon"><i class="fas fa-user"></i></div>
+                                    <h4 class="realm-group-title">凡人</h4>
+                                </div>
+                                <div class="realm-levels">
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">凡境</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">人们大多在此境界。五千亿凡人。</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">炼体</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">身强体壮，拳可碎石。强于奥运冠军。</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">通脉</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">气血可运转调控，爆发如超人。</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">开窍</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">灵气可入体运转，可以释放简单法术。</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="note-body">
-                                什么是万宗？世界上的各类修真组织与势力。
+                            <div class="realm-group immortal">
+                                <div class="realm-group-header">
+                                    <div class="realm-icon"><i class="fas fa-cloud"></i></div>
+                                    <h4 class="realm-group-title">仙人</h4>
+                                </div>
+                                <div class="realm-levels">
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">炼气</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">炼气之下皆蝼蚁。炼气为仙人，可隔空杀人、御剑飞行。</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">筑基</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">通常富可敌国，有自己的洞府、布置各种阵法。位面内争霸时的一流强者。</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">金丹</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">寻常位面的最强者。金丹及以上修士，入万界天榜。有金丹修士坐镇的势力，乃万界入流势力。</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">元婴</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">有元婴修士坐镇的势力，乃万界一流势力。丹宗，器宗，万宝楼，都在此行列。</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="realm-group true-immortal">
+                                <div class="realm-group-header">
+                                    <div class="realm-icon"><i class="fas fa-sun"></i></div>
+                                    <h4 class="realm-group-title">真人</h4>
+                                </div>
+                                <div class="realm-levels">
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">化神</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">见时空法则，知因果天命。除圣地外，没有一个宗门能连续两个时代皆出化神修士。</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">炼虚</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">亦称大帝，寿元三千载，言出法随。一个时代通常只有一名大帝，万界共尊，大帝在他的时代无敌（在圣域外）。</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">合道</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">亦称圣人，以身合一界天道，不死不灭。其所在位面为圣域，圣人于圣域内无敌、可断生死逆阴阳，但圣人无法离开其圣域。</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">大乘</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">前不见古人，后不见来者，百万年来万界从未有人踏入此境。</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="note-card" data-target="conflict-content-area">
-                            <div class="note-header">
-                                <span class="note-tag">大争</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 势力分布部分 -->
+            <div id="faction-content-area" class="worldview-content-area">
+                <!--<div class="back-button-container">
+                    <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>返回选项</a>
+                </div>-->
+                <!-- 主要势力类型部分 -->
+                <div class="power-system new-layout">
+                    <h3>主要势力类型</h3>
+                    <div class="faction-container">
+                        <div class="faction-grid">
+                            <div class="faction-item" data-faction="宗门">
+                                <div class="faction-icon" style="background-color: #e74c3c;"><i class="fas fa-mountain"></i></div>
+                                <div class="faction-name">宗门</div>
                             </div>
-                            <div class="note-body">
-                                为何沉睡？十万年一次大争之世，角逐成圣机缘。
+                            <div class="faction-item" data-faction="皇朝">
+                                <div class="faction-icon" style="background-color: #f39c12;"><i class="fas fa-crown"></i></div>
+                                <div class="faction-name">皇朝</div>
+                            </div>
+                            <div class="faction-item" data-faction="联盟">
+                                <div class="faction-icon" style="background-color: #9b59b6;"><i class="fas fa-hands-helping"></i></div>
+                                <div class="faction-name">联盟</div>
+                            </div>
+                            <div class="faction-item" data-faction="圣地">
+                                <div class="faction-icon" style="background-color: #3498db;"><i class="fas fa-place-of-worship"></i></div>
+                                <div class="faction-name">圣地</div>
                             </div>
                         </div>
+                        <div class="faction-detail">
+                            <div class="detail-content" id="宗门-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #e74c3c;"><i class="fas fa-mountain"></i></div>
+                                    <h4>宗门</h4>
+                                </div>
+                                <p class="detail-description">
+                                    家族、学校、公司的结合体。坐于山中，不招凡人。
+                                    - 家族性：管吃管住，管基本修炼资源。凡人进入宗门后，几乎就要与父母断绝关系，从此视宗门为家庭。若你的身份为内门弟子以上，你的孩子自动成为宗门成员。
+                                    - 学校性：宗门里设有学堂、藏经阁，有系统详细的教学规划。
+                                    - 公司性：宗门有任务，宗门成员需要执行。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="皇朝-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #f39c12;"><i class="fas fa-crown"></i></div>
+                                    <h4>皇朝</h4>
+                                </div>
+                                <p class="detail-description">
+                                    管理凡人与宗门，疆土广阔。但宗门与皇朝关系微妙，有如下特例：
+                                    - 有的宗门会有附属凡人城池（微型皇朝）。城主自治，仅上供、接受宗门庇护、给宗门活动提供方便（例如招生，再例如一些不见光的事、比如找炉鼎）。
+                                    - 强大的宗门会影响多个皇朝（类似跨国公司、富可敌国），但宗门的实力在临近皇朝时几乎必然会与其所在的原皇朝爆发一场冲突。
+                                    - 即便宗门的实力超越皇朝，宗门的总部占地面积依然会很小（相比于皇朝面积），依然会在明面上属于一个皇朝。只不过宗门会暗中控制皇帝与一众大臣，从而控制皇朝。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="联盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #9b59b6;"><i class="fas fa-hands-helping"></i></div>
+                                    <h4>联盟</h4>
+                                </div>
+                                <p class="detail-description">
+                                    多个宗门或皇朝构成的集体。
+                                    超一流势力（六个元婴以上）几乎都是联盟，单势力的极限通常是一个元婴。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="圣地-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #3498db;"><i class="fas fa-place-of-worship"></i></div>
+                                    <h4>圣地</h4>
+                                </div>
+                                <p class="detail-description">
+                                    圣人掌控，绝对安全，永恒不灭。圣人以身融天道，那一位面为圣域。
+                                    圣地法则变更，聪明凡人会被赋予永生、凡人会议掌握最高权力，但无法离开圣域。
+                                    圣地宗主无实权、仅为外交最高官。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 超一流联盟名录部分 -->
+                <div class="power-system new-layout">
+                    <h3>超一流联盟名录</h3>
+                    <div class="faction-container">
+                        <div class="faction-grid large-grid">
+                            <div class="faction-item" data-faction="魔盟">
+                                <div class="faction-icon" style="background-color: #c0392b;"><i class="fas fa-skull"></i></div>
+                                <div class="faction-name">魔盟</div>
+                            </div>
+                            <div class="faction-item" data-faction="商盟">
+                                <div class="faction-icon" style="background-color: #f1c40f;"><i class="fas fa-coins"></i></div>
+                                <div class="faction-name">商盟</div>
+                            </div>
+                            <div class="faction-item" data-faction="奇盟">
+                                <div class="faction-icon" style="background-color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
+                                <div class="faction-name">奇盟</div>
+                            </div>
+                            <div class="faction-item" data-faction="源盟">
+                                <div class="faction-icon" style="background-color: #2980b9;"><i class="fas fa-book-open"></i></div>
+                                <div class="faction-name">源盟</div>
+                            </div>
+                            <div class="faction-item" data-faction="道盟">
+                                <div class="faction-icon" style="background-color: #2c3e50;"><i class="fas fa-yin-yang"></i></div>
+                                <div class="faction-name">道盟</div>
+                            </div>
+                            <div class="faction-item" data-faction="侠盟">
+                                <div class="faction-icon" style="background-color: #e67e22;"><i class="fas fa-khanda"></i></div>
+                                <div class="faction-name">侠盟</div>
+                            </div>
+                            <div class="faction-item" data-faction="国盟">
+                                <div class="faction-icon" style="background-color: #d35400;"><i class="fas fa-landmark"></i></div>
+                                <div class="faction-name">国盟</div>
+                            </div>
+                            <div class="faction-item" data-faction="妖盟">
+                                <div class="faction-icon" style="background-color: #8e44ad;"><i class="fas fa-paw"></i></div>
+                                <div class="faction-name">妖盟</div>
+                            </div>
+                            <div class="faction-item" data-faction="龙盟">
+                                <div class="faction-icon" style="background-color: #27ae60;"><i class="fas fa-dragon"></i></div>
+                                <div class="faction-name">龙盟</div>
+                            </div>
+                            <div class="faction-item" data-faction="圣盟">
+                                <div class="faction-icon" style="background-color: #1abc9c;"><i class="fas fa-sun"></i></div>
+                                <div class="faction-name">圣盟</div>
+                            </div>
+                        </div>
+                        <div class="faction-detail">
+                            <div class="detail-content" id="魔盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #c0392b;"><i class="fas fa-skull"></i></div>
+                                    <h4>魔盟</h4>
+                                </div>
+                                <p class="detail-description">
+                                    概述：魔道联盟，打家劫舍
+                                    社会地位：超一流势力，常年拥有六名以上元婴修士。正道宗门对其成员相对宽容，不轻易围剿；魔盟成员多有公开总部，而非魔盟魔修需四海为家。万界大典通常邀请魔盟代表出席。
+                                    内部制度：一霸多雄制。霸主为终生制，可被挑战；元婴级势力领导人自动成为雄主，拥有议事权和知情权；其余成员需交纳保护费。
+                                    文化特点：成员多为教会制。教会特征：出入宽松，外围弟子众多；向上情报匮乏，向下权限极高。在正道围剿下，教会模式利于生存繁衍。少数势力依靠魔盟庇护改为宗门制，但六雄皆教会。
+                                    核心成员：
+                                    - 死神教：行走于闹市，一击必毙命。
+                                    - 幻神教：堵于传送阵，猎物无人救。
+                                    - 七杀教：堵于传送阵，斥候不可逃。
+                                    - 梦魇教：野外游荡，不可被罗盘预警。
+                                    - 洪教：随机传送，平推一切。所到之处，寸草不生。
+                                    - 影教：三年不开张，开张吃三年。间谍满天下，只劫最贵货。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="商盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #f1c40f;"><i class="fas fa-coins"></i></div>
+                                    <h4>商盟</h4>
+                                </div>
+                                <p class="detail-description">
+                                    概述：商业联盟，坐于圣地，低买高卖。
+                                    社会地位：超级巨头，与世无争。但如果谁敢小看他，袭击，那么商盟展露的獠牙将让你恐怖。
+                                    内部制度：会议制。会议通过的决策必须执行，无其他约束。
+                                    - 大雅钱庄：银行。存灵石，固定利息。
+                                    - 天地钱庄：理财。存灵石，代为投资，利率不定。
+                                    - 圣地李家：势力股票、债券认证与交易中心。
+                                    - 圣地王家：期货认证与交易中心。
+                                    - 圣地钱家：大宗商品现货投资。粮食与矿物无数。
+                                    - 聚宝楼：典当，收购，缓慢出货。秘境门前批量收购。
+                                    - 走龙团：跑商，收购各地廉价特产，长期与各界地头蛇合作。
+                                    - 万宝楼：批发零售，各地分店高价销售。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="奇盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
+                                    <h4>奇盟</h4>
+                                </div>
+                                <p class="detail-description">
+                                    概述：丹器符阵，生产销售，暴利垄断。
+                                    社会地位：万众瞩目。每个修士的日常用品与副业。
+                                    内部制度：经典联盟制。学术交流，定价会议，共同防御。
+                                    - 丹宗：生产丹药。代表：筑基丹，突破筑基用。
+                                    - 毒宗：生产毒药。代表：圣毒丹，控制下属用。
+                                    - 器宗：生产装备、法宝、丹炉。代表：仙剑。
+                                    - 须弥宗：生产储物戒。虽然器宗也生产，但不如须弥宗。
+                                    - 巨像宗：生产飞舟。
+                                    - 符宗：生产符箓。代表：护身符。
+                                    - 阵宗：定制阵法。代表：护山大阵。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="源盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #2980b9;"><i class="fas fa-book-open"></i></div>
+                                    <h4>源盟</h4>
+                                </div>
+                                <p class="detail-description">
+                                    概述：学院联盟，桃李满天下，中立。
+                                    社会地位：无冕之王，第十三圣地，与世无争。攻击源盟者，与天下为敌。
+                                    内部制度：经典联盟制。学术交流，共同防御，组织联赛。
+                                    - 极渊学院：综合性独立学院。
+                                    - 魂咒学院：综合性独立学院。专精魂法、咒法、血法、反制之法。
+                                    - 剑宗学院：剑心圣地所属，开放天下入学。综合性学院，专精剑法、心法。
+                                    - 蛮荒学院：综合性独立学院，专精体术。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="道盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #2c3e50;"><i class="fas fa-yin-yang"></i></div>
+                                    <h4>道盟</h4>
+                                </div>
+                                <p class="detail-description">
+                                    概述：无认知过滤，直面世界真相。万法本源，五维空间。天地如牌，他人只玩同花顺，而我直面混沌。百万年来，化神以上者大半出自道盟。
+                                    社会地位：无存在感，神秘，被视为规则的一部分，熟悉而陌生、大隐隐于市。
+                                    内部制度：貌合神离。仅有共同防御、以及借用联盟之名办事。
+                                    - 神教：道盟核心，无认知过滤，万法归一。
+                                    - 界宗：维护各大传送阵，万界交通格局。活动于虚空，探索未知界域。
+                                    - 天机阁：算历史，知现状，排天榜。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="侠盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #e67e22;"><i class="fas fa-khanda"></i></div>
+                                    <h4>侠盟</h4>
+                                </div>
+                                <p class="detail-description">
+                                    概述：侠客联盟，散修公朝。战魔兽，闯秘境，分享经验，互帮互助。
+                                    社会地位：可怜虫，土老帽，暴脾气，惹不起。不讲理，发神经，一言不合同归于尽，大傻逼。乌泱泱，没人知道侠盟有多少人，鱼龙混杂，牛鬼蛇神，不可名状。
+                                    内部制度：潜规则。明文规则少得可怜，只有一页纸；其余都是潜规则。开会基本靠嗓门与武力，内部经常吵得打起来，但打完就和好。
+                                    - 侠客帮：打野生魔兽为主。
+                                    - 黄雀会：秘境为主，夺宝、暗杀。有人称之为魔教。
+                                    - 狂战派：妖族前线，虫族位面，搏杀。
+                                    - 寻宝帮：秘境为主，避战找宝贝。
+                                    - 镖师会：护送商队，代送宝物，看守大门，大典主持，护送探险，雇佣兵。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="国盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #d35400;"><i class="fas fa-landmark"></i></div>
+                                    <h4>国域</h4>
+                                </div>
+                                <p class="detail-description">
+                                    概述：又名国盟、皇朝联盟。被宗门控制的皇朝没资格加入，国盟成员必须有独立主权。国盟内皇权威严，国盟外皇权笑话。
+                                    社会地位：中流砥柱！世界本体！知名度最高，许多人认为：国盟所在之处即为万界，国盟之外皆域外。
+                                    内部制度：议事制。允许联盟内战，但需维持联络、解释战争；国盟威严不可侵犯，外敌共同征讨。
+                                    - 大雅帝国：帝制，无限权力。法律少变，仙凡同罪。
+                                    - 大秦帝国：帝制，无限权力。法律多变，执法不严，仙人随意违法。
+                                    - 天璇帝国：帝制，无限权力。有法无狱，违法即罪民。庞大罪民群体，罪民无人权、任仙人采撷，罪民之子亦罪民，成仙可脱罪。
+                                    - 宋河王朝：天子诸侯制，诸侯自治、但需朝贡与征兵。
+                                    - 伊美诺森林：精灵，女王制。女王最高外交权，长老会最高决策权。
+                                    - 暗精灵王国：精灵，女王制。女王下辖暗执事、有信息权与审判权，长老会名存实亡，女王如帝。
+                                    - 古天城：领土仅单位面，但元婴级实力，位面富饶。对外无争，临近位面主动朝贡。帝制，高福利。
+                                    - 纪华城：富饶位面，单位面领土，不扩张。帝制，禁止离开本位面，无家庭、禁止生育，人造婴儿、统一培养。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="妖盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #8e44ad;"><i class="fas fa-paw"></i></div>
+                                    <h4>妖盟</h4>
+                                </div>
+                                <p class="detail-description">
+                                    概述：万族联盟，报团取暖，抵御人族。
+                                    社会地位：人族之敌。实力强大，领土辽阔。有外敌则越战越勇，无外敌则内部分裂。
+                                    内部制度：议事制。允许内战，保持联络，共同防御。元婴轮值盟主，紧急情况下盟主权力扩张。
+                                    - 虎族：综合最强。出生就强。
+                                    - 熊族：单体最强。出生就强。
+                                    - 蛇族：中毒。出生弱小，多次蜕变。
+                                    - 鳄族：伤害最高。出生就强。
+                                    - 鹰族：速度最快。出生弱小，成年后强。
+                                    - 虫族：领土辽阔，单体弱小。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="龙盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #27ae60;"><i class="fas fa-dragon"></i></div>
+                                    <h4>龙族</h4>
+                                </div>
+                                <p class="detail-description">
+                                    概述：非联盟，龙族一体。天下才十斗，人八我一余共一。
+                                    社会地位：无冕圣地，域外桃园，存在感低，拜访者多。
+                                    内部制度：长老制。长老会议决定族内大大小小的安排，一体、无成员势力。龙族寿命悠久。
+                                </p>
+                            </div>
+                            <div class="detail-content" id="圣盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #1abc9c;"><i class="fas fa-sun"></i></div>
+                                    <h4>圣域</h4>
+                                </div>
+                                <p class="detail-description">
+                                    概述：圣地联盟。圣地之人，蔑视天下，视万界为下界，圈地自萌。
+                                    社会地位：外人看来，高山仰止；内部看来，圈地自萌，外界皆蛮夷。
+                                    内部制度：排外制。交通互通，允许内战，维持联络，全领域交流。外敌自负。
+                                    - 平等圣地：原初天道下辖。禁止杀伐。贸易中心。
+                                    - 风神界：风神下辖，创建功法灵技。
+                                    - 剑灵界：剑圣下辖，创建心法。
+                                    - 魂界：魂圣下辖，创建道胎。
+                                    - 雷火圣地：雷神下辖。创建神格。
+                                    - 七星圣地：阵圣下辖。创建护山大阵。
+                                    - 幽冥圣地：咒圣下辖。创建自爆与燃烧。
+                                    - 无双界：无双神下辖。创建吞灵术。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 大争之世部分 -->
+            <div id="conflict-content-area" class="worldview-content-area">
+                <!--<div class="back-button-container">
+                    <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>返回选项</a>
+                </div>-->
+                <!-- 保留原有大争之世的内容，不修改标题样式 -->
+                <div class="elegant-content">
+                    <div class="decorated-title">
+                        <div class="ornament-line top"></div>
+                        <h2 class="section-title gold-title">大争之世</h2>
+                        <div class="ornament-line bottom"></div>
+                    </div>
+
+                    <!-- 主要内容 -->
+                    <div class="elegant-text-content">
+                        <p class="intro-text">
+                            十万年一次大争之世，大争之世中会有一个进阶合道圣人的机缘（天道轮回破缺）。
+                            天地初开时，有原初天道与深渊意志两位先天大道圣人。加上大争之世的十万年一次后天合道圣人，百万年来，万界共出十二圣人。
+                        </p>
+
+                        <p class="content-text">
+                            昔年那些寿元将尽的高阶修士会自我封印，等待大争之世到来之时苏醒。
+                            平日里万界之中通常只有一名炼虚、十名化神、百名元婴，而在大争之世中苏醒的炼虚有三十多名、元婴三万多名。他们将燃尽最后的寿元，激烈的交锋，缔造璀璨的时代，最终的赢家将进阶合道。
+                        </p>
+
+                        <p class="content-text">
+                            基于大争之世，游戏内可见许多上古遗迹：
+                            两个炼虚大帝的大战会打得一个位面赤地千里、寸草不生，在一些小位面甚至打得时空破碎、化作千万时间碎片、流传百万年。
+                            高阶修士寿元将尽、自我封印之时，会将全部身家带在身边，并且在周围布置凶阵、养殖凶兽、设置诅咒，将一片地区化为凶险禁地，从而保护灵棺渡过万年。玩家可以看到许多这样的凶地，并可以尝试去探险、盗墓。
+                        </p>
+
+                        <!-- 文档链接 -->
+                        <div class="document-link">
+                            <a href="document/风神界：大争之世.html" class="elegant-link">
+                                <span class="link-icon">📜</span>
+                                风神界：大争之世
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 底部装饰 -->
+                    <div class="ornament-line bottom-full"></div>
+                </div>
+            </div>
+            <!-- 玩家故事 -->
+            <div class="game-process">
+                <div class="process-header">
+                    <h3 class="process-heading">游戏过程</h3>
+                    <div class="process-divider"></div>
+                </div>
+
+                <!-- 这里插入从页面末尾移过来的玩家故事部分 -->
+                <div class="stories-container">
+                    <div class="stories-introduction">
+                        <p>每个风神界玩家都将创造自己独特的修真之旅。以下展示了三位玩家从凡人到真人的不同修炼路径，体现风神界无限可能的游戏体验。</p>
+                    </div>
+
+                    <!-- 故事展示轮播/滑块 -->
+                    <div class="story-slider">
+                        <!-- 导航箭头 -->
+                        <div class="slider-arrow prev-arrow">
+                            <i class="fas fa-chevron-left"></i>
+                        </div>
+
+                        <!-- 故事内容容器 -->
+                        <div class="story-container">
+                            <!-- 故事1: 从凡人到金丹 -->
+                            <div class="story-slide active" id="story-1">
+                                <div class="story-content">
+                                    <div class="story-header">
+                                        <div class="story-badge">凡人篇</div>
+                                        <h3>从凡人到金丹</h3>
+                                        <div class="story-divider"></div>
+                                    </div>
+
+                                    <div class="story-narrative">
+                                        <div class="story-visual">
+                                            <div class="story-image">
+                                                <div class="story-icon">
+                                                    <i class="fas fa-user-shield"></i>
+                                                </div>
+                                            </div>
+                                            <!-- 采访链接 -->
+                                            <div class="document-link">
+                                                <a href="document/【软件工程】采访：风神界开发方式.html" class="elegant-link">
+                                                    <span class="link-icon">🎙️</span>
+                                                    开发方式采访
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="story-text">
+                                            <p>
+                                                开局凡人在野外，砍树挖矿一背包。<br>摘果取水填肚子，砌墙盖楼挡风雨。<br>
+                                                野猪袭击倚墙战，击杀分尸骨肉皮。<br>偶得仙门交易符，卖肉换法始修仙。<br>
+                                                闭关突破至炼体，杀猪买丹至通脉。<br>宝墟一战至开窍，十战宝墟入炼气。<br>
+                                                丹器符术配置好，道胎晶棺后手足。<br>十险三死磨方案，百战宝墟入筑基。<br>
+                                                秘境寻宝得珍宝，惨遭魔修残魂逃。<br>不服再战又遇险，屡败屡战终生存。<br>
+                                                大宗邀约为供奉，搬家换界入豪宅。<br>跑商战役皆参与，所救百人谢不尽。<br>
+                                                金丹老祖迟暮死，堂主勾敌反宗主。<br>玩家站宗遭刺杀，聚党入局分城破。<br>
+                                                外敌海盗来分尸，内部合作再背刺。<br>杀阵血祭入金丹，御阵破敌内归心。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 故事2: 从金丹到元婴 -->
+                            <div class="story-slide" id="story-2">
+                                <div class="story-content">
+                                    <div class="story-header">
+                                        <div class="story-badge">金丹篇</div>
+                                        <h3>从金丹到元婴</h3>
+                                        <div class="story-divider"></div>
+                                    </div>
+
+                                    <div class="story-narrative">
+                                        <div class="story-visual">
+                                            <div class="story-image">
+                                                <div class="story-icon">
+                                                    <i class="fas fa-atom"></i>
+                                                </div>
+                                            </div>
+                                            <!-- 采访链接 -->
+                                            <div class="document-link">
+                                                <a href="document/【软件工程】采访：风神界开发方式.html" class="elegant-link">
+                                                    <span class="link-icon">🎙️</span>
+                                                    开发方式采访
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="story-text">
+                                            当年我金丹，在右无相建七杀，声名显赫，但地穷人多，无处扩张。<br>
+                                            当此之时，左金丹T1，右金丹C宗，前元婴A宗，后元婴B宗。 <br>
+                                            T1，传奇天才，从圣地走出，带一群天骄，有元婴之姿，正缺盟友。<br>
+                                            我欲投靠，但T1硬撼A宗，败而逃散，我转而吞其领土、收T2——T1手下得力天骄，亦有元婴之姿。 <br>
+                                            我等尊A宗为首，献金取领土，A宗许；我等搬迁结束，大兴土木，A宗转而悔，我等敢怒不敢言，让地而归。 <br>
+                                            元婴远征战，A宗拉我等相助，许以左无相。我等缩衣节食、殚精竭虑、不辞辛劳、供应前线。胜，A宗再悔，仅补偿几枚仙丹。我等赔笑，然复仇之火已燃于心。<br>
+                                            我拉C宗，建联盟。元婴战再起，A宗邀我相助；C宗出使B宗，B宗同意支援物资、背刺A宗，我抉择、许。<br>
+                                            C宗欲主导联盟，积极外交、军事，我放权指挥，然而他们战术一团糟，多场愚蠢的大败。我拿回指挥权，大胜。 <br>
+                                            连胜之中，A宗突然多次奇袭辎重队，情报准确，且攻击之处皆七杀薄弱而无C宗。<br>
+                                            我惊觉：C宗背叛，大概因嫉妒我战术优越。冥思苦想，我决定负荆请罪，称C宗以众牺牲铺路、我不该夺取战功。同时豪言：我不逼迫大家原谅我，但目前有间谍，我不希望心存芥蒂者暗藏。大家自愿去留，离开者过去在联盟投资我全额补偿。好聚好散，别再助A宗。<br>
+                                            天崩地裂，C宗几乎全走，七杀独战A宗。咬牙强撑，众志成城，大家捐资源，非战斗人员亦修法参战。领土不断沦陷，我等越战越勇：法宝件件产出，新兵批批毕业，十七金丹道胎成，T2进元婴。反攻灭A宗，清算灭C宗，盟B宗，七杀于无相称王。
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 故事3: 化神 -->
+                            <div class="story-slide" id="story-3">
+                                <div class="story-content">
+                                    <div class="story-header">
+                                        <div class="story-badge">元婴篇</div>
+                                        <h3>化神之路</h3>
+                                        <div class="story-divider"></div>
+                                    </div>
+
+                                    <div class="story-narrative">
+                                        <div class="story-visual">
+                                            <div class="story-image">
+                                                <div class="story-icon">
+                                                    <i class="fas fa-sun"></i>
+                                                </div>
+                                            </div>
+                                            <!-- 采访链接 -->
+                                            <div class="document-link">
+                                                <a href="document/【软件工程】采访：风神界开发方式.html" class="elegant-link">
+                                                    <span class="link-icon">🎙️</span>
+                                                    开发方式采访
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="story-text">
+                                            <p>
+                                                惯例，顶尖资源皆为大帝所夺。<br>
+                                                当今时代，三百年无帝，故各大化神势力富裕，共积累了近千具元婴道胎。然而平日里冲突规模却限于筑基，万界明面元婴仅百余人。元婴道胎已蠢蠢欲动。<br>
+                                                十二圣地中三个化神，外界六个，ABCDE与你。终于乱战爆发，你战A而灭之。休养生息，再战B而灭之。CDE联手，你决战而胜之，一统万界（圣地外）。<br>
+                                                然而内乱起，魔修在你境内掠夺，AB余党与CDE降军趁乱反叛，游击摧毁工坊仓库。<br>
+                                                你镇压灭杀魔修，然而魔修使用新的元婴道胎。你再次镇压灭杀，他们再次复活。<br>
+                                                你惊疑：他们哪来这么多元婴道胎？<br>
+                                                实际上，是商盟与圣地在支持魔修，他们都不希望统一：统一则剿匪，魔修不利；统一则无战损，需求不足，物价下跌，商人不利；统一则人们尊你而不尊圣地。（虽然同为化神，但圣地犯不着跟你拼。等你千年后一捧黄土、圣地依然屹立。因此圣地允许人们尊你，但圣地也不希望如此，因此想用小代价恶心你）<br>
+                                                魔修源源不断，你方后勤乏力，再战易覆灭。你及时收手，割让领土，给ABCDE复国。你保留五百位面。 ABCDE同意，议和。 你继续镇压魔修。这一次镇压结束后，魔修没再继续进攻。<br>
+                                                安顿好五百位面之后，你设计间谍符文，让大量NPC成为间谍、渗透进入ABCDE与商人与魔修，甚至部分圣地。 间谍们窃取情报，还有的成为文官、有投票权、从而干预其他势力决策。有些间谍甚至成为了其他势力的将军，负责指挥作战。<br>
+                                                时机成熟，收网。你再次发动全面战争，摧毁所有非圣地超一流势力，统一万界。圣地沉默。（超一流：拥有化神或六名元婴以上的势力或联盟）
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 导航箭头 -->
+                        <div class="slider-arrow next-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- 故事导航点 -->
+                    <div class="story-navigation">
+                        <div class="nav-dot active" data-story="1"></div>
+                        <div class="nav-dot" data-story="2"></div>
+                        <div class="nav-dot" data-story="3"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="game-process">
-            <div class="process-header">
-                <h3 class="process-heading">游戏过程</h3>
-                <div class="process-divider"></div>
-            </div>
-            
-            <!-- 这里插入从页面末尾移过来的玩家故事部分 -->
-            <div class="stories-container">
-                <div class="stories-introduction">
-                    <p>每个风神界玩家都将创造自己独特的修真之旅。以下展示了三位玩家从凡人到真人的不同修炼路径，体现风神界无限可能的游戏体验。</p>
-                </div>
-                
-                <!-- 故事展示轮播/滑块 -->
-                <div class="story-slider">
-                    <!-- 导航箭头 -->
-                    <div class="slider-arrow prev-arrow">
-                        <i class="fas fa-chevron-left"></i>
-                    </div>
-                    
-                    <!-- 故事内容容器 -->
-                    <div class="story-container">
-                        <!-- 故事1: 从凡人到金丹 -->
-                        <div class="story-slide active" id="story-1">
-                            <div class="story-content">
-                                <div class="story-header">
-                                    <div class="story-badge">凡人篇</div>
-                                    <h3>从凡人到金丹</h3>
-                                    <div class="story-divider"></div>
-                                </div>
-                                
-                                <div class="story-narrative">
-                                    <div class="story-visual">
-                                        <div class="story-image">
-                                            <div class="story-icon">
-                                                <i class="fas fa-user-shield"></i>
-                                            </div>
-                                        </div>
-                                        <!-- 采访链接 -->
-                                        <div class="document-link">
-                                            <a href="document/【软件工程】采访：风神界开发方式.html" class="elegant-link">
-                                                <span class="link-icon">🎙️</span>
-                                                开发方式采访
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="story-text">
-                                        <p>开局凡人在野外，砍树挖矿一背包。<br>摘果取水填肚子，砌墙盖楼挡风雨。<br>
-                                        野猪袭击倚墙战，击杀分尸骨肉皮。<br>偶得仙门交易符，卖肉换法始修仙。<br>
-                                        闭关突破至炼体，杀猪买丹至通脉。<br>宝墟一战至开窍，十战宝墟入炼气。<br>
-                                        丹器符术配置好，道胎晶棺后手足。<br>十险三死磨方案，百战宝墟入筑基。<br>
-                                        秘境寻宝得珍宝，惨遭魔修残魂逃。<br>不服再战又遇险，屡败屡战终生存。<br>
-                                        大宗邀约为供奉，搬家换界入豪宅。<br>跑商战役皆参与，所救百人谢不尽。<br>
-                                        金丹老祖迟暮死，堂主勾敌反宗主。<br>玩家站宗遭刺杀，聚党入局分城破。<br>
-                                        外敌海盗来分尸，内部合作再背刺。<br>杀阵血祭入金丹，御阵破敌内归心。</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 故事2: 从金丹到元婴 -->
-                        <div class="story-slide" id="story-2">
-                            <div class="story-content">
-                                <div class="story-header">
-                                    <div class="story-badge">金丹篇</div>
-                                    <h3>从金丹到元婴</h3>
-                                    <div class="story-divider"></div>
-                                </div>
-                                
-                                <div class="story-narrative">
-                                    <div class="story-visual">
-                                        <div class="story-image">
-                                            <div class="story-icon">
-                                                <i class="fas fa-atom"></i>
-                                            </div>
-                                        </div>
-                                        <!-- 采访链接 -->
-                                        <div class="document-link">
-                                            <a href="document/【软件工程】采访：风神界开发方式.html" class="elegant-link">
-                                                <span class="link-icon">🎙️</span>
-                                                开发方式采访
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="story-text">
-                                        <p>当年我金丹，在右无相建七杀，声名显赫，但地穷人多，无处扩张。</p>
-                                        <p>当此之时，左金丹T1，右金丹C宗，前元婴A宗，后元婴B宗。</p>
-                                        <p>T1，传奇天才，从圣地走出，带一群天骄，有元婴之姿，正缺盟友。</p>
-                                        <p>我欲投靠，但T1硬撼A宗，败而逃散，我转而吞其领土、收T2——T1手下得力天骄，亦有元婴之姿。</p>
-                                        <p>我等尊A宗为首，献金取领土，A宗许；我等搬迁结束，大兴土木，A宗转而悔，我等敢怒不敢言，让地而归。</p>
-                                        <p>元婴远征战，A宗拉我等相助，许以左无相。我等缩衣节食、殚精竭虑、不辞辛劳、供应前线。胜，A宗再悔，仅补偿几枚仙丹。我等赔笑，然复仇之火已燃于心。</p>
-                                        <p>我拉C宗，建联盟。元婴战再起，A宗邀我相助；C宗出使B宗，B宗同意支援物资、背刺A宗，我抉择、许。</p>
-                                        <p>C宗欲主导联盟，积极外交、军事，我放权指挥，然而他们战术一团糟，多场愚蠢的大败。我拿回指挥权，大胜。</p>
-                                        <p>我七杀于无相称王，功成名就，修为突破，元婴在握。</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 故事3: 化神 -->
-                        <div class="story-slide" id="story-3">
-                            <div class="story-content">
-                                <div class="story-header">
-                                    <div class="story-badge">元婴篇</div>
-                                    <h3>化神之路</h3>
-                                    <div class="story-divider"></div>
-                                </div>
-                                
-                                <div class="story-narrative">
-                                    <div class="story-visual">
-                                        <div class="story-image">
-                                            <div class="story-icon">
-                                                <i class="fas fa-sun"></i>
-                                            </div>
-                                        </div>
-                                        <!-- 采访链接 -->
-                                        <div class="document-link">
-                                            <a href="document/【软件工程】采访：风神界开发方式.html" class="elegant-link">
-                                                <span class="link-icon">🎙️</span>
-                                                开发方式采访
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="story-text">
-                                        <p>惯例，顶尖资源皆为大帝所夺。</p>
-                                        <p>当今时代，三百年无帝，故各大化神势力富裕，共积累了近千具元婴道胎。然而平日里冲突规模却限于筑基，万界明面元婴仅百余人。元婴道胎已蠢蠢欲动。</p>
-                                        <p>十二圣地中三个化神，外界六个，ABCDE与你。终于乱战爆发，你战A而灭之。休养生息，再战B而灭之。CDE联手，你决战而胜之，一统万界（圣地外）。</p>
-                                        <p>然而内乱起，魔修在你境内掠夺，AB余党与CDE降军趁乱反叛，游击摧毁工坊仓库。</p>
-                                        <p>你镇压灭杀魔修，然而魔修使用新的元婴道胎。你再次镇压灭杀，他们再次复活。</p>
-                                        <p>你惊疑：他们哪来这么多元婴道胎？</p>
-                                        <p>实际上，是商盟与圣地在支持魔修，他们都不希望统一：统一则剿匪，魔修不利；统一则无战损，需求不足，物价下跌，商人不利；统一则人们尊你而不尊圣地。</p>
-                                        <p>时机成熟，收网。你再次发动全面战争，摧毁所有非圣地超一流势力，统一万界。</p>
-                                        <p>感悟天道，法则，跨入化神境界，成为一个时代的传奇。</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 导航箭头 -->
-                    <div class="slider-arrow next-arrow">
-                        <i class="fas fa-chevron-right"></i>
+    </section>
+
+    <section id="faq" class="section-dark">
+        <div class="container">
+            <h2 class="section-title">常见问题</h2>
+
+            <!-- 常规 FAQ 网格部分 -->
+            <div class="faq-grid">
+                <!-- 游戏性能问题 FAQ 项 -->
+                <div class="faq-item">
+                    <h3>游戏性能需求如何？</h3>
+                    <!-- 删除了 style="display: none;" 来允许 JavaScript 正常工作 -->
+                    <div class="faq-content">
+                        <p><strong>推荐配置：</strong>i9-14900CPU，192GB内存，RTX 4090显卡，500GB硬盘。（存档上百G）</p>
+                        <p><strong>最低配置：</strong>i5-12400CPU，16GB内存，RTX 1060显卡，20GB硬盘。</p>
+                        <p>满配需要超算，家用电脑不可能实现。不过，在最低配置下在游戏设置中选择【大比例量子演算】【小型地图】，依然可以有不错的体验。</p>
                     </div>
                 </div>
-                
-                <!-- 故事导航点 -->
-                <div class="story-navigation">
-                    <div class="nav-dot active" data-story="1"></div>
-                    <div class="nav-dot" data-story="2"></div>
-                    <div class="nav-dot" data-story="3"></div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 境界系统部分 -->
-        <div id="realm-content-area" class="worldview-content-area">
-            <div class="back-button-container">
-                <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>返回选项</a>
-            </div>
-            <!-- 保留原有境界系统的内容，不修改标题样式 -->
-            <div class="realm-system">  <!-- Start of realm-system -->
-                <div class="realm-header">
-                    <h3 class="realm-title">境界系统</h3>
-                </div>
-                <!-- realm-chart-container is now correctly INSIDE realm-system -->
-                <div class="realm-chart-container">
-                    <div class="realm-chart">
-                        <div class="realm-group mortal">
-                            <div class="realm-group-header">
-                                <div class="realm-icon"><i class="fas fa-user"></i></div>
-                                <h4 class="realm-group-title">凡人</h4>
-                            </div>
-                            <div class="realm-levels">
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">凡境</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">人们大多在此境界。五千亿凡人。</div>
-                                </div>
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">炼体</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">身强体壮，拳可碎石。强于奥运冠军。</div>
-                                </div>
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">通脉</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">气血可运转调控，爆发如超人。</div>
-                                </div>
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">开窍</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">灵气可入体运转，可以释放简单法术。</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="realm-group immortal">
-                            <div class="realm-group-header">
-                                <div class="realm-icon"><i class="fas fa-cloud"></i></div>
-                                <h4 class="realm-group-title">仙人</h4>
-                            </div>
-                            <div class="realm-levels">
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">炼气</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">炼气之下皆蝼蚁。炼气为仙人，可隔空杀人、御剑飞行。</div>
-                                </div>
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">筑基</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">通常富可敌国，有自己的洞府、布置各种阵法。位面内争霸时的一流强者。</div>
-                                </div>
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">金丹</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">寻常位面的最强者。金丹及以上修士，入万界天榜。有金丹修士坐镇的势力，乃万界入流势力。</div>
-                                </div>
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">元婴</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">有元婴修士坐镇的势力，乃万界一流势力。丹宗，器宗，万宝楼，都在此行列。</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="realm-group true-immortal">
-                            <div class="realm-group-header">
-                                <div class="realm-icon"><i class="fas fa-sun"></i></div>
-                                <h4 class="realm-group-title">真人</h4>
-                            </div>
-                            <div class="realm-levels">
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">化神</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">见时空法则，知因果天命。除圣地外，没有一个宗门能连续两个时代皆出化神修士。</div>
-                                </div>
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">炼虚</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">亦称大帝，寿元三千载，言出法随。一个时代通常只有一名大帝，万界共尊，大帝在他的时代无敌（在圣域外）。</div>
-                                </div>
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">合道</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">亦称圣人，以身合一界天道，不死不灭。其所在位面为圣域，圣人于圣域内无敌、可断生死逆阴阳，但圣人无法离开其圣域。</div>
-                                </div>
-                                <div class="realm-level">
-                                    <div class="level-header">
-                                        <span class="level-name">大乘</span>
-                                        <span class="level-indicator"></span>
-                                    </div>
-                                    <div class="level-description">前不见古人，后不见来者，百万年来万界从未有人踏入此境。</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
-                </div> 
-            </div> 
-        </div>
-        
-        <!-- 势力分布部分 -->
-        <div id="faction-content-area" class="worldview-content-area">
-            <div class="back-button-container">
-                <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>返回选项</a>
-            </div>
-            <!-- 主要势力类型部分 -->
-            <div class="power-system new-layout">
-                <h3>主要势力类型</h3>
-                <div class="faction-container">
-                    <div class="faction-grid">
-                        <div class="faction-item" data-faction="宗门">
-                            <div class="faction-icon" style="background-color: #e74c3c;"><i class="fas fa-mountain"></i></div>
-                            <div class="faction-name">宗门</div>
-                        </div>
-                        <div class="faction-item" data-faction="皇朝">
-                            <div class="faction-icon" style="background-color: #f39c12;"><i class="fas fa-crown"></i></div>
-                            <div class="faction-name">皇朝</div>
-                        </div>
-                        <div class="faction-item" data-faction="联盟">
-                            <div class="faction-icon" style="background-color: #9b59b6;"><i class="fas fa-hands-helping"></i></div>
-                            <div class="faction-name">联盟</div>
-                        </div>
-                        <div class="faction-item" data-faction="圣地">
-                            <div class="faction-icon" style="background-color: #3498db;"><i class="fas fa-place-of-worship"></i></div>
-                            <div class="faction-name">圣地</div>
-                        </div>
-                    </div>
-                    <div class="faction-detail">
-                        <div class="detail-content" id="宗门-detail">
-                            <div class="detail-header">
-                                <div class="detail-icon" style="background-color: #e74c3c;"><i class="fas fa-mountain"></i></div>
-                                <h4>宗门</h4>
-                            </div>
-                            <p class="detail-description">修真者组织，是家族、学校、公司的结合体。宗门通常坐落在山脉之中，依附于皇朝；超级宗门会控制皇朝。</p>
-                        </div>
-                        <div class="detail-content" id="皇朝-detail">
-                            <div class="detail-header">
-                                <div class="detail-icon" style="background-color: #f39c12;"><i class="fas fa-crown"></i></div>
-                                <h4>皇朝</h4>
-                            </div>
-                            <p class="detail-description">管理凡人与宗门，疆土广阔。皇朝的实力在临近其所在皇朝时几乎必然会与皇朝发生一场冲突。</p>
-                        </div>
-                        <div class="detail-content" id="联盟-detail">
-                            <div class="detail-header">
-                                <div class="detail-icon" style="background-color: #9b59b6;"><i class="fas fa-hands-helping"></i></div>
-                                <h4>联盟</h4>
-                            </div>
-                            <p class="detail-description">例如，魔道联盟为超一流势力，不再如单个魔宗那样人人喊打。一些正道大典也会邀请魔盟代表出席。</p>
-                        </div>
-                        <div class="detail-content" id="圣地-detail">
-                            <div class="detail-header">
-                                <div class="detail-icon" style="background-color: #3498db;"><i class="fas fa-place-of-worship"></i></div>
-                                <h4>圣地</h4>
-                            </div>
-                            <p class="detail-description">圣人掌控，绝对安全，法则变更。圣地里的聪明凡人会被赋予永生，圣地宗主无实权、仅为外交最高官。</p>
-                        </div>
+
+                <div class="faq-item">
+                    <h3>游戏寿命有多长？</h3>
+                    <!-- 删除了 style="display: none;" 来允许 JavaScript 正常工作 -->
+                    <div class="faq-content">
+                        <p>单机模式，预期游戏时间为50-100小时，此时大约会达到元婴级别、多数玩家会在此结束。</p>
+                        <P>有更高追求的玩家会在1000小时左右时，精通五维与符文，成就炼虚。</P>
+                        <p>官服网游模式，预计10年以上长期运营，玩家所建设的势力可以长期存在。</p>
                     </div>
                 </div>
-            </div>
-                
-            <!-- 超一流联盟名录部分 -->
-            <div class="power-system new-layout">
-                <h3>超一流联盟名录</h3>
-                <div class="faction-container">
-                    <div class="faction-grid large-grid">
-                        <div class="faction-item" data-faction="魔盟">
-                            <div class="faction-icon" style="background-color: #c0392b;"><i class="fas fa-skull"></i></div>
-                            <div class="faction-name">魔盟</div>
-                        </div>
-                        <div class="faction-item" data-faction="商盟">
-                            <div class="faction-icon" style="background-color: #f1c40f;"><i class="fas fa-coins"></i></div>
-                            <div class="faction-name">商盟</div>
-                        </div>
-                        <div class="faction-item" data-faction="奇盟">
-                            <div class="faction-icon" style="background-color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
-                            <div class="faction-name">奇盟</div>
-                        </div>
-                        <div class="faction-item" data-faction="源盟">
-                            <div class="faction-icon" style="background-color: #2980b9;"><i class="fas fa-book-open"></i></div>
-                            <div class="faction-name">源盟</div>
-                        </div>
-                        <div class="faction-item" data-faction="道盟">
-                            <div class="faction-icon" style="background-color: #2c3e50;"><i class="fas fa-yin-yang"></i></div>
-                            <div class="faction-name">道盟</div>
-                        </div>
-                        <div class="faction-item" data-faction="侠盟">
-                            <div class="faction-icon" style="background-color: #e67e22;"><i class="fas fa-khanda"></i></div>
-                            <div class="faction-name">侠盟</div>
-                        </div>
-                        <div class="faction-item" data-faction="国盟">
-                            <div class="faction-icon" style="background-color: #d35400;"><i class="fas fa-landmark"></i></div>
-                            <div class="faction-name">国盟</div>
-                        </div>
-                        <div class="faction-item" data-faction="妖盟">
-                            <div class="faction-icon" style="background-color: #8e44ad;"><i class="fas fa-paw"></i></div>
-                            <div class="faction-name">妖盟</div>
-                        </div>
-                        <div class="faction-item" data-faction="龙盟">
-                            <div class="faction-icon" style="background-color: #27ae60;"><i class="fas fa-dragon"></i></div>
-                            <div class="faction-name">龙盟</div>
-                        </div>
-                        <div class="faction-item" data-faction="圣盟">
-                            <div class="faction-icon" style="background-color: #1abc9c;"><i class="fas fa-sun"></i></div>
-                            <div class="faction-name">圣盟</div>
-                        </div>
-                    </div>
-                    <div class="faction-detail">
-                        <div class="detail-content" id="魔盟-detail">
-                            <div class="detail-header">
-                                <div class="detail-icon" style="background-color: #c0392b;"><i class="fas fa-skull"></i></div>
-                                <h4>魔盟</h4>
-                            </div>
-                            <p class="detail-description">魔道联盟，打家劫舍</p>
-                        </div>
-                        <div class="detail-content" id="商盟-detail">
-                            <div class="detail-header">
-                                <div class="detail-icon" style="background-color: #f1c40f;"><i class="fas fa-coins"></i></div>
-                                <h4>商盟</h4>
-                            </div>
-                            <p class="detail-description">商业联盟，坐于圣地，低买高卖</p>
-                        </div>
-                        <div class="detail-content" id="奇盟-detail">
-                            <div class="detail-header">
-                                <div class="detail-icon" style="background-color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
-                                <h4>奇盟</h4>
-                            </div>
-                            <p class="detail-description">丹器符阵，生产销售，暴利垄断</p>
-                        </div>
-                        <div class="detail-content" id="源盟-detail">
-                            <div class="detail-header">
-                                <div class="detail-icon" style="background-color: #2980b9;"><i class="fas fa-book-open"></i></div>
-                                <h4>源盟</h4>
-                            </div>
-                            <p class="detail-description">学院联盟，桃李满天下，中立</p>
-                        </div>
-                        <div class="detail-content" id="道盟-detail">
-                            <div class="detail-header">
-                                <div class="detail-icon" style="background-color: #2c3e50;"><i class="fas fa-yin-yang"></i></div>
-                                <h4>道盟</h4>
-                            </div>
-                            <p class="detail-description">无认知过滤，直面世界真相。万法本源，五维空间。天地如牌，他人只玩同花顺，而我直面混沌。百万年来，化神以上者大半出自道盟。</p>
-                       </div>
-                       <div class="detail-content" id="侠盟-detail">
-                           <div class="detail-header">
-                               <div class="detail-icon" style="background-color: #e67e22;"><i class="fas fa-khanda"></i></div>
-                               <h4>侠盟</h4>
-                           </div>
-                           <p class="detail-description">侠客联盟，散修公朝。战魔兽，闯秘境，分享经验，互帮互助。</p>
-                       </div>
-                       <div class="detail-content" id="国盟-detail">
-                           <div class="detail-header">
-                               <div class="detail-icon" style="background-color: #d35400;"><i class="fas fa-landmark"></i></div>
-                               <h4>国盟</h4>
-                           </div>
-                           <p class="detail-description">皇朝联盟。被宗门控制的皇朝没资格加入，国盟成员必须有独立主权。国盟内皇权威严，国盟外皇权笑话。</p>
-                       </div>
-                       <div class="detail-content" id="妖盟-detail">
-                           <div class="detail-header">
-                               <div class="detail-icon" style="background-color: #8e44ad;"><i class="fas fa-paw"></i></div>
-                               <h4>妖盟</h4>
-                           </div>
-                           <p class="detail-description">万族联盟。实力强大，领土辽阔。有外敌则越战越勇，无外敌则内部分裂。</p>
-                       </div>
-                       <div class="detail-content" id="龙盟-detail">
-                           <div class="detail-header">
-                               <div class="detail-icon" style="background-color: #27ae60;"><i class="fas fa-dragon"></i></div>
-                               <h4>龙盟</h4>
-                           </div>
-                           <p class="detail-description">龙族联盟。天下才十斗，人八我一余共一。</p>
-                       </div>
-                       <div class="detail-content" id="圣盟-detail">
-                           <div class="detail-header">
-                               <div class="detail-icon" style="background-color: #1abc9c;"><i class="fas fa-sun"></i></div>
-                               <h4>圣盟</h4>
-                           </div>
-                           <p class="detail-description">圣地联盟。圣地之人，蔑视天下，视万界为下界，圈地自萌。</p>
-                       </div>
-                   </div>
-               </div>
-           </div>
-       </div>
 
-       <!-- 大争之世部分 -->
-       <div id="conflict-content-area" class="worldview-content-area">
-            <div class="back-button-container">
-                <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>返回选项</a>
-            </div>
-           <!-- 保留原有大争之世的内容，不修改标题样式 -->
-           <div class="elegant-content">
-               <div class="decorated-title">
-                   <div class="ornament-line top"></div>
-                   <h2 class="section-title gold-title">大争之世</h2>
-                   <div class="ornament-line bottom"></div>
-               </div>
-
-               <!-- 主要内容 -->
-               <div class="elegant-text-content">
-                   <p class="intro-text">
-                       十万年一次大争之世，大争之世中会有一个进阶合道圣人的机缘（天道轮回破缺）。
-                       天地初开时，有原初天道与深渊意志两位先天大道圣人。加上大争之世的十万年一次后天合道圣人，百万年来，万界共出十二圣人。
-                   </p>
-
-                   <p class="content-text">
-                       昔年那些寿元将尽的高阶修士会自我封印，等待大争之世到来之时苏醒。
-                       平日里万界之中通常只有一名炼虚、十名化神、百名元婴，而在大争之世中苏醒的炼虚有三十多名、元婴三万多名。他们将燃尽最后的寿元，激烈的交锋，缔造璀璨的时代，最终的赢家将进阶合道。
-                   </p>
-
-                   <p class="content-text">
-                       基于大争之世，游戏内可见许多上古遗迹：
-                       两个炼虚大帝的大战会打得一个位面赤地千里、寸草不生，在一些小位面甚至打得时空破碎、化作千万时间碎片、流传百万年。
-                       高阶修士寿元将尽、自我封印之时，会将全部身家带在身边，并且在周围布置凶阵、养殖凶兽、设置诅咒，将一片地区化为凶险禁地，从而保护灵棺渡过万年。玩家可以看到许多这样的凶地，并可以尝试去探险、盗墓。
-                   </p>
-
-                   <!-- 文档链接 -->
-                   <div class="document-link">
-                       <a href="document/风神界：大争之世.html" class="elegant-link">
-                           <span class="link-icon">📜</span>
-                           风神界：大争之世
-                       </a>
-                   </div>
-               </div>
-
-               <!-- 底部装饰 -->
-               <div class="ornament-line bottom-full"></div>
-           </div> 
-       </div> 
-   </div>
-</section>
-
-<section id="faq" class="section-dark">
-    <div class="container">
-        <h2 class="section-title">常见问题</h2>
-    
-        <!-- 常规 FAQ 网格部分 -->
-        <div class="faq-grid">
-            <!-- 游戏性能问题 FAQ 项 -->
-            <div class="faq-item">
-                <h3>游戏性能需求如何？</h3>
-                <!-- 删除了 style="display: none;" 来允许 JavaScript 正常工作 -->
-                <div class="faq-content">
-                    <p><strong>推荐配置：</strong>i9-14900CPU，192GB内存，RTX 4090显卡，500GB硬盘。（存档上百G）</p>
-                    <p><strong>最低配置：</strong>i5-12400CPU，16GB内存，RTX 1060显卡，20GB硬盘。</p>
-                    <p>满配需要超算，家用电脑不可能实现。不过，在最低配置下在游戏设置中选择【大比例量子演算】【小型地图】，依然可以有不错的体验。</p>
-                </div>
-            </div>
-    
-            <div class="faq-item">
-                <h3>游戏寿命有多长？</h3>
-                <!-- 删除了 style="display: none;" 来允许 JavaScript 正常工作 -->
-                <div class="faq-content">
-                    <p>单机模式，预期游戏时间为50-100小时，此时大约会达到元婴级别、多数玩家会在此结束。</p>
-                    <P>有更高追求的玩家会在1000小时左右时，精通五维与符文，成就炼虚。</P>
-                    <p>官服网游模式，预计10年以上长期运营，玩家所建设的势力可以长期存在。</p>
-                </div>
-            </div>
-    
-            <div class="faq-item">
-                <h3>游戏是否有内购？</h3>
-                <!-- 删除了 style="display: none;" 来允许 JavaScript 正常工作 -->
-                <div class="faq-content">
-                    <P>没有。</P>
-                    <p><strong>单机版：</strong>一次性买断价格100元，无任何内购，后续DLC另行购买。</p>
-                    <p><strong>网游版：</strong>每月订阅100元，无游戏内商城、无道具内购。但游戏内支持玩家间使用人民币交易物资，平台收取1%交易税。</p>
-                    <p>我们承诺：除无关平衡的皮肤之外，永不出售任何游戏内资源，所有资源必须由玩家或NPC通过游戏规则获取。</p>
-                </div>
-            </div>
-        </div> <!-- faq-grid 结束 -->
-    
-        <!-- 认知过滤部分 - 这部分保持不变 -->
-        <div class="faq-integrated-item">
-            <h3>这么复杂的游戏，新玩家会不会难以上手？</h3>
-            <div class="faq-integrated-content">
-                <p>不会，因为我们使用了<span class="highlight-filter">认知过滤</span>的设计方式，新玩家不会接触到复杂的世界真相。例如：</p>
-
-        <!-- 术法系统部分 - 修改标题 -->
-        <div class="section-header">
-            <div class="spell-system">
-                <div class="system-header">
-                    <div class="system-icon"><i class="fas fa-hat-wizard"></i></div>
-                    <h3 class="system-title">术法系统中的<span class="highlight-filter-text">认知过滤</span></h3>
-                </div>
-                <div class="system-content">
-                    <p>玩家可以学习无限的术法。但在使用术法时需要考虑五维向量。角色的状态由五个参数构成。每一次释放技能，五个参数同时变化；每个技能的释放条件，都是这五个参数满足某条件。</p>
-                    <p><strong>伪圣之路</strong>：伪圣之路，是实现术法认知过滤的办法，让玩家无需理解复杂的五维变化也能畅玩游戏。每一个功法都是一条伪圣之路，对应一个独特的UI面板，除非修神道功法、否则玩家不会知晓五维向量的存在。</p>
-                    <p>伪圣之路的修士会将【混乱术：随机打乱对手的五维状态】称之为【封魔术：效果近似视为让一个修士从此无法再使用技能】。只有神道功法的修士才无惧混乱术。</p>
-                </div>
-            </div>
-
-            <div class="path-comparison">
-                <div class="pseudo-path">
-                    <div class="path-header">
-                        <h4 class="path-title">伪圣之路：阴阳功法</h4>
-                        <div class="path-icon"><i class="fas fa-yin-yang"></i></div>
-                    </div>
-                    <div class="path-content">
-                        <div class="path-visual yin-yang-visual"></div>
-                        <div class="path-explanation">
-                            <p class="path-desc"><strong>近似认知</strong>：角色有阴阳值，每一个技能的释放条件都是需要角色阴阳值在某个范畴内，每个技能释放后都会改变角色阴阳值。同时还有两个技能分别是【阳化】【阴化】，CD一秒，使用无限制，效果除了阴阳值+1/-1之外没有任何其他效果。</p>
-                            <p class="path-flaw"><strong>缺陷</strong>：只能修炼阴阳系列术法，不能修炼其他术法。</p>
-                            <p class="path-truth"><strong>真相</strong>：阴阳值不存在，阴阳值本质是五维向量空间中的一个偏序。</p>
-                        </div>
+                <div class="faq-item">
+                    <h3>游戏是否有内购？</h3>
+                    <!-- 删除了 style="display: none;" 来允许 JavaScript 正常工作 -->
+                    <div class="faq-content">
+                        <P>没有。</P>
+                        <p><strong>单机版：</strong>一次性买断价格100元，无任何内购，后续DLC另行购买。</p>
+                        <p><strong>网游版：</strong>每月订阅100元，无游戏内商城、无道具内购。但游戏内支持玩家间使用人民币交易物资，平台收取1%交易税。</p>
+                        <p>我们承诺：除无关平衡的皮肤之外，永不出售任何游戏内资源，所有资源必须由玩家或NPC通过游戏规则获取。</p>
                     </div>
                 </div>
-                
-                <div class="pseudo-path">
-                    <div class="path-header">
-                        <h4 class="path-title">伪圣之路：轮回功法</h4>
-                        <div class="path-icon"><i class="fas fa-sync-alt"></i></div>
-                    </div>
-                    <div class="path-content">
-                        <div class="path-visual reincarnation-visual"></div>
-                        <div class="path-explanation">
-                            <p class="path-desc"><strong>近似认知</strong>：存在七族技能，称之为ABCDEFG族。释放一个A族技能后，下一个技能只能释放B族的，B之后是C……ABCDEFG一轮放完后回到A。</p>
-                            <p class="path-flaw"><strong>缺陷</strong>：只能修炼七族术法。</p>
-                            <p class="path-truth"><strong>真相</strong>：一族技能本质是一类【使用条件】相同、【使用效果】相同的术法，这七族本质是五维空间中的一个环路。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div> <!-- faq-grid 结束 -->
+            <!-- 认知过滤部分 - 这部分保持不变 -->
+            <div class="faq-integrated-item">
+                <h3>这么复杂的游戏，新玩家会不会难以上手？</h3>
+                <div class="faq-integrated-content">
+                    <p>不会，因为我们使用了<span class="highlight-filter">认知过滤</span>的设计方式，新玩家不会接触到复杂的世界真相。例如：</p>
 
-            <div class="rune-system">
-                <div class="system-header">
-                    <div class="system-icon"><i class="fas fa-scroll"></i></div>
-                    <h3 class="system-title">符文系统中的<span class="highlight-filter-text">认知过滤</span></h3>
-                </div>
-                <div class="rune-content">
-                    <div class="rune-editor">
-                        <pre class="code-example">
+                    <!-- 术法系统部分 - 修改标题 -->
+                    <div class="section-header">
+                        <div class="spell-system">
+                            <div class="system-header">
+                                <div class="system-icon"><i class="fas fa-hat-wizard"></i></div>
+                                <h3 class="system-title">术法系统中的<span class="highlight-filter-text">认知过滤</span></h3>
+                            </div>
+                            <div class="system-content">
+                                <p>玩家可以学习无限的术法。但在使用术法时需要考虑五维向量。角色的状态由五个参数构成。每一次释放技能，五个参数同时变化；每个技能的释放条件，都是这五个参数满足某条件。</p>
+                                <p><strong>伪圣之路</strong>：伪圣之路，是实现术法认知过滤的办法，让玩家无需理解复杂的五维变化也能畅玩游戏。每一个功法都是一条伪圣之路，对应一个独特的UI面板，除非修神道功法、否则玩家不会知晓五维向量的存在。</p>
+                                <p>伪圣之路的修士会将【混乱术：随机打乱对手的五维状态】称之为【封魔术：效果近似视为让一个修士从此无法再使用技能】。只有神道功法的修士才无惧混乱术。</p>
+                            </div>
+                        </div>
+
+                        <div class="path-comparison">
+                            <div class="pseudo-path">
+                                <div class="path-header">
+                                    <h4 class="path-title">伪圣之路：阴阳功法</h4>
+                                    <div class="path-icon"><i class="fas fa-yin-yang"></i></div>
+                                </div>
+                                <div class="path-content">
+                                    <div class="path-visual yin-yang-visual"></div>
+                                    <div class="path-explanation">
+                                        <p class="path-desc"><strong>近似认知</strong>：角色有阴阳值，每一个技能的释放条件都是需要角色阴阳值在某个范畴内，每个技能释放后都会改变角色阴阳值。同时还有两个技能分别是【阳化】【阴化】，CD一秒，使用无限制，效果除了阴阳值+1/-1之外没有任何其他效果。</p>
+                                        <p class="path-flaw"><strong>缺陷</strong>：只能修炼阴阳系列术法，不能修炼其他术法。</p>
+                                        <p class="path-truth"><strong>真相</strong>：阴阳值不存在，阴阳值本质是五维向量空间中的一个偏序。</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pseudo-path">
+                                <div class="path-header">
+                                    <h4 class="path-title">伪圣之路：轮回功法</h4>
+                                    <div class="path-icon"><i class="fas fa-sync-alt"></i></div>
+                                </div>
+                                <div class="path-content">
+                                    <div class="path-visual reincarnation-visual"></div>
+                                    <div class="path-explanation">
+                                        <p class="path-desc"><strong>近似认知</strong>：存在七族技能，称之为ABCDEFG族。释放一个A族技能后，下一个技能只能释放B族的，B之后是C……ABCDEFG一轮放完后回到A。</p>
+                                        <p class="path-flaw"><strong>缺陷</strong>：只能修炼七族术法。</p>
+                                        <p class="path-truth"><strong>真相</strong>：一族技能本质是一类【使用条件】相同、【使用效果】相同的术法，这七族本质是五维空间中的一个环路。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rune-system">
+                            <div class="system-header">
+                                <div class="system-icon"><i class="fas fa-scroll"></i></div>
+                                <h3 class="system-title">符文系统中的<span class="highlight-filter-text">认知过滤</span></h3>
+                            </div>
+                            <div class="rune-content">
+                                <div class="rune-editor">
+                                    <pre class="code-example">
 //自动销售符文
 定义 待售商品列表：玄铁矿石、凝血草、洗骨花、肉、骨、皮。
 
@@ -997,36 +1119,36 @@
 
 每当我进入平等圣地贸易中心时，执行指令：批量出售。
                         </pre>
-                    </div>
-                    <div class="rune-explanation">
-                        <h4 class="rune-title">风神界内置编程语言</h4>
-                        <p class="rune-desc">风神界内置编程语言，比Python更符合自然语言语法。符文有众多作用：可以自动战斗、自动探险、自动采矿、自动出售、自动管理势力、自定义职位、自定义功法等。</p>
-                        <p class="rune-desc">为了实现认知过滤，风神界中内置大量符文，且玩家通常感受不到符文的存在。例如，阴阳功法与轮回功法都是使用符文书写的，而不是代码书写的。（当然，玩家也可以使用符文来发明新的功法、新的面板。）</p>
-                        <p class="rune-desc">很多面板也是符文书写的，例如统一的仓库面板：左侧列表中有储物戒、箱子、交易中心寄存处、面前尸体等条目，右侧是选中条目里的道具网格。游戏会直接提供给玩家这个面板，但玩家可以手动查看这个面板的源符文、可以编辑与重置。游戏后台只用C#定义了各道具的独立面板（例如单独的储物戒面板），统一仓库面板是使用符文定义的，但玩家即便不知道符文、也可以正常使用统一仓库面板。这就是认知过滤。</p>
-                    </div>
-                </div>
-                <!-- 认知过滤总结段落 HTML -->
-                <div class="filter-conclusion">
-                    <div class="conclusion-divider"></div>
-                    <div class="conclusion-content">
-                        <div class="conclusion-icon">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        <div class="conclusion-text">
-                            <h4>认知过滤：复杂性的完美解决方案</h4>
-                            <p>通过术法系统和符文系统的认知过滤机制，我们成功将风神界高度复杂的玩法和机制封装起来，实现了丰富多样的伪圣之路。每个玩家都能在不同的功法和系统中找到适合自己的特例，轻松上手并逐渐深入。</p>
-                            <p>有了伪圣之路，复杂性永远不会是风神界的缺点，反而成为了优势——玩家可以从简单特例入手，循序渐进地探索更深层次的玩法。事实上，在我们的设计哲学中，<span class="highlight-text">游戏越复杂越好</span>，因为复杂度带来的是无尽可能性，而认知过滤确保了这种复杂性不会成为新玩家的障碍。</p>
+                                </div>
+                                <div class="rune-explanation">
+                                    <h4 class="rune-title">风神界内置编程语言</h4>
+                                    <p class="rune-desc">风神界内置编程语言，比Python更符合自然语言语法。符文有众多作用：可以自动战斗、自动探险、自动采矿、自动出售、自动管理势力、自定义职位、自定义功法等。</p>
+                                    <p class="rune-desc">为了实现认知过滤，风神界中内置大量符文，且玩家通常感受不到符文的存在。例如，阴阳功法与轮回功法都是使用符文书写的，而不是代码书写的。（当然，玩家也可以使用符文来发明新的功法、新的面板。）</p>
+                                    <p class="rune-desc">很多面板也是符文书写的，例如统一的仓库面板：左侧列表中有储物戒、箱子、交易中心寄存处、面前尸体等条目，右侧是选中条目里的道具网格。游戏会直接提供给玩家这个面板，但玩家可以手动查看这个面板的源符文、可以编辑与重置。游戏后台只用C#定义了各道具的独立面板（例如单独的储物戒面板），统一仓库面板是使用符文定义的，但玩家即便不知道符文、也可以正常使用统一仓库面板。这就是认知过滤。</p>
+                                </div>
+                            </div>
+                            <!-- 认知过滤总结段落 HTML -->
+                            <div class="filter-conclusion">
+                                <div class="conclusion-divider"></div>
+                                <div class="conclusion-content">
+                                    <div class="conclusion-icon">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div class="conclusion-text">
+                                        <h4>认知过滤：复杂性的完美解决方案</h4>
+                                        <p>通过术法系统和符文系统的认知过滤机制，我们成功将风神界高度复杂的玩法和机制封装起来，实现了丰富多样的伪圣之路。每个玩家都能在不同的功法和系统中找到适合自己的特例，轻松上手并逐渐深入。</p>
+                                        <p>有了伪圣之路，复杂性永远不会是风神界的缺点，反而成为了优势——玩家可以从简单特例入手，循序渐进地探索更深层次的玩法。事实上，在我们的设计哲学中，<span class="highlight-text">游戏越复杂越好</span>，因为复杂度带来的是无尽可能性，而认知过滤确保了这种复杂性不会成为新玩家的障碍。</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-    <!-- END: 插入的认知过滤部分 -->
+            <!-- END: 插入的认知过滤部分 -->
 
-</div>
-</section>
+        </div>
+    </section>
 
 
     <section id="versions" class="section-dark">
@@ -1062,7 +1184,7 @@
                         <span class="reservation-counter">预约人数：</span>
                     </div>
                 </div>
-                
+
                 <div class="version-card dlc">
                     <div class="version-badge">DLC</div>
                     <div class="version-header">
@@ -1091,7 +1213,7 @@
                         <span class="DLC">预约人数：</span>
                     </div>
                 </div>
-                
+
                 <div class="version-card online">
                     <div class="version-badge">网游</div>
                     <div class="version-header">
@@ -1121,7 +1243,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- <div class="preorder-cta">
                 <h3>现在预约，获得发售优惠与独家内容</h3>
                 <a href="#" class="main-preorder-button">立即预约</a>
@@ -1129,26 +1251,21 @@
         </div>
     </section>
 
-
-
-
-                
-
     <section id="team" class="section-dark">
         <div class="container">
             <h2 class="section-title">关于我们</h2>
-            
+
             <div class="community-section">
                 <h3>加入风神界社区</h3>
                 <p>与开发团队和其他玩家互动，获取最新资讯，参与游戏功能投票，共同影响风神界的未来发展。</p>
-                
+
                 <div class="community-links">
                     <a href="https://qm.qq.com/q/YeWfBbcgOQ" class="community-link discord">QQ群</a>
                     <a href="https://discord.gg/eg5uPkbfH3" class="community-link weibo">Discord</a>
                 </div>
-                
+
                 <p style="margin-top: 20px;">关注我们，即可获得最新的开发日志、游戏内容预览和社区活动信息。</p>
-                
+
                 <!-- 将博客链接移到这里 -->
                 <div class="community-links" style="margin-top: 15px;">
                     <a href="http://123.57.35.16/" class="community-link weibo">轲目苦津博客（开发团队）</a>
@@ -1225,235 +1342,4 @@
 
     <div id="back-to-top">↑</div>
 </body>
-
-<script>
-    const factionItems = document.querySelectorAll('.faction-item');
-    const factionContent = document.getElementById('faction-content');
-  
-    const factionData = {
-      '宗门': '修真者组织，层次森严，学徒、剑宗结为体系，掌门门徒常坐镇在山门之外，称呼不同等级：超凡宗门、传承宗门等。',
-      '联盟': '例如，魔道联盟为一流势力，不同的盟中可能拥有从人妖、亡灵、魔修等集体势力。',
-      '圣地': '圣人学生，传功安全、法则贤员，圣地出身的修士人数显著多于宗门。圣地地盘无敌，作为修炼圣言。',
-    };
-  
-    factionItems.forEach(item => {
-      item.addEventListener('click', () => {
-        factionItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-  
-        const name = item.getAttribute('data-faction');
-        factionContent.innerHTML = `
-          <h3>${name}</h3>
-          <p>${factionData[name]}</p>
-        `;
-      });
-    });
-  </script>
 </html>
-
-
-<!-- 添加到页面底部的JavaScript代码 -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // 设置默认显示的势力
-        showFaction('宗门');
-        showFaction('魔盟');
-        
-        // 为所有势力图标添加点击事件
-        const factionItems = document.querySelectorAll('.faction-item');
-        factionItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const factionName = this.getAttribute('data-faction');
-                const parent = this.closest('.faction-container');
-                showFaction(factionName, parent);
-            });
-        });
-        
-        // 显示指定势力的详情
-        function showFaction(factionName, container) {
-            // 如果没有指定容器，查找所有容器
-            if (!container) {
-                const containers = document.querySelectorAll('.faction-container');
-                containers.forEach(cont => {
-                    const item = cont.querySelector(`.faction-item[data-faction="${factionName}"]`);
-                    if (item) {
-                        showFaction(factionName, cont);
-                    }
-                });
-                return;
-            }
-            
-            // 隐藏所有详情
-            const allDetails = container.querySelectorAll('.detail-content');
-            allDetails.forEach(detail => {
-                detail.style.display = 'none';
-            });
-            
-            // 显示选中的详情
-            const selectedDetail = container.querySelector(`#${factionName}-detail`);
-            if (selectedDetail) {
-                selectedDetail.style.display = 'block';
-            }
-            
-            // 移除所有选中状态
-            const allItems = container.querySelectorAll('.faction-item');
-            allItems.forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // 添加选中状态
-            const selectedItem = container.querySelector(`.faction-item[data-faction="${factionName}"]`);
-            if (selectedItem) {
-                selectedItem.classList.add('active');
-            }
-        }
-    });
-    </script>
-    
-<script>
-    // 玩家故事部分的JavaScript脚本
-    document.addEventListener('DOMContentLoaded', function() {
-        // 获取元素
-        const storySlides = document.querySelectorAll('.story-slide');
-        const prevArrow = document.querySelector('.prev-arrow');
-        const nextArrow = document.querySelector('.next-arrow');
-        const navDots = document.querySelectorAll('.nav-dot');
-        
-        // 初始化当前故事索引
-        let currentStoryIndex = 0;
-        const totalStories = storySlides.length;
-        
-        // 显示特定故事
-        function showStory(index) {
-            // 检查索引是否有效
-            if (index < 0 || index >= totalStories) {
-                 console.error("Invalid story index:", index);
-                 return; // 防止无效索引导致错误
-             }
-
-            // 隐藏所有故事
-            storySlides.forEach(slide => {
-                slide.classList.remove('active');
-            });
-            
-            // 移除所有导航点的激活状态
-            navDots.forEach(dot => {
-                dot.classList.remove('active');
-            });
-            
-            // 显示当前故事
-            storySlides[index].classList.add('active');
-            
-            // 激活对应的导航点
-             if (navDots[index]) { // 添加检查确保导航点存在
-                 navDots[index].classList.add('active');
-             }
-            
-            // 更新当前索引
-            currentStoryIndex = index;
-        }
-        
-        // 显示下一个故事
-        function showNextStory() {
-            let nextIndex = (currentStoryIndex + 1) % totalStories;
-            showStory(nextIndex);
-        }
-        
-        // 显示上一个故事
-        function showPrevStory() {
-            let prevIndex = (currentStoryIndex - 1 + totalStories) % totalStories;
-            showStory(prevIndex);
-        }
-        
-        // 为箭头添加点击事件
-        if (prevArrow) {
-            prevArrow.addEventListener('click', showPrevStory);
-        }
-        
-        if (nextArrow) {
-            nextArrow.addEventListener('click', showNextStory);
-        }
-        
-        // 为导航点添加点击事件
-        navDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showStory(index);
-            });
-        });
-        
-        // 添加键盘导航支持
-        document.addEventListener('keydown', (e) => {
-             // 检查故事部分是否存在
-             const storySection = document.querySelector('.stories-container'); // 使用更具体的选择器
-             if (!storySection) return; // 如果故事部分不存在，则不执行键盘导航
-
-             const rect = storySection.getBoundingClientRect();
-             const isVisible = (
-                 rect.top < window.innerHeight && rect.bottom >= 0 // 检查是否在视口内
-             );
-             
-             if (isVisible) {
-                 if (e.key === 'ArrowRight') {
-                     showNextStory();
-                 } else if (e.key === 'ArrowLeft') {
-                     showPrevStory();
-                 }
-             }
-        });
-        
-        // 添加触摸滑动支持
-        const storyContainer = document.querySelector('.story-container');
-         if (storyContainer) { // 添加检查确保容器存在
-             let touchStartX = 0;
-             let touchEndX = 0;
-             
-             storyContainer.addEventListener('touchstart', (e) => {
-                 touchStartX = e.changedTouches[0].screenX;
-             });
-             
-             storyContainer.addEventListener('touchend', (e) => {
-                 touchEndX = e.changedTouches[0].screenX;
-                 handleSwipe();
-             });
-             
-             function handleSwipe() {
-                 const minSwipeDistance = 50;
-                 if (touchStartX - touchEndX > minSwipeDistance) {
-                     // 向左滑动，显示下一个故事
-                     showNextStory();
-                 } else if (touchEndX - touchStartX > minSwipeDistance) {
-                     // 向右滑动，显示上一个故事
-                     showPrevStory();
-                 }
-             }
-         }
-        
-        // 自动切换故事（可选）
-        let autoSlideInterval;
-        
-        function startAutoSlide() {
-             // 停止任何现有的计时器
-             stopAutoSlide();
-            autoSlideInterval = setInterval(() => {
-                showNextStory();
-            }, 10000); // 每10秒切换一次
-        }
-        
-        function stopAutoSlide() {
-            clearInterval(autoSlideInterval);
-        }
-        
-         // 当鼠标悬停在故事上时暂停自动切换
-         if (storyContainer) { // 再次检查
-             storyContainer.addEventListener('mouseenter', stopAutoSlide);
-             storyContainer.addEventListener('touchstart', stopAutoSlide);
-             
-             // 当鼠标离开故事时恢复自动切换
-             storyContainer.addEventListener('mouseleave', startAutoSlide);
-             storyContainer.addEventListener('touchend', startAutoSlide);
-         }
-    
-        // 启动自动切换
-        startAutoSlide();
-    });
-    </script>

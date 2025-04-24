@@ -3,7 +3,7 @@
 $data = file_get_contents('php://input');
 // echo "接收到的数据：" . $data;
 // Read the content of the file
-$content = file_get_contents($data);
+$content = file_get_contents("../Data/".$data.".txt");
 
 // Count the number of lines (users)
 $userCount = substr_count($content, "\n");
