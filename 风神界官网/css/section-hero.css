@@ -4,7 +4,7 @@
    ========================================================== */
 .hero {
     height: 100vh;
-    background: linear-gradient(rgba(9, 13, 31, 0.7), rgba(13, 16, 25, 0.9)), url('../风神界主页背景.png'); /* 检查路径 */
+    background: linear-gradient(rgba(9, 13, 31, 0.7), rgba(13, 16, 25, 0.9)), url('../Image/风神界主页背景.png'); /* 检查路径 */
     background-size: cover;
     background-position: center;
     display: flex;

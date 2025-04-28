@@ -3,7 +3,6 @@
  * 1.滚动条非顶部时的物体样式变化
  * 2.滚动时平滑移动
  * 3.符文文本高亮
- * 4.选项卡点击切换
  ********************/
 document.addEventListener("DOMContentLoaded", () => {
     非顶部时导航栏样式变化();
@@ -12,7 +11,20 @@ document.addEventListener("DOMContentLoaded", () => {
     卡片展开时平滑展开();
     新模块出场时渐入();
     符文高亮();
-    仅允许一个展开的卡片();
+
+    // 汉堡菜单切换
+    document.querySelector('.hamburger').addEventListener('click', function () {
+        this.classList.toggle('active');
+        document.querySelector('.nav-links').classList.toggle('active');
+    });
+
+    // 点击菜单外区域关闭
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('nav')) {
+            document.querySelector('.hamburger').classList.remove('active');
+            document.querySelector('.nav-links').classList.remove('active');
+        }
+    });
 });
 
 function 非顶部时导航栏样式变化() {
@@ -119,41 +131,4 @@ function 符文高亮() {
 
         codeExample.innerHTML = highlighted;
     }
-}
-function 仅允许一个展开的卡片() {
-    // 获取所有笔记卡片和内容区域
-    const noteCards = document.querySelectorAll('.note-card');
-    const contentAreas = document.querySelectorAll('.worldview-content-area');
-
-    // 为每个笔记卡片添加点击事件
-    noteCards.forEach(card => {
-        card.addEventListener('click', function () {
-            // 获取目标内容区域的ID
-            const targetId = this.getAttribute('data-target');
-            const targetContent = document.getElementById(targetId);
-
-            // 隐藏所有内容区域，移除active类
-            contentAreas.forEach(area => {
-                area.classList.remove('active');
-            });
-
-            // 移除所有卡片的active类
-            noteCards.forEach(c => {
-                c.classList.remove('active');
-            });
-
-            // 显示目标内容区域，添加active类
-            if (targetContent) {
-                targetContent.classList.add('active');
-                this.classList.add('active');
-
-                // 滚动到内容区域，添加平滑滚动效果和上方偏移
-                setTimeout(() => {
-                    const yOffset = -80; // 偏移量，给导航栏留出空间
-                    const y = targetContent.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                    window.scrollTo({ top: y, behavior: 'smooth' });
-                }, 100);
-            }
-        });
-    });
 }

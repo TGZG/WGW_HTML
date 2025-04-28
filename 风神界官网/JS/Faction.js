@@ -1,14 +1,14 @@
-/**
- * ´¦ÀíÊÆÁ¦½éÉÜÇøÓò
- * 1.Ä¬ÈÏÏÔÊ¾×ÚÃÅÓëÄ§ÃËµÄÏêÇé
- * 2.ÎªËùÓĞÊÆÁ¦Í¼±êÌí¼Óµã»÷ÊÂ¼ş
+ï»¿/**
+ * å¤„ç†åŠ¿åŠ›ä»‹ç»åŒºåŸŸ
+ * 1.é»˜è®¤æ˜¾ç¤ºå®—é—¨ä¸é­”ç›Ÿçš„è¯¦æƒ…
+ * 2.ä¸ºæ‰€æœ‰åŠ¿åŠ›å›¾æ ‡æ·»åŠ ç‚¹å‡»äº‹ä»¶
  */
 document.addEventListener('DOMContentLoaded', function () {
-    // ÉèÖÃÄ¬ÈÏÏÔÊ¾µÄÊÆÁ¦
-    showFaction('×ÚÃÅ');
-    showFaction('Ä§ÃË');
+    // è®¾ç½®é»˜è®¤æ˜¾ç¤ºçš„åŠ¿åŠ›
+    showFaction('å®—é—¨');
+    showFaction('é­”ç›Ÿ');
 
-    // ÎªËùÓĞÊÆÁ¦Í¼±êÌí¼Óµã»÷ÊÂ¼ş
+    // ä¸ºæ‰€æœ‰åŠ¿åŠ›å›¾æ ‡æ·»åŠ ç‚¹å‡»äº‹ä»¶
     const factionItems = document.querySelectorAll('.faction-item');
     factionItems.forEach(item => {
         item.addEventListener('click', function () {
@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // ÏÔÊ¾Ö¸¶¨ÊÆÁ¦µÄÏêÇé
+    // æ˜¾ç¤ºæŒ‡å®šåŠ¿åŠ›çš„è¯¦æƒ…
     function showFaction(factionName, container) {
-        // Èç¹ûÃ»ÓĞÖ¸¶¨ÈİÆ÷£¬²éÕÒËùÓĞÈİÆ÷
+        // å¦‚æœæ²¡æœ‰æŒ‡å®šå®¹å™¨ï¼ŒæŸ¥æ‰¾æ‰€æœ‰å®¹å™¨
         if (!container) {
             const containers = document.querySelectorAll('.faction-container');
             containers.forEach(cont => {
@@ -32,25 +32,25 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Òş²ØËùÓĞÏêÇé
+        // éšè—æ‰€æœ‰è¯¦æƒ…
         const allDetails = container.querySelectorAll('.detail-content');
         allDetails.forEach(detail => {
             detail.style.display = 'none';
         });
 
-        // ÏÔÊ¾Ñ¡ÖĞµÄÏêÇé
+        // æ˜¾ç¤ºé€‰ä¸­çš„è¯¦æƒ…
         const selectedDetail = container.querySelector(`#${factionName}-detail`);
         if (selectedDetail) {
             selectedDetail.style.display = 'block';
         }
 
-        // ÒÆ³ıËùÓĞÑ¡ÖĞ×´Ì¬
+        // ç§»é™¤æ‰€æœ‰é€‰ä¸­çŠ¶æ€
         const allItems = container.querySelectorAll('.faction-item');
         allItems.forEach(item => {
             item.classList.remove('active');
         });
 
-        // Ìí¼ÓÑ¡ÖĞ×´Ì¬
+        // æ·»åŠ é€‰ä¸­çŠ¶æ€
         const selectedItem = container.querySelector(`.faction-item[data-faction="${factionName}"]`);
         if (selectedItem) {
             selectedItem.classList.add('active');

@@ -2,6 +2,22 @@
    13. 响应式设计
    responsive.css: Media Queries
    ========================================================== */
+/* 新增汉堡菜单样式 */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.language-desktop {
+    display: block;
+}
+
+.language-mobile {
+    display: none;
+}
 
 @media (max-width: 1200px) {
     .container { max-width: 960px; }
@@ -29,9 +45,9 @@
 
 @media (max-width: 768px) {
     .container { max-width: 540px; }
-    nav { padding: 10px 20px; flex-direction: column; }
+    /*nav { padding: 10px 20px; flex-direction: column; }
     nav.scrolled { padding: 8px 20px; }
-    .nav-links { margin-top: 15px; flex-wrap: wrap; justify-content: center; gap: 15px; }
+    .nav-links { margin-top: 15px; flex-wrap: wrap; justify-content: center; gap: 15px; }*/
     .hero-content h1 { font-size: 3rem; }
     .hero-content h2 { font-size: 1.5rem; }
     .hero-buttons { flex-direction: column; gap: 15px; align-items: center; }
@@ -57,6 +73,46 @@
      /* 在平板等小屏幕上堆叠特色网格 */
     #introduction .features-grid { grid-template-columns: 1fr; }
 
+    .hamburger {
+        display: block;
+        margin-left: auto;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(13, 16, 25, 0.95);
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 12px;
+        border-bottom: 1px solid rgba(230, 213, 138, 0.1);
+    }
+
+        .nav-links.active {
+            display: flex;
+        }
+    nav {
+        flex-wrap: nowrap;
+        padding: 10px 20px;
+        position: relative;
+    }
+
+    .nav-links .cta-button {
+        width: 100%;
+        text-align: center;
+    }
+    .language-desktop {
+        display: none;
+    }
+    .language-mobile {
+        display: block;
+        padding-top: 15px;
+        margin-top: 15px;
+        border-top: 1px solid rgba(230, 213, 138, 0.1);
+    }
 }
 
 @media (max-width: 576px) {

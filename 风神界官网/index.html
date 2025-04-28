@@ -1,22 +1,36 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>风神界 - 开启尊重业时代的玄幻战略RPG</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="CSS/settings.css">    <!-- 1. 全局变量 -->
+    <link rel="stylesheet" href="CSS/generic.css">     <!-- 2. 重置与 Body -->
+    <link rel="stylesheet" href="CSS/base.css">        <!-- 3. 基础元素 -->
+    <link rel="stylesheet" href="CSS/layout.css">      <!-- 4. 布局 -->
+    <link rel="stylesheet" href="CSS/theme.css">       <!-- 5. 主题与效果 -->
+    <link rel="stylesheet" href="CSS/components.css">   <!-- 6. 组件 (如果拆分了，则链接多个组件文件) -->
+    <link rel="stylesheet" href="CSS/section-hero.css">   <!-- 7. Hero 区域 -->
+    <link rel="stylesheet" href="CSS/section-introduction.css"> <!-- 8. 游戏介绍区域 -->
+    <link rel="stylesheet" href="CSS/section-worldview.css">  <!-- 9. 世界观区域 -->
+    <link rel="stylesheet" href="CSS/section-faq.css">        <!-- 10. FAQ 区域 -->
+    <link rel="stylesheet" href="CSS/section-versions.css">   <!-- 11. 版本区域 -->
+    <link rel="stylesheet" href="CSS/section-team.css">       <!-- 12. 团队区域 -->
+    <link rel="stylesheet" href="CSS/responsive.css">     <!-- 13. 响应式 (最后加载) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="JS/Faction.js" defer></script>
     <script src="JS/OnLoadAnimation.js" defer></script>
     <script src="JS/OnLoadPhp.js" defer></script>
     <script src="JS/PlayerStory.js" defer></script>
+    <script src="JS/WorldView.js" defer></script>
 </head>
 
 <body>
     <header id="home">
         <nav>
             <div class="logo">风神界</div>
+            <button class="hamburger">☰</button>
             <ul class="nav-links">
                 <li><a href="#home">首页</a></li>
                 <li><a href="#introduction">游戏介绍</a></li>
@@ -24,9 +38,15 @@
                 <li><a href="#faq">游戏系统</a></li>
                 <li><a href="#versions">版本计划</a></li>
                 <li><a href="#versions" class="cta-button">预约/购买</a></li>
+
+                <!-- 移动端专用语言切换 -->
+                <li class="language-mobile language-switcher">
+                    <a href="index.html">中文</a> | <a href="index_en.html">English</a>
+                </li>
             </ul>
-            <!-- 添加语言切换按钮 -->
-            <div class="language-switcher">
+
+            <!-- 桌面端语言切换 -->
+            <div class="language-desktop language-switcher">
                 <a href="index.html">中文</a> | <a href="index_en.html">English</a>
             </div>
         </nav>
@@ -584,7 +604,7 @@
 
                 <!-- 超一流联盟名录部分 -->
                 <div class="power-system new-layout">
-                    <h3>超一流联盟名录</h3>
+                    <h3>超一流势力名录</h3>
                     <div class="faction-container">
                         <div class="faction-grid large-grid">
                             <div class="faction-item" data-faction="魔盟">
@@ -613,7 +633,7 @@
                             </div>
                             <div class="faction-item" data-faction="国盟">
                                 <div class="faction-icon" style="background-color: #d35400;"><i class="fas fa-landmark"></i></div>
-                                <div class="faction-name">国盟</div>
+                                <div class="faction-name">国域</div>
                             </div>
                             <div class="faction-item" data-faction="妖盟">
                                 <div class="faction-icon" style="background-color: #8e44ad;"><i class="fas fa-paw"></i></div>
@@ -621,11 +641,11 @@
                             </div>
                             <div class="faction-item" data-faction="龙盟">
                                 <div class="faction-icon" style="background-color: #27ae60;"><i class="fas fa-dragon"></i></div>
-                                <div class="faction-name">龙盟</div>
+                                <div class="faction-name">龙族</div>
                             </div>
                             <div class="faction-item" data-faction="圣盟">
                                 <div class="faction-icon" style="background-color: #1abc9c;"><i class="fas fa-sun"></i></div>
-                                <div class="faction-name">圣盟</div>
+                                <div class="faction-name">圣域</div>
                             </div>
                         </div>
                         <div class="faction-detail">
@@ -1297,8 +1317,8 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="images/logo-white.png" alt="风神界">
-                    <p>开启尊重业时代的玄幻战略RPG</p>
+                    <img src="Image/风神界LOGO.png" alt="风神界">
+                    <p>全球首款玄幻战略RPG沙盒游戏</p>
                 </div>
                 <div class="footer-links">
                     <div class="links-group">
@@ -1330,7 +1350,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2024 风神界开发团队. 保留所有权利。</p>
+                <p>© 2020-至今 风神界开发团队版权所有 | 深圳市轲目苦津信息技术有限公司</p>
                 <div class="footer-social">
                     <a href="#" class="social-icon weibo"></a>
                     <a href="#" class="social-icon wechat"></a>
