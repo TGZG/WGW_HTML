@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!isValid) return;
 
                 // Submit form if validation passes
-                fetch("../"+phpEndpoint, {
+                fetch("./"+phpEndpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ function validatePhone(phone) {
 function getUserCount(url, className) {
 
     var userCount_singleMachine = 0;
-    fetch('../PHP/userCount_singleMachine.php', {
+    fetch('./PHP/userCount_singleMachine.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'text/plain'

@@ -1,4 +1,5 @@
 <?php
+header("Content-Type: text/plain"); // 响应纯文本
 
 $data = file_get_contents('php://input');
 // echo "接收到的数据：" . $data;
