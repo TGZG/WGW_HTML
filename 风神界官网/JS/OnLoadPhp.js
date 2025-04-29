@@ -29,16 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <form id="preorder-form">
           <h3 style="margin-bottom:20px;color:#4e7cff;">${formType}</h3>
           <div style="margin-bottom:15px;">
-            <label for="name">昵称（选填）:</label>
+            <label for="name" style="color: black;">昵称（选填）:</label>
             <input type="text" id="name" name="name" style="width:100%;padding:8px;margin-top:5px;border:1px solid #ddd;border-radius:4px;">
           </div>
           <div style="margin-bottom:15px;">
-            <label for="email">电子邮箱*:</label>
+            <label for="email" style="color: black;">电子邮箱*:</label>
             <input type="email" id="email" name="email" required style="width:100%;padding:8px;margin-top:5px;border:1px solid #ddd;border-radius:4px;">
             <span class="error-message" style="color:red;font-size:12px;display:none;">请输入有效的邮箱地址</span>
           </div>
           <div style="margin-bottom:15px;">
-            <label for="phone">手机号码*:</label>
+            <label for="phone" style="color: black;">手机号码*:</label>
             <input type="tel" id="phone" name="phone" required style="width:100%;padding:8px;margin-top:5px;border:1px solid #ddd;border-radius:4px;">
             <span class="error-message" style="color:red;font-size:12px;display:none;">请输入有效的手机号码</span>
           </div>
