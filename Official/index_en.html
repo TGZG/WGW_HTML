@@ -4,53 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>风神界 - 开启尊重业时代的玄幻战略RPG</title>
-    <link rel="stylesheet" href="CSS/settings.css">    <!-- 1. 全局变量 -->
-    <link rel="stylesheet" href="CSS/generic.css">     <!-- 2. 重置与 Body -->
-    <link rel="stylesheet" href="CSS/base.css">        <!-- 3. 基础元素 -->
-    <link rel="stylesheet" href="CSS/layout.css">      <!-- 4. 布局 -->
-    <link rel="stylesheet" href="CSS/theme.css">       <!-- 5. 主题与效果 -->
-    <link rel="stylesheet" href="CSS/components.css">   <!-- 6. 组件 (如果拆分了，则链接多个组件文件) -->
-    <link rel="stylesheet" href="CSS/section-hero.css">   <!-- 7. Hero 区域 -->
-    <link rel="stylesheet" href="CSS/section-introduction.css"> <!-- 8. 游戏介绍区域 -->
-    <link rel="stylesheet" href="CSS/section-worldview.css">  <!-- 9. 世界观区域 -->
-    <link rel="stylesheet" href="CSS/section-faq.css">        <!-- 10. FAQ 区域 -->
-    <link rel="stylesheet" href="CSS/section-versions.css">   <!-- 11. 版本区域 -->
-    <link rel="stylesheet" href="CSS/section-team.css">       <!-- 12. 团队区域 -->
-    <link rel="stylesheet" href="CSS/responsive.css">     <!-- 13. 响应式 (最后加载) -->
+    <title>Realm of Wind Spirit - A Fantasy Strategic RPG Respecting the Player</title>
+    <link rel="stylesheet" href="CSS/settings.css">    <!-- 1. Global variables -->
+    <link rel="stylesheet" href="CSS/generic.css">     <!-- 2. Reset & Body -->
+    <link rel="stylesheet" href="CSS/base.css">        <!-- 3. Basic elements -->
+    <link rel="stylesheet" href="CSS/layout.css">      <!-- 4. Layout -->
+    <link rel="stylesheet" href="CSS/theme.css">       <!-- 5. Theme & effects -->
+    <link rel="stylesheet" href="CSS/components.css">   <!-- 6. Components (if split, link multiple component files) -->
+    <link rel="stylesheet" href="CSS/section-hero.css">   <!-- 7. Hero section -->
+    <link rel="stylesheet" href="CSS/section-introduction.css"> <!-- 8. Game introduction section -->
+    <link rel="stylesheet" href="CSS/section-worldview.css">  <!-- 9. World view section -->
+    <link rel="stylesheet" href="CSS/section-faq.css">        <!-- 10. FAQ section -->
+    <link rel="stylesheet" href="CSS/section-versions.css">   <!-- 11. Version section -->
+    <link rel="stylesheet" href="CSS/section-team.css">       <!-- 12. Team section -->
+    <link rel="stylesheet" href="CSS/responsive.css">     <!-- 13. Responsive (load last) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="JS/Faction.js" defer></script>
     <script src="JS/OnLoadAnimation.js" defer></script>
-    <script src="JS/OnLoadPhp.js" defer></script>
+    <script src="JS_en/OnLoadPhp.js" defer></script>
     <script src="JS/PlayerStory.js" defer></script>
     <script src="JS/WorldView.js" defer></script>
+    
 </head>
 
 <body>
     <header id="home">
         <nav>
-            <div class="logo">Wind God Realm</div>
+            <div class="logo">Realm of Wind Spirit</div>
+            <button class="hamburger">☰</button>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#introduction">Game Introduction</a></li>
+                <li><a href="#introduction">Introduction</a></li>
                 <li><a href="#worldview">World View</a></li>
-                <li><a href="#system">Game Systems</a></li>
-                <li><a href="#versions">Version Plans</a></li>
-                <li><a href="#preorder" class="cta-button">Preorder/Buy</a></li>
+                <li><a href="#faq">Game Systems</a></li>
+                <li><a href="#versions">Versions</a></li>
+                <li><a href="#versions" class="cta-button">Buy Now</a></li>
+
+                <!-- Mobile language switcher -->
+                <li class="language-mobile language-switcher">
+                    <a href="index.html">中文</a> | <a href="index_en.html">English</a>
+                </li>
             </ul>
-            <!-- Language switcher buttons -->
-            <div class="language-switcher">
+
+            <!-- Desktop language switcher -->
+            <div class="language-desktop language-switcher">
                 <a href="index.html">中文</a> | <a href="index_en.html">English</a>
             </div>
         </nav>
 
         <div class="hero">
             <div class="hero-content">
-                <h1>Wind God Realm</h1>
-                <h2>A Xianxia Strategic RPG Ushering in the Era of Respect</h2>
-                <p class="tagline">An eternal world driven by billions of AI, where you write history</p>
+                <h1>Realm of Wind Spirit</h1>
+                <h2>Fantasy Strategic RPG - The World's First Emergent Civilization Game</h2>
+                <p class="tagline">Explore billions of AI-driven characters in procedurally generated worlds, where dynasties rise and fall across a million years of simulated history. Your epic adventure awaits!</p>
                 <div class="hero-buttons">
-                    <a href="#preorder" class="primary-button">Preorder Now</a>
+                    <a href="#versions" class="primary-button">Buy Now</a>
                     <a href="#introduction" class="secondary-button">Learn More</a>
                 </div>
             </div>
@@ -60,39 +68,261 @@
     <section id="introduction" class="section-light">
         <div class="container">
             <h2 class="section-title">Game Introduction</h2>
-
-            <div class="game-definition">
-                <div class="definition-text">
-                    <h3>Game Positioning</h3>
-                    <p>"Wind God Realm", the world's first virtual civilization game, a Xianxia strategic RPG with one-time purchase.</p>
-                    <p>Billions of AI characters form a society with division of labor and hierarchy based on survival needs; the economy and transportation are highly developed, with all AI behaviors calculated in real-time, influencing the world's prices and faction territories.</p>
-                    <p>Before release, the world evolves for a million years under AI. A million years later in-game, the game is released, and players gradually enter the world.</p>
+            <div class="game-definition-container">
+                <div class="game-definition-left">
+                    <h3>Basic Information</h3>
+                    <p>Basics: Single-player PC game, 1.2GB, Steam release</p>
+                    <p>Art Direction: Mystical cultivation, 2D non-pixel, grid map, top-down view</p>
+                    <p>Main Categories: Open world, RPG, tactical, strategic, sandbox, simulation</p>
+                    <p>Sub-Categories: Survival, building, management, automation, trading, finance, conquest</p>
                 </div>
-                <div class="definition-image"></div>
+                <div class="game-definition-right">
+                    <h3>Game Summary</h3>
+                    <p>Realm of Wind Spirit, a mystical strategic RPG - a truly open world game.</p>
+                    <p>Billions of AI-NPCs, procedural worlds, initial evolution over a million years, dynasties rise and fall even without player intervention - a true virtual civilization.</p>
+                    <p>Thriving financial and trade systems, unlike the social isolation of Dwarf Fortress or the loneliness of Minecraft.</p>
+                    <p>Billions of NPCs based on survival needs and independent wills, without the rigid soldiers of Civilization or the inflexible AI of Kenshi.</p>
+                    <p>Seamless map, flow state curve, immersive experience, without the fragmented scenes of Mount & Blade or the fodder experience of EVE Online.</p>
+                </div>
             </div>
+            <!-- Game comparison module -->
+            <div class="game-comparison">
+                <h3>Realm of Wind Spirit VS Other Virtual Civilization Games</h3>
+                <div class="comparison-table">
+                    <div class="comparison-header">
+                        <div class="corner-cell">
+                            <!-- Empty top-left cell -->
+                        </div>
+                        <div class="game-column main-game">
+                            <div class="game-logo">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <h4>Realm of Wind Spirit</h4>
+                        </div>
+                        <div class="game-column">
+                            <div class="game-logo">
+                                <i class="fas fa-user-astronaut"></i>
+                            </div>
+                            <h4>Cultivation Simulator</h4>
+                        </div>
+                        <div class="game-column">
+                            <div class="game-logo">
+                                <i class="fas fa-landmark"></i>
+                            </div>
+                            <h4>Civilization 6</h4>
+                        </div>
+                        <div class="game-column">
+                            <div class="game-logo">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h4>Stanford Town</h4>
+                        </div>
+                        <div class="game-column">
+                            <div class="game-logo">
+                                <i class="fas fa-satellite"></i>
+                            </div>
+                            <h4>EVE</h4>
+                        </div>
+                        <div class="game-column">
+                            <div class="game-logo">
+                                <i class="fas fa-khanda"></i> <!-- or use  (sword) or  (barren mountain) -->
+                            </div>
+                            <h4>Kenshi</h4>
+                        </div>
+                    </div>
 
+                    <!-- World driven -->
+                    <div class="comparison-row">
+                        <div class="feature-name">World Driven By</div>
+                        <div class="game-column main-game">
+                            <div class="feature-value">AI driven</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Fixed events</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value">AI driven</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value">AI driven</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Player driven</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value">AI driven</div>
+                        </div>
+                    </div>
+
+                    <!-- Economic system -->
+                    <div class="comparison-row">
+                        <div class="feature-name">Economic System</div>
+                        <div class="game-column main-game">
+                            <div class="feature-value">Stock market pricing</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Temporary pricing</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Temporary pricing</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Barter system</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value">Stock market pricing</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Temporary pricing</div>
+                        </div>
+                    </div>
+
+                    <!-- Power structure -->
+                    <div class="comparison-row">
+                        <div class="feature-name">Power Structure</div>
+                        <div class="game-column main-game">
+                            <div class="feature-value">Soldiers with will</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Mechanical soldiers</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Mechanical soldiers</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">No soldiers</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value">Soldiers with will</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Mechanical soldiers</div>
+                        </div>
+                    </div>
+
+                    <!-- Setting style -->
+                    <div class="comparison-row">
+                        <div class="feature-name">Setting Style</div>
+                        <div class="game-column main-game">
+                            <div class="feature-value">Mystical cultivation</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value">Mystical cultivation</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Historical</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Modern</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Space sci-fi</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Wasteland sci-fi</div>
+                        </div>
+                    </div>
+
+                    <!-- Player identity -->
+                    <div class="comparison-row">
+                        <div class="feature-name">Player Identity</div>
+                        <div class="game-column main-game">
+                            <div class="feature-value">One among many</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">National will</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">National will</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Creator</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value">One among many</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value">One among many</div>
+                        </div>
+                    </div>
+
+                    <!-- Foreign people -->
+                    <div class="comparison-row">
+                        <div class="feature-name">Foreign Relations</div>
+                        <div class="game-column main-game">
+                            <div class="feature-value">Mutually beneficial</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Never interact</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">Never interact</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value different">No foreigners</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value">Mutually beneficial</div>
+                        </div>
+                        <div class="game-column">
+                            <div class="feature-value">Mutually beneficial</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-difference">
+                    <div class="difference-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="difference-content">
+                        <h4>Core Difference: Realm of Wind Spirit is a True Virtual Civilization</h4>
+                        <p>In Realm of Wind Spirit, the player is not the protagonist but one among many. Each NPC is the protagonist of their own story - from supreme immortals to common mortals - all acting according to Maslow's hierarchy of needs. Fluctuating prices, dynasty changes, immortal falls, and mortal ascensions continue to evolve even when the player is absent. The player enters a truly virtual society, not a static world of structures.</p>
+                    </div>
+                </div>
+            </div>
             <div class="features">
                 <h3>Game Features</h3>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <div class="feature-icon world-icon"></div>
+                        <div class="feature-icon world-icon"><i class="fas fa-globe-asia"></i></div>
                         <h4>Cultivation Sociology</h4>
-                        <p>Myriad worlds with billions of NPCs. The entire world can operate and undergo dynastic changes even without players. Each faction's cultural systems evolve naturally, forming a true cultivation society rather than a cultivation opera.</p>
+                        <p>Mystical worldview. Thousands of worlds, billions of NPCs. The entire world can operate and dynasties can change even without player intervention. Cultural systems of various factions evolve naturally, forming a genuine cultivation society rather than a cultivation opera.</p>
+                        <div class="document-link">
+                            <a href="document_en/风神界：无限容量基地的实现-SRA_en.html" class="elegant-link">
+                                <span class="link-icon">📜</span>
+                                Wind Spirit Realm: Unlimited Base Capacity
+                            </a>
+                        </div>
                     </div>
+
                     <div class="feature-card">
-                        <div class="feature-icon freedom-icon"></div>
+                        <div class="feature-icon freedom-icon"><i class="fas fa-cube"></i></div>
                         <h4>Sandbox Simulation</h4>
-                        <p>Random world, evolving for a million years before starting. No storyline, no quests, you can do anything. Explore, build, trade, fight, cultivate, join sects, usurp power, establish your own sect, wage wars... a thousand players will experience a thousand different Wind God Realms.</p>
+                        <p>Procedural worlds, evolving for a million years at the start. No preset plot, no missions, you can do anything. Monster hunting, industry, commerce, strategy... a single subset is entertaining enough. A thousand players will experience a thousand different versions of the Realm of Wind Spirit.</p>
                     </div>
+
                     <div class="feature-card">
-                        <div class="feature-icon respect-icon"></div>
-                        <h4>Respect Mechanics</h4>
-                        <p>Face-slapping, catharsis, commanding respect, receiving tribute from all nations. Make those who don't respect you bow down, turn the high and mighty into humble servants. Power increases are no longer just numerical changes.</p>
+                        <div class="feature-icon respect-icon"><i class="fas fa-crown"></i></div>
+                        <h4>Respect System</h4>
+                        <p>Show your power, stand your ground, command respect, receive tribute from all nations. Transform those who disrespect you into those who revere you, make the proud bow to you. The increase in combat power is not just a change in numbers but a cultural ascension.</p>
+                        <div class="document-link">
+                            <a href="document_en/风神界：尊敬感_en.html" class="elegant-link">
+                                <span class="link-icon">📜</span>
+                                Wind Spirit Realm: Respect System
+                            </a>
+                        </div>
                     </div>
+
                     <div class="feature-card">
-                        <div class="feature-icon path-icon"></div>
+                        <div class="feature-icon mind-icon"><i class="fas fa-route"></i></div>
                         <h4>Cognitive Filtering</h4>
-                        <p>The world's settings are extremely complex, but we allow players to perceive them in a simplified way that approximates the truth in more than 80% of scenarios. Easy to grasp at first while allowing deeper exploration.</p>
+                        <p>The world's settings are extremely complex, but we allow players to perceive them in a simplified way that is roughly equivalent to the truth in over 80% of scenarios. This makes the game both easy to learn and deep to explore.</p>
+                        <div class="document-link">
+                            <a href="document_en/风神界：伪圣之路(1)_en.html" class="elegant-link">
+                                <span class="link-icon">📜</span>
+                                Wind Spirit Realm: The Pseudo-Saint Path
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,503 +330,999 @@
                 <h3>AI Features</h3>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <div class="feature-icon world-icon"></div>
-                        <h4>Independent Survival</h4>
-                        <p>When placed in the wild, an AI will harvest fruits to eat, collect wood to build houses, and plant farms due to hunger needs. When encountering enemies, they will hide in their houses.</p>
+                        <div class="feature-icon world-icon"><i class="fas fa-seedling"></i></div>
+                        <h4>Autonomous Survival</h4>
+                        <p>When an AI is placed in the wild, driven by hunger, it will gather fruits to eat, collect wood to build a house, and plant farms. When encountering enemies, it will hide in its house.</p>
                         <br>
-                        <p>AI must sustain themselves. Their hunger doesn't automatically refresh, their money doesn't replenish, they must have their own means of livelihood - even when players aren't watching them.</p>
+                        <p>AI must sustain itself. Its hunger meter doesn't reset, its money doesn't refresh - it must have its own means of livelihood even when the player isn't watching.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon freedom-icon"></div>
-                        <h4>Free Will</h4>
-                        <p>When we control a new character and suggest an AI follow us, they won't listen. If we attack or restrain them, then suggest they follow us, they indicate they'll comply. After releasing the restraint, they'll follow us but might escape at any time.</p>
+                        <div class="feature-icon freedom-icon"><i class="fas fa-balance-scale"></i></div>
+                        <h4>Persuasion Over Command</h4>
+                        <p>When we control a new character and suggest an AI follow us, it won't listen. If we attack or restrain it, then suggest it follow us, it will indicate compliance. After being released, it will follow us but may escape at any time.</p>
                         <br>
-                        <p>When establishing your faction, you must realize: AI are not chess pieces; they have their own thoughts. Small tip: carrots and sticks are a simple and effective management approach.</p>
+                        <p>When establishing a faction, you must realize: AI entities are not pawns; they have their own thoughts. Small tip: a combination of force and rewards is a simple and effective management approach.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon respect-icon"></div>
+                        <div class="feature-icon respect-icon"><i class="fas fa-brain"></i></div>
                         <h4>Learning & Memory</h4>
-                        <p>We bring an AI to a city and buy quality food for them to eat. They express great happiness. Then we bring the AI to the wilderness and set them free. The AI no longer builds houses or farms but collects some food and begins moving around, searching for the city. They remember the city had delicious food.</p>
+                        <p>We bring an AI to the city, buy high-quality food, and feed it. It expresses great happiness. Then we take the AI to the wilderness and set it free. The AI no longer builds houses or farms but collects some food and then begins to move around searching for the city. It remembers the delicious food in the city.</p>
                         <br>
-                        <p>AI have both short-term and long-term memory, capable of simple learning like cats and dogs, no longer rigid and foolish.</p>
+                        <p>AI will have short-term and long-term memory, capable of simple learning like cats and dogs, rather than remaining rigid and foolish.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon path-icon"></div>
-                        <h4>Adaptive Careers</h4>
-                        <p>If a merchant AI's goods are plundered by pirates, that merchant might become a pirate out of desperation; if a monster hunter AI finds healing medicines too expensive after being injured, they might switch to alchemy. Many AI work in specialized fields, cooperating through social trading, with daily goods traded in the billions at trading centers, prices determined by the market. This also spawns speculator AI who profit from buying low and selling high.</p>
+                        <div class="feature-icon mind-icon"><i class="fas fa-user-tie"></i></div>
+                        <h4>Acquired Professions</h4>
+                        <p>If a merchant AI's goods are plundered by pirates, that merchant might break down and become a pirate; if a monster hunter AI is injured and finds healing medicine too expensive, that hunter might switch to alchemy. Many AIs work in specialized fields, cooperating through social trade, with daily trade volume in trade centers reaching billions, prices determined by the market. This also gives rise to a group of speculative AIs, buying low and selling high for profit.</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="respect-experience">
-                <blockquote>
-                    No need to worry about performance issues. The AI is not a large language model. Before starting, you can adjust the world size and AI intelligence; an RTX 4060 graphics card can run smoothly in a small world.
-                    At the beginning, only 100,000 concrete NPCs exist, with the remaining billions existing in abstract form, materializing when observed by players (as the game progresses, the number of concrete NPCs will reach about 200,000).
-                </blockquote>
             </div>
         </div>
     </section>
 
+    <!-- Worldview section upgraded header -->
     <section id="worldview" class="section-dark">
         <div class="container">
-            <h2 class="section-title">World View</h2>
+            <!-- Worldview section upgraded header -->
+            <div class="game-objective main-objective">
+                <div class="objective-content">
+                    <h3 class="objective-heading">Game Objective</h3>
+                    <p class="objective-text">Players start as <span class="highlight">mortals</span> with the ultimate goal of achieving <span class="highlight">Ethereal Void Realm</span>, conquering the world, earning submission from all sects, and then gathering vast resources of an era to create the most luxurious imperial coffin and tomb before entering hibernation.</p>
 
-            <div class="realm-system">
-                <h3>Cultivation Realm System</h3>
-                <div class="realm-chart">
-                    <div class="realm-group mortal">
-                        <h4>Mortals</h4>
-                        <div class="realm-levels">
-                            <div class="realm-level">
-                                <span class="level-name">Mortal Realm</span>
-                                <span class="level-lifespan">Most people are at this realm. Five hundred billion mortals.</span>
+                    <div class="notes-section">
+                        <div class="notes-row">
+                            <div class="note-card" data-target="realm-content-area" id="Worldview: Realms Button">
+                                <div class="note-header">
+                                    <span class="note-tag">Realms</span>
+                                </div>
+                                <div class="note-body">
+                                    What are mortals and Ethereal Void? The realm system from weakest to strongest.
+                                </div>
                             </div>
-                            <div class="realm-level">
-                                <span class="level-name">Body Tempering</span>
-                                <span class="level-lifespan">Strong and robust, fists can crush stones. Stronger than Olympic champions.</span>
+                            <div class="note-card" data-target="faction-content-area">
+                                <div class="note-header">
+                                    <span class="note-tag">Factions</span>
+                                </div>
+                                <div class="note-body">
+                                    What are the myriad sects? Various cultivation organizations and factions in the world.
+                                </div>
                             </div>
-                            <div class="realm-level">
-                                <span class="level-name">Meridian Opening</span>
-                                <span class="level-lifespan">Qi and blood can be controlled, explosive power like Superman.</span>
-                            </div>
-                            <div class="realm-level">
-                                <span class="level-name">Aperture Opening</span>
-                                <span class="level-lifespan">Spirit energy can enter and circulate in the body, simple spells can be cast.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="realm-group immortal">
-                        <h4>Immortals</h4>
-                        <div class="realm-levels">
-                            <div class="realm-level">
-                                <span class="level-name">Qi Condensation</span>
-                                <span class="level-lifespan">Below Qi Condensation, all are ants. Qi Condensation cultivators are immortals who can kill remotely and fly on swords.</span>
-                            </div>
-                            <div class="realm-level">
-                                <span class="level-name">Foundation Establishment</span>
-                                <span class="level-lifespan">Usually wealthy enough to rival nations, with their own caves and various formations. Top-tier powerhouses during plane conquests.</span>
-                            </div>
-                            <div class="realm-level">
-                                <span class="level-name">Golden Core</span>
-                                <span class="level-lifespan">The strongest in ordinary planes. Golden Core and above cultivators enter the Ten Thousand Worlds Rankings. Factions with Golden Core cultivators are considered established in the Ten Thousand Worlds.</span>
-                            </div>
-                            <div class="realm-level">
-                                <span class="level-name">Nascent Soul</span>
-                                <span class="level-lifespan">Factions with Nascent Soul cultivators are first-class powers in the Ten Thousand Worlds. Pill Sects, Artifact Sects, and Ten Thousand Treasures Pavilion are in this category.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="realm-group true-immortal">
-                        <h4>True Immortals</h4>
-                        <div class="realm-levels">
-                            <div class="realm-level">
-                                <span class="level-name">Divine Transformation</span>
-                                <span class="level-lifespan">Can perceive space-time laws and know causality and fate. Knowing heaven is easy, defying it is hard. Except for Holy Lands, no sect can produce Divine Transformation cultivators in two consecutive eras.</span>
-                            </div>
-                            <div class="realm-level">
-                                <span class="level-name">Void Refinement</span>
-                                <span class="level-lifespan">Also known as Emperors, with a lifespan of 3000 years, their words become law. Usually only one Emperor per era, revered throughout the Ten Thousand Worlds, unmatched in their era (outside Holy Domains).</span>
-                            </div>
-                            <div class="realm-level">
-                                <span class="level-name">Dao Unity</span>
-                                <span class="level-lifespan">Also known as Saints, merging with a plane's Heavenly Dao, immortal and indestructible. Their plane becomes a Holy Domain; within it, they are invincible and can reverse life and death, but cannot leave their Holy Domain. A chance for sainthood comes once every 100,000 years; in the past million years, twelve Saints have emerged in the Ten Thousand Worlds.</span>
-                            </div>
-                            <div class="realm-level">
-                                <span class="level-name">Great Perfection</span>
-                                <span class="level-lifespan">No predecessors seen, no successors to come. No one in the Ten Thousand Worlds has reached this realm in a million years. Theoretically could create or destroy Ten Thousand Worlds with a thought.</span>
+                            <div class="note-card" data-target="conflict-content-area">
+                                <div class="note-header">
+                                    <span class="note-tag">Great Strife</span>
+                                </div>
+                                <div class="note-body">
+                                    Why hibernate? The Great Strife Era occurs every ten thousand years, contending for the opportunity to ascend to sainthood.
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <p>
-                    Players start as mortals, with the ultimate goal of reaching Void Refinement, destroying the old Emperor's tomb, then exhausting an era's resources to create the most luxurious Emperor coffin and tomb before hibernating.
-                </p>
-                <p>
-                    Note: Hibernation conserves lifespan, allowing safe sleep until the Great Contention Era (once every 100,000 years) to awaken and compete for the chance at sainthood. Note: In the single-player version, players cannot wait for the Great Contention Era; in the multiplayer version, it happens once a year.
-                </p>
             </div>
-
-            <div class="power-system">
-                <h3>Great Contention Era</h3>
-                <div class="power-types">
-                    <div class="power-type">
-                        <h4>Basic Settings</h4>
-                        <p>The Great Contention Era occurs once every 100,000 years, with an opportunity to advance to Dao Unity Sainthood (through a Heavenly Dao cycle breach).</p>
-                        <p>When heaven and earth were first formed, there were two Dao Unity beings: the Primordial Heavenly Dao and the Abyss Will. Adding the Dao Unity cultivators from Great Contention Eras, twelve Saints have emerged in the Ten Thousand Worlds over the past million years.</p>
+            <!-- Realm system section -->
+            <div id="realm-content-area" class="worldview-content-area">
+                <!--<div class="back-button-container">
+                    <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>Return to options</a>
+                </div>-->
+                <!-- Keep the original realm system content, don't modify title style -->
+                <div class="realm-system">
+                    <!-- Start of realm-system -->
+                    <div class="realm-header">
+                        <h3 class="realm-title">Realm System</h3>
                     </div>
-                    <div class="power-type">
-                        <h4>Hibernation & Awakening</h4>
-                        <p>High-level cultivators near the end of their lifespan self-seal and wait to awaken during the Great Contention Era.</p>
-                        <p>Normally, the Ten Thousand Worlds typically have only one Void Refinement, ten Divine Transformation, and a hundred Nascent Soul cultivators, but during the Great Contention Era, over thirty Void Refinement and more than 30,000 Nascent Soul cultivators awaken. They consume their remaining lifespan to create a brilliant era through intense conflicts, and the ultimate winner advances to Dao Unity.</p>
-                    </div>
-                    <div class="power-type">
-                        <h4>Ruins & Forbidden Areas</h4>
-                        <p>Based on the Great Contention Era, many ancient ruins can be seen in the game:</p>
-                        <p>A battle between two Void Refinement Emperors can leave a plane barren without a blade of grass; in some small planes, it can even shatter space-time into millions of time fragments lasting a million years.</p>
-                        <p>When high-level cultivators near the end of their lifespan self-seal, they take all their possessions, arrange deadly formations, breed ferocious beasts, and set curses around them, turning an area into a dangerous forbidden zone to protect their spiritual coffin through the ages. Players can see many such dangerous areas and attempt to explore and loot tombs.</p>
+                    <!-- realm-chart-container is now correctly INSIDE realm-system -->
+                    <div class="realm-chart-container">
+                        <div class="realm-chart">
+                            <div class="realm-group mortal">
+                                <div class="realm-group-header">
+                                    <div class="realm-icon"><i class="fas fa-user"></i></div>
+                                    <h4 class="realm-group-title">Mortal</h4>
+                                </div>
+                                <div class="realm-levels">
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Mortal Realm</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">Most people are at this realm. Five hundred billion mortals.</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Body Tempering</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">Strong and robust, fists can break rocks. Stronger than Olympic champions.</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Meridian Opening</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">Blood and qi can be controlled and regulated, with bursts like Superman.</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Aperture Opening</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">Spiritual energy can enter the body and circulate, allowing simple spells to be cast.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="realm-group immortal">
+                                <div class="realm-group-header">
+                                    <div class="realm-icon"><i class="fas fa-cloud"></i></div>
+                                    <h4 class="realm-group-title">Immortal</h4>
+                                </div>
+                                <div class="realm-levels">
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Qi Condensation</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">All below Qi Condensation are insects. Qi Condensation cultivators can kill from a distance and fly on swords.</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Foundation Establishment</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">Typically wealthy beyond measure, with personal cultivation abode and various arrays. First-class powerhouses during plane conquests.</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Golden Core</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">The strongest in ordinary planes. Golden Core and above cultivators enter the Ten Thousand Worlds Ranking. Factions with Golden Core cultivators are considered established powers in the Ten Thousand Worlds.</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Nascent Soul</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">Factions with Nascent Soul cultivators are first-class powers in the Ten Thousand Worlds. The Elixir Sect, Artifact Sect, and Ten Thousand Treasures Pavilion are among them.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="realm-group true-immortal">
+                                <div class="realm-group-header">
+                                    <div class="realm-icon"><i class="fas fa-sun"></i></div>
+                                    <h4 class="realm-group-title">True Immortal</h4>
+                                </div>
+                                <div class="realm-levels">
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Divine Transformation</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">Perceive space-time laws, know cause and effect and heavenly mandate. Except for Holy Lands, no sect can produce Divine Transformation cultivators in two consecutive eras.</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Ethereal Void</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">Also known as Grand Emperor, with a lifespan of three thousand years, words become law. Usually, only one Grand Emperor appears in an era, respected by all Ten Thousand Worlds, invincible in their era (outside Holy Domains).</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Dao Integration</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">Also known as Saint, merging with a plane's Heavenly Dao, undying and indestructible. Their plane becomes a Holy Domain, where they are invincible and can reverse life and death, but Saints cannot leave their Holy Domain.</div>
+                                    </div>
+                                    <div class="realm-level">
+                                        <div class="level-header">
+                                            <span class="level-name">Grand Ascension</span>
+                                            <span class="level-indicator"></span>
+                                        </div>
+                                        <div class="level-description">No predecessors, no successors. No one in the Ten Thousand Worlds has reached this realm in a million years.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="power-system">
-                <h3>Major Faction Types</h3>
-                <div class="power-types">
-                    <div class="power-type">
-                        <h4>Sects</h4>
-                        <p>Organizations of cultivators, combining elements of family, school, and company. Sects are usually located in mountain ranges, subordinate to dynasties; super sects control dynasties.</p>
+            <!-- Faction distribution section -->
+            <div id="faction-content-area" class="worldview-content-area">
+                <!--<div class="back-button-container">
+                    <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>Return to options</a>
+                </div>-->
+                <!-- Main faction types section -->
+                <div class="power-system new-layout">
+                    <h3>Main Faction Types</h3>
+                    <div class="faction-container">
+                        <div class="faction-grid">
+                            <div class="faction-item" data-faction="宗门">
+                                <div class="faction-icon" style="background-color: #e74c3c;"><i class="fas fa-mountain"></i></div>
+                                <div class="faction-name">Sects</div>
+                            </div>
+                            <div class="faction-item" data-faction="皇朝">
+                                <div class="faction-icon" style="background-color: #f39c12;"><i class="fas fa-crown"></i></div>
+                                <div class="faction-name">Dynasties</div>
+                            </div>
+                            <div class="faction-item" data-faction="联盟">
+                                <div class="faction-icon" style="background-color: #9b59b6;"><i class="fas fa-hands-helping"></i></div>
+                                <div class="faction-name">Alliances</div>
+                            </div>
+                            <div class="faction-item" data-faction="圣地">
+                                <div class="faction-icon" style="background-color: #3498db;"><i class="fas fa-place-of-worship"></i></div>
+                                <div class="faction-name">Holy Lands</div>
+                            </div>
+                        </div>
+                        <div class="faction-detail">
+                            <div class="detail-content" id="宗门-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #e74c3c;"><i class="fas fa-mountain"></i></div>
+                                    <h4>Sects</h4>
+                                </div>
+                                <p class="detail-description">
+                                    A combination of family, school, and company. Located in mountains, not recruiting mortals.
+                                    - Family aspect: Provides food, lodging, and basic cultivation resources. When mortals enter a sect, they almost sever ties with their parents, considering the sect as their family. If your status is an inner disciple or higher, your children automatically become sect members.
+                                    - School aspect: The sect has classrooms and scripture libraries, with systematic and detailed teaching plans.
+                                    - Company aspect: The sect has missions that members must complete.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="皇朝-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #f39c12;"><i class="fas fa-crown"></i></div>
+                                    <h4>Dynasties</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Manage mortals and sects, with vast territories. However, the relationship between sects and dynasties is complex, with the following exceptions:
+                                    - Some sects have affiliated mortal cities (mini-dynasties). City lords are self-governing, only providing tribute, accepting sect protection, and facilitating sect activities (such as recruitment, or some less public affairs like finding cultivation vessels).
+                                    - Powerful sects influence multiple dynasties (like multinational corporations, rich enough to challenge nations), but a sect's power within a nearby dynasty will almost inevitably lead to conflict with its original dynasty.
+                                    - Even if a sect's power surpasses a dynasty, the sect's headquarters will still occupy a small area (compared to the dynasty's territory) and will still nominally belong to a dynasty. However, the sect will secretly control the emperor and ministers, thereby controlling the dynasty.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="联盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #9b59b6;"><i class="fas fa-hands-helping"></i></div>
+                                    <h4>Alliances</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Collectives formed by multiple sects or dynasties.
+                                    Almost all super first-class powers (six or more Nascent Soul cultivators) are alliances, as the limit for a single faction is usually one Nascent Soul.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="圣地-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #3498db;"><i class="fas fa-place-of-worship"></i></div>
+                                    <h4>Holy Lands</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Controlled by Saints, absolutely safe, eternally indestructible. Saints merge with the Heavenly Dao of a plane, and that plane becomes a Holy Domain.
+                                    Holy Lands change their laws, intelligent mortals are granted immortality, and a mortal council holds supreme power, but cannot leave the Holy Domain.
+                                    The sect master of a Holy Land has no real power, only serving as the highest diplomat.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="power-type">
-                        <h4>Dynasties</h4>
-                        <p>Manage mortals and sects, with vast territories. A sect's power near its dynasty almost inevitably leads to conflict with the dynasty.</p>
-                    </div>
-                    <div class="power-type">
-                        <h4>Alliances</h4>
-                        <p>For example, the Demonic Path Alliance is a super first-class power, no longer universally condemned like individual demonic sects. Some righteous path ceremonies even invite representatives from the Demonic Alliance.</p>
-                    </div>
-                    <div class="power-type">
-                        <h4>Holy Lands</h4>
-                        <p>Controlled by Saints, absolutely safe, with altered laws. Clever mortals in Holy Lands are granted immortality; the sect master of a Holy Land has no real power and serves only as the highest diplomatic official.</p>
+                </div>
+
+                <!-- Super first-class alliance directory section -->
+                <div class="power-system new-layout">
+                    <h3>Super First-Class Powers Directory</h3>
+                    <div class="faction-container">
+                        <div class="faction-grid large-grid">
+                            <div class="faction-item" data-faction="魔盟">
+                                <div class="faction-icon" style="background-color: #c0392b;"><i class="fas fa-skull"></i></div>
+                                <div class="faction-name">Demonic Alliance</div>
+                            </div>
+                            <div class="faction-item" data-faction="商盟">
+                                <div class="faction-icon" style="background-color: #f1c40f;"><i class="fas fa-coins"></i></div>
+                                <div class="faction-name">Merchant Alliance</div>
+                            </div>
+                            <div class="faction-item" data-faction="奇盟">
+                                <div class="faction-icon" style="background-color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
+                                <div class="faction-name">Arcane Alliance</div>
+                            </div>
+                            <div class="faction-item" data-faction="源盟">
+                                <div class="faction-icon" style="background-color: #2980b9;"><i class="fas fa-book-open"></i></div>
+                                <div class="faction-name">Source Alliance</div>
+                            </div>
+                            <div class="faction-item" data-faction="道盟">
+                                <div class="faction-icon" style="background-color: #2c3e50;"><i class="fas fa-yin-yang"></i></div>
+                                <div class="faction-name">Dao Alliance</div>
+                            </div>
+                            <div class="faction-item" data-faction="侠盟">
+                                <div class="faction-icon" style="background-color: #e67e22;"><i class="fas fa-khanda"></i></div>
+                                <div class="faction-name">Martial Alliance</div>
+                            </div>
+                            <div class="faction-item" data-faction="国盟">
+                                <div class="faction-icon" style="background-color: #d35400;"><i class="fas fa-landmark"></i></div>
+                                <div class="faction-name">National Domain</div>
+                            </div>
+                            <div class="faction-item" data-faction="妖盟">
+                                <div class="faction-icon" style="background-color: #8e44ad;"><i class="fas fa-paw"></i></div>
+                                <div class="faction-name">Beast Alliance</div>
+                            </div>
+                            <div class="faction-item" data-faction="龙盟">
+                                <div class="faction-icon" style="background-color: #27ae60;"><i class="fas fa-dragon"></i></div>
+                                <div class="faction-name">Dragon Clan</div>
+                            </div>
+                            <div class="faction-item" data-faction="圣盟">
+                                <div class="faction-icon" style="background-color: #1abc9c;"><i class="fas fa-sun"></i></div>
+                                <div class="faction-name">Holy Domain</div>
+                            </div>
+                        </div>
+                        <div class="faction-detail">
+                            <div class="detail-content" id="魔盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #c0392b;"><i class="fas fa-skull"></i></div>
+                                    <h4>Demonic Alliance</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Overview: Demonic path alliance, robbing and plundering.
+                                    Social status: Super first-class power, consistently possessing six or more Nascent Soul cultivators. Righteous sects are relatively tolerant of their members, not easily eradicating them; Demonic Alliance members often have public headquarters, while non-Alliance demon cultivators must wander homelessness. The Ten Thousand Worlds Convention usually invites Demonic Alliance representatives to attend.
+                                    Internal system: One hegemon, many powers. The hegemon is lifelong, can be challenged; leaders of Nascent Soul-level powers automatically become powerful masters, with deliberation and information rights; other members need to pay protection fees.
+                                    Cultural characteristics: Members are mostly church-based. Church characteristics: loose entry and exit, numerous outer disciples; information scarcity upward, extreme authority downward. Under righteous sect suppression, the church model facilitates survival and reproduction. A few powers rely on Demonic Alliance protection to change to the sect system, but all six powers are churches.
+                                    Core members:
+                                    - Death Church: One-hit kill.
+                                    - Phantom Church: You struggle and cry out in a barrier, but passersby are unaware.
+                                    - Seven Kill Church: Occupy transmission arrays, kill everyone who comes.
+                                    - Nightmare Church: Wander in the wild, can't be warned by compasses.
+                                    - Flood Church: Random transmission, steamroll everything. Wherever they go, nothing grows.
+                                    - Shadow Church: Three years without action, then feast for three years. Spies everywhere, only rob the most valuable goods.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="商盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #f1c40f;"><i class="fas fa-coins"></i></div>
+                                    <h4>Merchant Alliance</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Overview: Commercial alliance, based in Holy Lands, buying low and selling high.
+                                    Social status: Super giant, detached from worldly conflicts. But if anyone dares to underestimate or attack them, the fangs revealed by the Merchant Alliance will terrify you.
+                                    Internal system: Conference-based. Decisions passed by the conference must be executed, with no other constraints.
+                                    - Great Elegance Bank: Banking. Store spirit stones, fixed interest.
+                                    - Heaven and Earth Bank: Wealth management. Store spirit stones, invest on behalf, variable interest rates.
+                                    - Holy Land Li Family: Power stock, bond certification and trading center.
+                                    - Holy Land Wang Family: Futures certification and trading center.
+                                    - Holy Land Qian Family: Bulk commodity spot investment. Countless food and minerals.
+                                    - Treasure Gathering Tower: Pawn, purchase, slow sales. Bulk purchases in front of secret realms.
+                                    - Dragon Walking Group: Merchants, purchasing cheap local specialties, long-term cooperation with local powers.
+                                    - Ten Thousand Treasures Pavilion: Wholesale and retail, high-priced sales at branches everywhere.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="奇盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #9b59b6;"><i class="fas fa-hat-wizard"></i></div>
+                                    <h4>Arcane Alliance</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Overview: Elixirs, artifacts, talismans, arrays - production, sales, monopolistic profits.
+                                    Social status: The focus of all attention. Every cultivator's daily necessities and side businesses.
+                                    Internal system: Classic alliance system. Academic exchanges, pricing conferences, joint defense.
+                                    - Elixir Sect: Produces elixirs. Representative: Foundation Establishment Pill, for breakthrough to Foundation Establishment.
+                                    - Poison Sect: Produces poisons. Representative: Holy Poison Pill, for controlling subordinates.
+                                    - Artifact Sect: Produces equipment, magical treasures, elixir cauldrons. Representative: Immortal Swords.
+                                    - Sumeru Sect: Produces storage rings. Although Artifact Sect also produces them, they're not as good as Sumeru Sect's.
+                                    - Colossus Sect: Produces flying ships.
+                                    - Talisman Sect: Produces talismans. Representative: Protection Talismans.
+                                    - Array Sect: Customizes arrays. Representative: Mountain Protection Grand Array.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="源盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #2980b9;"><i class="fas fa-book-open"></i></div>
+                                    <h4>Source Alliance</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Overview: Academy alliance, disciples throughout the world, neutral.
+                                    Social status: Uncrowned king, the thirteenth Holy Land, detached from worldly conflicts. Those who attack the Source Alliance become enemies of the world.
+                                    Internal system: Classic alliance system. Academic exchanges, joint defense, organizing leagues.
+                                    - Extreme Abyss Academy: Comprehensive independent academy.
+                                    - Soul Curse Academy: Comprehensive independent academy. Specializes in soul techniques, curse techniques, blood techniques, counter techniques.
+                                    - Sword Sect Academy: Affiliated with Sword Heart Holy Land, open to worldwide enrollment. Comprehensive academy, specializing in sword techniques, heart techniques.
+                                    - Wilderness Academy: Comprehensive independent academy, specializing in body techniques.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="道盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #2c3e50;"><i class="fas fa-yin-yang"></i></div>
+                                    <h4>Dao Alliance</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Overview: No cognitive filtering, directly facing the world's truth. The source of all techniques, five-dimensional space. The world is like cards; others only play straight flushes, while I face chaos. Over a million years, more than half of those above Divine Transformation came from the Dao Alliance.
+                                    Social status: No presence, mysterious, viewed as part of the rules, familiar yet strange, hidden in plain sight.
+                                    Internal system: United in appearance, divided in heart. Only joint defense and using the alliance name for business.
+                                    - Divine Church: Core of the Dao Alliance, no cognitive filtering, all techniques returning to one.
+                                    - Boundary Sect: Maintains various major transmission arrays, the Ten Thousand Worlds transportation pattern. Active in the void, exploring unknown realms.
+                                    - Heavenly Mechanism Tower: Calculates history, knows the current situation, ranks the Heavenly Rankings.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="侠盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #e67e22;"><i class="fas fa-khanda"></i></div>
+                                    <h4>Martial Alliance</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Overview: Martial artist alliance, rogue cultivator court. Fighting demonic beasts, exploring secret realms, sharing experiences, mutual assistance.
+                                    Social status: Pitiful creatures, bumpkins, hot-tempered, not to be provoked. Unreasonable, neurotic, ready to fight to the death over disagreements, big fools. Countless, no one knows how many people are in the Martial Alliance, a mixed bag, all sorts of characters, indescribable.
+                                    Internal system: Unwritten rules. Very few written rules, just one page; the rest are all unwritten. Meetings basically depend on loudness and force, internal often quarreling into fights, but making up afterward.
+                                    - Martial Gang: Mainly fighting wild demonic beasts.
+                                    - Yellow Bird Society: Secret realms as the main focus, treasure hunting, assassination. Some call it a demonic church.
+                                    - Berserker Faction: Beast clan front line, insect plane, life-or-death battles.
+                                    - Treasure Hunting Gang: Secret realms as the main focus, avoiding battles to find treasures.
+                                    - Escort Association: Escorting merchant caravans, delivering treasures, guarding gates, hosting conventions, escorting explorers, mercenaries.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="国盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #d35400;"><i class="fas fa-landmark"></i></div>
+                                    <h4>National Domain</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Overview: Also known as the National Alliance or Dynasty Alliance. Dynasties controlled by sects are not qualified to join; National Domain members must have independent sovereignty. Imperial authority is stern within the National Domain but a joke outside it.
+                                    Social status: The backbone! The body of the world! Highest recognition; many people believe: where the National Domain is located is the Ten Thousand Worlds, outside the National Domain is all outer territory.
+                                    Internal system: Conference system. Allows internal wars, but must maintain communication and explain the war; the dignity of the National Domain cannot be violated, external enemies are jointly suppressed.
+                                    - Great Elegance Empire: Imperial system, unlimited power. Few legal changes, immortals and mortals subject to the same laws.
+                                    - Great Qin Empire: Imperial system, unlimited power. Many legal changes, lax enforcement, immortals freely violating laws.
+                                    - Tianxuan Empire: Imperial system, unlimited power. Has laws but no prisons, violators become crime citizens. Vast crime citizen groups, crime citizens have no human rights, at the disposal of immortals, children of crime citizens are also crime citizens, achieving immortality can absolve crimes.
+                                    - Song River Dynasty: Emperor and feudal lord system, feudal lords are self-governing but must pay tribute and provide soldiers.
+                                    - Imenosson Forest: Elves, queen system. Queen has highest diplomatic authority, Elder Council has highest decision-making authority.
+                                    - Dark Elf Kingdom: Elves, queen system. Queen oversees Dark Stewards with information and judgment rights, Elder Council exists in name only, queen is like an emperor.
+                                    - Ancient Sky City: Territory only in a single plane, but Nascent Soul-level strength, abundant plane. No external conflicts, nearby planes voluntarily paying tribute. Imperial system, high welfare.
+                                    - Jihua City: Rich plane, single plane territory, no expansion. Imperial system, prohibits leaving the plane, no families, prohibits reproduction, artificial babies, unified cultivation.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="妖盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #8e44ad;"><i class="fas fa-paw"></i></div>
+                                    <h4>Beast Alliance</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Overview: Alliance of myriad races, huddling together for warmth, resisting humans.
+                                    Social status: Enemy of humans. Powerful, vast territory. With external enemies, they grow stronger through battle; without external enemies, they split internally.
+                                    Internal system: Conference system. Allows internal wars, maintains communication, joint defense. Nascent Soul takes turns as alliance leader, in emergencies the leader's power expands.
+                                    - Tiger Clan: Comprehensively strongest. Strong from birth.
+                                    - Bear Clan: Individually strongest. Strong from birth.
+                                    - Snake Clan: Poisonous. Born weak, multiple transformations.
+                                    - Crocodile Clan: Highest damage. Strong from birth.
+                                    - Eagle Clan: Fastest speed. Born weak, strong after adulthood.
+                                    - Insect Clan: Vast territory, individually weak.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="龙盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #27ae60;"><i class="fas fa-dragon"></i></div>
+                                    <h4>Dragon Clan</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Overview: Not an alliance, Dragon Clan is one entity. The world has only ten parts, humans take eight, I take one, and the rest share one.
+                                    Social status: Uncrowned Holy Land, outer realm paradise, low presence, many visitors.
+                                    Internal system: Elder system. The Elder Council decides all arrangements large and small within the clan, one entity, no member powers. Dragons have long lifespans.
+                                </p>
+                            </div>
+                            <div class="detail-content" id="圣盟-detail">
+                                <div class="detail-header">
+                                    <div class="detail-icon" style="background-color: #1abc9c;"><i class="fas fa-sun"></i></div>
+                                    <h4>Holy Domain</h4>
+                                </div>
+                                <p class="detail-description">
+                                    Overview: Holy Land alliance. People from Holy Lands look down upon the world, viewing the Ten Thousand Worlds as the lower realms, enclosed in their own paradise.
+                                    Social status: To outsiders, lofty and venerable; to insiders, enclosed in their own paradise, all outside is barbaric.
+                                    Internal system: Exclusionary system. Transportation interconnected, internal wars allowed, maintaining communication, comprehensive exchanges. Each responsible for their own external enemies.
+                                    - Equality Holy Land: Under the jurisdiction of the Primordial Heavenly Dao. Prohibits killing. Trade center.
+                                    - Wind Spirit Realm: Under the jurisdiction of the Wind Deity, creating cultivation methods and spiritual techniques.
+                                    - Sword Spirit Realm: Under the jurisdiction of the Sword Saint, creating heart techniques.
+                                    - Soul Realm: Under the jurisdiction of the Soul Saint, creating dao embryos.
+                                    - Thunder Fire Holy Land: Under the jurisdiction of the Thunder Deity. Creating divine positions.
+                                    - Seven Star Holy Land: Under the jurisdiction of the Array Saint. Creating mountain protection grand arrays.
+                                    - Netherworld Holy Land: Under the jurisdiction of the Curse Saint. Creating self-destruct and burning techniques.
+                                    - Matchless Realm: Under the jurisdiction of the Matchless Deity. Creating spirit absorption techniques.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="power-system">
-                <h3>Super First-Class Alliance Registry</h3>
-                <div class="power-types">
-                    <div class="power-type">
-                        <h4>Demonic Alliance</h4>
-                        <p>Demonic Path Alliance, robbing and plundering</p>
+            <!-- Great Strife Era section -->
+            <div id="conflict-content-area" class="worldview-content-area">
+                <!--<div class="back-button-container">
+                    <a href="#" class="back-to-notes"><i class="fas fa-arrow-up"></i>Return to options</a>
+                </div>-->
+                <!-- Keep the original Great Strife Era content, don't modify title style -->
+                <div class="elegant-content">
+                    <div class="decorated-title">
+                        <div class="ornament-line top"></div>
+                        <h2 class="section-title gold-title">Great Strife Era</h2>
+                        <div class="ornament-line bottom"></div>
                     </div>
-                    <div class="power-type">
-                        <h4>Merchant Alliance</h4>
-                        <p>Commercial Alliance, based in Holy Lands, buying low and selling high</p>
+
+                    <!-- Main content -->
+                    <div class="elegant-text-content">
+                        <p class="intro-text">
+                            The Great Strife Era occurs once every ten thousand years, during which an opportunity to advance to Dao Integration sainthood appears (a breach in the Heavenly Dao cycle).<br>
+                            When the world first began, there were two innate Great Dao Saints: the Primordial Heavenly Dao and the Abyss Will. With the addition of the Great Strife Era's once-in-ten-thousand-years posterior Dao Integration Saints, over a million years, the Ten Thousand Worlds have produced twelve Saints in total.
+                        </p>
+
+                        <p class="content-text">
+                            In the past, those high-level cultivators whose lifespans were nearing their end would self-seal, waiting to awaken when the Great Strife Era arrived.
+                            Normally, the Ten Thousand Worlds typically have only one Ethereal Void, ten Divine Transformations, and a hundred Nascent Souls, but during the Great Strife Era, over thirty Ethereal Voids and over thirty thousand Nascent Souls awaken. They will burn their remaining lifespans, engage in intense confrontations, create a brilliant era, and the final winner will advance to Dao Integration.
+                        </p>
+
+                        <p class="content-text">
+                            Based on the Great Strife Era, many ancient ruins can be seen in the game:
+                            The battle between two Ethereal Void Grand Emperors can leave a plane scorched for thousands of miles, with not a blade of grass growing. In some small planes, they even shatter space-time, turning it into millions of time fragments that persist for a million years.
+                            When high-level cultivators' lifespans are nearly exhausted and they self-seal, they bring all their possessions with them and arrange terrible arrays, breed fierce beasts, and set curses around them, turning an area into a dangerous forbidden zone to protect their spirit coffin through ten thousand years. Players can see many such dangerous lands and can attempt to explore and tomb raid.
+                        </p>
+
+                        <!-- Document link -->
+                        <div class="document-link">
+                            <a href="document_en/风神界：大争之世_en.html" class="elegant-link">
+                                <span class="link-icon">📜</span>
+                                Wind Spirit Realm: The Great Strife Era
+                            </a>
+                        </div>
                     </div>
-                    <div class="power-type">
-                        <h4>Craft Alliance</h4>
-                        <p>Pills, artifacts, talismans, formations; highly profitable production</p>
+
+                    <!-- Bottom decoration -->
+                    <div class="ornament-line bottom-full"></div>
+                </div>
+            </div>
+            <!-- Player stories -->
+            <div class="game-process">
+                <div class="process-header">
+                    <h3 class="process-heading">Game Process</h3>
+                    <div class="process-divider"></div>
+                </div>
+
+                <!-- Insert player stories section moved from page bottom -->
+                <div class="stories-container">
+                    <div class="stories-introduction">
+                        <p>In Realm of Wind Spirit, a thousand players have a thousand different stories. Here are three players' different experiences.</p>
                     </div>
-                    <div class="power-type">
-                        <h4>Source Alliance</h4>
-                        <p>Academies with disciples all over the world</p>
+
+                    <!-- Story showcase carousel/slider -->
+                    <div class="story-slider">
+                        <!-- Navigation arrows -->
+                        <div class="slider-arrow prev-arrow">
+                            <i class="fas fa-chevron-left"></i>
+                        </div>
+
+                        <!-- Story content container -->
+                        <div class="story-container">
+                            <!-- Story 1: From Mortal to Golden Core -->
+                            <div class="story-slide active" id="story-1">
+                                <div class="story-content">
+                                    <div class="story-header">
+                                        <div class="story-badge">Mortal Chapter</div>
+                                        <h3>From Mortal to Golden Core</h3>
+                                        <div class="story-divider"></div>
+                                    </div>
+
+                                    <div class="story-narrative">
+                                        <div class="story-visual">
+                                            <div class="story-image">
+                                                <div class="story-icon">
+                                                    <i class="fas fa-user-shield"></i>
+                                                </div>
+                                            </div>
+                                            <!-- Interview link -->
+                                            <div class="document-link">
+                                                <a href="document_en/【软件工程】采访：风神界开发方式_en.html" class="elegant-link">
+                                                    <span class="link-icon">🎙️</span>
+                                                    Development Approach Interview
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="story-text">
+                                            <p>
+                                                Starting as a mortal in the wild, cutting trees and mining with a backpack.<br>Picking fruits and gathering water to fill my stomach, building walls and houses to shelter from the wind and rain.<br>
+                                                Wild boar attacks, fighting with my back to the wall, killing, dismembering for bones, meat, and skin.<br>Occasionally obtaining a sect trading talisman, selling meat to exchange for techniques, beginning cultivation.<br>
+                                                Secluded breakthrough to Body Tempering, killing pigs and buying pills to reach Meridian Opening.<br>One battle in Treasure Ruins to Aperture Opening, ten battles in Treasure Ruins to enter Qi Condensation.<br>
+                                                Elixirs, artifacts, talismans, and techniques well-configured, dao embryo and crystal coffin as backup.<br>Ten dangers and three deaths polishing my approach, a hundred battles in Treasure Ruins to enter Foundation Establishment.<br>
+                                                Searching for treasures in secret realms, brutally attacked by demonic cultivators, soul escaping.<br>Refusing to accept defeat, fighting again and encountering danger, repeatedly defeated yet persisting.<br>
+                                                A major sect inviting me as a guardian, moving to a new realm, entering a mansion.<br>Participating in merchant ventures and battles, saving hundreds who express endless gratitude.<br>
+                                                As the Golden Core elder nears death, the hall master conspires against the sect master.<br>The player stands with the sect, faces assassination, gathers allies to divide and conquer.<br>
+                                                External pirates come to dismember, internal cooperation followed by betrayal.<br>Blood sacrifice array to enter Golden Core, using arrays to defeat enemies and win back loyalty.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Story 2: From Golden Core to Nascent Soul -->
+                            <div class="story-slide" id="story-2">
+                                <div class="story-content">
+                                    <div class="story-header">
+                                        <div class="story-badge">Golden Core Chapter</div>
+                                        <h3>From Golden Core to Nascent Soul</h3>
+                                        <div class="story-divider"></div>
+                                    </div>
+
+                                    <div class="story-narrative">
+                                        <div class="story-visual">
+                                            <div class="story-image">
+                                                <div class="story-icon">
+                                                    <i class="fas fa-atom"></i>
+                                                </div>
+                                            </div>
+                                            <!-- Interview link -->
+                                            <div class="document-link">
+                                                <a href="document_en/【软件工程】采访：风神界开发方式_en.html" class="elegant-link">
+                                                    <span class="link-icon">🎙️</span>
+                                                    Development Approach Interview
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="story-text">
+                                            Back when I was at Golden Core, I established the Seven Kill Sect in Right Formless, gaining fame, but with limited land and many people, there was no room for expansion.<br>
+                                            At that time, to the left was Golden Core T1, to the right was Golden Core C Sect, to the front was Nascent Soul A Sect, and to the back was Nascent Soul B Sect.<br>
+                                            T1, a legendary genius from a Holy Land, leading a group of prodigies, with the potential for Nascent Soul, was just lacking allies.<br>
+                                            I wanted to join them, but T1 fiercely attacked A Sect, was defeated and scattered. I then took over their territory and recruited T2—a capable prodigy under T1, also with Nascent Soul potential.<br>
+                                            We respected A Sect as the leader, offered gold for territory, A Sect agreed; after we finished relocating and began construction, A Sect changed their mind. We were furious but dared not speak out, yielding the land and returning.<br>
+                                            During the Nascent Soul expedition, A Sect called on us for assistance, promising the Left Formless. We tightened our belts, exhausted our resources, spared no effort, and supplied the front line. Victory came, but A Sect reneged again, compensating with
+                                            just a few immortal pills. We smiled, but the fire of revenge was already burning in our hearts.<br>
+                                            I allied with C Sect, forming a union. When Nascent Soul conflicts arose again, A Sect invited us to assist; C Sect sent envoys to B Sect, B Sect agreed to supply resources and backstab A Sect, I deliberated and agreed.<br>
+                                            C Sect wanted to lead the alliance, actively engaging in diplomacy and military affairs. I delegated command authority, but their tactics were a mess, resulting in several major defeats. I took back command and achieved great victories.<br>
+                                            Amid consecutive victories, A Sect suddenly launched multiple surprise attacks on our supply lines, with accurate intelligence, targeting only Seven Kill's weak points without involving C Sect.<br>
+                                            I realized with shock: C Sect had betrayed us, probably out of jealousy for my superior tactics. After deep contemplation, I decided to apologize, stating that C Sect had paved the way with sacrifices, and I shouldn't have taken the military achievements. Simultaneously, I boldly declared: I won't force everyone to forgive me, but currently there are spies, and I don't want those harboring resentment to hide. Everyone can leave or stay voluntarily; for those leaving, I'll fully compensate their past investments in the alliance. Let's part amicably, and please don't aid A Sect anymore.<br>
+                                            Earth-shattering, almost all of C Sect left, leaving Seven Kill to fight A Sect alone. Gritting our teeth to hold on, united in purpose, everyone donated resources, non-combatants also cultivated techniques to join the battle. Territories continued to fall, but we fought with increasing fervor: magical treasures produced one after another, new soldiers graduating batch after batch, seventeen Golden Core dao embryos formed, T2 entered Nascent Soul. We counterattacked and exterminated A Sect, liquidated C Sect, allied with B Sect, and Seven Kill reigned in Formless.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Story 3: Divine Transformation -->
+                            <div class="story-slide" id="story-3">
+                                <div class="story-content">
+                                    <div class="story-header">
+                                        <div class="story-badge">Nascent Soul Chapter</div>
+                                        <h3>Path to Divine Transformation</h3>
+                                        <div class="story-divider"></div>
+                                    </div>
+
+                                    <div class="story-narrative">
+                                        <div class="story-visual">
+                                            <div class="story-image">
+                                                <div class="story-icon">
+                                                    <i class="fas fa-sun"></i>
+                                                </div>
+                                            </div>
+                                            <!-- Interview link -->
+                                            <div class="document-link">
+                                                <a href="document_en/【软件工程】采访：风神界开发方式_en.html
+                                                " class="elegant-link">
+                                                    <span class="link-icon">🎙️</span>
+                                                    Development Approach Interview
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="story-text">
+                                            <p>
+                                                Conventionally, top resources are all seized by Grand Emperors.<br>
+                                                In the current era, there has been no emperor for three hundred years, so the various Divine Transformation powers are wealthy, collectively accumulating nearly a thousand Nascent Soul dao embryos. However, daily conflicts remain limited to Foundation Establishment scale, with only about a hundred Nascent Soul cultivators publicly known in the Ten Thousand Worlds. The Nascent Soul dao embryos are already stirring.<br>
+                                                Among the twelve Holy Lands, three have Divine Transformation, with six others in the outside world: ABCDE and you. Finally, chaotic warfare erupts. You battle A and exterminate it. After recuperating, you fight B and exterminate it as well. CDE join forces, and you decide to face them in a decisive battle, emerging victorious, unifying the Ten Thousand Worlds (outside the Holy Lands).<br>
+                                                However, internal turmoil arises; demonic cultivators plunder your territories, and the remnants of AB and surrendered forces from CDE take advantage of the chaos to rebel, conducting guerrilla warfare to destroy workshops and warehouses.<br>
+                                                You suppress and eradicate the demonic cultivators, but the demonic cultivators use new Nascent Soul dao embryos. You suppress and kill them again, and they revive again.<br>
+                                                You wonder with shock: where do they get so many Nascent Soul dao embryos?<br>
+                                                In reality, the Merchant Alliance and Holy Lands are supporting the demonic cultivators; none of them want unification. Unification leads to bandit suppression, which is disadvantageous to demonic cultivators; unification means no war casualties, insufficient demand, falling prices, disadvantageous to merchants; unification means people respect you instead of the Holy Lands. (Although both are Divine Transformation, the Holy Lands have no need to compete with you. After you turn to dust in a thousand years, the Holy Lands will still stand. Therefore, the Holy Lands allow people to respect you, but they don't prefer it, so they want to irritate you at a small cost.)<br>
+                                                With demonic cultivators coming endlessly, your logistics are strained, and further battles risk destruction. You withdraw in time, ceding territories, allowing ABCDE to re-establish their nations. You retain five hundred planes. ABCDE agree, and peace is reached. You continue to suppress demonic cultivators. After this suppression ends, the demonic cultivators stop attacking.<br>
+                                                After settling the five hundred planes, you design spy talismans, letting many NPCs become spies, infiltrating ABCDE, merchants, demonic cultivators, and even some Holy Lands. The spies steal intelligence; some become civil officials with voting rights, thus influencing other powers' decisions. Some spies even become generals of other powers, responsible for commanding battles.<br>
+                                                When the time is right, you spring the trap. You launch full-scale warfare again, destroying all non-Holy Land super first-class powers, unifying the Ten Thousand Worlds. The Holy Lands remain silent. (Super first-class: powers or alliances with Divine Transformation or six or more Nascent Souls.)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation arrows -->
+                        <div class="slider-arrow next-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
                     </div>
-                    <div class="power-type">
-                        <h4>Dao Alliance</h4>
-                        <p>No cognitive filtering, directly facing the world's truth. The origin of all laws, five-dimensional space. The world is like cards; others play straight flush, while I face chaos. In the past million years, most cultivators above Divine Transformation came from the Dao Alliance.</p>
-                    </div>
-                    <div class="power-type">
-                        <h4>Hero Alliance</h4>
-                        <p>Fighting demonic beasts, exploring secret realms</p>
-                    </div>
-                    <div class="power-type">
-                        <h4>Nation Alliance</h4>
-                        <p>Dynasty Alliance</p>
-                    </div>
-                    <div class="power-type">
-                        <h4>Beast Alliance</h4>
-                        <p>Alliance of all races</p>
-                    </div>
-                    <div class="power-type">
-                        <h4>Dragon Alliance</h4>
-                        <p>Dragon Race Alliance. "There are ten measures of talent in the world; humans have eight, I have one, and the rest share one."</p>
-                    </div>
-                    <div class="power-type">
-                        <h4>Saint Alliance</h4>
-                        <p>Holy Land Alliance</p>
-                    </div>
-                    <div class="power-type">
-                        <h4>Rogue Alliance</h4>
-                        <p>Independent Cultivator Alliance</p>
+
+                    <!-- Story navigation dots -->
+                    <div class="story-navigation">
+                        <div class="nav-dot active" data-story="1"></div>
+                        <div class="nav-dot" data-story="2"></div>
+                        <div class="nav-dot" data-story="3"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <section id="system" class="section-light">
-        <div class="container">
-            <h2 class="section-title">Cognitive Filtering</h2>
-
-            <div class="vector-system">
-                <h3>Spell System</h3>
-                <div class="vector-content">
-                    <div class="vector-text">
-                        <p>Players can learn unlimited spells. But when using spells, they need to consider five-dimensional vectors.</p>
-                        <p>A character's state consists of five parameters. Each time a skill is released, all five parameters change simultaneously; the release condition for each skill is that these five parameters meet certain conditions.</p>
-                        <p><strong>Pseudo-Saint Path</strong>: The Pseudo-Saint Path is a way to implement spell cognitive filtering, allowing players to enjoy the game without understanding complex five-dimensional changes. Each cultivation method is a Pseudo-Saint Path, corresponding to a unique UI panel. Unless practicing Divine Path cultivation methods, players won't know about the existence of five-dimensional vectors.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="spell-system">
-                <p>Cultivators on the Pseudo-Saint Path will call [Chaos Spell: Randomly scrambles the opponent's five-dimensional state] as [Seal Magic Spell: Effect approximately considered as preventing a cultivator from using skills]. Only cultivators of Divine Path methods are unafraid of Chaos Spells.</p>
-                <div class="spell-comparison">
-                    <div class="traditional">
-                        <h4>Pseudo-Saint Path: Yin-Yang Cultivation Method</h4>
-                        <p>Approximate cognition: Characters have Yin-Yang values. Each skill's release condition requires the character's Yin-Yang value to be within a certain range, and each skill after release will change the character's Yin-Yang value. There are also two skills, [Yang Transformation] and [Yin Transformation], with 1-second cooldowns, unlimited uses, and no effects other than +1/-1 to Yin-Yang value.</p>
-                        <p>Flaw: Can only cultivate Yin-Yang series spells, cannot cultivate other spells.</p>
-                        <p>Truth: Acid-base level doesn't exist; acid-base level is essentially a partial order in five-dimensional vector space.</p>
-                    </div>
-                    <div class="our-approach">
-                        <h4>Pseudo-Saint Path: Reincarnation Cultivation Method</h4>
-                        <p>Approximate cognition: There are seven clan skills, called A, B, C, D, E, F, G clans. After releasing an A clan skill, the next skill can only be from B clan, after B comes C... after completing the ABCDEFG cycle, it returns to A.</p>
-                        <p>Flaw: Can only cultivate seven clan spells.</p>
-                        <p>Truth: A clan skill is essentially a type of spell with the same [usage conditions] and [usage effects]; these seven clans are essentially a loop in five-dimensional space.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="rune-system">
-                <h3>Rune System</h3>
-                <div class="rune-content">
-                    <div class="rune-editor">
-                        <pre class="code-example">
-//Automatic Mining Rune
-Define ItemsToSell: Iron Ore, Blood Congealing Grass, Bone Washing Flower, Meat, Bone, Skin.
-
-Define Command QuickSell Item:
-    Requirements: Has this item in inventory. Currently at a trading post. Current trading post has buy orders for this item.
-    Effect: Continuously execute command until requirements are not met: Sell X Y 1, where X is this item, Y is the highest buy order price for this item at the current trading post.
-
-Define Command BatchSell:
-    Requirements: Currently at a trading post.
-    Effect: Check each group of items in inventory: if this group's item name is in ItemsToSell, then execute command: QuickSell X, where X is this group's item name.
-
-Whenever I enter the Equal Holy Land Trading Center, execute command: BatchSell.
-                        </pre>
-                    </div>
-                    <div class="rune-text">
-                        <p>Wind God Realm has a built-in programming language with syntax more natural than Python.</p>
-                        <p>Runes have many uses: automatic combat, automatic exploration, automatic mining, automatic selling, automatic faction management, custom positions, custom cultivation methods...</p>
-                        <p>To implement cognitive filtering, Wind God Realm has many built-in runes, and players typically don't notice their existence. For example, Yin-Yang cultivation methods and Reincarnation cultivation methods are written in runes, not code. (Of course, players can also use runes to invent new cultivation methods and interfaces.)</p>
-                        <p>Many interfaces are also written in runes, such as the unified inventory interface: the left list contains items like storage rings, boxes, trading center deposits, corpses in front, etc., and the right side is the item grid of the selected entry. The game directly provides this interface to players, but players can manually view this interface's source runes and edit or reset them. The game backend only defines independent interfaces for each item (e.g., a separate storage ring interface) in C#, while the unified inventory interface is defined using runes, but players can use the unified inventory interface normally even without knowing about runes.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="versions" class="section-dark">
-        <div class="container">
-            <h2 class="section-title">Game Versions</h2>
-
-            <div class="version-comparison">
-                <div class="version singleplayer">
-                    <div class="version-header">
-                        <h3>Single Player Mode (2026)</h3>
-                        <div class="price">¥100 One-time Purchase</div>
-                    </div>
-                    <ul class="version-features">
-                        <li>Complete game experience, continuous updates</li>
-                        <li>Freely adjust time flow rate, lifespan is not an issue</li>
-                        <li>Randomly generated world, selectable evolution time</li>
-                        <li>RPG-style growth, can reach Nascent Soul in dozens of hours</li>
-                        <li>Focus on experiencing game depth without social influences</li>
-                    </ul>
-                    <p class="version-note">Default evolution is a million years, can choose evolution time when creating new game. Time flow rate is 1:60, one second on Earth equals one minute in-game.</p>
-                </div>
-                <div class="version dlc">
-                    <div class="version-header">
-                        <h3>Great Contention Era DLC (2027)</h3>
-                        <div class="price">Price TBD</div>
-                    </div>
-                    <ul class="version-features">
-                        <li>Multiple specific starting options</li>
-                        <li>Experience characters like current Emperor, ancient Emperor, etc.</li>
-                        <li>Participate in the Great Contention Era, compete for Dao Unity opportunity</li>
-                        <li>Experience special storylines in a fixed world</li>
-                        <li>Use resources prepared by NPCs to conquer the world</li>
-                    </ul>
-                    <p class="version-note">In the DLC's Great Contention Era start, you'll possess a fixed NPC. These NPCs have made many preparations for the Great Contention Era, and players can use their prepared resources.</p>
-                </div>
-                <div class="version online">
-                    <div class="version-header">
-                        <h3>Official Online Version (2029)</h3>
-                        <div class="price">¥100/month Subscription</div>
-                    </div>
-                    <ul class="version-features">
-                        <li>Supercomputer support, real-time calculation of billions of interactive NPCs</li>
-                        <li>Time flow rate 1:100,000, authentic cultivation world experience</li>
-                        <li>Great Contention Era opportunity once per year</li>
-                        <li>Immortal factions, build the same faction across characters</li>
-                        <li>RMB trading system, safe and convenient</li>
-                    </ul>
-                    <p class="version-note">A mortal's 100-year lifespan corresponds to 8 hours of Earth time. The Great Contention Era lasts 1,000 years, corresponding to 3 days of Earth time. Teleportation formations ensure factions are difficult to destroy; factions will evolve across tens of thousands of years.</p>
-                </div>
-            </div>
-
-            <div class="trade-system">
-                <h3>Equal Holy Land Trading House</h3>
-                <p>The game supports RMB trading. The Equal Holy Land provides proxy trading services, accepting two currencies: Spirit Stones and Dao Stones. The only way to obtain Dao Stones is through recharging, and the only way to consume them is through redemption: 1:1 exchange for RMB (or equivalent USD).</p>
-                <p>Based on these rules, players can trade resources using RMB. We will not generate any resources or interfere with NPC behavior. All resources are collected and produced by NPCs and players according to world rules.</p>
-                <p>We charge a 1% transaction tax.</p>
-            </div>
-        </div>
-    </section>
-
 
     <section id="faq" class="section-dark">
         <div class="container">
-            <h2 class="section-title">FAQ</h2>
+            <h2 class="section-title">Frequently Asked Questions</h2>
 
-            <!-- FAQ section complete content -->
+            <!-- Regular FAQ grid section -->
             <div class="faq-grid">
+                <!-- Game performance FAQ item -->
                 <div class="faq-item">
                     <h3>What are the game's performance requirements?</h3>
+                    <!-- Removed style="display: none;" to allow JavaScript to work normally -->
                     <div class="faq-content">
-                        <p><strong>Recommended specs:</strong> i9-14900 CPU, 192GB RAM, RTX 4090 GPU, 500GB storage. (Save files can be hundreds of GB)</p>
+                        <p><strong>Recommended specs:</strong> i9-14900 CPU, 192GB RAM, RTX 4090 GPU, 500GB storage. (Saves can be hundreds of GBs)</p>
                         <p><strong>Minimum specs:</strong> i5-12400 CPU, 16GB RAM, RTX 1060 GPU, 20GB storage.</p>
-                        <p>Full configuration requires a supercomputer, impossible for home computers. However, with minimum specs, selecting [Large Proportion Quantum Calculation] and [Small Map] in game settings still provides a good experience.</p>
+                        <p>Full configuration requires a supercomputer, impossible on home PCs. However, with minimum specs and game settings set to [Large Scale Quantum Calculation] [Small Map], you can still have a good experience.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
-                    <h3>How long is the gameplay?</h3>
+                    <h3>How long is the game's lifespan?</h3>
+                    <!-- Removed style="display: none;" to allow JavaScript to work normally -->
                     <div class="faq-content">
-                        <p>In single-player mode, expected gameplay is 50-100 hours, by which time you'll reach around Nascent Soul level, where most players will finish.</p>
-                        <p>More ambitious players will master five-dimensions and runes around 1000 hours, achieving Void Refinement.</p>
-                        <p>The official online mode is expected to operate for 10+ years, with player-built factions existing long-term.</p>
+                        <p>In single-player mode, expected gameplay time is 50-100 hours, by which point most players will reach the Nascent Soul level and conclude their journey.</p>
+                        <p>More ambitious players will master five-dimensional space and runes around 1,000 hours, achieving Ethereal Void.</p>
+                        <p>Official server online mode is planned for 10+ years of operation, where player-built factions can exist long-term.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <h3>Does the game have in-app purchases?</h3>
+                    <!-- Removed style="display: none;" to allow JavaScript to work normally -->
                     <div class="faq-content">
                         <p>No.</p>
-                        <p><strong>Single-player version:</strong> One-time purchase price of 100 yuan, no in-app purchases, future DLCs sold separately.</p>
-                        <p><strong>Online version:</strong> Monthly subscription of 100 yuan, no in-game store, no item purchases. However, the game supports RMB trading between players, with the platform charging a 1% transaction tax.</p>
-                        <p>We promise: Except for cosmetic skins that don't affect balance, we will never sell any in-game resources; all resources must be obtained by players or NPCs through game rules.</p>
+                        <p><strong>Single-player version:</strong> One-time purchase price of $100, no in-app purchases, future DLCs sold separately.</p>
+                        <p><strong>Online version:</strong> $100 monthly subscription, no in-game store, no item purchases. However, the game supports player-to-player trading using real money, with the platform charging a 1% transaction tax.</p>
+                        <p>We promise: Except for cosmetic skins that don't affect balance, we will never sell any in-game resources. All resources must be obtained by players or NPCs through game rules.</p>
+                    </div>
+                </div>
+            </div> <!-- faq-grid end -->
+            <!-- Cognitive filtering section - this part remains unchanged -->
+            <div class="faq-integrated-item">
+                <h3>With such a complex game, will new players struggle to get started?</h3>
+                <div class="faq-integrated-content">
+                    <p>No, because we use a <span class="highlight-filter">cognitive filtering</span> design approach, where new players don't encounter the complex truth of the world. For example:</p>
+
+                    <!-- Spell system section - modified title -->
+                    <div class="section-header">
+                        <div class="spell-system">
+                            <div class="system-header">
+                                <div class="system-icon"><i class="fas fa-hat-wizard"></i></div>
+                                <h3 class="system-title"><span class="highlight-filter-text">Cognitive Filtering</span> in the Spell System</h3>
+                            </div>
+                            <div class="system-content">
+                                <p>Players can learn unlimited spells. But when using spells, they need to consider five-dimensional vectors. A character's state is composed of five parameters. Each time a skill is released, all five parameters change simultaneously; the release condition for each skill is that these five parameters meet certain criteria.</p>
+                                <p><strong>The Pseudo-Saint Path</strong>: This is how we implement cognitive filtering for spells, allowing players to enjoy the game without understanding complex five-dimensional changes. Each cultivation method is a Pseudo-Saint Path, corresponding to a unique UI panel. Unless cultivating Divine Path methods, players won't know about the existence of five-dimensional vectors.</p>
+                                <p>Cultivators on the Pseudo-Saint Path will call [Chaos Technique: Randomly disrupts the opponent's five-dimensional state] by the name [Sealing Technique: Effect approximately considered as preventing a cultivator from using skills]. Only cultivators of Divine Path methods are unafraid of chaos techniques.</p>
+                            </div>
+                        </div>
+
+                        <div class="path-comparison">
+                            <div class="pseudo-path">
+                                <div class="path-header">
+                                    <h4 class="path-title">Pseudo-Saint Path: Yin-Yang Method</h4>
+                                    <div class="path-icon"><i class="fas fa-yin-yang"></i></div>
+                                </div>
+                                <div class="path-content">
+                                    <div class="path-visual yin-yang-visual"></div>
+                                    <div class="path-explanation">
+                                        <p class="path-desc"><strong>Approximate Cognition</strong>: The character has yin-yang values. Each skill's release condition requires the character's yin-yang values to be within a certain range, and each skill after release will change the character's yin-yang values. There are also two skills, [Yang Transformation] and [Yin Transformation], with 1-second cooldowns, unlimited usage, with effects only changing yin-yang values by +1/-1 without any other effects.</p>
+                                        <p class="path-flaw"><strong>Flaw</strong>: Can only cultivate yin-yang series techniques, cannot cultivate other techniques.</p>
+                                        <p class="path-truth"><strong>Truth</strong>: Yin-yang values don't exist; yin-yang values are essentially a partial ordering in five-dimensional vector space.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pseudo-path">
+                                <div class="path-header">
+                                    <h4 class="path-title">Pseudo-Saint Path: Reincarnation Method</h4>
+                                    <div class="path-icon"><i class="fas fa-sync-alt"></i></div>
+                                </div>
+                                <div class="path-content">
+                                    <div class="path-visual reincarnation-visual"></div>
+                                    <div class="path-explanation">
+                                        <p class="path-desc"><strong>Approximate Cognition</strong>: There are seven clan techniques, called ABCDEFG clans. After releasing an A clan technique, the next technique can only be from the B clan, after B comes C... after completing ABCDEFG, return to A.</p>
+                                        <p class="path-flaw"><strong>Flaw</strong>: Can only cultivate seven clan techniques.</p>
+                                        <p class="path-truth"><strong>Truth</strong>: One clan technique is essentially a type of technique with the same [usage conditions] and [usage effects]; these seven clans are essentially a loop in five-dimensional space.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rune-system">
+                            <div class="system-header">
+                                <div class="system-icon"><i class="fas fa-scroll"></i></div>
+                                <h3 class="system-title"><span class="highlight-filter-text">Cognitive Filtering</span> in the Rune System</h3>
+                            </div>
+                            <div class="rune-content">
+                                <div class="rune-editor">
+                                    <pre class="code-example">
+//Automatic Sales Rune
+Define ItemsForSale list: Xuantie Ore, Blood Coagulation Grass, Bone Washing Flower, Meat, Bone, Skin.
+
+Define command QuickSell Item:
+    Requirement: This item is in inventory. Currently at a trading place. Current trading place has buy orders for this item.
+    Effect: Continue executing commands until requirements not met: Sell X Y, where X is this item, Y is the highest buy order price for this item at the current trading place.
+
+Define command BatchSell:
+    Requirement: Currently at a trading place.
+    Effect: Check each group of items in inventory: If this group's item name is in the ItemsForSale list, then execute command: QuickSell X, where X is this group's item name.
+
+Whenever I enter the Equality Holy Land Trading Center, execute command: BatchSell.
+                        </pre>
+                                </div>
+                                <div class="rune-explanation">
+                                    <h4 class="rune-title">Built-in Programming Language in Realm of Wind Spirit</h4>
+                                    <p class="rune-desc">Realm of Wind Spirit has a built-in programming language with syntax more similar to natural language than Python. Runes have many functions: automatic combat, automatic exploration, automatic mining, automatic selling, automatic faction management, custom positions, custom cultivation methods, etc.</p>
+                                    <p class="rune-desc">To implement cognitive filtering, Realm of Wind Spirit contains many built-in runes, and players typically don't perceive the existence of runes. For example, the Yin-Yang method and Reincarnation method are both written with runes, not code. (Of course, players can also use runes to invent new methods and new panels.)</p>
+                                    <p class="rune-desc">Many panels are also written with runes, such as the unified storage panel: the left list contains items like storage rings, boxes, trading center deposits, corpses in front, etc., and the right side is a grid of items in the selected entry. The game provides this panel directly to players, but players can manually view this panel's source runes, edit and reset them. The game backend only defines independent panels for various items in C# (e.g., a separate storage ring panel), while the unified storage panel is defined using runes. But players can use the unified storage panel normally even without knowing about runes. This is cognitive filtering.</p>
+                                </div>
+                            </div>
+                            <!-- Cognitive filtering conclusion paragraph HTML -->
+                            <div class="filter-conclusion">
+                                <div class="conclusion-divider"></div>
+                                <div class="conclusion-content">
+                                    <div class="conclusion-icon">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div class="conclusion-text">
+                                        <h4>Cognitive Filtering: The Perfect Solution to Complexity</h4>
+                                        <p>Through the cognitive filtering mechanisms in the spell system and rune system, we have successfully encapsulated the highly complex gameplay and mechanics of Realm of Wind Spirit, creating diverse Pseudo-Saint Paths. Each player can find suitable special cases among different cultivation methods and systems, easily getting started and gradually going deeper.</p>
+                                        <p>With the Pseudo-Saint Path, complexity will never be a disadvantage of Realm of Wind Spirit, but rather an advantage—players can start with simple special cases and progressively explore deeper gameplay. In fact, in our design philosophy, <span class="highlight-text">the more complex the game, the better</span>, because complexity brings endless possibilities, while cognitive filtering ensures this complexity doesn't become an obstacle for new players.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- END: Inserted cognitive filtering section -->
+
         </div>
     </section>
 
-    <section id="preorder" class="section-light">
+
+    <section id="versions" class="section-dark">
         <div class="container">
-            <!-- Added special section: Player Stories -->
-            <section id="player-stories" class="section-light">
-                <div class="container">
-                    <h2 class="section-title">Player Stories</h2>
+            <h2 class="section-title">Game Versions</h2>
 
-                    <div class="stories-introduction">
-                        <p>Every Wind God Realm player has their own unique game experience. Below are some possible player timelines that showcase the rich and diverse gameplay possibilities in Wind God Realm.</p>
+            <div class="version-cards">
+                <div class="version-card singleplayer">
+                    <div class="version-badge">Single-player</div>
+                    <div class="version-header">
+                        <div class="version-logo"><i class="fas fa-desktop"></i></div>
+                        <h3 class="version-title">Single-player Mode</h3>
+                        <div class="version-release">2026</div>
                     </div>
-
-                    <div class="story-cards">
-                        <div class="story-card">
-                            <div class="story-header">
-                                <h3>From Mortal to Golden Core</h3>
-                            </div>
-                            <div class="story-content">
-                                <p> Starting as a mortal in the wild, cutting trees and mining with a backpack.<br>Picking fruits and fetching water to fill the stomach, building walls and houses to block wind and rain.<br>
-                                    Wild boar attacks, fighting with back against the wall, killing and butchering for bone, meat, and skin.<br>Chance encounter with a trading talisman from a immortal sect, selling meat for cultivation techniques to begin immortal cultivation.<br>
-                                    Secluded cultivation breakthrough to Body Tempering, killing pigs to buy pills to reach Meridian Opening.<br>One battle at the treasure ruins to reach Aperture Opening, ten battles at treasure ruins to enter Qi Condensation.<br>
-                                    Good configuration of pills, artifacts, and talismans, with spirit embryo and crystal coffin as backup.<br>Ten dangers and three deaths to refine the plan, a hundred battles at treasure ruins to enter Foundation Establishment.<br>
-                                    Seeking treasures in secret realms, barely escaping a demonic cultivator with only the soul intact.<br>Fighting again despite defeat, encountering dangers repeatedly, surviving through persistence.<br>
-                                    Invited by a major sect as an honored guest, moving homes to a new plane with a luxury residence.<br>Participating in merchant runs and battles, saving hundreds of people who express endless gratitude.<br>
-                                    The Golden Core elder dies of old age, the hall master conspires with enemies against the sect master.<br>Player stands with the sect facing assassination, gathering allies to break through the city.<br>
-                                    External enemies and pirates come to dismember, internal cooperation followed by backstabbing.<br>Blood sacrifice formation to enter Golden Core, formation defense to defeat enemies and win internal loyalty.</p>
-                            </div>
-                        </div>
-
-                        <div class="story-card">
-                            <div class="story-header">
-                                <h3>From Golden Core to Nascent Soul</h3>
-                            </div>
-                            <div class="story-content">
-                                <p> In those years as a Golden Core cultivator, I established the Sky Drive in the right Dual Dance, gaining fame, but the land was poor with too many people and nowhere to expand.<br>
-                                    At that time, Golden Core Solon to the left, Golden Core Dawn to the right, Nascent Soul Silver ahead, and Nascent Soul SG behind.<br>
-                                    Solon, a legendary genius from a Holy Land, led a group of prodigies with Nascent Soul potential, in need of allies.<br>
-                                    I wanted to join him, but Solon fought hard against Silver, was defeated and scattered. I then seized his territory and recruited Phantom Moon—Solon's capable prodigy who also had Nascent Soul potential.<br>
-                                    We respected Silver as our leader, offering gold for territory, which Silver permitted. After we completed our relocation and began major construction, Silver regretted the deal. We dared feel angry but not express it, yielding the land and returning.<br>
-                                    During a Nascent Soul expedition, Silver asked for our help, promising the left Dual Dance. We tightened our belts, racked our brains, worked tirelessly, and supplied the front line. After victory, Silver again regretted, compensating only with a few immortal pills. We smiled in his face, but the fire of revenge was already burning in our hearts.<br>
-                                    I pulled in Dawn, forming the Eastern Alliance. When another Nascent Soul conflict arose, Silver invited our assistance; Dawn sent envoys to SG, who agreed to supply resources and backstab Silver. I deliberated and agreed.<br>
-                                    Dawn wanted to lead the Eastern Alliance, actively engaging in diplomacy and military affairs. I delegated command authority, but their tactics were a mess, resulting in many foolish defeats. I took back command and achieved great victories.<br>
-                                    Amid consecutive victories, Silver suddenly launched multiple surprise attacks on our supply lines. The intelligence was accurate, targeting Sky Drive's weak points where Dawn was absent.<br>
-                                    I was shocked to realize: Dawn had betrayed us, probably out of jealousy for my superior tactics. After much thought, I decided to apologize, stating that Dawn had sacrificed many to pave the way, and I shouldn't have taken the battle credit. At the same time, I declared: "I won't force everyone to forgive me, but currently there are spies, and I don't want those harboring grudges to hide among us. Everyone is free to stay or leave; those who leave will receive full compensation for their past investments in the Eastern Alliance. Let's part on good terms, and don't assist Silver anymore."<br>
-                                    The world collapsed as almost all of Dawn's people left, leaving Sky Drive to fight Silver alone. Gritting our teeth to endure, we united in common purpose. Everyone donated resources, with non-combat personnel cultivating spells to join the battle. As territory continued to fall, we fought with increasing determination: artifacts produced one after another, new troops graduating batch after batch, seventeen Golden Core spirit embryos forming, Phantom Moon advancing to Nascent Soul. We counterattacked and destroyed Silver, liquidated and eliminated Dawn, allied with SG, and Sky Drive became king of Dual Dance.</p>
-                            </div>
-                        </div>
-
-                        <div class="story-card">
-                            <div class="story-header">
-                                <h3>Divine Transformation</h3>
-                            </div>
-                            <div class="story-content">
-                                <p> Conventionally, top resources are seized by Emperors.<br>
-                                    In the current era, 300 years without an Emperor, so various Divine Transformation factions are wealthy, collectively accumulating nearly a thousand Nascent Soul spirit embryos. However, daily conflicts remain limited to Foundation Establishment scale, with only about a hundred Nascent Soul cultivators openly in the Ten Thousand Worlds. The Nascent Soul spirit embryos are starting to stir.<br>
-                                    Among the twelve Holy Lands are three Divine Transformation cultivators, with six more in the outside world: A, B, C, D, E, and you. Finally, chaos erupts. You battle A and destroy them. After recovery, you battle B and destroy them. C, D, and E join forces, and you decisively battle and defeat them, unifying the Ten Thousand Worlds (outside Holy Lands).<br>
-                                    However, internal turmoil begins, with demonic cultivators plundering within your territory, remnants of A and B along with surrendered troops from C, D, and E taking the opportunity to rebel, conducting guerrilla attacks destroying workshops and warehouses.<br>
-                                    You suppress and kill the demonic cultivators, but they use new Nascent Soul spirit embryos. You suppress and kill them again, and they revive again.<br>
-                                    You wonder in shock: Where are they getting so many Nascent Soul spirit embryos?<br>
-                                    In reality, the Merchant Alliance and Holy Lands are supporting the demonic cultivators. None of them want unification: Unification means bandit elimination, disadvantaging demonic cultivators; unification means no war casualties, insufficient demand, falling prices, disadvantaging merchants; unification means people respect you rather than Holy Lands. (Although both are Divine Transformation, Holy Lands don't need to compete with you. After you turn to dust in a thousand years, Holy Lands will still stand. Therefore, Holy Lands allow people to respect you, but they don't like it, so they use small costs to annoy you.)<br>
-                                    The demonic cultivators continue endlessly, your faction's logistics are strained, and further battles risk collapse. You withdraw in time, ceding territory, allowing A, B, C, D, and E to re-establish their nations. You retain five hundred planes. A, B, C, D, and E agree, and peace is negotiated. You continue suppressing demonic cultivators. After this suppression, the demonic cultivators don't attack again.<br>
-                                    After settling the five hundred planes, you design spy runes, making many NPCs into spies infiltrating A, B, C, D, and E, merchants, demonic cultivators, and even some Holy Lands. The spies steal intelligence; some become civil officials with voting rights to influence other factions' decisions. Some spies even become generals of other factions, responsible for commanding battles.<br>
-                                    When the time is ripe, you spring the trap. You launch another full-scale war, destroying all non-Holy Land super first-class powers, unifying the Ten Thousand Worlds. The Holy Lands remain silent. (Super first-class: powers or alliances with Divine Transformation or six or more Nascent Soul cultivators)</p>
-                            </div>
-                        </div>
+                    <div class="version-pricing">
+                        <div class="price-amount">$100</div>
+                        <div class="price-type">One-time purchase</div>
                     </div>
-
-                    <!-- Development Team Introduction Section -->
-                    <section id="team" class="section-dark">
-                        <div class="container">
-                            <h2 class="section-title">About Us</h2>
-                            <a href="#" class="community-link weibo">Kemu Kujin Blog (Development Team)</a>
-
-                            <div class="community-section">
-                                <h3>Join the Wind God Realm Community</h3>
-                                <p>Interact with the development team and other players, get the latest news, participate in game feature voting, and collectively influence the future development of Wind God Realm.</p>
-                                <div class="community-links">
-                                    <a href="#" class="community-link discord">QQ Group</a>
-                                    <a href="#" class="community-link weibo">Discord</a>
-                                </div>
-                                <p style="margin-top: 20px;">Follow us to receive the latest development logs, game content previews, and community event information.</p>
-                            </div>
-
-                            <div class="join-team">
-                                <h3>Join the Development Team</h3>
-                                <div class="open-positions">
-                                    <div class="position">
-                                        <h4>Programming Engineer</h4>
-                                        <p>Responsible for game development</p>
-                                    </div>
-                                    <div class="position">
-                                        <h4>Art Designer</h4>
-                                        <p>Responsible for concept art</p>
-                                    </div>
-                                    <div class="position">
-                                        <h4>UI/UX Designer</h4>
-                                        <p>Optimize game interface and user experience</p>
-                                    </div>
-                                </div>
-                                <p>Contact: a1181807822@gmail.com</p>
-                            </div>
-                        </div>
-                    </section>
-
+                    <div class="version-features">
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Procedurally generated world, complete game experience</li>
+                            <li><i class="fas fa-check"></i> Over a dozen starting options, from mortal to prince</li>
+                            <li><i class="fas fa-check"></i> Rapid bug fixes, continuous update support</li>
+                            <li><i class="fas fa-check"></i> Real-time calculation, freely adjustable time flow</li>
+                            <li><i class="fas fa-check"></i> RPG-style growth, reaching Nascent Soul in tens of hours</li>
+                        </ul>
+                    </div>
+                    <div class="version-note">
+                        <p>Default initial evolution over a million years. Default time flow is 1:60: one second on Earth, one minute in the game.</p>
+                    </div>
+                    <div class="version-cta">
+                        <a href="#" class="preorder-button">Pre-order Now</a>
+                        <span class="reservation-counter">Pre-orders:</span>
+                    </div>
                 </div>
-            </section>
+
+                <div class="version-card dlc">
+                    <div class="version-badge">DLC</div>
+                    <div class="version-header">
+                        <div class="version-logo"><i class="fas fa-puzzle-piece"></i></div>
+                        <h3 class="version-title">Great Strife Era DLC</h3>
+                        <div class="version-release">2027</div>
+                    </div>
+                    <div class="version-pricing">
+                        <div class="price-amount">Price TBD</div>
+                        <div class="price-type">Expansion content</div>
+                    </div>
+                    <div class="version-features">
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Multiple specific worlds: Great Strife Era, Tyrant Era</li>
+                            <li><i class="fas fa-check"></i> Multiple specific starts: Current Grand Emperor, Ancient Grand Emperor</li>
+                            <li><i class="fas fa-check"></i> Start by possessing an NPC, inheriting resources and connections</li>
+                            <li><i class="fas fa-check"></i> Participate in the Great Strife Era, compete for Dao Integration opportunity</li>
+                            <li><i class="fas fa-check"></i> Experience special storylines in fixed worlds</li>
+                        </ul>
+                    </div>
+                    <div class="version-note">
+                        <p>In the original Realm of Wind Spirit, you possess a random NPC that meets conditions, while in the DLC, each specific start possesses a fixed NPC whose resources and connections have been carefully designed by us.</p>
+                    </div>
+                    <div class="version-cta">
+                        <a href="#" class="preorder-button dlc">Stay Updated</a>
+                        <span class="DLC">Pre-orders:</span>
+                    </div>
+                </div>
+
+                <div class="version-card online">
+                    <div class="version-badge">Online</div>
+                    <div class="version-header">
+                        <div class="version-logo"><i class="fas fa-globe"></i></div>
+                        <h3 class="version-title">Official Server Online Version</h3>
+                        <div class="version-release">2029</div>
+                    </div>
+                    <div class="version-pricing">
+                        <div class="price-amount">$100/month</div>
+                        <div class="price-type">Subscription</div>
+                    </div>
+                    <div class="version-features">
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Supercomputer support, real-time calculation of billions of interactive NPCs</li>
+                            <li><i class="fas fa-check"></i> Time flow 1:10,000, Great Strife Era once a year</li>
+                            <li><i class="fas fa-check"></i> Mortal lifespan eight hours, Grand Emperor lifespan ten days, factions immortal</li>
+                            <li><i class="fas fa-check"></i> NPCs manage factions, worship players as ancestors</li>
+                            <li><i class="fas fa-check"></i> New characters join old factions, cross-character management of the same faction</li>
+                        </ul>
+                    </div>
+                    <div class="version-note">
+                        <p>Single-player version leans toward RPG, online version leans toward faction management. Stable prices, supports player-to-player RMB trading.</p>
+                    </div>
+                    <div class="version-cta">
+                        <a href="#" class="preorder-button online">Stay Updated</a>
+                        <span class="Online">Pre-orders:</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="preorder-cta">
+                <h3>Pre-order now for release discounts and exclusive content</h3>
+                <a href="#" class="main-preorder-button">Pre-order Now</a>
+            </div> -->
         </div>
     </section>
 
-    <div id="documents-links">
-        <h2>Document Links</h2>
-        <ul>
-            <li><a href="document_en/风神界：尊敬感_en.html">Wind God Realm: Sense of Respect</a></li>
-            <li><a href="document_en/风神界：无限容量基地的实现-SRA_en.html">Wind God Realm: Implementing Infinite Base Capacity-SRA</a></li>
-            <li><a href="document_en/风神界：伪圣之路(1)_en.html">Wind God Realm: Pseudo-Saint Path</a></li>
-            <li><a href="document_en/风神界：大争之世_en.html">Wind God Realm: Great Contention Era</a></li>
-            <li><a href="document_en/【软件工程】采访：风神界开发方式_en.html">【Software Engineering】Interview: Wind God Realm Development Approach</a></li>
-            <li><a href="document_en/【修真社会学】采访：风神界势力分布_en.html">【Cultivation Sociology】Interview: Wind God Realm Faction Distribution</a></li>
-        </ul>
-    </div>
+    <section id="team" class="section-dark">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+
+            <div class="community-section">
+                <h3>Join the Realm of Wind Spirit Community</h3>
+                <p>Interact with the development team and other players, get the latest news, participate in voting on game features, and influence the future development of Realm of Wind Spirit.</p>
+
+                <div class="community-links">
+                    <a href="https://qm.qq.com/q/aRtrX9nX56" class="community-link discord">QQ Group</a>
+                    <a href="https://t.me/CMKZ_WGW" class="community-link weibo">Telegram</a>
+                </div>
+
+                <p style="margin-top: 20px;">Follow us to receive the latest development logs, game content previews, and community event information.</p>
+
+                <!-- Blog link moved here -->
+                <div class="community-links" style="margin-top: 15px;">
+                    <a href="http://123.57.35.16/" class="community-link weibo">Kemu Kujin Blog (Development Team)</a>
+                </div>
+            </div>
+
+            <div class="join-team">
+                <h3>Join the Development Team</h3>
+                <div class="open-positions">
+                    <div class="position">
+                        <h4>Programming Engineer</h4>
+                        <p>Responsible for game development</p>
+                    </div>
+                    <div class="position">
+                        <h4>Art Designer</h4>
+                        <p>Responsible for drawing material images, concept art</p>
+                    </div>
+                    <div class="position">
+                        <h4>UI/UX Designer</h4>
+                        <p>Responsible for designing game interfaces</p>
+                    </div>
+                </div>
+                <p>Contact: a1181807822@gmail.com</p>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="images/logo-white.png" alt="Wind God Realm">
-                    <p>A Xianxia Strategic RPG Ushering in the Era of Respect</p>
+                    <img src="Image/风神界LOGO.png" alt="Realm of Wind Spirit">
+                    <p>World's First Mystical Strategic RPG Sandbox Game</p>
                 </div>
                 <div class="footer-links">
                     <div class="links-group">
@@ -628,7 +1354,7 @@ Whenever I enter the Equal Holy Land Trading Center, execute command: BatchSell.
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Wind God Realm Development Team. All rights reserved.</p>
+                <p>© 2020-Present Realm of Wind Spirit Development Team | Shenzhen Kemu Kujin Information Technology Co., Ltd.</p>
                 <div class="footer-social">
                     <a href="#" class="social-icon weibo"></a>
                     <a href="#" class="social-icon wechat"></a>
@@ -640,5 +1366,4 @@ Whenever I enter the Equal Holy Land Trading Center, execute command: BatchSell.
 
     <div id="back-to-top">↑</div>
 </body>
-
 </html>
