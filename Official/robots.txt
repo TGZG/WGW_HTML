@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /private/
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /search/
+Sitemap: https://fengshenjie.com/official/sitemap.xml
+
