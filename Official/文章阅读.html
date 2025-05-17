@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>风神界文档</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div id="AX"></div>
+    <script>
+        // 获取 URL 参数函数
+        function getUrlParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // 动态请求数据
+        async function loadMarkdown() {
+            const fileParam = getUrlParam('标题'); // 获取 ?标题=xxx 参数
+
+            try {
+                const response = await fetch(`./PHP/Read.php?Title=${encodeURIComponent(fileParam)}`);
+                if (!response.ok) {
+                    const errorData = {
+                        timestamp: new Date().toISOString(),
+                        status: response.status,
+                        statusText: response.statusText,
+                        requestParam: fileParam,
+                        responseBody: await response.text().catch(() => 'Failed to read response')
+                    };
+                    console.error('HTTP Error:', errorData);
+                    throw new Error(`请求失败 [${response.status}] ${response.statusText}`);
+                }
+
+                let mdContent = await response.text();
+                mdContent=mdContent.replace(/\n/g,"  \n");
+                document.getElementById('AX').innerHTML = marked.parse(mdContent);
+            } catch (error) {
+                document.getElementById('AX').innerHTML = `错误: ${error.message}`;
+            }
+        }
+
+        // 页面加载时执行
+        loadMarkdown();
+    </script>
+</body>
+</html>

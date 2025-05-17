@@ -29,3 +29,14 @@ p {
 h1, h2, h3, h4, h5, h6 {
    /* 可在此添加基础 margin/padding */
 }
+
+/*.垂直居中 {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}*/
+.垂直居中容器 {
+    display: flex;
+    align-items: center;
+}
