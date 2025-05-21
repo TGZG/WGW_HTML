@@ -63,6 +63,34 @@
     .main-objective .notes-row { flex-direction: column; gap: 15px; }
     .realm-chart { flex-direction: column; min-width: unset; gap: 20px;}
 
+    /* 玩家故事轮播响应式调整 */
+    #worldview .story-container {
+        min-height: auto; /* 移除或减小最小高度 */
+    }
+    #worldview .story-slide {
+        min-height: auto; /* 移除或减小最小高度 */
+        padding-bottom: 20px; /* 为内容可能溢出增加一些底部空间 */
+    }
+    #worldview .story-narrative {
+        flex-direction: column; /* 在小屏幕上堆叠图片和文本 */
+        height: auto; /* 高度由内容决定 */
+        gap: 15px;
+    }
+    #worldview .story-visual {
+        width: 100%; /* 图片信息区宽度占满 */
+        max-width: 200px; /* 但最大不超过一个合理值，使其居中 */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #worldview .story-text {
+        padding-right: 0; /* 移除右侧内边距 */
+        /* max-height: 300px; */ /* 暂时注释掉，观察200%缩放时的文本显示问题 */
+        overflow-y: auto; /* 如果内容超出，允许滚动 (若未注释max-height则此条生效) */
+    }
+    #worldview .story-content {
+        padding: 20px; /* 减小整体内边距 */
+    }
+
     /* 确保故事滑块箭头在移动端保持水平 */
     #worldview .story-slider { flex-direction: row; }
     #worldview .slider-arrow { transform: none; margin: 0; }
@@ -135,5 +163,32 @@
         grid-template-columns: 1fr; /* 确保堆叠 */
     }
     .footer-content { grid-template-columns: 1fr; }
-    .comparison-table { min-width: unset; } /* 允许表格收缩 */
+    .comparison-table {
+        /* min-width: unset; */ /* 移除此行 - 允许表格收缩，配合base.css中的overflow-x:auto实现滚动 */
+    }
+
+    /* 确保比较表格的表头和内容行在窄屏幕下能更好地对齐和滚动 */
+    .comparison-header .corner-cell,
+    .comparison-row .feature-name {
+        flex-shrink: 0; /* 防止特征名列被压缩 */
+        /* width: 120px; */ /* 如果默认的150px在手机上太宽, 可在此减小,需同步修改components.css中的值或在此覆盖 */
+    }
+
+    .comparison-header .game-column, 
+    .comparison-row .game-column {
+        flex-basis: 90px;  /* 为每个游戏列设置一个基础宽度 */
+        flex-grow: 1;        /* 允许它们增长以填充额外空间 (如果父级宽度大于所有basis之和) */
+        flex-shrink: 0;      /* 防止它们在父级宽度不足时收缩得太厉害 */
+        min-width: 70px;     /* 设置一个最小宽度保证基本可读性 */
+        /* border-right: 1px solid rgba(255, 255, 255, 0.05); /* 分隔线在components.css中定义 */
+    }
+    /* .comparison-header .game-column:last-child, (last-child选择器在components.css中已有) */
+    /* .comparison-row .game-column:last-child { border-right: none; } */
+
+    .game-column .feature-value {
+        width: 100%; /* 确保特性值充满其单元格 */
+        min-height: auto; /* 移除或覆盖可能存在的最小高度，使其自适应内容 */
+        /* padding: 8px 5px; */ /* 可适当调整内边距 */
+        font-size: 0.9rem; /* 可适当调整字体大小 */
+    }
 }
