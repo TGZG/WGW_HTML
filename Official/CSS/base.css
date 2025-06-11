@@ -18,6 +18,7 @@ ul {
 img {
     max-width: 100%; /* 图片最大宽度不超过父容器 */
     height: auto;    /* 高度自动，保持比例 */
+    display: block; /* 防止图片底部出现额外间距 */
 }
 
 /* 基础段落样式 (如果需要) */
@@ -39,4 +40,40 @@ h1, h2, h3, h4, h5, h6 {
 .垂直居中容器 {
     display: flex;
     align-items: center;
+}
+
+/* 响应式图片和预格式化文本 */
+pre, .code-example { /* 假设 .code-example 用于 pre 标签或其父元素 */
+    white-space: pre-wrap;    /* 允许文本换行 */
+    word-break: break-all;    /* 强制长单词或字符串换行 */
+    overflow-x: auto;         /* 如果 pre-wrap 不足或不适用，为超长且不可断行的文本添加水平滚动条 */
+    max-width: 100%;          /* 确保 pre 区块本身不会溢出 */
+    font-size: 0.875em;       /* 如果需要在小屏幕上调整字体大小以提高可读性 */
+}
+
+/* 确保表格布局具有响应性 */
+table {
+    width: 100%; /* 使表格占据可用宽度的100% */
+    border-collapse: collapse; /* 标准做法，合并边框 */
+}
+
+/* 如果您有特定的表格 (如 comparison-table)，请确保它们可以收缩。
+   您已在断点处为 .comparison-table 设置了 min-width: unset，这很好。
+   如果存在其他表格，这是一个更通用的规则。 */
+.comparison-table { /* 或更通用的表格类名 */
+    display: block; /* 允许 overflow-x 在表格上正常工作 */
+    overflow-x: auto; /* 允许非常宽的表格水平滚动 */
+    -webkit-overflow-scrolling: touch; /* iOS上的平滑滚动 */
+}
+
+.comparison-table th,
+.comparison-table td {
+    white-space: normal; /* 允许单元格内文本换行 (如果需要)，与表格上的 nowrap 效果相反 */
+    /* 根据需要添加内边距和其他样式 */
+}
+
+/* 确保 html 和 body 占据全部高度，并尽早防止溢出问题，这是一种良好实践 */
+html, body {
+    overflow-x: hidden; /* 全局防止水平滚动条出现，以防某个元素意外溢出。
+                           最好是修复溢出的元素，但这是一种备用方案。 */
 }
