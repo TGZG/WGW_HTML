@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网文写作课程商品展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 800px;
+            height: 800px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 16px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-color);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .basic { --accent-color: linear-gradient(90deg, #4facfe, #00f2fe); }
+        .standard { --accent-color: linear-gradient(90deg, #43e97b, #38f9d7); }
+        .premium { --accent-color: linear-gradient(90deg, #fa709a, #fee140); }
+        .ultimate { --accent-color: linear-gradient(90deg, #a8edea, #fed6e3); }
+
+        .price-tag {
+            position: absolute;
+            top: -8px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .card-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a202c;
+            margin-bottom: 16px;
+            margin-top: 12px;
+        }
+
+        .features {
+            flex-grow: 1;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: #4a5568;
+            font-size: 22px;
+            line-height: 1.5;
+        }
+
+        .feature-item::before {
+            content: '✓';
+            color: #48bb78;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #38eee6 0%, #f64e85 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .special-note {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 8px 12px;
+            margin-top: 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #856404;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95vw;
+                height: 95vw;
+                max-width: 600px;
+                max-height: 600px;
+            }
+
+            .product-card {
+                padding: 16px;
+            }
+
+            .card-title {
+                font-size: 18px;
+            }
+
+            .feature-item {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 1元理论课 -->
+    <div class="product-card basic">
+        <div class="price-tag">¥1</div>
+        <h3 class="card-title">理论课基础包</h3>
+        <div class="features">
+            <div class="feature-item">二十万字理论课资料</div>
+            <div class="feature-item">涵盖设定、大纲、文笔</div>
+            <div class="feature-item">百度网盘链接发货</div>
+            <div class="feature-item">出自贴吧千楼万粉精品帖</div>
+        </div>
+        <div class="special-note">
+            <strong>正版保证：</strong>作者本人直营，其他皆为盗版
+        </div>
+    </div>
+
+    <!-- 19元QQ群 -->
+    <div class="product-card standard">
+        <div class="price-tag">¥19</div>
+        <h3 class="card-title">QQ群互动包</h3>
+        <div class="features">
+            <div class="feature-item">涵盖<span class="highlight">1元套餐</span>的所有内容</div>
+            <div class="feature-item">额外添加QQ群，可以跟作者吹水闲聊</div>
+            <div class="feature-item">群内不定期分享更多资料</div>
+            <div class="feature-item">与其他学员交流写作心得</div>
+        </div>
+    </div>
+
+    <!-- 199元知识星球 -->
+    <div class="product-card premium">
+        <div class="price-tag">¥199</div>
+        <h3 class="card-title">知识星球进阶包</h3>
+        <div class="features">
+            <div class="feature-item">涵盖<span class="highlight">19元套餐</span>的所有内容</div>
+            <div class="feature-item">额外添加知识星球</div>
+            <div class="feature-item">可以阅读所有他人的实战评改</div>
+            <div class="feature-item">学员作品番茄20万在读</div>
+        </div>
+    </div>
+
+    <!-- 1999元实战评改 -->
+    <div class="product-card ultimate">
+        <div class="price-tag">¥1999</div>
+        <h3 class="card-title">实战评改尊享包</h3>
+        <div class="features">
+            <div class="feature-item">涵盖<span class="highlight">199元套餐</span>的所有内容</div>
+            <div class="feature-item">可以提交你的作品/大纲/设定来评改</div>
+            <div class="feature-item">对评改结果有疑问的，可以免费追问</div>
+            <div class="feature-item">一对一专业指导</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
