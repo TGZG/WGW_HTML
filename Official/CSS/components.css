@@ -213,7 +213,7 @@ footer::before { /* 顶部光晕 */
 .story-slider {
     position: relative; display: flex; align-items: center;
     margin: 30px 0; /* 调整外边距 */
-    min-height: 500px; /* 确保有足够高度 */
+    min-height: 400px; /* 减小默认最小高度 */
      /* 玻璃效果在 section-worldview.css 中应用 */
 }
 .slider-arrow {
@@ -227,8 +227,8 @@ footer::before { /* 顶部光晕 */
 .slider-arrow i { font-size: 1rem; }
 .prev-arrow { margin-right: 15px; }
 .next-arrow { margin-left: 15px; }
-.story-container { flex: 1; position: relative; overflow: hidden; min-height: 550px; height: auto; }
-.story-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 500px; opacity: 0; visibility: hidden; transition: all 0.5s ease; transform: translateX(50px); z-index: 1; }
+.story-container { flex: 1; position: relative; overflow: hidden; min-height: 450px; height: auto; }
+.story-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 400px; opacity: 0; visibility: hidden; transition: all 0.5s ease; transform: translateX(50px); z-index: 1; }
 .story-slide.active { opacity: 1; visibility: visible; transform: translateX(0); z-index: 2; }
 .story-navigation { display: flex; justify-content: center; margin-top: 20px; gap: 12px; }
 .nav-dot { width: 10px; height: 10px; border-radius: 50%; background-color: rgba(230, 213, 138, 0.2); border: 1px solid rgba(230, 213, 138, 0.3); cursor: pointer; transition: all 0.3s ease; }

@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const prevArrow = document.querySelector('.prev-arrow');
     const nextArrow = document.querySelector('.next-arrow');
     const navDots = document.querySelectorAll('.nav-dot');
+    
+    // 获取移动端切换按钮
+    const mobilePrevBtns = document.querySelectorAll('.mobile-prev-btn');
+    const mobileNextBtns = document.querySelectorAll('.mobile-next-btn');
 
     // 初始化当前故事索引
     let currentStoryIndex = 0;
@@ -45,7 +49,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 更新当前索引
         currentStoryIndex = index;
+        
+        // 在移动端动态调整容器高度
+        adjustContainerHeight();
     }
+
+    // 动态调整容器高度（移动端）
+    function adjustContainerHeight() {
+        if (window.innerWidth <= 768 && storyContainer) {
+            const activeSlide = storyContainer.querySelector('.story-slide.active');
+            if (activeSlide) {
+                // 等待CSS过渡完成后再调整高度
+                setTimeout(() => {
+                    const slideHeight = activeSlide.scrollHeight;
+                    storyContainer.style.minHeight = slideHeight + 'px';
+                }, 50);
+            }
+        }
+    }
+    
+    // 监听窗口大小变化，重新调整高度
+    window.addEventListener('resize', () => {
+        adjustContainerHeight();
+    });
 
     // 显示下一个故事
     function showNextStory() {
@@ -67,6 +93,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (nextArrow) {
         nextArrow.addEventListener('click', showNextStory);
     }
+    
+    // 为移动端按钮添加点击事件
+    mobilePrevBtns.forEach(btn => {
+        btn.addEventListener('click', showPrevStory);
+    });
+    
+    mobileNextBtns.forEach(btn => {
+        btn.addEventListener('click', showNextStory);
+    });
 
     // 为导航点添加点击事件
     navDots.forEach((dot, index) => {
@@ -149,4 +184,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 启动自动切换
     startAutoSlide();
+    
+    // 初始化容器高度（移动端）
+    setTimeout(() => {
+        adjustContainerHeight();
+    }, 100);
 });

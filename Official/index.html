@@ -5,6 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>风神界 - 开启尊重业时代的玄幻战略RPG</title>
+    
+    <!-- 网站图标 -->
+    <link rel="icon" href="Image/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="Image/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="Image/favicon-96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" href="Image/apple-touch-icon.png">
+    <link rel="manifest" href="Image/site.webmanifest">
+    <link rel="icon" sizes="192x192" href="Image/web-app-manifest-192x192.png">
+    <link rel="icon" sizes="512x512" href="Image/web-app-manifest-512x512.png">
+    
+    
+    <!-- CSS文件链接 -->
     <link rel="stylesheet" href="CSS/settings.css">    <!-- 1. 全局变量 -->
     <link rel="stylesheet" href="CSS/generic.css">     <!-- 2. 重置与 Body -->
     <link rel="stylesheet" href="CSS/base.css">        <!-- 3. 基础元素 -->
@@ -891,9 +903,20 @@
                             <div class="story-slide active" id="story-1">
                                 <div class="story-content">
                                     <div class="story-header">
-                                        <div class="story-badge">凡人篇</div>
-                                        <h3>从凡人到金丹</h3>
-                                        <div class="story-divider"></div>
+                                        <div class="story-title-area">
+                                            <div class="story-badge">凡人篇</div>
+                                            <h3>从凡人到金丹</h3>
+                                            <div class="story-divider"></div>
+                                        </div>
+                                        <!-- 移动端切换按钮 -->
+                                        <div class="mobile-story-nav">
+                                            <button class="mobile-nav-btn mobile-prev-btn" aria-label="上一个故事">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                            <button class="mobile-nav-btn mobile-next-btn" aria-label="下一个故事">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <div class="story-narrative">
@@ -931,9 +954,20 @@
                             <div class="story-slide" id="story-2">
                                 <div class="story-content">
                                     <div class="story-header">
-                                        <div class="story-badge">金丹篇</div>
-                                        <h3>从金丹到元婴</h3>
-                                        <div class="story-divider"></div>
+                                        <div class="story-title-area">
+                                            <div class="story-badge">金丹篇</div>
+                                            <h3>从金丹到元婴</h3>
+                                            <div class="story-divider"></div>
+                                        </div>
+                                        <!-- 移动端切换按钮 -->
+                                        <div class="mobile-story-nav">
+                                            <button class="mobile-nav-btn mobile-prev-btn" aria-label="上一个故事">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                            <button class="mobile-nav-btn mobile-next-btn" aria-label="下一个故事">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <div class="story-narrative">
@@ -972,9 +1006,20 @@
                             <div class="story-slide" id="story-3">
                                 <div class="story-content">
                                     <div class="story-header">
-                                        <div class="story-badge">元婴篇</div>
-                                        <h3>化神之路</h3>
-                                        <div class="story-divider"></div>
+                                        <div class="story-title-area">
+                                            <div class="story-badge">元婴篇</div>
+                                            <h3>化神之路</h3>
+                                            <div class="story-divider"></div>
+                                        </div>
+                                        <!-- 移动端切换按钮 -->
+                                        <div class="mobile-story-nav">
+                                            <button class="mobile-nav-btn mobile-prev-btn" aria-label="上一个故事">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                            <button class="mobile-nav-btn mobile-next-btn" aria-label="下一个故事">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <div class="story-narrative">
@@ -1324,27 +1369,27 @@
                     <div class="links-group">
                         <h4>关于我们</h4>
                         <ul>
-                            <li><a href="#">团队介绍</a></li>
-                            <li><a href="#">开发日志</a></li>
-                            <li><a href="#">加入我们</a></li>
-                            <li><a href="#">联系方式</a></li>
+                            <li><a href="http://123.57.35.16/">团队介绍</a></li>
+                            <li><a href="http://123.57.35.16/">开发日志</a></li>
+                            <li><a href="http://123.57.35.16/">加入我们</a></li>
+                            <li><a href="http://123.57.35.16/">联系方式</a></li>
                         </ul>
                     </div>
                     <div class="links-group">
                         <h4>支持</h4>
                         <ul>
-                            <li><a href="#">常见问题</a></li>
-                            <li><a href="#">用户反馈</a></li>
-                            <li><a href="#">Bug报告</a></li>
-                            <li><a href="#">社区守则</a></li>
+                            <li><span class="disabled-link">常见问题</span></li>
+                            <li><span class="disabled-link">用户反馈</span></li>
+                            <li><span class="disabled-link">Bug报告</span></li>
+                            <li><span class="disabled-link">社区守则</span></li>
                         </ul>
                     </div>
                     <div class="links-group">
                         <h4>法律</h4>
                         <ul>
-                            <li><a href="#">用户协议</a></li>
-                            <li><a href="#">隐私政策</a></li>
-                            <li><a href="#">退款政策</a></li>
+                            <li><span class="disabled-link">用户协议</span></li>
+                            <li><span class="disabled-link">隐私政策</span></li>
+                            <li><span class="disabled-link">退款政策</span></li>
                         </ul>
                     </div>
                 </div>
@@ -1352,9 +1397,9 @@
             <div class="footer-bottom">
                 <p>© 2020-至今 风神界开发团队版权所有 | 深圳市轲目苦津信息技术有限公司 粤ICP备2025386721号-1</p>
                 <div class="footer-social">
-                    <a href="#" class="social-icon weibo"></a>
-                    <a href="#" class="social-icon wechat"></a>
-                    <a href="#" class="social-icon qq"></a>
+                    <span class="social-icon weibo disabled-link"></span>
+                    <span class="social-icon wechat disabled-link"></span>
+                    <span class="social-icon qq disabled-link"></span>
                 </div>
             </div>
         </div>

@@ -77,3 +77,16 @@ html, body {
     overflow-x: hidden; /* 全局防止水平滚动条出现，以防某个元素意外溢出。
                            最好是修复溢出的元素，但这是一种备用方案。 */
 }
+
+/* 禁用链接样式 */
+.disabled-link {
+    color: #666; /* 灰色文字 */
+    cursor: not-allowed; /* 禁止点击的鼠标指针 */
+    opacity: 0.6; /* 半透明效果 */
+    transition: none; /* 禁用过渡效果 */
+}
+
+.disabled-link:hover {
+    color: #666; /* 悬停时保持灰色 */
+    opacity: 0.6; /* 悬停时保持半透明 */
+}

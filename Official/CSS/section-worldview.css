@@ -36,8 +36,8 @@
 .note-tag { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: white; font-size: 0.9rem; padding: 3px 10px; border-radius: 20px; font-weight: 500; display: inline-block; box-shadow: 0 2px 8px rgba(74, 99, 181, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
 .note-body { padding: 12px 15px; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; }
 .note-card.active { background: linear-gradient(135deg, rgba(26, 28, 50, 0.8), rgba(16, 24, 36, 0.9)); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(230, 213, 138, 0.1); border-left: 3px solid var(--secondary-color); }
-.note-card::after { content: "点击展开"; position: absolute; bottom: 10px; right: 10px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); transition: all 0.3s ease; }
-.note-card.active::after { content: "点击收起"; }
+.note-card::after { content: "点击切换"; position: absolute; bottom: 10px; right: 10px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); transition: all 0.3s ease; }
+.note-card.active::after { content: "点击切换"; }
 .note-card:hover::after { color: rgba(255, 255, 255, 0.8); }
 
 /* --- 游戏过程 & 玩家故事 --- */
@@ -49,8 +49,8 @@
 .stories-introduction { max-width: 800px; margin: 0 auto 30px; text-align: center; font-size: 1.1rem; line-height: 1.7; color: var(--text-secondary); text-shadow: var(--text-shadow); }
 .story-slider { background: rgba(13, 16, 25, 0.5); border-radius: var(--card-radius); padding: 20px; box-shadow: var(--box-shadow); margin: 30px 0; position: relative; border: 1px solid rgba(230, 213, 138, 0.1); backdrop-filter: blur(5px); display: flex; align-items: center; }
 /* Slider arrows & nav dots in components/slider.css */
-.story-container { flex: 1; position: relative; overflow: hidden; border-radius: 8px; background-color: transparent; box-shadow: none; min-height: 600px; height: auto; }
-.story-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 500px; opacity: 0; visibility: hidden; transition: all 0.5s ease; transform: translateX(50px); z-index: 1; }
+.story-container { flex: 1; position: relative; overflow: hidden; border-radius: 8px; background-color: transparent; box-shadow: none; min-height: 450px; height: auto; }
+.story-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 400px; opacity: 0; visibility: hidden; transition: all 0.5s ease; transform: translateX(50px); z-index: 1; }
 .story-slide.active { opacity: 1; visibility: visible; transform: translateX(0); z-index: 2; }
 .story-content { padding: 30px; height: 100%; }
 .story-header { position: relative; margin-bottom: 25px; padding-bottom: 15px; }

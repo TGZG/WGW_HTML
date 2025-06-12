@@ -2,6 +2,14 @@
    13. 响应式设计
    responsive.css: Media Queries
    ========================================================== */
+
+/* 桌面端隐藏移动端专用按钮 */
+@media (min-width: 769px) {
+    #worldview .mobile-story-nav {
+        display: none;
+    }
+}
+
 /* 新增汉堡菜单样式 */
 .hamburger {
     display: none;
@@ -63,42 +71,196 @@
     .main-objective .notes-row { flex-direction: column; gap: 15px; }
     .realm-chart { flex-direction: column; min-width: unset; gap: 20px;}
 
-    /* 玩家故事轮播响应式调整 */
+    /* 游戏过程部分故事滑块的完整修复 */
+    #worldview .game-process {
+        padding: 20px 15px; /* 减小外边距 */
+    }
+    
+    #worldview .process-header {
+        margin-bottom: 25px; /* 减小标题区间距 */
+    }
+    
+    #worldview .process-heading {
+        font-size: 1.5rem; /* 减小标题字体 */
+    }
+    
+    #worldview .stories-introduction {
+        font-size: 1rem; /* 减小介绍文字 */
+        margin-bottom: 20px;
+        padding: 0 10px;
+    }
+
+    /* 故事滑块容器修复 */
     #worldview .story-container {
-        min-height: auto; /* 移除或减小最小高度 */
+        position: static; /* 改为静态定位 */
+        min-height: auto; /* 移除最小高度 */
+        height: auto; /* 高度自适应 */
+        overflow: visible; /* 允许内容正常显示 */
+        width: 100%;
+        border-radius: 8px;
+        background-color: transparent;
+        box-shadow: none;
     }
+
+    /* 故事滑块内容修复 - 恢复渐变效果 */
     #worldview .story-slide {
-        min-height: auto; /* 移除或减小最小高度 */
-        padding-bottom: 20px; /* 为内容可能溢出增加一些底部空间 */
+        position: absolute !important; /* 恢复绝对定位以支持渐变 */
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: auto !important; /* 高度自适应内容 */
+        min-height: auto !important; /* 移除最小高度限制 */
+        opacity: 0 !important; /* 使用透明度控制 */
+        visibility: hidden !important; /* 使用可见性控制 */
+        transform: translateX(50px) !important; /* 恢复平移效果 */
+        transition: all 0.5s ease !important; /* 恢复过渡动画 */
+        z-index: 1 !important;
+        /* 确保容器能自适应内容高度 */
+        padding-bottom: 20px; /* 添加底部内边距防止内容被截断 */
     }
+    
+    #worldview .story-slide.active {
+        opacity: 1 !important; /* 激活状态完全不透明 */
+        visibility: visible !important; /* 激活状态可见 */
+        transform: translateX(0) !important; /* 激活状态回到原位 */
+        z-index: 2 !important; /* 激活状态层级更高 */
+    }
+    
+    /* 让容器高度适应当前激活故事的内容 */
+    #worldview .story-container {
+        position: relative; /* 改为相对定位 */
+        min-height: 300px; /* 设置一个基础最小高度 */
+        height: auto; /* 高度自适应 */
+        overflow: visible; /* 允许内容溢出 */
+        width: 100%;
+        border-radius: 8px;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    /* 故事内容调整 */
+    #worldview .story-content {
+        padding: 15px; /* 减小内边距 */
+        height: auto; /* 高度自适应 */
+    }
+
+    #worldview .story-header {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    
+    #worldview .story-title-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #worldview .story-header h3 {
+        font-size: 1.3rem; /* 减小标题字体 */
+        margin: 5px 0 10px;
+    }
+
+    #worldview .story-badge {
+        font-size: 0.8rem; /* 减小徽章字体 */
+        padding: 4px 10px;
+        margin-bottom: 8px;
+        align-self: flex-start; /* 徽章左对齐 */
+    }
+
+    /* 故事叙述区域修复 */
     #worldview .story-narrative {
-        flex-direction: column; /* 在小屏幕上堆叠图片和文本 */
-        height: auto; /* 高度由内容决定 */
+        flex-direction: column; /* 垂直堆叠 */
+        height: auto; /* 高度自适应 */
+        min-height: auto; /* 移除最小高度 */
         gap: 15px;
     }
+
     #worldview .story-visual {
-        width: 100%; /* 图片信息区宽度占满 */
-        max-width: 200px; /* 但最大不超过一个合理值，使其居中 */
-        margin-left: auto;
-        margin-right: auto;
+        width: 100%; /* 占满宽度 */
+        max-width: none; /* 移除最大宽度限制 */
+        display: flex;
+        flex-direction: row; /* 水平排列图标和链接 */
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
     }
+    
+    #worldview .story-image {
+        width: 80px; /* 减小图片尺寸 */
+        height: 80px;
+        margin-bottom: 0; /* 移除底部边距 */
+        flex-shrink: 0;
+    }
+    
+    #worldview .story-icon {
+        font-size: 35px; /* 减小图标大小 */
+    }
+
+    #worldview .story-visual .document-link {
+        margin-top: 0;
+        flex-shrink: 0;
+    }
+    
+    #worldview .story-visual .elegant-link {
+        padding: 8px 12px; /* 减小链接按钮尺寸 */
+        font-size: 0.85rem;
+    }
+
+    /* 故事文本区域 */
     #worldview .story-text {
-        padding-right: 0; /* 移除右侧内边距 */
-        /* max-height: 300px; */ /* 暂时注释掉，观察200%缩放时的文本显示问题 */
-        overflow-y: auto; /* 如果内容超出，允许滚动 (若未注释max-height则此条生效) */
+        padding: 0; /* 移除内边距 */
+        font-size: 0.9rem; /* 减小字体 */
+        line-height: 1.5; /* 调整行高 */
+        max-height: none; /* 移除最大高度限制 */
+        overflow-y: visible; /* 允许内容正常显示 */
+        min-height: auto; /* 移除最小高度 */
+        scrollbar-width: none; /* 隐藏滚动条 */
     }
-    #worldview .story-content {
-        padding: 20px; /* 减小整体内边距 */
+    
+    #worldview .story-text::-webkit-scrollbar {
+        display: none; /* 隐藏webkit滚动条 */
+    }
+    
+    #worldview .story-text p {
+        margin-bottom: 12px; /* 调整段落间距 */
+        font-size: 0.9rem;
     }
 
-    /* 确保故事滑块箭头在移动端保持水平 */
-    #worldview .story-slider { flex-direction: row; }
-    #worldview .slider-arrow { transform: none; margin: 0; }
-    #worldview .prev-arrow { margin-right: 10px; order: -1; }
-    #worldview .next-arrow { margin-left: 10px; order: 1; }
-    #worldview .story-container { order: 0; }
+    /* 故事导航点调整 */
+    #worldview .story-navigation {
+        margin-top: 20px;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+    }
+    
+    #worldview .nav-dot {
+        width: 12px; /* 稍微增大导航点 */
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(230, 213, 138, 0.2);
+        border: 1px solid rgba(230, 213, 138, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    #worldview .nav-dot:hover {
+        background-color: rgba(230, 213, 138, 0.4);
+        transform: scale(1.2);
+    }
+    
+    #worldview .nav-dot.active {
+        background-color: var(--secondary-color);
+        box-shadow: 0 0 8px rgba(230, 213, 138, 0.6);
+        transform: scale(1.2);
+        border-color: var(--secondary-color);
+    }
 
-     /* 在平板等小屏幕上堆叠特色网格 */
+    /* 在平板等小屏幕上堆叠特色网格 */
     #introduction .features-grid { grid-template-columns: 1fr; }
 
     .hamburger {
@@ -107,40 +269,175 @@
     }
 
     .nav-links {
-        display: none;
         position: absolute;
         top: 100%;
         left: 0;
-        right: 0;
-        background: rgba(13, 16, 25, 0.95);
-        flex-direction: column;
-        padding: 15px 20px;
-        gap: 12px;
-        border-bottom: 1px solid rgba(230, 213, 138, 0.1);
-    }
-
-        .nav-links.active {
-            display: flex;
-        }
-    nav {
-        flex-wrap: nowrap;
-        padding: 10px 20px;
-        position: relative;
-    }
-
-    .nav-links .cta-button {
         width: 100%;
-        text-align: center;
+        background: rgba(13, 16, 25, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 20px 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        border-top: 1px solid rgba(230, 213, 138, 0.1);
     }
+
+    .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-links li {
+        padding: 10px 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-links li:last-child {
+        border-bottom: none;
+    }
+
+    /* 语言切换在移动端的处理 */
     .language-desktop {
         display: none;
     }
+
     .language-mobile {
         display: block;
-        padding-top: 15px;
-        margin-top: 15px;
-        border-top: 1px solid rgba(230, 213, 138, 0.1);
     }
+
+    /* 导航按钮在移动端的调整 */
+    nav {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    /* 比较表格的移动端优化 */
+    .comparison-table {
+        display: block; /* 确保表格可以水平滚动 */
+        overflow-x: auto;
+        white-space: nowrap; /* 防止内容换行 */
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px; /* 减小圆角 */
+        margin-bottom: 20px;
+    }
+    
+    .comparison-header,
+    .comparison-row {
+        display: flex;
+        min-width: 800px; /* 设置最小宽度确保所有列都能显示 */
+        white-space: nowrap;
+    }
+    
+    .corner-cell,
+    .feature-name {
+        flex-shrink: 0;
+        width: 100px; /* 减小第一列宽度 */
+        font-size: 0.85rem; /* 减小字体 */
+        padding: 12px 8px;
+    }
+    
+    .game-column {
+        flex-shrink: 0;
+        flex-basis: 85px; /* 减小每列的基础宽度 */
+        min-width: 75px; /* 减小最小宽度 */
+        padding: 12px 6px;
+    }
+    
+    .game-column h4 {
+        font-size: 0.9rem; /* 减小游戏名字体 */
+        line-height: 1.2;
+    }
+    
+    .game-logo {
+        width: 35px; /* 减小图标大小 */
+        height: 35px;
+        margin-bottom: 8px;
+    }
+    
+    .game-logo i {
+        font-size: 1rem; /* 减小图标字体 */
+    }
+    
+    .feature-value {
+        font-size: 0.8rem !important; /* 强制减小特性值字体 */
+        padding: 10px 4px !important;
+        min-height: 45px !important; /* 减小最小高度 */
+        line-height: 1.2 !important;
+        white-space: normal !important; /* 允许文字换行 */
+    }
+    
+    /* 为比较表格添加滚动提示 */
+    .comparison-table::after {
+        content: "左右滑动查看更多";
+        display: block;
+        text-align: center;
+        padding: 10px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        background: rgba(13, 16, 25, 0.8);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* 箭头导航在移动端隐藏 */
+    #worldview .story-slider .prev-arrow,
+    #worldview .story-slider .next-arrow {
+        display: none; /* 在移动端隐藏箭头，只保留导航点和触摸滑动 */
+    }
+    
+    /* 故事滑块容器修复 */
+    #worldview .story-slider {
+        flex-direction: column; /* 垂直布局 */
+        min-height: auto; /* 移除最小高度限制 */
+        padding: 15px 10px; /* 减小内边距 */
+        margin: 20px 0; /* 减小外边距 */
+        background: rgba(13, 16, 25, 0.6); /* 保持背景效果 */
+        border-radius: var(--card-radius);
+        box-shadow: var(--box-shadow);
+        border: 1px solid rgba(230, 213, 138, 0.1);
+        backdrop-filter: blur(5px);
+    }
+    
+    /* 移动端专用的紧凑切换按钮 */
+    #worldview .mobile-story-nav {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+    
+    #worldview .mobile-nav-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(230, 213, 138, 0.1);
+        border: 1px solid rgba(230, 213, 138, 0.3);
+        color: var(--secondary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        backdrop-filter: blur(5px);
+    }
+    
+    #worldview .mobile-nav-btn:hover,
+    #worldview .mobile-nav-btn:active {
+        background: rgba(230, 213, 138, 0.2);
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(230, 213, 138, 0.4);
+    }
+    
+    #worldview .mobile-nav-btn:active {
+        transform: scale(0.95);
+    }
+
+    /* 让容器高度适应当前激活故事的内容 */
 }
 
 @media (max-width: 576px) {
@@ -167,6 +464,34 @@
         /* min-width: unset; */ /* 移除此行 - 允许表格收缩，配合base.css中的overflow-x:auto实现滚动 */
     }
 
+    /* 确保比较表格的表头和内容行在窄屏幕下能更好地对齐和滚动 */
+    .comparison-header .corner-cell,
+    .comparison-row .feature-name {
+        flex-shrink: 0; /* 防止特征名列被压缩 */
+        /* width: 120px; */ /* 如果默认的150px在手机上太宽, 可在此减小,需同步修改components.css中的值或在此覆盖 */
+    }
+
+    .comparison-header .game-column, 
+    .comparison-row .game-column {
+        flex-basis: 90px;  /* 为每个游戏列设置一个基础宽度 */
+        flex-grow: 1;        /* 允许它们增长以填充额外空间 (如果父级宽度大于所有basis之和) */
+        flex-shrink: 0;      /* 防止它们在父级宽度不足时收缩得太厉害 */
+        min-width: 70px;     /* 设置一个最小宽度保证基本可读性 */
+        /* border-right: 1px solid rgba(255, 255, 255, 0.05); /* 分隔线在components.css中定义 */
+    }
+    /* .comparison-header .game-column:last-child, (last-child选择器在components.css中已有) */
+    /* .comparison-row .game-column:last-child { border-right: none; } */
+
+    .game-column .feature-value {
+        width: 100%; /* 确保特性值充满其单元格 */
+        min-height: auto; /* 移除或覆盖可能存在的最小高度，使其自适应内容 */
+        /* padding: 8px 5px; */ /* 可适当调整内边距 */
+        font-size: 0.9rem; /* 可适当调整字体大小 */
+    }
+}
+
+/* 平板端响应式调整 (769px - 992px) */
+@media (min-width: 769px) and (max-width: 992px) {
     /* 确保比较表格的表头和内容行在窄屏幕下能更好地对齐和滚动 */
     .comparison-header .corner-cell,
     .comparison-row .feature-name {
