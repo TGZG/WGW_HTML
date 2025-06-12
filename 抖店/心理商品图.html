@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 800px;
+            height: 800px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 16px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-color);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .basic { --accent-color: linear-gradient(90deg, #4facfe, #00f2fe); }
+        .standard { --accent-color: linear-gradient(90deg, #43e97b, #38f9d7); }
+        .premium { --accent-color: linear-gradient(90deg, #fa709a, #fee140); }
+        .ultimate { --accent-color: linear-gradient(90deg, #a8edea, #fed6e3); }
+
+        .price-tag {
+            position: absolute;
+            top: -8px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .card-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a202c;
+            margin-bottom: 16px;
+            margin-top: 12px;
+        }
+
+        .features {
+            flex-grow: 1;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: #4a5568;
+            font-size: 22px;
+            line-height: 1.5;
+        }
+
+        .feature-item::before {
+            content: '✓';
+            color: #48bb78;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .feature-item2 {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: #4a5568;
+            font-size: 22px;
+            line-height: 1.5;
+        }
+
+        .feature-item2::before {
+            content: 'X';
+            color: #FF8858;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #38eee6 0%, #f64e85 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .special-note {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 8px 12px;
+            margin-top: 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #856404;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95vw;
+                height: 95vw;
+                max-width: 600px;
+                max-height: 600px;
+            }
+
+            .product-card {
+                padding: 16px;
+            }
+
+            .card-title {
+                font-size: 18px;
+            }
+
+            .feature-item {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-card basic">
+            <div class="price-tag">¥10</div>
+            <h3 class="card-title">树洞倾听</h3>
+            <div class="features">
+                <div class="feature-item">三十分钟耐心陪聊</div>
+                <div class="feature-item">你可以倾诉你的烦恼</div>
+                <div class="feature-item">我们提供倾听与鼓励</div>
+            </div>
+        </div>
+        <div class="product-card premium">
+            <div class="price-tag">¥100</div>
+            <h3 class="card-title">心理咨询</h3>
+            <div class="features">
+                <div class="feature-item">六十分钟专业咨询</div>
+                <div class="feature-item">婚姻、亲子、职场、学业问题</div>
+                <div class="feature-item">焦虑、抑郁、孤独、厌恨情绪</div>
+                <div class="feature-item">倾听、鼓励、剖析、建议服务</div>
+            </div>
+        </div>
+        <div class="product-card standard">
+            <div class="price-tag">¥20</div>
+            <h3 class="card-title">首单咨询</h3>
+            <div class="features">
+                <div class="feature-item">三十分钟专业咨询</div>
+                <div class="feature-item">新用户首单特价优惠</div>
+                <div class="feature-item">服务内容同100元心理咨询</div>
+                <div class="feature-item">支持文字、语音、电话、视频</div>
+            </div>
+        </div>
+        <div class="product-card ultimate">
+            <div class="price-tag">¥500</div>
+            <h3 class="card-title">资深咨询</h3>
+            <div class="features">
+                <div class="feature-item">六十分钟一针见血</div>
+                <div class="feature-item">五年三百万字经验</div>
+                <div class="feature-item2">仅支持纯文字咨询</div>
+                <div class="feature-item">详情见于下一页</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
