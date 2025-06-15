@@ -92,10 +92,10 @@
 
     /* 故事滑块容器修复 */
     #worldview .story-container {
-        position: static; /* 改为静态定位 */
-        min-height: auto; /* 移除最小高度 */
+        position: relative; /* 改为相对定位 */
+        min-height: 510px; /* 490px + 20px = 510px，移动端最后一次增加20px */
         height: auto; /* 高度自适应 */
-        overflow: visible; /* 允许内容正常显示 */
+        overflow: visible; /* 允许内容溢出 */
         width: 100%;
         border-radius: 8px;
         background-color: transparent;
@@ -109,7 +109,7 @@
         left: 0 !important;
         width: 100% !important;
         height: auto !important; /* 高度自适应内容 */
-        min-height: auto !important; /* 移除最小高度限制 */
+        min-height: 510px !important; /* 490px + 20px = 510px，移动端最后一次增加20px */
         opacity: 0 !important; /* 使用透明度控制 */
         visibility: hidden !important; /* 使用可见性控制 */
         transform: translateX(50px) !important; /* 恢复平移效果 */
@@ -126,18 +126,6 @@
         z-index: 2 !important; /* 激活状态层级更高 */
     }
     
-    /* 让容器高度适应当前激活故事的内容 */
-    #worldview .story-container {
-        position: relative; /* 改为相对定位 */
-        min-height: 300px; /* 设置一个基础最小高度 */
-        height: auto; /* 高度自适应 */
-        overflow: visible; /* 允许内容溢出 */
-        width: 100%;
-        border-radius: 8px;
-        background-color: transparent;
-        box-shadow: none;
-    }
-
     /* 故事内容调整 */
     #worldview .story-content {
         padding: 15px; /* 减小内边距 */

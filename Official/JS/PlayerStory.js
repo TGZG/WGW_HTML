@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const prevArrow = document.querySelector('.prev-arrow');
     const nextArrow = document.querySelector('.next-arrow');
     const navDots = document.querySelectorAll('.nav-dot');
-    
+
     // 获取移动端切换按钮
     const mobilePrevBtns = document.querySelectorAll('.mobile-prev-btn');
     const mobileNextBtns = document.querySelectorAll('.mobile-next-btn');
