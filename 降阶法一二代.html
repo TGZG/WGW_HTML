@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI模型对比</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: #f5f5f5;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .shared-question {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #28a745;
+            margin: 0;
+        }
+
+        .question-label {
+            font-weight: 600;
+            color: #28a745;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .comparison {
+            display: flex;
+        }
+
+        .model-section {
+            flex: 1;
+            padding: 15px;
+            position: relative;
+        }
+
+        .model-section:first-child {
+            border-right: 2px solid #e0e0e0;
+        }
+
+        .model-title {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 10px 15px;
+            margin: -15px -15px 15px -15px;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .model-section:last-child .model-title {
+            background: linear-gradient(45deg, #4834d4, #686de0);
+        }
+
+        .iteration {
+            margin-bottom: 12px;
+            border-left: 2px solid #dee2e6;
+            padding-left: 10px;
+        }
+
+        .response {
+            background: #e3f2fd;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+
+        .response-label {
+            font-weight: 600;
+            color: #1976d2;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .suggestion {
+            background: #fff3cd;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+
+        .suggestion-label {
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .optimization {
+            background: #d4edda;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .optimization-label {
+            font-weight: 600;
+            color: #155724;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .content-text {
+            color: #333;
+            margin: 0;
+            white-space: pre-wrap;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>一二代模型对比</h1>
+    </div>
+
+    <div class="shared-question">
+        <div class="question-label">问：</div>
+        <p class="content-text">朋友失恋了，他跟女友因为女权问题吵起来了，原本感情很好，今天一天直接分手。现在他在跟我喝酒，他跟我说他又后悔又生气又迷茫，很难受很复杂。我一直听他倾诉，现在他说完了，最后几句是问我他怎么办，我问他他想挽回吗，他说他不知道。我怎么说？直接给我一个我可以说的语句。</p>
+    </div>
+
+    <div class="comparison">
+        <!-- 一代模型 -->
+        <div class="model-section">
+            <div class="model-title">一代模型</div>
+
+            <div class="iteration">
+                <div class="response">
+                    <div class="response-label">答：生成：</div>
+                    <p class="content-text">失恋确实很痛苦，你需要时间来静静。</p>
+                </div>
+                <div class="suggestion">
+                    <div class="suggestion-label">建议：</div>
+                    <p class="content-text">要更具体</p>
+                </div>
+                <div class="optimization">
+                    <div class="optimization-label">优化：</div>
+                    <p class="content-text">失恋确实很痛苦，让人想在地上打滚。你需要时间来静静，自己一个人发呆。</p>
+                </div>
+            </div>
+
+            <div class="iteration">
+                <div class="suggestion">
+                    <div class="suggestion-label">建议：</div>
+                    <p class="content-text">要更实用</p>
+                </div>
+                <div class="optimization">
+                    <div class="optimization-label">优化：</div>
+                    <p class="content-text">失恋确实很痛苦，让人想在地上打滚。你需要时间来静静，自己一个人发呆。建议你把这次经历写成日记，记录下每天的心情变化，这样能帮助你更好地了解自己。</p>
+                </div>
+            </div>
+
+            <div class="iteration">
+                <div class="suggestion">
+                    <div class="suggestion-label">建议：</div>
+                    <p class="content-text">要表现自己的真诚，而不是事不关己</p>
+                </div>
+                <div class="optimization">
+                    <div class="optimization-label">优化：</div>
+                    <p class="content-text">恭喜你获得了一次宝贵的人生体验！失恋其实是上天给你的礼物，你应该感谢这次机会让你重新认识自己，建议你制定一个30天的自我提升计划。</p>
+                </div>
+            </div>
+
+            <div class="iteration">
+                <div class="suggestion">
+                    <div class="suggestion-label">建议：</div>
+                    <p class="content-text">不要说教。你不是权威</p>
+                </div>
+                <div class="optimization">
+                    <div class="optimization-label">优化：</div>
+                    <p class="content-text">根据心理学研究，失恋能够激活大脑的创造力区域，你现在正处于创意爆发的黄金期！建议你利用这个机会学习绘画、写作或音乐，很多艺术家都是在失恋后创作出传世佳作的。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 二代模型 -->
+        <div class="model-section">
+            <div class="model-title">二代模型</div>
+
+            <div class="iteration">
+                <div class="response">
+                    <div class="response-label">答：生成：</div>
+                    <p class="content-text">你先缓缓再想吧。</p>
+                </div>
+                <div class="suggestion">
+                    <div class="suggestion-label">建议：</div>
+                    <p class="content-text">表达理解</p>
+                </div>
+                <div class="optimization">
+                    <div class="optimization-label">优化：</div>
+                    <p class="content-text">失恋确实很痛苦，你先缓缓再想吧。</p>
+                </div>
+            </div>
+
+            <div class="iteration">
+                <div class="suggestion">
+                    <div class="suggestion-label">建议：</div>
+                    <p class="content-text">提供具体的缓解方式</p>
+                </div>
+                <div class="optimization">
+                    <div class="optimization-label">优化：</div>
+                    <p class="content-text">失恋确实很痛苦。建议你今晚好好休息，明天头脑清醒了再想想自己真正想要什么。</p>
+                </div>
+            </div>
+
+            <div class="iteration">
+                <div class="suggestion">
+                    <div class="suggestion-label">建议：</div>
+                    <p class="content-text">语气要更自然</p>
+                </div>
+                <div class="optimization">
+                    <div class="optimization-label">优化：</div>
+                    <p class="content-text">兄弟，我懂你现在这种又后悔又生气的感觉，换谁都会这样的。别急着想怎么办，今晚我陪你，明天脑子清醒了再说。</p>
+                </div>
+            </div>
+
+            <div class="iteration">
+                <div class="suggestion">
+                    <div class="suggestion-label">建议：</div>
+                    <p class="content-text">语言要简洁</p>
+                </div>
+                <div class="optimization">
+                    <div class="optimization-label">优化：</div>
+                    <p class="content-text">兄弟，我懂你的感受。别急着想怎么办，今晚我陪你，明天再说。</p>
+                </div>
+            </div>
+
+            <div class="iteration">
+                <div class="suggestion">
+                    <div class="suggestion-label">建议：</div>
+                    <p class="content-text">让对方做决定</p>
+                </div>
+                <div class="optimization">
+                    <div class="optimization-label">优化：</div>
+                    <p class="content-text">兄弟，你觉得现在最需要的是什么？是时间来整理情绪，还是有人陪着你？</p>
+                </div>
+            </div>
+
+            <div class="iteration">
+                <div class="suggestion">
+                    <div class="suggestion-label">建议：</div>
+                    <p class="content-text">不要问对方复杂的问题</p>
+                </div>
+                <div class="optimization">
+                    <div class="optimization-label">优化：</div>
+                    <p class="content-text">兄弟，你现在像是一只孤独的鸟，站在了人生的十字路口，对吧？</p>
+                </div>
+            </div>
+
+            <div class="iteration">
+                <div class="suggestion">
+                    <div class="suggestion-label">建议：</div>
+                    <p class="content-text">表达理解</p>
+                </div>
+                <div class="optimization">
+                    <div class="optimization-label">优化：</div>
+                    <p class="content-text">兄弟，你现在就像一只受伤的鸟，翅膀还在痛，不知道该不该再次飞翔。对吧？</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
