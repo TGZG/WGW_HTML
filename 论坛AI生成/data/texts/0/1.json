@@ -1,0 +1,53 @@
+{
+  "id": "1",
+  "communityId": "0",
+  "name": "测试",
+  "createdBy": "执悲",
+  "createdAt": 1767428640167,
+  "perm_read": "__all_users__",
+  "perm_write": "__all_users__",
+  "perm_announcement": "执悲",
+  "perm_meta": "执悲",
+  "announcement": "这是测试公告",
+  "floors": [
+    {
+      "id": "0",
+      "author": "系统",
+      "content": "话题由 执悲 创建\n话题名称：测试",
+      "isSystem": true,
+      "createdAt": 1767428640167
+    },
+    {
+      "id": "1",
+      "author": "系统",
+      "content": "执悲 上传了附件: 测试.txt",
+      "isSystem": true,
+      "createdAt": 1767428655852
+    },
+    {
+      "id": "1",
+      "author": "执悲",
+      "content": "测试",
+      "isSystem": false,
+      "createdAt": 1767428715599
+    },
+    {
+      "id": "1",
+      "author": "系统",
+      "content": "执悲 更新了公告\n\n这是测试公告",
+      "isSystem": true,
+      "createdAt": 1767428866669
+    }
+  ],
+  "attachments": [
+    {
+      "id": "1",
+      "filename": "0_1_1_测试.txt",
+      "originalName": "测试.txt",
+      "size": 8,
+      "uploadedBy": "执悲",
+      "uploadedAt": 1767428655852
+    }
+  ],
+  "nextFloorId": 1
+}

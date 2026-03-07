@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内部论坛</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="CSS.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container not-logged-in" id="app">
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">📋 内部论坛</div>
+                <span class="connection-status disconnected" id="connectionStatus">● 未连接</span>
+            </div>
+            <div class="header-right">
+                <div class="global-search">
+                    <input type="text" id="globalSearchInput" placeholder="全局搜索...">
+                    <button class="btn btn-secondary" onclick="openSearchModal()">🔍</button>
+                </div>
+                <button class="btn btn-secondary" onclick="openGroupModal()">👥 用户组</button>
+            </div>
+        </header>
+
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">账号</div>
+                <div class="auth-section">
+                    <input type="text" id="usernameInput" placeholder="账号">
+                    <input type="password" id="passwordInput" placeholder="密码">
+                    <div class="auth-row">
+                        <button class="btn btn-primary" onclick="login()">登录</button>
+                        <button class="btn btn-secondary" onclick="register()">注册</button>
+                        <button class="btn btn-secondary" onclick="logout()">登出</button>
+                    </div>
+                    <div class="login-status" id="loginStatus">未登录</div>
+                    <button class="btn btn-secondary btn-small" onclick="setInternal()" id="setInternalBtn" style="display:none;">🔧 设为内部用户</button>
+                </div>
+            </div>
+            <div class="sidebar-section account-list-section" id="accountListSection">
+                <div class="sidebar-title">已登录账号 (F1隐藏)</div>
+                <div id="accountList"></div>
+            </div>
+            <div class="sidebar-section" style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+                <div class="sidebar-title">社区</div>
+                <div class="search-box">
+                    <input type="text" id="communitySearchInput" placeholder="搜索/创建社区">
+                    <button class="btn btn-primary btn-small" onclick="enterCommunity()">进入</button>
+                </div>
+                <div class="list-container" id="communityList"></div>
+            </div>
+        </aside>
+
+        <div class="welcome-panel" id="welcomePanel">
+            <div class="welcome-title">欢迎使用内部论坛</div>
+            <div class="welcome-desc">请先登录或注册账号。<br>注册默认为外部用户，内部用户可创建新社区。<br><br><strong>快捷键：</strong>按 F1 可切换显示/隐藏已登录账号列表</div>
+        </div>
+
+        <div class="middle-panel">
+            <div class="panel-header">
+                <span class="panel-title" id="currentCommunityName">选择社区</span>
+                <button class="btn btn-primary btn-small" onclick="createTopic()" id="createTopicBtn" style="display:none;">+ 新话题</button>
+            </div>
+            <div class="list-container" id="topicList"></div>
+        </div>
+
+        <main class="main-content">
+            <div class="content-header" id="topicHeader" style="display:none;">
+                <div class="topic-title" id="topicTitle"></div>
+                <div class="topic-meta" id="topicMeta"></div>
+            </div>
+            <div class="meta-sections" id="metaSections" style="display:none;">
+                <div class="meta-section" id="permissionSection">
+                    <div class="meta-section-header" onclick="toggleMetaSection('permissionSection')">
+                        <span class="meta-section-title">🔐 权限设置</span>
+                        <span class="meta-section-toggle">▼</span>
+                    </div>
+                    <div class="meta-section-content" id="permissionContent"></div>
+                </div>
+                <div class="meta-section" id="announcementSection">
+                    <div class="meta-section-header" onclick="toggleMetaSection('announcementSection')">
+                        <span class="meta-section-title">📢 公告</span>
+                        <span class="meta-section-toggle">▼</span>
+                    </div>
+                    <div class="meta-section-content" id="announcementContent"></div>
+                </div>
+                <div class="meta-section" id="noteSection">
+                    <div class="meta-section-header" onclick="toggleMetaSection('noteSection')">
+                        <span class="meta-section-title">📝 我的笔记</span>
+                        <span class="meta-section-toggle">▼</span>
+                    </div>
+                    <div class="meta-section-content" id="noteContent"></div>
+                </div>
+                <div class="meta-section" id="attachmentSection">
+                    <div class="meta-section-header" onclick="toggleMetaSection('attachmentSection')">
+                        <span class="meta-section-title">📎 附件</span>
+                        <span class="meta-section-toggle">▼</span>
+                    </div>
+                    <div class="meta-section-content" id="attachmentContent"></div>
+                </div>
+            </div>
+            <div class="floor-list" id="floorList"><div class="empty-state"><div class="empty-state-icon">💬</div><div>选择一个话题查看内容</div></div></div>
+            <div class="reply-section" id="replySection" style="display:none;">
+                <textarea class="reply-textarea" id="replyInput" placeholder="输入内容... (Ctrl+Enter发送)"></textarea>
+                <div class="reply-actions">
+                    <button class="btn btn-primary" onclick="sendReply()">发送</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('fileInput').click()">📎 附件</button>
+                    <input type="file" id="fileInput" style="display:none;" onchange="handleFileUpload(event)">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="context-menu" id="contextMenu"></div>
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-title" id="modalTitle"></div>
+            <div class="modal-content" id="modalContent"></div>
+            <div class="modal-actions" id="modalActions"></div>
+        </div>
+    </div>
+    <div class="toast" id="toast"></div>
+
+    <script>
+        async function api(endpoint, options = {}) {
+            const res = await fetch(endpoint, { ...options, headers: { 'Content-Type': 'application/json', ...options.headers }, body: options.body ? JSON.stringify(options.body) : undefined });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || '请求失败');
+            return data;
+        }
+
+        let ws = null;
+        function connectWebSocket() {
+            const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            ws = new WebSocket(`${protocol}//${location.host}`);
+            ws.onopen = () => { document.getElementById('connectionStatus').textContent = '● 已连接'; document.getElementById('connectionStatus').className = 'connection-status connected'; if (currentUser) ws.send(JSON.stringify({ type: 'auth', username: currentUser.username })); };
+            ws.onclose = () => { document.getElementById('connectionStatus').textContent = '● 未连接'; document.getElementById('connectionStatus').className = 'connection-status disconnected'; setTimeout(connectWebSocket, 3000); };
+            ws.onerror = () => ws.close();
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.type === 'new_floor') { if (currentTopic && data.topicId === currentTopic.id) loadFloorList(); loadCommunityList(); if (currentCommunity) loadTopicList(); triggerNotification(); }
+                else if (data.type === 'new_topic' && currentCommunity?.id === data.topic.communityId) loadTopicList();
+            };
+        }
+
+        let currentUser = null, currentCommunity = null, currentTopic = null, topicDetails = null;
+        function getLocalAccounts() { return JSON.parse(localStorage.getItem('forum_accounts') || '[]'); }
+        function saveLocalAccount(u, p) { const accounts = getLocalAccounts(); if (!accounts.find(a => a.username === u)) { accounts.push({ username: u, password: p }); localStorage.setItem('forum_accounts', JSON.stringify(accounts)); } }
+
+        async function register() {
+            const username = document.getElementById('usernameInput').value.trim(), password = document.getElementById('passwordInput').value;
+            if (!username || !password) return showToast('请输入账号和密码', 'error');
+            try { await api('/api/register', { method: 'POST', body: { username, password } }); showToast('注册成功！请登录', 'success'); } catch (e) { showToast(e.message, 'error'); }
+        }
+
+        async function login() {
+            const username = document.getElementById('usernameInput').value.trim(), password = document.getElementById('passwordInput').value;
+            if (!username || !password) return showToast('请输入账号和密码', 'error');
+            try {
+                const data = await api('/api/login', { method: 'POST', body: { username, password } });
+                currentUser = data.user; saveLocalAccount(username, password);
+                if (ws?.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: 'auth', username }));
+                updateLoginStatus(); updateAccountList(); loadCommunityList();
+                document.getElementById('app').classList.remove('not-logged-in'); document.getElementById('welcomePanel').style.display = 'none';
+                showToast(`欢迎，${username}！`, 'success');
+            } catch (e) { showToast(e.message, 'error'); }
+        }
+
+        function logout() { currentUser = currentCommunity = currentTopic = null; document.getElementById('app').classList.add('not-logged-in'); document.getElementById('welcomePanel').style.display = 'flex'; updateLoginStatus(); }
+        function switchAccount(username) { const account = getLocalAccounts().find(a => a.username === username); if (account) { document.getElementById('usernameInput').value = account.username; document.getElementById('passwordInput').value = account.password; login(); } }
+
+        function updateLoginStatus() {
+            const el = document.getElementById('loginStatus'), btn = document.getElementById('setInternalBtn');
+            if (currentUser) { el.innerHTML = `已登录: <strong>${currentUser.username}</strong><span class="user-type-badge ${currentUser.type}">${currentUser.type === 'internal' ? '内部' : '外部'}</span>`; el.classList.add('logged-in'); btn.style.display = currentUser.type === 'external' ? 'block' : 'none'; }
+            else { el.textContent = '未登录'; el.classList.remove('logged-in'); btn.style.display = 'none'; }
+        }
+
+        async function setInternal() { if (!currentUser) return; try { await api('/api/user/set-internal', { method: 'POST', body: { username: currentUser.username } }); currentUser.type = 'internal'; updateLoginStatus(); showToast('已设为内部用户', 'success'); } catch (e) { showToast(e.message, 'error'); } }
+
+        function updateAccountList() {
+            const accounts = getLocalAccounts(), el = document.getElementById('accountList');
+            el.innerHTML = accounts.length === 0 ? '<div style="color:var(--text-muted);font-size:12px;">暂无</div>' : accounts.map(a => `<div class="account-item ${currentUser?.username === a.username ? 'current' : ''}" onclick="switchAccount('${esc(a.username)}')">${esc(a.username)}${currentUser?.username === a.username ? ' ✓' : ''}</div>`).join('');
+        }
+
+        document.addEventListener('keydown', e => { if (e.key === 'F1') { e.preventDefault(); document.getElementById('accountListSection').classList.toggle('visible'); } });
+
+        async function loadCommunityList() {
+            if (!currentUser) return;
+            try {
+                const { communities } = await api(`/api/communities?username=${encodeURIComponent(currentUser.username)}`);
+                const el = document.getElementById('communityList');
+                el.innerHTML = communities.length === 0 ? '<div class="empty-state"><div>暂无关注的社区</div></div>' : communities.map(c => `<div class="list-item ${currentCommunity?.id === c.id ? 'active' : ''} ${c.isBlocked ? 'blocked' : ''}" onclick="selectCommunity('${c.id}')" oncontextmenu="showCommunityMenu(event,'${c.id}',${c.isBlocked},${c.isPinned})"><div class="list-item-info"><div class="list-item-name">${esc(c.name)}</div><div class="list-item-id">#${c.id.slice(0,8)}</div></div><div class="list-item-badge">${c.isPinned ? '<span class="pin-icon">📌</span>' : ''}${c.unread > 0 ? `<span class="unread-count ${c.isBlocked ? 'muted' : ''}">${c.unread}</span>` : ''}</div></div>`).join('');
+            } catch (e) { showToast(e.message, 'error'); }
+        }
+
+        async function enterCommunity() {
+            if (!currentUser) return showToast('请先登录', 'error');
+            const name = document.getElementById('communitySearchInput').value.trim();
+            if (!name) return showToast('请输入社区名', 'error');
+            try { const { community } = await api('/api/communities/enter', { method: 'POST', body: { username: currentUser.username, communityName: name } }); document.getElementById('communitySearchInput').value = ''; loadCommunityList(); selectCommunity(community.id); } catch (e) { showToast(e.message, 'error'); }
+        }
+
+        async function selectCommunity(id) {
+            const { communities } = await api(`/api/communities?username=${encodeURIComponent(currentUser.username)}`);
+            currentCommunity = communities.find(c => c.id === id); currentTopic = null;
+            document.getElementById('currentCommunityName').textContent = currentCommunity?.name || ''; document.getElementById('createTopicBtn').style.display = 'block';
+            loadTopicList(); loadCommunityList();
+            document.getElementById('topicHeader').style.display = 'none'; document.getElementById('metaSections').style.display = 'none'; document.getElementById('replySection').style.display = 'none';
+            document.getElementById('floorList').innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><div>选择话题</div></div>';
+        }
+
+        function showCommunityMenu(e, id, blocked, pinned) { e.preventDefault(); e.stopPropagation(); showContextMenu(e, [{ text: '解除关注', action: () => communityAction(id, 'unfollow'), danger: true }, { text: blocked ? '取消屏蔽' : '屏蔽', action: () => communityAction(id, 'toggle_block') }, { text: pinned ? '解除置顶' : '置顶', action: () => communityAction(id, 'toggle_pin') }]); }
+        async function communityAction(id, action) { try { await api(`/api/communities/${id}/action`, { method: 'POST', body: { username: currentUser.username, action } }); if (action === 'unfollow' && currentCommunity?.id === id) currentCommunity = currentTopic = null; loadCommunityList(); } catch (e) { showToast(e.message, 'error'); } }
+
+        async function loadTopicList() {
+            if (!currentCommunity) return;
+            try {
+                const { topics } = await api(`/api/topics?username=${encodeURIComponent(currentUser.username)}&communityId=${currentCommunity.id}`);
+                const el = document.getElementById('topicList');
+                el.innerHTML = topics.length === 0 ? '<div class="empty-state"><div>暂无话题</div></div>' : topics.map(t => `<div class="list-item ${currentTopic?.id === t.id ? 'active' : ''} ${t.isBlocked ? 'blocked' : ''}" onclick="selectTopic('${t.id}')" oncontextmenu="showTopicMenu(event,'${t.id}',${t.isBlocked},${t.isPinned})"><div class="list-item-info"><div class="list-item-name">${esc(t.name)}</div><div class="list-item-id">#${t.id.slice(0,8)}</div></div><div class="list-item-badge">${t.isPinned ? '<span class="pin-icon">📌</span>' : ''}${t.unread > 0 ? `<span class="unread-count ${t.isBlocked ? 'muted' : ''}">${t.unread}</span>` : ''}</div></div>`).join('');
+            } catch (e) { showToast(e.message, 'error'); }
+        }
+
+        function createTopic() {
+            if (!currentCommunity) return;
+            openModal('创建话题', '<div class="form-group"><label class="form-label">话题名称</label><input type="text" id="newTopicName"></div>', [{ text: '取消', cls: 'btn-secondary', action: closeModalDirect }, { text: '创建', cls: 'btn-primary', action: async () => {
+                const name = document.getElementById('newTopicName').value.trim();
+                if (!name) return showToast('请输入名称', 'error');
+                try { const { topic } = await api('/api/topics', { method: 'POST', body: { username: currentUser.username, communityId: currentCommunity.id, name } }); closeModalDirect(); loadTopicList(); selectTopic(topic.id); } catch (e) { showToast(e.message, 'error'); }
+            }}]);
+        }
+
+        async function selectTopic(id) {
+            try {
+                const data = await api(`/api/topics/${id}?username=${encodeURIComponent(currentUser.username)}&communityId=${currentCommunity.id}`);
+                currentTopic = data.topic; topicDetails = data;
+                document.getElementById('topicHeader').style.display = 'block'; document.getElementById('topicTitle').textContent = currentTopic.name;
+                document.getElementById('topicMeta').textContent = `创建者: ${currentTopic.createdBy} | ${formatTime(currentTopic.createdAt)}`;
+                document.getElementById('metaSections').style.display = 'block'; document.getElementById('replySection').style.display = currentTopic.canWrite ? 'block' : 'none';
+                loadPermissionSection(); loadAnnouncementSection(); loadNoteSection(); loadAttachmentSection(); loadFloorList(); loadTopicList();
+                await api('/api/read', { method: 'POST', body: { username: currentUser.username, topicId: id } });
+            } catch (e) { showToast(e.message, 'error'); }
+        }
+
+        function showTopicMenu(e, id, blocked, pinned) { e.preventDefault(); e.stopPropagation(); showContextMenu(e, [{ text: blocked ? '取消屏蔽' : '屏蔽', action: () => topicAction(id, 'toggle_block') }, { text: pinned ? '解除置顶' : '置顶', action: () => topicAction(id, 'toggle_pin') }, { text: '重命名', action: () => renameTopic(id) }]); }
+
+        async function topicAction(id, action, data = {}) {
+            try { await api(`/api/topics/${id}/action`, { method: 'POST', body: { username: currentUser.username, communityId: currentCommunity.id, action, data } }); loadTopicList(); if (currentTopic?.id === id && ['update_permissions', 'update_announcement'].includes(action)) selectTopic(id); } catch (e) { showToast(e.message, 'error'); }
+        }
+
+        function renameTopic(id) {
+            openModal('重命名', '<div class="form-group"><label class="form-label">新名称</label><input type="text" id="renameInput"></div>', [{ text: '取消', cls: 'btn-secondary', action: closeModalDirect }, { text: '保存', cls: 'btn-primary', action: async () => {
+                const name = document.getElementById('renameInput').value.trim();
+                if (!name) return showToast('请输入名称', 'error');
+                await topicAction(id, 'rename', { name }); closeModalDirect();
+                if (currentTopic?.id === id) { currentTopic.name = name; document.getElementById('topicTitle').textContent = name; }
+            }}]);
+        }
+
+        async function loadFloorList() {
+            if (!currentTopic || !currentCommunity) return;
+            try {
+                const { floors } = await api(`/api/floors?topicId=${currentTopic.id}&communityId=${currentCommunity.id}`);
+                const el = document.getElementById('floorList');
+                el.innerHTML = floors.length === 0 ? '<div class="empty-state"><div class="empty-state-icon">💬</div><div>暂无内容</div></div>' : floors.map((f, i) => `<div class="floor-item ${f.isSystem ? 'system' : ''}"><div class="floor-header"><div class="floor-info"><span class="floor-number">#${i+1}</span><span class="floor-author">${esc(f.author)}</span></div><span class="floor-time">${formatTime(f.createdAt)}</span></div><div class="floor-content">${esc(f.content)}</div></div>`).join('');
+                el.scrollTop = el.scrollHeight;
+            } catch (e) { showToast(e.message, 'error'); }
+        }
+
+        async function sendReply() {
+            if (!currentTopic || !currentCommunity) return;
+            const input = document.getElementById('replyInput'), content = input.value.trim();
+            if (!content) return showToast('请输入内容', 'error');
+            try { await api('/api/floors', { method: 'POST', body: { username: currentUser.username, topicId: currentTopic.id, communityId: currentCommunity.id, content } }); input.value = ''; loadFloorList(); } catch (e) { showToast(e.message, 'error'); }
+        }
+
+        function permDisplay(s) { if (!s) return '无'; return s.split(',').map(p => { p = p.trim(); if (p === '__all_users__') return '所有用户'; if (p === '__all_internal__') return '所有内部用户'; if (p === '__myself__') return '我自己'; if (p.startsWith('group:')) return `[${p.slice(6)}]`; return p; }).join(', '); }
+
+        function loadPermissionSection() {
+            let html = ['read', 'write', 'announcement', 'meta'].map(t => `<div class="permission-row"><span class="permission-label">${{read:'阅读',write:'发言',announcement:'公告',meta:'元权限'}[t]}</span><span class="permission-value">${permDisplay(currentTopic['perm_'+t])}</span></div>`).join('');
+            if (currentTopic.canEditMeta) html += '<button class="btn btn-secondary btn-small" style="margin-top:10px" onclick="editPermissions()">编辑权限</button>';
+            document.getElementById('permissionContent').innerHTML = html;
+        }
+
+        function editPermissions() {
+            openModal('编辑权限', `<div class="form-group"><label class="form-label">阅读权限</label><input type="text" id="permRead" value="${currentTopic.perm_read||''}"><small style="color:var(--text-muted);font-size:11px">特殊值: __all_users__, __all_internal__, __myself__, group:组名</small></div><div class="form-group"><label class="form-label">发言权限</label><input type="text" id="permWrite" value="${currentTopic.perm_write||''}"></div><div class="form-group"><label class="form-label">公告权限</label><input type="text" id="permAnn" value="${currentTopic.perm_announcement||''}"></div><div class="form-group"><label class="form-label">元权限</label><input type="text" id="permMeta" value="${currentTopic.perm_meta||''}"></div>`,
+            [{ text: '取消', cls: 'btn-secondary', action: closeModalDirect }, { text: '保存', cls: 'btn-primary', action: async () => { await topicAction(currentTopic.id, 'update_permissions', { read: document.getElementById('permRead').value, write: document.getElementById('permWrite').value, announcement: document.getElementById('permAnn').value, meta: document.getElementById('permMeta').value }); closeModalDirect(); }}]);
+        }
+
+        function loadAnnouncementSection() {
+            let html = currentTopic.announcement ? `<div style="white-space:pre-wrap">${esc(currentTopic.announcement)}</div>` : '<div style="color:var(--text-muted)">暂无公告</div>';
+            if (currentTopic.canEditAnnouncement) html += '<button class="btn btn-secondary btn-small" style="margin-top:10px" onclick="editAnnouncement()">编辑公告</button>';
+            document.getElementById('announcementContent').innerHTML = html;
+        }
+
+        function editAnnouncement() {
+            openModal('编辑公告', `<div class="form-group"><label class="form-label">公告内容</label><textarea id="annInput" style="min-height:100px">${esc(currentTopic.announcement||'')}</textarea></div>`,
+            [{ text: '取消', cls: 'btn-secondary', action: closeModalDirect }, { text: '保存', cls: 'btn-primary', action: async () => { await topicAction(currentTopic.id, 'update_announcement', { announcement: document.getElementById('annInput').value }); closeModalDirect(); }}]);
+        }
+
+        function loadNoteSection() {
+            let html = topicDetails?.note ? `<div style="white-space:pre-wrap">${esc(topicDetails.note)}</div>` : '<div style="color:var(--text-muted)">暂无笔记</div>';
+            html += '<button class="btn btn-secondary btn-small" style="margin-top:10px" onclick="editNote()">编辑笔记</button>';
+            document.getElementById('noteContent').innerHTML = html;
+        }
+
+        function editNote() {
+            openModal('编辑笔记', `<div class="form-group"><label class="form-label">我的笔记（仅自己可见）</label><textarea id="noteInput" style="min-height:100px">${esc(topicDetails?.note||'')}</textarea></div>`,
+            [{ text: '取消', cls: 'btn-secondary', action: closeModalDirect }, { text: '保存', cls: 'btn-primary', action: async () => { try { await api('/api/notes', { method: 'POST', body: { username: currentUser.username, topicId: currentTopic.id, content: document.getElementById('noteInput').value } }); topicDetails.note = document.getElementById('noteInput').value; loadNoteSection(); closeModalDirect(); } catch (e) { showToast(e.message, 'error'); } }}]);
+        }
+
+        function loadAttachmentSection() {
+            const atts = topicDetails?.attachments || [];
+            document.getElementById('attachmentContent').innerHTML = atts.length === 0 ? '<div style="color:var(--text-muted)">暂无附件</div>' : atts.map(a => `<div class="attachment-item" onclick="window.open('/api/attachments/${encodeURIComponent(a.filename)}')"><span class="attachment-icon">📄</span><span class="attachment-name">${esc(a.originalName)}</span><span class="attachment-size">${formatSize(a.size)}</span></div>`).join('');
+        }
+
+        async function handleFileUpload(e) {
+            const file = e.target.files[0]; if (!file || !currentTopic || !currentCommunity) return;
+            const reader = new FileReader();
+            reader.onload = async (ev) => { try { await api('/api/attachments', { method: 'POST', body: { username: currentUser.username, topicId: currentTopic.id, communityId: currentCommunity.id, name: file.name, size: file.size, data: ev.target.result } }); selectTopic(currentTopic.id); showToast('附件已上传', 'success'); } catch (e) { showToast(e.message, 'error'); } };
+            reader.readAsDataURL(file); e.target.value = '';
+        }
+
+        async function openGroupModal() {
+            if (!currentUser) return showToast('请先登录', 'error');
+            try {
+                const { groups } = await api(`/api/groups?username=${encodeURIComponent(currentUser.username)}`);
+                let html = '<div style="margin-bottom:15px"><div style="display:flex;gap:8px"><input type="text" id="newGroupName" placeholder="新用户组名称" style="flex:1"><button class="btn btn-primary btn-small" onclick="createGroup()">创建</button></div></div><div class="group-list">';
+                html += groups.length === 0 ? '<div style="color:var(--text-muted);text-align:center;padding:20px">暂无自定义用户组</div>' : groups.map(g => `<div class="group-item"><div><div class="group-item-name">${esc(g.name)}</div><div class="group-item-members">${g.members.length} 个成员</div></div><div class="group-item-actions"><button class="btn btn-secondary btn-small" onclick="editGroup('${g.id}','${esc(g.name)}',${JSON.stringify(g.members).replace(/"/g,'&quot;')})">编辑</button><button class="btn btn-danger btn-small" onclick="deleteGroup('${g.id}')">删除</button></div></div>`).join('');
+                html += '</div>';
+                openModal('用户组管理', html, [{ text: '关闭', cls: 'btn-secondary', action: closeModalDirect }]);
+            } catch (e) { showToast(e.message, 'error'); }
+        }
+
+        async function createGroup() { const name = document.getElementById('newGroupName').value.trim(); if (!name) return showToast('请输入组名', 'error'); try { await api('/api/groups', { method: 'POST', body: { username: currentUser.username, name } }); openGroupModal(); } catch (e) { showToast(e.message, 'error'); } }
+
+        function editGroup(id, name, members) {
+            openModal(`编辑: ${name}`, `<div class="form-group"><label class="form-label">组名</label><input type="text" id="editGroupName" value="${esc(name)}"></div><div class="form-group"><label class="form-label">成员（逗号分隔）</label><textarea id="editGroupMembers" style="min-height:80px">${members.join(', ')}</textarea></div>`,
+            [{ text: '取消', cls: 'btn-secondary', action: openGroupModal }, { text: '保存', cls: 'btn-primary', action: async () => { try { await api(`/api/groups/${id}`, { method: 'PUT', body: { username: currentUser.username, name: document.getElementById('editGroupName').value.trim(), members: document.getElementById('editGroupMembers').value.split(',').map(s=>s.trim()).filter(s=>s) } }); openGroupModal(); } catch (e) { showToast(e.message, 'error'); } }}]);
+        }
+
+        async function deleteGroup(id) { try { await api(`/api/groups/${id}`, { method: 'DELETE', body: { username: currentUser.username } }); openGroupModal(); } catch (e) { showToast(e.message, 'error'); } }
+
+        async function openSearchModal() {
+            const q = document.getElementById('globalSearchInput').value.trim(); if (!q) return showToast('请输入搜索内容', 'error');
+            try {
+                const data = await api(`/api/search?username=${encodeURIComponent(currentUser.username)}&query=${encodeURIComponent(q)}`);
+                let html = '<div class="search-results">';
+                html += `<div class="search-category"><div class="search-category-title">社区 (${data.communities.length})</div>`;
+                html += data.communities.length === 0 ? '<div style="color:var(--text-muted)">无结果</div>' : data.communities.slice(0,10).map(c => `<div class="list-item" onclick="jumpToCommunity('${c.id}')" style="margin-bottom:5px"><div class="list-item-info"><div class="list-item-name">${highlight(c.name,q)}</div></div></div>`).join('');
+                html += '</div>';
+                html += `<div class="search-category"><div class="search-category-title">话题 (${data.topics.length})</div>`;
+                html += data.topics.length === 0 ? '<div style="color:var(--text-muted)">无结果</div>' : data.topics.slice(0,10).map(t => `<div class="list-item" onclick="jumpToTopic('${t.communityId}','${t.id}')" style="margin-bottom:5px"><div class="list-item-info"><div class="list-item-name">${highlight(t.name,q)}</div></div></div>`).join('');
+                html += '</div>';
+                html += `<div class="search-category"><div class="search-category-title">内容 (${data.floors.length})</div>`;
+                html += data.floors.length === 0 ? '<div style="color:var(--text-muted)">无结果</div>' : data.floors.slice(0,10).map(f => `<div class="list-item" onclick="jumpToTopic('${f.communityId}','${f.topicId}')" style="margin-bottom:5px"><div class="list-item-info"><div class="list-item-name" style="font-size:12px">${highlight(excerpt(f.content,q,50),q)}</div></div></div>`).join('');
+                html += '</div></div>';
+                openModal('搜索结果', html, [{ text: '关闭', cls: 'btn-secondary', action: closeModalDirect }]);
+            } catch (e) { showToast(e.message, 'error'); }
+        }
+
+        async function jumpToCommunity(id) { closeModalDirect(); await selectCommunity(id); }
+        async function jumpToTopic(cid, tid) { closeModalDirect(); if (currentCommunity?.id !== cid) await selectCommunity(cid); setTimeout(() => selectTopic(tid), 100); }
+
+        function toggleMetaSection(id) { const el = document.getElementById(id); el.classList.toggle('expanded'); el.querySelector('.meta-section-toggle').textContent = el.classList.contains('expanded') ? '▲' : '▼'; }
+        function showContextMenu(e, items) { const menu = document.getElementById('contextMenu'); menu.innerHTML = items.map((item, i) => `<div class="context-menu-item ${item.danger?'danger':''}" data-idx="${i}">${item.text}</div>`).join(''); menu.querySelectorAll('.context-menu-item').forEach((el, i) => { el.onclick = () => { hideContextMenu(); items[i].action(); }; }); menu.style.left = e.pageX + 'px'; menu.style.top = e.pageY + 'px'; menu.classList.add('visible'); setTimeout(() => document.addEventListener('click', hideContextMenu, { once: true }), 0); }
+        function hideContextMenu() { document.getElementById('contextMenu').classList.remove('visible'); }
+        function openModal(title, content, actions) { document.getElementById('modalTitle').textContent = title; document.getElementById('modalContent').innerHTML = content; document.getElementById('modalActions').innerHTML = actions.map((a, i) => `<button class="btn ${a.cls}" data-idx="${i}">${a.text}</button>`).join(''); document.getElementById('modalActions').querySelectorAll('button').forEach((btn, i) => { btn.onclick = actions[i].action; }); document.getElementById('modalOverlay').classList.add('visible'); }
+        function closeModal(e) { if (e.target === document.getElementById('modalOverlay')) closeModalDirect(); }
+        function closeModalDirect() { document.getElementById('modalOverlay').classList.remove('visible'); }
+        function showToast(msg, type = 'success') { const t = document.getElementById('toast'); t.textContent = msg; t.className = `toast visible ${type}`; setTimeout(() => t.classList.remove('visible'), 3000); }
+        function triggerNotification() { const orig = document.title; let flash = false; const iv = setInterval(() => { document.title = (flash = !flash) ? '【新消息】内部论坛' : orig; }, 500); setTimeout(() => { clearInterval(iv); document.title = orig; }, 5000); }
+
+        function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+        function highlight(text, q) { return esc(text).replace(new RegExp(`(${esc(q).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`,'gi'), '<mark style="background:var(--accent-orange);color:#000;padding:0 2px">$1</mark>'); }
+        function excerpt(text, q, len) { const i = text.toLowerCase().indexOf(q.toLowerCase()); if (i < 0) return text.slice(0, len*2); const s = Math.max(0, i-len), e = Math.min(text.length, i+q.length+len); return (s>0?'...':'')+text.slice(s,e)+(e<text.length?'...':''); }
+        function formatTime(ts) { return new Date(ts).toLocaleString('zh-CN', { year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit' }); }
+        function formatSize(b) { if (b < 1024) return b+' B'; if (b < 1048576) return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(1)+' MB'; }
+
+        connectWebSocket(); updateAccountList();
+        document.getElementById('replyInput').addEventListener('keydown', e => { if (e.key === 'Enter' && e.ctrlKey) sendReply(); });
+        document.getElementById('globalSearchInput').addEventListener('keydown', e => { if (e.key === 'Enter') openSearchModal(); });
+        document.getElementById('communitySearchInput').addEventListener('keydown', e => { if (e.key === 'Enter') enterCommunity(); });
+    </script>
+</body>
+</html>

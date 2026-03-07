@@ -1,0 +1,23 @@
+{
+  "id": "0",
+  "communityId": "0",
+  "name": "欢迎话题",
+  "createdBy": "执悲",
+  "createdAt": 1767427964661,
+  "perm_read": "__all_users__",
+  "perm_write": "__all_users__",
+  "perm_announcement": "执悲",
+  "perm_meta": "执悲",
+  "announcement": "",
+  "floors": [
+    {
+      "id": "0",
+      "author": "系统",
+      "content": "话题由 执悲 创建\n话题名称：欢迎话题",
+      "isSystem": true,
+      "createdAt": 1767427964661
+    }
+  ],
+  "attachments": [],
+  "nextFloorId": 1
+}

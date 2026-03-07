@@ -1,0 +1,60 @@
+{
+  "users": {
+    "执悲": {
+      "username": "执悲",
+      "password": "123",
+      "type": "internal",
+      "createdAt": 1767427937382
+    },
+    "执悲22": {
+      "username": "执悲22",
+      "password": "123",
+      "type": "external",
+      "createdAt": 1767428761644
+    }
+  },
+  "userGroups": {
+    "执悲": [
+      {
+        "id": "qnnevbbwbmjy10yy6",
+        "name": "11",
+        "members": []
+      }
+    ],
+    "执悲22": []
+  },
+  "userData": {
+    "执悲": {
+      "followedCommunities": [
+        "0",
+        "1"
+      ],
+      "blockedCommunities": [],
+      "pinnedCommunities": [],
+      "blockedTopics": [],
+      "pinnedTopics": [],
+      "notes": {}
+    },
+    "执悲22": {
+      "followedCommunities": [
+        "0"
+      ],
+      "blockedCommunities": [],
+      "pinnedCommunities": [],
+      "blockedTopics": [],
+      "pinnedTopics": [],
+      "notes": {}
+    }
+  },
+  "readRecords": {
+    "执悲": {
+      "0": 1767428634531,
+      "1": 1767428875322
+    },
+    "执悲22": {
+      "0": 1767428814006,
+      "1": 1767428813189
+    }
+  },
+  "nextCommunityId": 2
+}

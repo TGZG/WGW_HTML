@@ -1,0 +1,652 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #0a0a12;
+    --bg-panel: rgba(15, 20, 35, 0.95);
+    --border-glow: #4a9eff;
+    --text-primary: #e8e8e8;
+    --text-gold: #ffd700;
+    --text-spirit: #00ffcc;
+    --hp-red: #ff4444;
+    --hunger-orange: #ff9944;
+    --spirit-blue: #4488ff;
+    --exp-purple: #aa44ff;
+}
+
+body {
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'ZCOOL KuaiLe', cursive;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+#gameContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 顶部HUD */
+#hud {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--bg-panel);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(74, 158, 255, 0.3);
+    box-shadow: 0 0 20px rgba(74, 158, 255, 0.1);
+    min-width: 220px;
+}
+
+.stat-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.stat-bar .label {
+    width: 50px;
+    text-align: right;
+}
+
+.stat-bar .bar-container {
+    flex: 1;
+    height: 16px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.stat-bar .bar-fill {
+    height: 100%;
+    transition: width 0.3s;
+    border-radius: 8px;
+}
+
+.stat-bar .bar-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    line-height: 16px;
+    text-shadow: 1px 1px 2px black;
+}
+
+.bar-hp { background: linear-gradient(90deg, #cc2222, #ff4444); }
+.bar-hunger { background: linear-gradient(90deg, #cc6622, #ff9944); }
+.bar-spirit { background: linear-gradient(90deg, #2244aa, #4488ff); }
+.bar-exp { background: linear-gradient(90deg, #6622aa, #aa44ff); }
+
+#playerInfo {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#playerInfo span {
+    color: var(--text-gold);
+}
+
+/* 小地图 */
+#minimap {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 200px;
+    height: 200px;
+    background: var(--bg-panel);
+    border: 1px solid rgba(74, 158, 255, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 100;
+}
+
+#minimapCanvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* 主游戏画布 */
+#gameCanvas {
+    flex: 1;
+    display: block;
+}
+
+/* 消息日志 */
+#messageLog {
+    position: absolute;
+    bottom: 60px;
+    left: 10px;
+    width: 400px;
+    max-height: 150px;
+    overflow-y: auto;
+    background: var(--bg-panel);
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(74, 158, 255, 0.2);
+    font-size: 13px;
+    z-index: 100;
+}
+
+#messageLog::-webkit-scrollbar {
+    width: 6px;
+}
+
+#messageLog::-webkit-scrollbar-thumb {
+    background: rgba(74, 158, 255, 0.3);
+    border-radius: 3px;
+}
+
+.msg {
+    padding: 3px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.msg-combat { color: #ff6666; }
+.msg-loot { color: #ffcc00; }
+.msg-system { color: #66ccff; }
+.msg-level { color: #ff66ff; font-size: 15px; }
+
+/* 操作提示 */
+#controls {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: var(--bg-panel);
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(74, 158, 255, 0.2);
+    font-size: 12px;
+    z-index: 100;
+}
+
+#controls kbd {
+    background: rgba(255,255,255,0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin: 0 2px;
+}
+
+/* 背包面板 */
+#inventoryPanel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 500px;
+    background: var(--bg-panel);
+    border: 2px solid var(--border-glow);
+    border-radius: 15px;
+    padding: 20px;
+    display: none;
+    z-index: 200;
+    box-shadow: 0 0 50px rgba(74, 158, 255, 0.3);
+}
+
+#inventoryPanel.show { display: flex; }
+
+#inventoryPanel h2 {
+    font-family: 'Ma Shan Zheng', cursive;
+    color: var(--text-gold);
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.panel-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-section:first-child {
+    border-right: 1px solid rgba(255,255,255,0.1);
+    padding-right: 15px;
+    margin-right: 15px;
+}
+
+#inventoryGrid {
+    display: grid;
+    grid-template-columns: repeat(6, 50px);
+    gap: 5px;
+    flex: 1;
+    overflow-y: auto;
+    align-content: start;
+}
+
+.inv-slot {
+    width: 50px;
+    height: 50px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.inv-slot:hover {
+    border-color: var(--border-glow);
+    background: rgba(74, 158, 255, 0.1);
+}
+
+.inv-slot .item-icon {
+    font-size: 24px;
+}
+
+.inv-slot .item-count {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: 10px;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+
+#volumeInfo {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #aaa;
+}
+
+/* 制造面板 */
+#craftingList {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.recipe-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 5px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.recipe-item:hover {
+    background: rgba(74, 158, 255, 0.2);
+}
+
+.recipe-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.recipe-item .icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.recipe-item .info {
+    flex: 1;
+}
+
+.recipe-item .name {
+    font-size: 14px;
+    color: var(--text-gold);
+}
+
+.recipe-item .materials {
+    font-size: 11px;
+    color: #888;
+}
+
+/* 交易面板 */
+#tradePanel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 550px;
+    background: var(--bg-panel);
+    border: 2px solid var(--border-glow);
+    border-radius: 15px;
+    padding: 20px;
+    display: none;
+    z-index: 200;
+    box-shadow: 0 0 50px rgba(74, 158, 255, 0.3);
+}
+
+#tradePanel.show { display: flex; }
+
+#tradePanel h2 {
+    font-family: 'Ma Shan Zheng', cursive;
+    color: var(--text-gold);
+    font-size: 24px;
+}
+
+#itemList {
+    width: 200px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    padding-right: 15px;
+    overflow-y: auto;
+}
+
+.trade-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.trade-item:hover, .trade-item.selected {
+    background: rgba(74, 158, 255, 0.3);
+}
+
+#orderBook {
+    flex: 1;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-section {
+    flex: 1;
+    margin-bottom: 10px;
+}
+
+.order-section h3 {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.order-list {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.order-row {
+    display: flex;
+    padding: 6px 10px;
+    background: rgba(0,0,0,0.2);
+    margin-bottom: 3px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.order-row.buy { border-left: 3px solid #44ff44; }
+.order-row.sell { border-left: 3px solid #ff4444; }
+
+.order-row span { flex: 1; }
+
+.order-row button {
+    background: rgba(74, 158, 255, 0.5);
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.order-row button:hover {
+    background: rgba(74, 158, 255, 0.8);
+}
+
+#tradeActions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#tradeActions input {
+    width: 80px;
+    padding: 8px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 5px;
+    color: white;
+    font-family: inherit;
+}
+
+#tradeActions button {
+    padding: 8px 20px;
+    background: linear-gradient(180deg, #4a9eff, #2266cc);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+#tradeActions button:hover {
+    background: linear-gradient(180deg, #6ab0ff, #3377dd);
+}
+
+/* 关闭按钮 */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: rgba(255,0,0,0.3);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    background: rgba(255,0,0,0.5);
+}
+
+/* 技能栏 */
+#skillBar {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+    background: var(--bg-panel);
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(74, 158, 255, 0.2);
+    z-index: 100;
+}
+
+.skill-slot {
+    width: 50px;
+    height: 50px;
+    background: rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.skill-slot .icon {
+    font-size: 24px;
+}
+
+.skill-slot .key {
+    position: absolute;
+    bottom: 2px;
+    font-size: 10px;
+    color: #888;
+}
+
+.skill-slot .cooldown {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    display: none;
+}
+
+.skill-slot.on-cd .cooldown {
+    display: flex;
+}
+
+/* 死亡画面 */
+#deathScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 300;
+}
+
+#deathScreen.show { display: flex; }
+
+#deathScreen h1 {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 72px;
+    color: #ff4444;
+    text-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+    margin-bottom: 20px;
+}
+
+#deathScreen p {
+    font-size: 18px;
+    color: #888;
+    margin-bottom: 30px;
+}
+
+#deathScreen button {
+    padding: 15px 40px;
+    font-size: 20px;
+    font-family: 'Ma Shan Zheng', cursive;
+    background: linear-gradient(180deg, #aa2222, #661111);
+    border: 2px solid #ff4444;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+#deathScreen button:hover {
+    background: linear-gradient(180deg, #cc3333, #882222);
+}
+
+/* 建造面板 */
+#buildPanel {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-panel);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(74, 158, 255, 0.3);
+    display: none;
+    z-index: 100;
+}
+
+#buildPanel.show { display: flex; gap: 10px; }
+
+.build-option {
+    width: 60px;
+    height: 60px;
+    background: rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.build-option:hover {
+    border-color: var(--border-glow);
+}
+
+.build-option .icon {
+    font-size: 28px;
+}
+
+/* 游戏标题 */
+#gameTitle {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 28px;
+    color: var(--text-gold);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    z-index: 100;
+}
+
+/* Tooltip */
+#tooltip {
+    position: absolute;
+    background: rgba(10, 10, 20, 0.95);
+    border: 1px solid var(--border-glow);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 12px;
+    max-width: 200px;
+    pointer-events: none;
+    z-index: 400;
+    display: none;
+}
+
+#tooltip.show { display: block; }
+
+#tooltip .title {
+    color: var(--text-gold);
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+#tooltip .desc {
+    color: #aaa;
+}

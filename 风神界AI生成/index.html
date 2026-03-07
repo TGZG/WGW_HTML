@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>风神界 - 玄幻沙盒Demo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&display=swap');
+        @import url('CSS.css');
+    </style>
+</head>
+<body>
+<div id="gameContainer">
+    <div id="gameTitle">⚔️ 风神界 ⚔️</div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- HUD -->
+    <div id="hud">
+        <div class="stat-bar">
+            <span class="label">❤️ 生命</span>
+            <div class="bar-container">
+                <div class="bar-fill bar-hp" id="hpBar"></div>
+                <div class="bar-text" id="hpText">100/100</div>
+            </div>
+        </div>
+        <div class="stat-bar">
+            <span class="label">🍖 饱食</span>
+            <div class="bar-container">
+                <div class="bar-fill bar-hunger" id="hungerBar"></div>
+                <div class="bar-text" id="hungerText">100/100</div>
+            </div>
+        </div>
+        <div class="stat-bar">
+            <span class="label">💠 灵气</span>
+            <div class="bar-container">
+                <div class="bar-fill bar-spirit" id="spiritBar"></div>
+                <div class="bar-text" id="spiritText">50/50</div>
+            </div>
+        </div>
+        <div class="stat-bar">
+            <span class="label">✨ 修为</span>
+            <div class="bar-container">
+                <div class="bar-fill bar-exp" id="expBar"></div>
+                <div class="bar-text" id="expText">0/100</div>
+            </div>
+        </div>
+        <div id="playerInfo">
+            境界: <span id="realmText">凡境</span> |
+            力量: <span id="strengthText">10</span> |
+            护甲: <span id="armorText">0</span>
+        </div>
+    </div>
+
+    <!-- 小地图 -->
+    <div id="minimap">
+        <canvas id="minimapCanvas"></canvas>
+    </div>
+
+    <!-- 消息日志 -->
+    <div id="messageLog"></div>
+
+    <!-- 操作提示 -->
+    <div id="controls">
+        <kbd>WASD</kbd> 移动 |
+        <kbd>Shift</kbd> 疾跑 |
+        <kbd>E</kbd> 采集 |
+        <kbd>空格</kbd> 普攻 |
+        <kbd>1-4</kbd> 技能 |
+        <kbd>5</kbd> 测试+金币 |
+        <kbd>B</kbd> 背包 |
+        <kbd>Q</kbd> 交易 |
+        <kbd>V</kbd> 建造
+    </div>
+
+    <!-- 技能栏 -->
+    <div id="skillBar">
+        <div class="skill-slot" data-skill="attack">
+            <span class="icon">⚔️</span>
+            <span class="key">空格</span>
+            <div class="cooldown">0</div>
+        </div>
+        <div class="skill-slot" data-skill="heavyStrike">
+            <span class="icon">💥</span>
+            <span class="key">1</span>
+            <div class="cooldown">0</div>
+        </div>
+        <div class="skill-slot" data-skill="whirlwind">
+            <span class="icon">🌪️</span>
+            <span class="key">2</span>
+            <div class="cooldown">0</div>
+        </div>
+        <div class="skill-slot" data-skill="heal">
+            <span class="icon">💚</span>
+            <span class="key">3</span>
+            <div class="cooldown">0</div>
+        </div>
+        <div class="skill-slot" data-skill="meditate">
+            <span class="icon">🧘</span>
+            <span class="key">4</span>
+            <div class="cooldown">0</div>
+        </div>
+    </div>
+
+    <!-- 建造面板 -->
+    <div id="buildPanel">
+        <div class="build-option" data-build="wall">
+            <span class="icon">🧱</span>
+            <span>城墙</span>
+        </div>
+        <div class="build-option" data-build="chest">
+            <span class="icon">📦</span>
+            <span>箱子</span>
+        </div>
+    </div>
+
+    <!-- 背包面板 -->
+    <div id="inventoryPanel">
+        <button class="close-btn" onclick="game.toggleInventory()">×</button>
+        <div class="panel-section">
+            <h2>📦 背包</h2>
+            <div id="inventoryGrid"></div>
+            <div id="volumeInfo">容量: 0/100</div>
+        </div>
+        <div class="panel-section">
+            <h2>⚒️ 制造</h2>
+            <div id="craftingList"></div>
+        </div>
+    </div>
+
+    <!-- 交易面板 -->
+    <div id="tradePanel">
+        <button class="close-btn" onclick="game.toggleTrade()">×</button>
+        <div id="itemList">
+            <h2>📜 商品</h2>
+        </div>
+        <div id="orderBook">
+            <h2>📊 交易所</h2>
+            <div class="order-section">
+                <h3>🟢 买单</h3>
+                <div class="order-list" id="buyOrders"></div>
+            </div>
+            <div class="order-section">
+                <h3>🔴 卖单</h3>
+                <div class="order-list" id="sellOrders"></div>
+            </div>
+            <div id="tradeActions">
+                <span>数量:</span>
+                <input type="number" id="tradeQty" value="1" min="1">
+                <span>价格:</span>
+                <input type="number" id="tradePrice" value="10" min="1">
+                <button onclick="game.placeBuyOrder()">挂买单</button>
+                <button onclick="game.placeSellOrder()">挂卖单</button>
+                <span style="margin-left:20px">金币: <span id="goldDisplay">0</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 死亡画面 -->
+    <div id="deathScreen">
+        <h1>魂飞魄散</h1>
+        <p>你的修行之路在此终结...</p>
+        <button onclick="game.respawn()">重新开始</button>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="tooltip">
+        <div class="title"></div>
+        <div class="desc"></div>
+    </div>
+</div>
+
+<script>
+    // ==================== 游戏配置 ====================
+    const CONFIG = {
+        MAP_SIZE: 1000,
+        TILE_SIZE: 32,
+        PLAYER_SPEED: 5,
+        PLAYER_SPRINT_SPEED: 15,
+        VIEW_TILES_X: 25,
+        VIEW_TILES_Y: 18,
+        MAX_INVENTORY_VOLUME: 100,
+        HUNGER_DECAY_RATE: 0.5, // 每秒
+        HUNGER_DAMAGE: 5, // 饱食为0时每秒伤害
+    };
+
+    // 境界配置
+    const REALMS = [
+        { name: '凡境', expRequired: 0, bonusStrength: 0 },
+        { name: '炼体境', expRequired: 100, bonusStrength: 10 },
+        { name: '炼气境', expRequired: 300, bonusStrength: 25 },
+        { name: '筑基境', expRequired: 600, bonusStrength: 50 },
+        { name: '金丹境', expRequired: 1000, bonusStrength: 100 },
+        { name: '元婴境', expRequired: 2000, bonusStrength: 200 },
+    ];
+
+    // 物品定义
+    const ITEMS = {
+        wood: { name: '木材', icon: '🌳', volume: 1, desc: '普通木材，可用于建造' },
+        stone: { name: '矿石', icon: '💎', volume: 2, desc: '坚硬的石头' },
+        herb: { name: '灵草', icon: '🌿', volume: 0.5, desc: '蕴含灵气的草药' },
+        fruit: { name: '灵果', icon: '🍎', volume: 0.5, desc: '可以恢复饱食度', useEffect: (p) => { p.hunger = Math.min(p.maxHunger, p.hunger + 20); return '恢复20点饱食度'; }},
+        meat: { name: '兽肉', icon: '🍖', volume: 1, desc: '野兽的肉' },
+        hide: { name: '兽皮', icon: '🦴', volume: 1, desc: '可以制作护甲' },
+        bigu_dan: { name: '辟谷丹', icon: '💊', volume: 0.2, desc: '服用后大幅恢复饱食度', useEffect: (p) => { p.hunger = p.maxHunger; return '饱食度完全恢复！'; }},
+        healing_dan: { name: '疗伤丹', icon: '💉', volume: 0.2, desc: '服用后恢复大量生命', useEffect: (p) => { p.hp = Math.min(p.maxHp, p.hp + 50); return '恢复50点生命！'; }},
+        ling_dan: { name: '灵丹', icon: '✨', volume: 0.2, desc: '服用后增加修为', useEffect: (p) => { p.exp += 50; return '获得50点修为！'; }},
+        gold: { name: '金币', icon: '💰', volume: 0, desc: '通用货币' },
+        wall: { name: '城墙', icon: '🧱', volume: 5, desc: '可以建造城墙' },
+        chest: { name: '箱子', icon: '📦', volume: 10, desc: '可以存放物品' },
+    };
+
+    // 配方定义
+    const RECIPES = [
+        { id: 'wall', result: 'wall', resultQty: 1, materials: { wood: 10, stone: 5 } },
+        { id: 'chest', result: 'chest', resultQty: 1, materials: { wood: 20 } },
+        { id: 'bigu_dan', result: 'bigu_dan', resultQty: 1, materials: { herb: 3, fruit: 2 } },
+        { id: 'healing_dan', result: 'healing_dan', resultQty: 1, materials: { herb: 5, meat: 2 } },
+    ];
+
+    // 技能定义
+    const SKILLS = {
+        attack: { name: '普攻', type: 'martial', cd: 0.5, value: 5, ratio: 0.5, range: 1.5 },
+        heavyStrike: { name: '重击', type: 'martial', cd: 3, value: 20, ratio: 1.5, range: 1.5 },
+        whirlwind: { name: '旋风斩', type: 'martial', cd: 5, value: 15, ratio: 1, range: 2, aoe: true },
+        heal: { name: '血法·治愈', type: 'blood', cd: 8, value: 30, spiritCost: 20 },
+        meditate: { name: '冥想', type: 'blood', cd: 15, value: 20, spiritCost: 0, restoreSpirit: true },
+    };
+
+    // 怪物定义
+    const MONSTERS = {
+        boar: { name: '野猪', icon: '🐗', hp: 30, damage: 5, speed: 2, exp: 15, drops: [{ item: 'meat', qty: 1, chance: 0.8 }, { item: 'hide', qty: 1, chance: 0.5 }] },
+        wolf: { name: '青狼', icon: '🐺', hp: 80, damage: 25, speed: 6, exp: 50, drops: [{ item: 'meat', qty: 2, chance: 1 }, { item: 'hide', qty: 2, chance: 0.7 }] },
+        tiger: { name: '妖虎', icon: '🐅', hp: 150, damage: 40, speed: 4, exp: 100, drops: [{ item: 'meat', qty: 3, chance: 1 }, { item: 'hide', qty: 3, chance: 0.8 }] },
+    };
+
+    // ==================== 游戏类 ====================
+    class Game {
+        constructor() {
+            this.canvas = document.getElementById('gameCanvas');
+            this.ctx = this.canvas.getContext('2d');
+            this.minimapCanvas = document.getElementById('minimapCanvas');
+            this.minimapCtx = this.minimapCanvas.getContext('2d');
+
+            this.resize();
+            window.addEventListener('resize', () => this.resize());
+
+            this.keys = {};
+            this.lastTime = 0;
+            this.running = true;
+
+            this.initWorld();
+            this.initPlayer();
+            this.initNPCs();
+            this.initMarket();
+            this.setupInput();
+            this.updateUI();
+
+            this.log('欢迎来到风神界！开始你的修仙之旅吧。', 'system');
+            this.log('提示：按E采集资源，按Q在城区打开交易面板。', 'system');
+
+            requestAnimationFrame((t) => this.gameLoop(t));
+        }
+
+        resize() {
+            this.canvas.width = window.innerWidth;
+            this.canvas.height = window.innerHeight;
+            this.minimapCanvas.width = 200;
+            this.minimapCanvas.height = 200;
+        }
+
+        // ==================== 世界生成 ====================
+        initWorld() {
+            this.map = [];
+            this.resources = [];
+            this.buildings = [];
+            this.monsters = [];
+            this.zones = [];
+
+            // 初始化地图 (0=荒地, 1=城区, 2=林区)
+            for (let y = 0; y < CONFIG.MAP_SIZE; y++) {
+                this.map[y] = [];
+                for (let x = 0; x < CONFIG.MAP_SIZE; x++) {
+                    this.map[y][x] = { type: 0, wall: false };
+                }
+            }
+
+            // 生成城区 (5个)
+            const cities = [
+                { x: 500, y: 500, name: '中央城' },
+                { x: 150, y: 150, name: '青木城' },
+                { x: 850, y: 150, name: '赤火城' },
+                { x: 150, y: 850, name: '玄水城' },
+                { x: 850, y: 850, name: '厚土城' },
+            ];
+
+            cities.forEach(city => {
+                const zone = { type: 'city', x: city.x - 50, y: city.y - 50, w: 100, h: 100, name: city.name };
+                this.zones.push(zone);
+
+                for (let dy = -50; dy < 50; dy++) {
+                    for (let dx = -50; dx < 50; dx++) {
+                        const mx = city.x + dx;
+                        const my = city.y + dy;
+                        if (mx >= 0 && mx < CONFIG.MAP_SIZE && my >= 0 && my < CONFIG.MAP_SIZE) {
+                            this.map[my][mx].type = 1;
+                            // 城墙
+                            if (Math.abs(dx) >= 48 || Math.abs(dy) >= 48) {
+                                this.map[my][mx].wall = true;
+                            }
+                        }
+                    }
+                }
+
+                // 城门 - 穿透3层城墙
+                for (let i = -3; i <= 3; i++) {
+                    for (let layer = 0; layer < 3; layer++) {
+                        // 北门
+                        const ny = city.y - 50 + layer;
+                        if (ny >= 0 && ny < CONFIG.MAP_SIZE && city.x + i >= 0 && city.x + i < CONFIG.MAP_SIZE) {
+                            this.map[ny][city.x + i].wall = false;
+                        }
+                        // 南门
+                        const sy = city.y + 49 - layer;
+                        if (sy >= 0 && sy < CONFIG.MAP_SIZE && city.x + i >= 0 && city.x + i < CONFIG.MAP_SIZE) {
+                            this.map[sy][city.x + i].wall = false;
+                        }
+                        // 西门
+                        const wx = city.x - 50 + layer;
+                        if (wx >= 0 && wx < CONFIG.MAP_SIZE && city.y + i >= 0 && city.y + i < CONFIG.MAP_SIZE) {
+                            this.map[city.y + i][wx].wall = false;
+                        }
+                        // 东门
+                        const ex = city.x + 49 - layer;
+                        if (ex >= 0 && ex < CONFIG.MAP_SIZE && city.y + i >= 0 && city.y + i < CONFIG.MAP_SIZE) {
+                            this.map[city.y + i][ex].wall = false;
+                        }
+                    }
+                }
+            });
+
+            // 生成林区 (10个)
+            for (let i = 0; i < 10; i++) {
+                let fx, fy;
+                let valid = false;
+                while (!valid) {
+                    fx = Math.floor(Math.random() * (CONFIG.MAP_SIZE - 60)) + 30;
+                    fy = Math.floor(Math.random() * (CONFIG.MAP_SIZE - 60)) + 30;
+                    valid = true;
+                    // 检查是否与城区重叠
+                    for (const zone of this.zones) {
+                        if (this.rectsOverlap(fx - 15, fy - 15, 30, 30, zone.x, zone.y, zone.w, zone.h)) {
+                            valid = false;
+                            break;
+                        }
+                    }
+                }
+
+                const zone = { type: 'forest', x: fx - 15, y: fy - 15, w: 30, h: 30, name: `林区${i + 1}` };
+                this.zones.push(zone);
+
+                for (let dy = -15; dy < 15; dy++) {
+                    for (let dx = -15; dx < 15; dx++) {
+                        const mx = fx + dx;
+                        const my = fy + dy;
+                        if (mx >= 0 && mx < CONFIG.MAP_SIZE && my >= 0 && my < CONFIG.MAP_SIZE) {
+                            this.map[my][mx].type = 2;
+                        }
+                    }
+                }
+
+                // 生成资源
+                this.spawnForestResources(zone);
+                // 生成怪物
+                this.spawnForestMonsters(zone);
+            }
+        }
+
+        spawnForestResources(zone) {
+            const types = ['tree', 'herb', 'fruit', 'stone'];
+            for (let i = 0; i < 20; i++) {
+                const rx = zone.x + Math.floor(Math.random() * zone.w);
+                const ry = zone.y + Math.floor(Math.random() * zone.h);
+                const type = types[Math.floor(Math.random() * types.length)];
+                this.resources.push({ x: rx, y: ry, type, hp: 3, zone });
+            }
+        }
+
+        spawnForestMonsters(zone) {
+            const types = ['boar', 'boar', 'boar', 'wolf'];
+            for (let i = 0; i < 5; i++) {
+                const mx = zone.x + Math.floor(Math.random() * zone.w);
+                const my = zone.y + Math.floor(Math.random() * zone.h);
+                const type = types[Math.floor(Math.random() * types.length)];
+                const monsterDef = MONSTERS[type];
+                this.monsters.push({
+                    x: mx, y: my,
+                    type,
+                    ...monsterDef,
+                    currentHp: monsterDef.hp,
+                    targetX: mx, targetY: my,
+                    wanderTimer: 0,
+                    aggroTarget: null,
+                    zone
+                });
+            }
+        }
+
+        rectsOverlap(x1, y1, w1, h1, x2, y2, w2, h2) {
+            return x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2;
+        }
+
+        // ==================== 玩家初始化 ====================
+        initPlayer() {
+            // 找一个城区作为出生点
+            const startCity = this.zones.find(z => z.type === 'city');
+
+            this.player = {
+                x: startCity.x + 50,
+                y: startCity.y + 50,
+                hp: 100,
+                maxHp: 100,
+                hunger: 100,
+                maxHunger: 100,
+                spirit: 50,
+                maxSpirit: 50,
+                strength: 10,
+                armor: 0,
+                exp: 0,
+                level: 0,
+                gold: 0,
+                inventory: [],
+                skillCooldowns: {},
+            };
+        }
+
+        // ==================== NPC初始化 ====================
+        initNPCs() {
+            this.npcs = [];
+
+            // 每个城区生成丹师
+            this.zones.filter(z => z.type === 'city').forEach(city => {
+                for (let i = 0; i < 3; i++) {
+                    this.npcs.push({
+                        type: 'danshi',
+                        name: `丹师${this.npcs.length + 1}`,
+                        x: city.x + 20 + Math.random() * 60,
+                        y: city.y + 20 + Math.random() * 60,
+                        icon: '👨‍🔬',
+                        zone: city
+                    });
+                }
+            });
+
+            // 林区生成散修
+            this.zones.filter(z => z.type === 'forest').forEach(forest => {
+                for (let i = 0; i < 2; i++) {
+                    this.npcs.push({
+                        type: 'sanxiu',
+                        name: `散修${this.npcs.length + 1}`,
+                        x: forest.x + Math.random() * forest.w,
+                        y: forest.y + Math.random() * forest.h,
+                        icon: '🧑‍🌾',
+                        zone: forest,
+                        targetX: 0, targetY: 0,
+                        wanderTimer: 0
+                    });
+                }
+            });
+
+            // 一些魔修在野外游荡
+            for (let i = 0; i < 5; i++) {
+                const forest = this.zones.filter(z => z.type === 'forest')[Math.floor(Math.random() * 10)];
+                this.npcs.push({
+                    type: 'moxiu',
+                    name: `魔修${i + 1}`,
+                    x: forest.x + Math.random() * forest.w,
+                    y: forest.y + Math.random() * forest.h,
+                    icon: '👹',
+                    zone: forest,
+                    hp: 200,
+                    damage: 30,
+                    targetX: 0, targetY: 0,
+                    wanderTimer: 0
+                });
+            }
+        }
+
+        // ==================== 市场初始化 ====================
+        initMarket() {
+            this.market = {
+                orders: [],
+                selectedItem: 'wood'
+            };
+
+            // NPC挂买卖单
+            const tradeItems = ['wood', 'stone', 'herb', 'fruit', 'meat', 'hide', 'bigu_dan', 'healing_dan', 'ling_dan'];
+
+            // 丹师挂买单（收购原材料）和卖单（出售丹药）
+            tradeItems.forEach(itemId => {
+                const item = ITEMS[itemId];
+                if (!item) return;
+
+                // 基础价格
+                let basePrice = 10;
+                if (itemId === 'bigu_dan') basePrice = 30;
+                else if (itemId === 'healing_dan') basePrice = 50;
+                else if (itemId === 'ling_dan') basePrice = 100;
+                else if (itemId === 'hide') basePrice = 15;
+                else if (itemId === 'meat') basePrice = 8;
+                else if (itemId === 'herb') basePrice = 12;
+
+                // 买单
+                for (let i = 0; i < 3; i++) {
+                    this.market.orders.push({
+                        type: 'buy',
+                        itemId,
+                        price: Math.floor(basePrice * (0.7 + Math.random() * 0.2)),
+                        quantity: Math.floor(10 + Math.random() * 50),
+                        npcId: Math.floor(Math.random() * this.npcs.length)
+                    });
+                }
+
+                // 卖单
+                for (let i = 0; i < 3; i++) {
+                    this.market.orders.push({
+                        type: 'sell',
+                        itemId,
+                        price: Math.floor(basePrice * (1 + Math.random() * 0.3)),
+                        quantity: Math.floor(5 + Math.random() * 30),
+                        npcId: Math.floor(Math.random() * this.npcs.length)
+                    });
+                }
+            });
+        }
+
+        // ==================== 输入处理 ====================
+        setupInput() {
+            document.addEventListener('keydown', (e) => {
+                this.keys[e.key.toLowerCase()] = true;
+                this.keys['shift'] = e.shiftKey;
+
+                // 技能快捷键
+                if (e.key === ' ') this.useSkill('attack');
+                if (e.key === '1') this.useSkill('heavyStrike');
+                if (e.key === '2') this.useSkill('whirlwind');
+                if (e.key === '3') this.useSkill('heal');
+                if (e.key === '4') this.useSkill('meditate');
+
+                // 测试按钮
+                if (e.key === '5') {
+                    this.player.gold += 1000;
+                    this.log('【测试】获得1000金币！', 'loot');
+                    this.updateUI();
+                }
+
+                // 面板切换
+                if (e.key.toLowerCase() === 'b') this.toggleInventory();
+                if (e.key.toLowerCase() === 'q') this.toggleTrade();
+                if (e.key.toLowerCase() === 'v') this.toggleBuild();
+                if (e.key.toLowerCase() === 'e') this.gather();
+                if (e.key === 'Escape') this.closeAllPanels();
+            });
+
+            document.addEventListener('keyup', (e) => {
+                this.keys[e.key.toLowerCase()] = false;
+                this.keys['shift'] = e.shiftKey;
+            });
+
+            // 建造点击
+            document.querySelectorAll('.build-option').forEach(el => {
+                el.addEventListener('click', () => {
+                    const buildType = el.dataset.build;
+                    this.build(buildType);
+                });
+            });
+
+            // 交易面板物品选择
+            document.getElementById('itemList').addEventListener('click', (e) => {
+                const item = e.target.closest('.trade-item');
+                if (item) {
+                    document.querySelectorAll('.trade-item').forEach(i => i.classList.remove('selected'));
+                    item.classList.add('selected');
+                    this.market.selectedItem = item.dataset.item;
+                    this.updateTradePanel();
+                }
+            });
+        }
+
+        // ==================== 游戏主循环 ====================
+        gameLoop(timestamp) {
+            if (!this.running) return;
+
+            const dt = Math.min((timestamp - this.lastTime) / 1000, 0.1);
+            this.lastTime = timestamp;
+
+            this.update(dt);
+            this.render();
+
+            requestAnimationFrame((t) => this.gameLoop(t));
+        }
+
+        update(dt) {
+            if (this.player.hp <= 0) return;
+
+            this.updatePlayer(dt);
+            this.updateMonsters(dt);
+            this.updateNPCs(dt);
+            this.updateCooldowns(dt);
+            this.updateHunger(dt);
+            this.checkLevelUp();
+            this.updateUI();
+        }
+
+        updatePlayer(dt) {
+            const speed = this.keys['shift'] ? CONFIG.PLAYER_SPRINT_SPEED : CONFIG.PLAYER_SPEED;
+            let dx = 0, dy = 0;
+
+            if (this.keys['w']) dy -= 1;
+            if (this.keys['s']) dy += 1;
+            if (this.keys['a']) dx -= 1;
+            if (this.keys['d']) dx += 1;
+
+            if (dx !== 0 || dy !== 0) {
+                const len = Math.sqrt(dx * dx + dy * dy);
+                dx /= len;
+                dy /= len;
+
+                const newX = this.player.x + dx * speed * dt;
+                const newY = this.player.y + dy * speed * dt;
+
+                // 碰撞检测
+                if (this.canMoveTo(newX, this.player.y)) {
+                    this.player.x = newX;
+                }
+                if (this.canMoveTo(this.player.x, newY)) {
+                    this.player.y = newY;
+                }
+
+                // 边界限制
+                this.player.x = Math.max(0, Math.min(CONFIG.MAP_SIZE - 1, this.player.x));
+                this.player.y = Math.max(0, Math.min(CONFIG.MAP_SIZE - 1, this.player.y));
+            }
+        }
+
+        canMoveTo(x, y) {
+            // 玩家碰撞半径
+            const radius = 0.4;
+
+            // 检查玩家四角是否碰撞
+            const corners = [
+                [x - radius, y - radius],
+                [x + radius, y - radius],
+                [x - radius, y + radius],
+                [x + radius, y + radius]
+            ];
+
+            for (const [cx, cy] of corners) {
+                const tileX = Math.floor(cx);
+                const tileY = Math.floor(cy);
+
+                if (tileX < 0 || tileX >= CONFIG.MAP_SIZE || tileY < 0 || tileY >= CONFIG.MAP_SIZE) {
+                    return false;
+                }
+
+                if (this.map[tileY][tileX].wall) {
+                    return false;
+                }
+
+                // 检查玩家建造的建筑
+                for (const b of this.buildings) {
+                    if (b.type === 'wall' && Math.floor(b.x) === tileX && Math.floor(b.y) === tileY) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        updateMonsters(dt) {
+            for (const monster of this.monsters) {
+                if (monster.currentHp <= 0) continue;
+
+                const distToPlayer = this.distance(monster.x, monster.y, this.player.x, this.player.y);
+
+                // 仇恨范围
+                if (distToPlayer < 8) {
+                    monster.aggroTarget = this.player;
+                } else if (distToPlayer > 15) {
+                    monster.aggroTarget = null;
+                }
+
+                if (monster.aggroTarget) {
+                    // 追击玩家
+                    const dx = this.player.x - monster.x;
+                    const dy = this.player.y - monster.y;
+                    const len = Math.sqrt(dx * dx + dy * dy);
+                    if (len > 0.8) {
+                        monster.x += (dx / len) * monster.speed * dt;
+                        monster.y += (dy / len) * monster.speed * dt;
+                    } else {
+                        // 攻击
+                        if (!monster.attackCd || monster.attackCd <= 0) {
+                            this.damagePlayer(monster.damage, monster.name);
+                            monster.attackCd = 1;
+                        }
+                    }
+                    if (monster.attackCd) monster.attackCd -= dt;
+                } else {
+                    // 游荡
+                    monster.wanderTimer -= dt;
+                    if (monster.wanderTimer <= 0) {
+                        monster.targetX = monster.zone.x + Math.random() * monster.zone.w;
+                        monster.targetY = monster.zone.y + Math.random() * monster.zone.h;
+                        monster.wanderTimer = 3 + Math.random() * 5;
+                    }
+
+                    const dx = monster.targetX - monster.x;
+                    const dy = monster.targetY - monster.y;
+                    const len = Math.sqrt(dx * dx + dy * dy);
+                    if (len > 0.5) {
+                        monster.x += (dx / len) * monster.speed * 0.3 * dt;
+                        monster.y += (dy / len) * monster.speed * 0.3 * dt;
+                    }
+                }
+            }
+        }
+
+        updateNPCs(dt) {
+            for (const npc of this.npcs) {
+                if (npc.type === 'sanxiu' || npc.type === 'moxiu') {
+                    // 游荡
+                    npc.wanderTimer -= dt;
+                    if (npc.wanderTimer <= 0) {
+                        npc.targetX = npc.zone.x + Math.random() * npc.zone.w;
+                        npc.targetY = npc.zone.y + Math.random() * npc.zone.h;
+                        npc.wanderTimer = 5 + Math.random() * 10;
+                    }
+
+                    const dx = npc.targetX - npc.x;
+                    const dy = npc.targetY - npc.y;
+                    const len = Math.sqrt(dx * dx + dy * dy);
+                    if (len > 0.5) {
+                        npc.x += (dx / len) * 2 * dt;
+                        npc.y += (dy / len) * 2 * dt;
+                    }
+                }
+            }
+        }
+
+        updateCooldowns(dt) {
+            for (const skillId in this.player.skillCooldowns) {
+                this.player.skillCooldowns[skillId] -= dt;
+                if (this.player.skillCooldowns[skillId] <= 0) {
+                    delete this.player.skillCooldowns[skillId];
+                }
+            }
+
+            // 更新技能栏显示
+            document.querySelectorAll('.skill-slot').forEach(slot => {
+                const skillId = slot.dataset.skill;
+                const cd = this.player.skillCooldowns[skillId];
+                if (cd > 0) {
+                    slot.classList.add('on-cd');
+                    slot.querySelector('.cooldown').textContent = Math.ceil(cd);
+                } else {
+                    slot.classList.remove('on-cd');
+                }
+            });
+        }
+
+        updateHunger(dt) {
+            this.player.hunger -= CONFIG.HUNGER_DECAY_RATE * dt;
+            this.player.hunger = Math.max(0, this.player.hunger);
+
+            if (this.player.hunger <= 0) {
+                this.player.hp -= CONFIG.HUNGER_DAMAGE * dt;
+                if (this.player.hp <= 0) {
+                    this.playerDeath();
+                }
+            }
+
+            // 自然恢复灵气
+            this.player.spirit = Math.min(this.player.maxSpirit, this.player.spirit + 1 * dt);
+        }
+
+        checkLevelUp() {
+            const nextRealm = REALMS[this.player.level + 1];
+            if (nextRealm && this.player.exp >= nextRealm.expRequired) {
+                this.player.level++;
+                const realm = REALMS[this.player.level];
+                this.player.strength = 10 + realm.bonusStrength;
+                this.player.maxHp += 20;
+                this.player.hp = this.player.maxHp;
+                this.player.maxSpirit += 10;
+                this.player.spirit = this.player.maxSpirit;
+                this.log(`🎉 突破了！晋升${realm.name}！力量+${realm.bonusStrength - (REALMS[this.player.level - 1]?.bonusStrength || 0)}`, 'level');
+            }
+        }
+
+        // ==================== 战斗系统 ====================
+        useSkill(skillId) {
+            if (this.player.hp <= 0) return;
+
+            const skill = SKILLS[skillId];
+            if (!skill) return;
+
+            // CD检查
+            if (this.player.skillCooldowns[skillId] > 0) return;
+
+            // 灵气消耗
+            if (skill.spiritCost && this.player.spirit < skill.spiritCost) {
+                this.log('灵气不足！', 'system');
+                return;
+            }
+
+            if (skill.spiritCost) {
+                this.player.spirit -= skill.spiritCost;
+            }
+
+            this.player.skillCooldowns[skillId] = skill.cd;
+
+            if (skill.type === 'martial') {
+                // 武技
+                const damage = skill.value + this.player.strength * skill.ratio;
+                let hitCount = 0;
+
+                for (const monster of this.monsters) {
+                    if (monster.currentHp <= 0) continue;
+                    const dist = this.distance(this.player.x, this.player.y, monster.x, monster.y);
+                    if (dist <= skill.range) {
+                        if (!skill.aoe && hitCount > 0) continue;
+                        this.damageMonster(monster, damage);
+                        hitCount++;
+                    }
+                }
+
+                if (hitCount > 0) {
+                    this.log(`${skill.name}命中${hitCount}个目标，造成${Math.floor(damage)}伤害！`, 'combat');
+                }
+            } else if (skill.type === 'blood') {
+                // 血法
+                if (skill.restoreSpirit) {
+                    this.player.spirit = this.player.maxSpirit;
+                    this.log(`${skill.name}：灵气完全恢复！`, 'system');
+                } else {
+                    this.player.hp = Math.min(this.player.maxHp, this.player.hp + skill.value);
+                    this.log(`${skill.name}：恢复${skill.value}生命！`, 'system');
+                }
+            }
+        }
+
+        damageMonster(monster, damage) {
+            monster.currentHp -= damage;
+            monster.aggroTarget = this.player;
+
+            if (monster.currentHp <= 0) {
+                this.log(`击杀${monster.name}！获得${monster.exp}修为！`, 'combat');
+                this.player.exp += monster.exp;
+
+                // 掉落
+                for (const drop of monster.drops) {
+                    if (Math.random() < drop.chance) {
+                        this.addToInventory(drop.item, drop.qty);
+                        this.log(`获得 ${ITEMS[drop.item].icon} ${ITEMS[drop.item].name} x${drop.qty}`, 'loot');
+                    }
+                }
+
+                // 重生怪物
+                setTimeout(() => {
+                    monster.currentHp = monster.hp;
+                    monster.x = monster.zone.x + Math.random() * monster.zone.w;
+                    monster.y = monster.zone.y + Math.random() * monster.zone.h;
+                    monster.aggroTarget = null;
+                }, 30000);
+            }
+        }
+
+        damagePlayer(rawDamage, source) {
+            const reduction = this.player.armor / (this.player.armor + 100);
+            const damage = rawDamage * (1 - reduction);
+            this.player.hp -= damage;
+            this.log(`${source}对你造成${Math.floor(damage)}伤害！`, 'combat');
+
+            if (this.player.hp <= 0) {
+                this.playerDeath();
+            }
+        }
+
+        playerDeath() {
+            this.player.hp = 0;
+            document.getElementById('deathScreen').classList.add('show');
+            this.log('你死了！背包物品全部丢失！', 'combat');
+        }
+
+        respawn() {
+            document.getElementById('deathScreen').classList.remove('show');
+            const startCity = this.zones.find(z => z.type === 'city');
+            this.player.x = startCity.x + 50;
+            this.player.y = startCity.y + 50;
+            this.player.hp = this.player.maxHp;
+            this.player.hunger = this.player.maxHunger;
+            this.player.spirit = this.player.maxSpirit;
+            this.player.inventory = [];
+            this.player.gold = 0;
+            this.log('你复活了，但背包已空...', 'system');
+        }
+
+        // ==================== 采集系统 ====================
+        gather() {
+            const px = this.player.x;
+            const py = this.player.y;
+            const gatherRange = 0.8; // 采集范围
+
+            for (let i = this.resources.length - 1; i >= 0; i--) {
+                const res = this.resources[i];
+                // 检测玩家与资源的距离（中心点距离小于采集范围+0.5格即可）
+                const dx = Math.abs(res.x + 0.5 - px);
+                const dy = Math.abs(res.y + 0.5 - py);
+
+                if (dx <= gatherRange && dy <= gatherRange) {
+                    res.hp--;
+
+                    let itemId, qty = 1;
+                    switch (res.type) {
+                        case 'tree': itemId = 'wood'; break;
+                        case 'stone': itemId = 'stone'; break;
+                        case 'herb': itemId = 'herb'; break;
+                        case 'fruit': itemId = 'fruit'; break;
+                    }
+
+                    if (itemId) {
+                        this.addToInventory(itemId, qty);
+                        this.log(`采集 ${ITEMS[itemId].icon} ${ITEMS[itemId].name} x${qty}`, 'loot');
+                    }
+
+                    if (res.hp <= 0) {
+                        this.resources.splice(i, 1);
+                        // 重生资源
+                        setTimeout(() => {
+                            res.hp = 3;
+                            this.resources.push(res);
+                        }, 60000);
+                    }
+                    return;
+                }
+            }
+
+            // 检查箱子
+            for (const b of this.buildings) {
+                if (b.type === 'chest') {
+                    const dx = Math.abs(b.x + 0.5 - px);
+                    const dy = Math.abs(b.y + 0.5 - py);
+                    if (dx <= gatherRange && dy <= gatherRange) {
+                        this.openChest(b);
+                        return;
+                    }
+                }
+            }
+
+            this.log('附近没有可采集的资源', 'system');
+        }
+
+        // ==================== 背包系统 ====================
+        addToInventory(itemId, qty) {
+            const existing = this.player.inventory.find(i => i.id === itemId);
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                this.player.inventory.push({ id: itemId, qty });
+            }
+        }
+
+        removeFromInventory(itemId, qty) {
+            const idx = this.player.inventory.findIndex(i => i.id === itemId);
+            if (idx === -1) return false;
+
+            if (this.player.inventory[idx].qty < qty) return false;
+
+            this.player.inventory[idx].qty -= qty;
+            if (this.player.inventory[idx].qty <= 0) {
+                this.player.inventory.splice(idx, 1);
+            }
+            return true;
+        }
+
+        getItemCount(itemId) {
+            const item = this.player.inventory.find(i => i.id === itemId);
+            return item ? item.qty : 0;
+        }
+
+        getCurrentVolume() {
+            let vol = 0;
+            for (const slot of this.player.inventory) {
+                const item = ITEMS[slot.id];
+                vol += (item?.volume || 0) * slot.qty;
+            }
+            return vol;
+        }
+
+        useItem(itemId) {
+            const item = ITEMS[itemId];
+            if (!item || !item.useEffect) return;
+
+            if (this.getItemCount(itemId) <= 0) return;
+
+            const result = item.useEffect(this.player);
+            this.removeFromInventory(itemId, 1);
+            this.log(`使用 ${item.icon} ${item.name}：${result}`, 'system');
+        }
+
+        // ==================== 制造系统 ====================
+        canCraft(recipe) {
+            for (const [matId, qty] of Object.entries(recipe.materials)) {
+                if (this.getItemCount(matId) < qty) return false;
+            }
+            return true;
+        }
+
+        craft(recipeId) {
+            const recipe = RECIPES.find(r => r.id === recipeId);
+            if (!recipe || !this.canCraft(recipe)) return;
+
+            for (const [matId, qty] of Object.entries(recipe.materials)) {
+                this.removeFromInventory(matId, qty);
+            }
+
+            this.addToInventory(recipe.result, recipe.resultQty);
+            this.log(`制造了 ${ITEMS[recipe.result].icon} ${ITEMS[recipe.result].name} x${recipe.resultQty}`, 'loot');
+            this.updateInventoryPanel();
+        }
+
+        // ==================== 建造系统 ====================
+        build(buildType) {
+            const px = Math.floor(this.player.x);
+            const py = Math.floor(this.player.y);
+
+            // 检查是否有材料
+            if (this.getItemCount(buildType) <= 0) {
+                this.log(`没有${ITEMS[buildType].name}！`, 'system');
+                return;
+            }
+
+            // 检查位置是否可建造
+            for (const b of this.buildings) {
+                if (Math.floor(b.x) === px && Math.floor(b.y) === py) {
+                    this.log('这里已经有建筑了！', 'system');
+                    return;
+                }
+            }
+
+            this.removeFromInventory(buildType, 1);
+            this.buildings.push({
+                type: buildType,
+                x: px,
+                y: py,
+                inventory: buildType === 'chest' ? [] : null
+            });
+
+            this.log(`建造了${ITEMS[buildType].name}！`, 'system');
+
+            // 如果建造的是墙，把玩家推到旁边
+            if (buildType === 'wall') {
+                // 尝试四个方向，找一个可以站的位置
+                const directions = [
+                    [1, 0], [-1, 0], [0, 1], [0, -1],
+                    [1, 1], [1, -1], [-1, 1], [-1, -1]
+                ];
+                for (const [dx, dy] of directions) {
+                    const newX = this.player.x + dx;
+                    const newY = this.player.y + dy;
+                    if (this.canMoveTo(newX, newY)) {
+                        this.player.x = newX;
+                        this.player.y = newY;
+                        break;
+                    }
+                }
+            }
+
+            this.toggleBuild();
+        }
+
+        openChest(chest) {
+            // 简单的箱子交互：把背包物品放入/取出
+            // 这里简化处理：显示一个简单的对话
+            const action = confirm('选择操作：\n确定=存入所有物品\n取消=取出所有物品');
+
+            if (action) {
+                // 存入
+                chest.inventory = chest.inventory.concat(this.player.inventory);
+                this.player.inventory = [];
+                this.log('已将所有物品存入箱子！', 'system');
+            } else {
+                // 取出
+                this.player.inventory = this.player.inventory.concat(chest.inventory);
+                chest.inventory = [];
+                this.log('已取出箱子中的所有物品！', 'system');
+            }
+        }
+
+        // ==================== 交易系统 ====================
+        placeBuyOrder() {
+            const qty = parseInt(document.getElementById('tradeQty').value) || 1;
+            const price = parseInt(document.getElementById('tradePrice').value) || 10;
+            const totalCost = qty * price;
+
+            if (this.player.gold < totalCost) {
+                this.log('金币不足！', 'system');
+                return;
+            }
+
+            // 查找可成交的卖单
+            const sellOrders = this.market.orders.filter(o =>
+                o.type === 'sell' &&
+                o.itemId === this.market.selectedItem &&
+                o.price <= price
+            ).sort((a, b) => a.price - b.price);
+
+            let remaining = qty;
+            for (const order of sellOrders) {
+                if (remaining <= 0) break;
+
+                const tradeQty = Math.min(remaining, order.quantity);
+                const cost = tradeQty * order.price;
+
+                this.player.gold -= cost;
+                this.addToInventory(order.itemId, tradeQty);
+                order.quantity -= tradeQty;
+                remaining -= tradeQty;
+
+                this.log(`购买 ${ITEMS[order.itemId].name} x${tradeQty}，花费${cost}金币`, 'loot');
+            }
+
+            // 清理空订单
+            this.market.orders = this.market.orders.filter(o => o.quantity > 0);
+
+            if (remaining > 0) {
+                this.log(`部分订单未成交，剩余${remaining}个`, 'system');
+            }
+
+            this.updateTradePanel();
+        }
+
+        placeSellOrder() {
+            const qty = parseInt(document.getElementById('tradeQty').value) || 1;
+            const price = parseInt(document.getElementById('tradePrice').value) || 10;
+
+            if (this.getItemCount(this.market.selectedItem) < qty) {
+                this.log('物品数量不足！', 'system');
+                return;
+            }
+
+            // 查找可成交的买单
+            const buyOrders = this.market.orders.filter(o =>
+                o.type === 'buy' &&
+                o.itemId === this.market.selectedItem &&
+                o.price >= price
+            ).sort((a, b) => b.price - a.price);
+
+            let remaining = qty;
+            for (const order of buyOrders) {
+                if (remaining <= 0) break;
+
+                const tradeQty = Math.min(remaining, order.quantity);
+                const income = tradeQty * order.price;
+
+                this.player.gold += income;
+                this.removeFromInventory(order.itemId, tradeQty);
+                order.quantity -= tradeQty;
+                remaining -= tradeQty;
+
+                this.log(`出售 ${ITEMS[order.itemId].name} x${tradeQty}，获得${income}金币`, 'loot');
+            }
+
+            // 清理空订单
+            this.market.orders = this.market.orders.filter(o => o.quantity > 0);
+
+            if (remaining > 0) {
+                this.log(`部分订单未成交，剩余${remaining}个`, 'system');
+            }
+
+            this.updateTradePanel();
+        }
+
+        // ==================== UI更新 ====================
+        updateUI() {
+            const p = this.player;
+
+            // 状态条
+            document.getElementById('hpBar').style.width = `${(p.hp / p.maxHp) * 100}%`;
+            document.getElementById('hpText').textContent = `${Math.floor(p.hp)}/${p.maxHp}`;
+
+            document.getElementById('hungerBar').style.width = `${(p.hunger / p.maxHunger) * 100}%`;
+            document.getElementById('hungerText').textContent = `${Math.floor(p.hunger)}/${p.maxHunger}`;
+
+            document.getElementById('spiritBar').style.width = `${(p.spirit / p.maxSpirit) * 100}%`;
+            document.getElementById('spiritText').textContent = `${Math.floor(p.spirit)}/${p.maxSpirit}`;
+
+            const nextRealm = REALMS[p.level + 1];
+            const currentRealmExp = REALMS[p.level]?.expRequired || 0;
+            const neededExp = nextRealm ? nextRealm.expRequired - currentRealmExp : 1;
+            const currentExp = p.exp - currentRealmExp;
+            document.getElementById('expBar').style.width = `${(currentExp / neededExp) * 100}%`;
+            document.getElementById('expText').textContent = `${p.exp}/${nextRealm?.expRequired || '∞'}`;
+
+            // 玩家信息
+            document.getElementById('realmText').textContent = REALMS[p.level].name;
+            document.getElementById('strengthText').textContent = p.strength;
+            document.getElementById('armorText').textContent = p.armor;
+            document.getElementById('goldDisplay').textContent = p.gold;
+        }
+
+        updateInventoryPanel() {
+            const grid = document.getElementById('inventoryGrid');
+            grid.innerHTML = '';
+
+            for (const slot of this.player.inventory) {
+                const item = ITEMS[slot.id];
+                if (!item) continue;
+
+                const div = document.createElement('div');
+                div.className = 'inv-slot';
+                div.innerHTML = `
+                <span class="item-icon">${item.icon}</span>
+                <span class="item-count">${slot.qty}</span>
+            `;
+                div.title = `${item.name}\n${item.desc}`;
+
+                if (item.useEffect) {
+                    div.addEventListener('click', () => {
+                        this.useItem(slot.id);
+                        this.updateInventoryPanel();
+                    });
+                }
+
+                grid.appendChild(div);
+            }
+
+            document.getElementById('volumeInfo').textContent =
+                `容量: ${this.getCurrentVolume().toFixed(1)}/${CONFIG.MAX_INVENTORY_VOLUME}`;
+
+            // 更新制造列表
+            const craftList = document.getElementById('craftingList');
+            craftList.innerHTML = '';
+
+            for (const recipe of RECIPES) {
+                const result = ITEMS[recipe.result];
+                const canCraft = this.canCraft(recipe);
+
+                const div = document.createElement('div');
+                div.className = 'recipe-item' + (canCraft ? '' : ' disabled');
+
+                const matText = Object.entries(recipe.materials)
+                    .map(([id, qty]) => `${ITEMS[id].icon}${qty}`)
+                    .join(' ');
+
+                div.innerHTML = `
+                <span class="icon">${result.icon}</span>
+                <div class="info">
+                    <div class="name">${result.name} x${recipe.resultQty}</div>
+                    <div class="materials">${matText}</div>
+                </div>
+            `;
+
+                if (canCraft) {
+                    div.addEventListener('click', () => this.craft(recipe.id));
+                }
+
+                craftList.appendChild(div);
+            }
+        }
+
+        updateTradePanel() {
+            // 物品列表
+            const itemList = document.getElementById('itemList');
+            itemList.innerHTML = '<h2>📜 商品</h2>';
+
+            const tradeableItems = ['wood', 'stone', 'herb', 'fruit', 'meat', 'hide', 'bigu_dan', 'healing_dan', 'ling_dan'];
+            for (const itemId of tradeableItems) {
+                const item = ITEMS[itemId];
+                const div = document.createElement('div');
+                div.className = 'trade-item' + (itemId === this.market.selectedItem ? ' selected' : '');
+                div.dataset.item = itemId;
+                div.innerHTML = `<span>${item.icon}</span><span>${item.name}</span>`;
+                itemList.appendChild(div);
+            }
+
+            // 订单簿
+            const buyOrdersDiv = document.getElementById('buyOrders');
+            const sellOrdersDiv = document.getElementById('sellOrders');
+            buyOrdersDiv.innerHTML = '';
+            sellOrdersDiv.innerHTML = '';
+
+            const itemOrders = this.market.orders.filter(o => o.itemId === this.market.selectedItem);
+            const buyOrders = itemOrders.filter(o => o.type === 'buy').sort((a, b) => b.price - a.price);
+            const sellOrders = itemOrders.filter(o => o.type === 'sell').sort((a, b) => a.price - b.price);
+
+            for (const order of buyOrders.slice(0, 5)) {
+                const div = document.createElement('div');
+                div.className = 'order-row buy';
+                div.innerHTML = `
+                <span>💰 ${order.price}</span>
+                <span>📦 ${order.quantity}</span>
+                <button onclick="game.sellToOrder(${order.price}, ${order.quantity})">卖出</button>
+            `;
+                buyOrdersDiv.appendChild(div);
+            }
+
+            for (const order of sellOrders.slice(0, 5)) {
+                const div = document.createElement('div');
+                div.className = 'order-row sell';
+                div.innerHTML = `
+                <span>💰 ${order.price}</span>
+                <span>📦 ${order.quantity}</span>
+                <button onclick="game.buyFromOrder(${order.price}, ${order.quantity})">买入</button>
+            `;
+                sellOrdersDiv.appendChild(div);
+            }
+
+            document.getElementById('goldDisplay').textContent = this.player.gold;
+        }
+
+        buyFromOrder(price, maxQty) {
+            document.getElementById('tradePrice').value = price;
+            document.getElementById('tradeQty').value = Math.min(maxQty, Math.floor(this.player.gold / price) || 1);
+            this.placeBuyOrder();
+        }
+
+        sellToOrder(price, maxQty) {
+            document.getElementById('tradePrice').value = price;
+            const have = this.getItemCount(this.market.selectedItem);
+            document.getElementById('tradeQty').value = Math.min(maxQty, have) || 1;
+            this.placeSellOrder();
+        }
+
+        // ==================== 面板切换 ====================
+        toggleInventory() {
+            const panel = document.getElementById('inventoryPanel');
+            panel.classList.toggle('show');
+            if (panel.classList.contains('show')) {
+                this.updateInventoryPanel();
+            }
+        }
+
+        toggleTrade() {
+            // 检查是否在城区
+            const px = Math.floor(this.player.x);
+            const py = Math.floor(this.player.y);
+            let inCity = false;
+
+            for (const zone of this.zones) {
+                if (zone.type === 'city' &&
+                    px >= zone.x && px < zone.x + zone.w &&
+                    py >= zone.y && py < zone.y + zone.h) {
+                    inCity = true;
+                    break;
+                }
+            }
+
+            if (!inCity) {
+                this.log('只能在城区使用交易所！', 'system');
+                return;
+            }
+
+            const panel = document.getElementById('tradePanel');
+            panel.classList.toggle('show');
+            if (panel.classList.contains('show')) {
+                this.updateTradePanel();
+            }
+        }
+
+        toggleBuild() {
+            document.getElementById('buildPanel').classList.toggle('show');
+        }
+
+        closeAllPanels() {
+            document.getElementById('inventoryPanel').classList.remove('show');
+            document.getElementById('tradePanel').classList.remove('show');
+            document.getElementById('buildPanel').classList.remove('show');
+        }
+
+        // ==================== 渲染系统 ====================
+        render() {
+            const ctx = this.ctx;
+            const canvas = this.canvas;
+
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const tileSize = CONFIG.TILE_SIZE;
+            const viewTilesX = Math.ceil(canvas.width / tileSize) + 2;
+            const viewTilesY = Math.ceil(canvas.height / tileSize) + 2;
+
+            const camX = this.player.x - viewTilesX / 2;
+            const camY = this.player.y - viewTilesY / 2;
+
+            const startX = Math.floor(camX);
+            const startY = Math.floor(camY);
+            const offsetX = (camX - startX) * tileSize;
+            const offsetY = (camY - startY) * tileSize;
+
+            // 绘制地图
+            for (let dy = 0; dy < viewTilesY; dy++) {
+                for (let dx = 0; dx < viewTilesX; dx++) {
+                    const mapX = startX + dx;
+                    const mapY = startY + dy;
+
+                    if (mapX < 0 || mapX >= CONFIG.MAP_SIZE || mapY < 0 || mapY >= CONFIG.MAP_SIZE) continue;
+
+                    const tile = this.map[mapY][mapX];
+                    const screenX = dx * tileSize - offsetX;
+                    const screenY = dy * tileSize - offsetY;
+
+                    // 地面
+                    switch (tile.type) {
+                        case 0: ctx.fillStyle = '#2d2d44'; break; // 荒地
+                        case 1: ctx.fillStyle = '#3d3d5c'; break; // 城区
+                        case 2: ctx.fillStyle = '#1d3d2d'; break; // 林区
+                    }
+                    ctx.fillRect(screenX, screenY, tileSize, tileSize);
+
+                    // 城墙
+                    if (tile.wall) {
+                        ctx.fillStyle = '#555577';
+                        ctx.fillRect(screenX, screenY, tileSize, tileSize);
+                        ctx.fillStyle = '#777799';
+                        ctx.fillRect(screenX + 2, screenY + 2, tileSize - 4, tileSize - 4);
+                    }
+
+                    // 网格线
+                    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+                    ctx.strokeRect(screenX, screenY, tileSize, tileSize);
+                }
+            }
+
+            // 绘制资源
+            for (const res of this.resources) {
+                const screenX = (res.x - camX) * tileSize;
+                const screenY = (res.y - camY) * tileSize;
+
+                if (screenX < -tileSize || screenX > canvas.width + tileSize ||
+                    screenY < -tileSize || screenY > canvas.height + tileSize) continue;
+
+                let icon = '❓';
+                switch (res.type) {
+                    case 'tree': icon = '🌲'; break;
+                    case 'stone': icon = '💎'; break;
+                    case 'herb': icon = '🌿'; break;
+                    case 'fruit': icon = '🍎'; break;
+                }
+
+                ctx.font = '24px serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(icon, screenX + tileSize / 2, screenY + tileSize / 2 + 8);
+            }
+
+            // 绘制建筑
+            for (const b of this.buildings) {
+                const screenX = (b.x - camX) * tileSize;
+                const screenY = (b.y - camY) * tileSize;
+
+                if (screenX < -tileSize || screenX > canvas.width + tileSize ||
+                    screenY < -tileSize || screenY > canvas.height + tileSize) continue;
+
+                ctx.font = '28px serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(ITEMS[b.type].icon, screenX + tileSize / 2, screenY + tileSize / 2 + 8);
+            }
+
+            // 绘制怪物
+            for (const monster of this.monsters) {
+                if (monster.currentHp <= 0) continue;
+
+                const screenX = (monster.x - camX) * tileSize;
+                const screenY = (monster.y - camY) * tileSize;
+
+                if (screenX < -tileSize || screenX > canvas.width + tileSize ||
+                    screenY < -tileSize || screenY > canvas.height + tileSize) continue;
+
+                ctx.font = '28px serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(monster.icon, screenX + tileSize / 2, screenY + tileSize / 2 + 8);
+
+                // 血条
+                const hpPercent = monster.currentHp / monster.hp;
+                ctx.fillStyle = 'rgba(0,0,0,0.5)';
+                ctx.fillRect(screenX, screenY - 8, tileSize, 6);
+                ctx.fillStyle = hpPercent > 0.5 ? '#44ff44' : hpPercent > 0.25 ? '#ffff44' : '#ff4444';
+                ctx.fillRect(screenX, screenY - 8, tileSize * hpPercent, 6);
+            }
+
+            // 绘制NPC
+            for (const npc of this.npcs) {
+                const screenX = (npc.x - camX) * tileSize;
+                const screenY = (npc.y - camY) * tileSize;
+
+                if (screenX < -tileSize || screenX > canvas.width + tileSize ||
+                    screenY < -tileSize || screenY > canvas.height + tileSize) continue;
+
+                ctx.font = '24px serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(npc.icon, screenX + tileSize / 2, screenY + tileSize / 2 + 8);
+            }
+
+            // 绘制玩家
+            const playerScreenX = (this.player.x - camX) * tileSize;
+            const playerScreenY = (this.player.y - camY) * tileSize;
+
+            ctx.font = '32px serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('🧙', playerScreenX + tileSize / 2, playerScreenY + tileSize / 2 + 10);
+
+            // 绘制小地图
+            this.renderMinimap();
+        }
+
+        renderMinimap() {
+            const ctx = this.minimapCtx;
+            const size = 200;
+            const scale = size / CONFIG.MAP_SIZE;
+
+            ctx.fillStyle = '#0a0a15';
+            ctx.fillRect(0, 0, size, size);
+
+            // 绘制区域
+            for (const zone of this.zones) {
+                if (zone.type === 'city') {
+                    ctx.fillStyle = '#4a4a6a';
+                } else {
+                    ctx.fillStyle = '#2a4a3a';
+                }
+                ctx.fillRect(zone.x * scale, zone.y * scale, zone.w * scale, zone.h * scale);
+            }
+
+            // 绘制玩家
+            ctx.fillStyle = '#ffff00';
+            ctx.beginPath();
+            ctx.arc(this.player.x * scale, this.player.y * scale, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 绘制怪物
+            ctx.fillStyle = '#ff4444';
+            for (const m of this.monsters) {
+                if (m.currentHp > 0) {
+                    ctx.fillRect(m.x * scale - 1, m.y * scale - 1, 2, 2);
+                }
+            }
+        }
+
+        // ==================== 工具方法 ====================
+        distance(x1, y1, x2, y2) {
+            return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+        }
+
+        log(message, type = '') {
+            const log = document.getElementById('messageLog');
+            const div = document.createElement('div');
+            div.className = 'msg msg-' + type;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.appendChild(div);
+            log.scrollTop = log.scrollHeight;
+
+            // 限制日志数量
+            while (log.children.length > 50) {
+                log.removeChild(log.firstChild);
+            }
+        }
+    }
+
+    // ==================== 启动游戏 ====================
+    let game;
+    window.addEventListener('load', () => {
+        game = new Game();
+    });
+</script>
+</body>
+</html>
