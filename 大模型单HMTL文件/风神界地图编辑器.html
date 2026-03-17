@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>地图编辑器</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+:root {
+  --bg: #0f0f14;
+  --panel: #16161f;
+  --panel2: #1e1e2a;
+  --border: #2a2a3a;
+  --accent: #4af;
+  --accent2: #f4a;
+  --text: #c8c8d8;
+  --text2: rgba(180,180,210,0.35);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 13px;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+}
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── THREE COLUMNS ── */
+#col-left {
+  width: 30%;
+  flex-shrink: 0;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#col-mid {
+  width: 10%;
+  flex-shrink: 0;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#col-right {
+  width: 60%;
+  flex: 1;
+  overflow: auto;
+  background: var(--bg);
+}
+#col-right.dragging { cursor: grabbing !important; }
+
+/* ── SECTION HEADERS ── */
+.sec-hd {
+  padding: 6px 8px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  text-align: center;
+}
+
+/* ── BUTTONS ── */
+.btn {
+  background: var(--panel2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 4px 6px;
+  cursor: pointer;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .5px;
+  transition: all .12s;
+  border-radius: 2px;
+  text-align: center;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.accent { border-color: var(--accent); color: var(--accent); }
+.btn.warn { border-color: #3a2a2a; color: var(--accent2); }
+.btn.warn:hover { border-color: var(--accent2); }
+.btn:disabled { opacity: .28; cursor: default; }
+.btn:disabled:hover { border-color: var(--border); color: var(--text); }
+
+/* ── LEFT: MATERIALS ── */
+#mat-add-bar {
+  padding: 6px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+#mat-grid {
+  padding: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-content: flex-start;
+}
+.mat-item {
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.mat-item img {
+  width: 64px; height: 64px;
+  display: block;
+  border: 2px solid var(--border);
+  image-rendering: pixelated;
+  object-fit: cover;
+  border-radius: 2px;
+  transition: border-color .12s;
+}
+.mat-item:hover img { border-color: var(--accent); }
+.mat-item.active img { border-color: var(--accent2); }
+.mat-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,.7);
+  color: #fff;
+  font-size: 9px;
+  text-align: center;
+  padding: 1px 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ── MIDDLE: CONTROLS ── */
+.mid-sec {
+  padding: 5px 4px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.dir-row {
+  display: flex;
+  gap: 2px;
+}
+.dir-row .btn { flex: 1; padding: 3px 2px; font-size: 9px; }
+
+.layer-row {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+.layer-btn {
+  width: 20px; height: 20px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  cursor: pointer;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all .12s;
+  border-radius: 2px;
+}
+.layer-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(68,170,255,.12); }
+.layer-note {
+  flex: 1; min-width: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text2);
+  font-size: 9px;
+  padding: 1px 3px;
+  font-family: 'Noto Sans SC', sans-serif;
+  transition: border-color .12s;
+  border-radius: 2px;
+  user-select: text;
+}
+.layer-note:focus { outline: none; border-color: var(--border); color: var(--text); background: var(--panel2); }
+
+.info-line {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--text2);
+  text-align: center;
+  line-height: 1.8;
+}
+.info-line b { color: var(--accent); font-weight: normal; }
+
+/* ── RIGHT: MAP ── */
+#map-inner {
+  padding: 20px;
+  display: inline-block;
+  min-width: 100%;
+  min-height: 100%;
+}
+#map-table {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+#map-table td {
+  width: 64px; height: 64px;
+  border: 1px solid #2a2a3a;
+  cursor: crosshair;
+  position: relative;
+  overflow: hidden;
+  vertical-align: top;
+  background: #0d0d12;
+}
+#map-table td:hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(68,170,255,.15);
+  pointer-events: none;
+  z-index: 20;
+}
+.cell-layer {
+  position: absolute;
+  inset: 0;
+  width: 64px; height: 64px;
+  image-rendering: pixelated;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ── MODAL ── */
+#modal-ov {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+#modal-ov.show { display: flex; }
+#modal-box {
+  background: var(--panel);
+  border: 1px solid var(--accent2);
+  padding: 22px 28px;
+  border-radius: 4px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: var(--accent2);
+  max-width: 360px;
+  text-align: center;
+  line-height: 1.9;
+  white-space: pre-wrap;
+}
+#modal-box .btn { margin-top: 14px; }
+
+#coord-badge {
+  position: fixed;
+  bottom: 10px; right: 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 3px 9px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--text2);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 50;
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LEFT: MATERIALS ══ -->
+<div id="col-left">
+  <div class="sec-hd">素材区</div>
+  <div id="mat-add-bar">
+    <button class="btn accent" style="width:100%" onclick="triggerMatImport()">导入图片 (PNG)</button>
+    <input type="file" id="mat-file" accept="image/png" multiple style="display:none" onchange="handleMatImport(event)">
+  </div>
+  <div id="mat-grid"></div>
+</div>
+
+<!-- ══ MIDDLE: CONTROLS ══ -->
+<div id="col-mid">
+
+  <div class="sec-hd">文件</div>
+  <div class="mid-sec">
+    <button class="btn accent" onclick="triggerImport()">导入存档</button>
+    <input type="file" id="import-file" accept=".txt" style="display:none" onchange="handleImport(event)">
+    <button class="btn" onclick="newMap()">新建3×3</button>
+    <button class="btn warn" onclick="exportMap()">导出存档</button>
+  </div>
+
+  <div class="sec-hd">历史</div>
+  <div class="mid-sec">
+    <button class="btn" id="btn-undo" onclick="undo()" disabled>撤　销</button>
+    <button class="btn" id="btn-redo" onclick="redo()" disabled>重　做</button>
+  </div>
+
+  <div class="sec-hd">扩缩地图</div>
+  <div class="mid-sec">
+    <div class="dir-row">
+      <button class="btn" onclick="addRow('top')">上加</button>
+      <button class="btn warn" onclick="removeRow('top')">上减</button>
+    </div>
+    <div class="dir-row">
+      <button class="btn" onclick="addRow('bottom')">下加</button>
+      <button class="btn warn" onclick="removeRow('bottom')">下减</button>
+    </div>
+    <div class="dir-row">
+      <button class="btn" onclick="addCol('left')">左加</button>
+      <button class="btn warn" onclick="removeCol('left')">左减</button>
+    </div>
+    <div class="dir-row">
+      <button class="btn" onclick="addCol('right')">右加</button>
+      <button class="btn warn" onclick="removeCol('right')">右减</button>
+    </div>
+  </div>
+
+  <div class="sec-hd">图层</div>
+  <div class="mid-sec" id="layers-list"></div>
+
+  <div class="sec-hd">信息</div>
+  <div class="mid-sec">
+    <div class="info-line">尺寸 <b id="info-size">—</b></div>
+    <div class="info-line">图层 <b id="info-layer">—</b></div>
+    <div class="info-line">素材 <b id="info-mat">无</b></div>
+  </div>
+
+</div>
+
+<!-- ══ RIGHT: MAP ══ -->
+<div id="col-right">
+  <div id="map-inner">
+    <table id="map-table"></table>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-ov">
+  <div id="modal-box">
+    <div id="modal-msg"></div>
+    <button class="btn" onclick="closeModal()">确定</button>
+  </div>
+</div>
+
+<div id="coord-badge">x: —  y: —</div>
+
+<script>
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+const LAYERS = 10;
+let cells = [], cols = 0, rows = 0;
+let materials = {};
+let activeLayer = 0, activeMat = null;
+let undoStack = [], redoStack = [];
+let layerNotes = new Array(LAYERS).fill('');
+
+// ═══════════════════════════════════════════
+// UNDO / REDO
+// ═══════════════════════════════════════════
+function snapshot() {
+  return {
+    cols, rows,
+    cells: cells.map(row => row.map(cell => ({ layers: [...cell.layers] })))
+  };
+}
+function pushUndo() {
+  undoStack.push(snapshot());
+  redoStack = [];
+  syncUndoUI();
+}
+function applySnap(s) {
+  cols = s.cols; rows = s.rows;
+  cells = s.cells.map(row => row.map(c => ({ layers: [...c.layers] })));
+  buildMapTable();
+}
+function undo() {
+  if (!undoStack.length) return;
+  redoStack.push(snapshot());
+  applySnap(undoStack.pop());
+  syncUndoUI();
+}
+function redo() {
+  if (!redoStack.length) return;
+  undoStack.push(snapshot());
+  applySnap(redoStack.pop());
+  syncUndoUI();
+}
+function syncUndoUI() {
+  document.getElementById('btn-undo').disabled = !undoStack.length;
+  document.getElementById('btn-redo').disabled = !redoStack.length;
+}
+
+// ═══════════════════════════════════════════
+// LAYERS UI
+// ═══════════════════════════════════════════
+function buildLayersUI() {
+  const el = document.getElementById('layers-list');
+  // save notes
+  el.querySelectorAll('.layer-note').forEach((inp, i) => layerNotes[i] = inp.value);
+  el.innerHTML = '';
+  for (let i = 0; i < LAYERS; i++) {
+    const row = document.createElement('div');
+    row.className = 'layer-row';
+    const btn = document.createElement('button');
+    btn.className = 'layer-btn' + (i === activeLayer ? ' active' : '');
+    btn.textContent = i;
+    btn.onclick = () => { activeLayer = i; buildLayersUI(); updateInfo(); };
+    const note = document.createElement('input');
+    note.type = 'text'; note.className = 'layer-note';
+    note.placeholder = `L${i}`; note.value = layerNotes[i] || '';
+    row.appendChild(btn); row.appendChild(note);
+    el.appendChild(row);
+  }
+}
+
+// ═══════════════════════════════════════════
+// MATERIALS UI
+// ═══════════════════════════════════════════
+function refreshMatsUI() {
+  const el = document.getElementById('mat-grid');
+  el.innerHTML = '';
+  for (const [name, mat] of Object.entries(materials)) {
+    const wrap = document.createElement('div');
+    wrap.className = 'mat-item' + (name === activeMat ? ' active' : '');
+    const img = document.createElement('img');
+    img.src = mat.dataUrl; img.title = name;
+    const lbl = document.createElement('div');
+    lbl.className = 'mat-label'; lbl.textContent = name;
+    wrap.appendChild(img); wrap.appendChild(lbl);
+    wrap.onclick = () => { activeMat = name; refreshMatsUI(); updateInfo(); };
+    el.appendChild(wrap);
+  }
+}
+
+// ═══════════════════════════════════════════
+// MAP TABLE
+// ═══════════════════════════════════════════
+function makeCell() { return { layers: new Array(LAYERS).fill(null) }; }
+
+function buildMapTable() {
+  const tbl = document.getElementById('map-table');
+  tbl.innerHTML = '';
+  for (let r = rows - 1; r >= 0; r--) {
+    const tr = document.createElement('tr');
+    for (let c = 0; c < cols; c++) {
+      const td = document.createElement('td');
+      td.dataset.r = r; td.dataset.c = c;
+      renderCell(td, r, c);
+      tr.appendChild(td);
+    }
+    tbl.appendChild(tr);
+  }
+  document.getElementById('info-size').textContent = `${cols}×${rows}`;
+}
+
+function renderCell(td, r, c) {
+  td.innerHTML = '';
+  const cell = cells[r][c];
+  for (let l = 0; l < LAYERS; l++) {
+    const name = cell.layers[l];
+    if (!name || !materials[name]) continue;
+    const img = document.createElement('img');
+    img.src = materials[name].dataUrl;
+    img.className = 'cell-layer';
+    img.style.zIndex = l;
+    td.appendChild(img);
+  }
+}
+
+// ═══════════════════════════════════════════
+// CELL INTERACTION
+// left click: only on mousedown+mouseup same cell (no drag painting)
+// ═══════════════════════════════════════════
+let mdCell = null;
+
+document.getElementById('map-table').addEventListener('mousedown', e => {
+  if (e.button !== 0) return;
+  e.preventDefault(); // block text selection
+  mdCell = e.target.closest('td') || null;
+});
+
+document.getElementById('map-table').addEventListener('mouseup', e => {
+  if (e.button !== 0) return;
+  const td = e.target.closest('td');
+  if (!td || td !== mdCell) { mdCell = null; return; }
+  mdCell = null;
+  if (activeMat === null) return;
+  const r = +td.dataset.r, c = +td.dataset.c;
+  if (cells[r][c].layers[activeLayer] === activeMat) return;
+  pushUndo();
+  cells[r][c].layers[activeLayer] = activeMat;
+  renderCell(td, r, c);
+});
+
+// cancel mdCell on leaving table
+document.getElementById('map-table').addEventListener('mouseleave', () => mdCell = null);
+
+document.getElementById('map-table').addEventListener('mouseover', e => {
+  const td = e.target.closest('td');
+  if (!td) return;
+  document.getElementById('coord-badge').textContent = `x: ${td.dataset.c}  y: ${td.dataset.r}`;
+});
+
+// ═══════════════════════════════════════════
+// RIGHT-CLICK DRAG SCROLL
+// ═══════════════════════════════════════════
+const CR = document.getElementById('col-right');
+let rDrag = false, rX = 0, rY = 0, rSX = 0, rSY = 0;
+
+CR.addEventListener('mousedown', e => {
+  if (e.button !== 2) return;
+  rDrag = true; rX = e.clientX; rY = e.clientY;
+  rSX = CR.scrollLeft; rSY = CR.scrollTop;
+  CR.classList.add('dragging');
+  e.preventDefault();
+});
+window.addEventListener('mousemove', e => {
+  if (!rDrag) return;
+  CR.scrollLeft = rSX - (e.clientX - rX);
+  CR.scrollTop  = rSY - (e.clientY - rY);
+});
+window.addEventListener('mouseup', e => {
+  if (e.button === 2) { rDrag = false; CR.classList.remove('dragging'); }
+});
+CR.addEventListener('contextmenu', e => e.preventDefault());
+
+// ═══════════════════════════════════════════
+// NEW MAP
+// ═══════════════════════════════════════════
+function newMap() {
+  pushUndo();
+  cols = 3; rows = 3;
+  cells = Array.from({length: rows}, () => Array.from({length: cols}, makeCell));
+  buildMapTable();
+}
+
+// ═══════════════════════════════════════════
+// IMPORT MATERIALS
+// ═══════════════════════════════════════════
+function triggerMatImport() {
+  document.getElementById('mat-file').value = '';
+  document.getElementById('mat-file').click();
+}
+function handleMatImport(e) { Array.from(e.target.files).forEach(importMatFile); }
+function importMatFile(file) {
+  if (!file.type.startsWith('image/')) { showModal('请上传 PNG 图片'); return; }
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      if (img.width !== img.height) {
+        showModal(`"${file.name}" 不是正方形图片\n(${img.width}×${img.height})\n请使用正方形 PNG。`);
+        return;
+      }
+      const cv = document.createElement('canvas');
+      cv.width = cv.height = 64;
+      cv.getContext('2d').drawImage(img, 0, 0, 64, 64);
+      const name = file.name.replace(/\.[^.]+$/, '');
+      materials[name] = { dataUrl: cv.toDataURL('image/png') };
+      refreshMatsUI();
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ═══════════════════════════════════════════
+// IMPORT MAP (TXT)
+// Format per line: X Y Z 图片名
+// ═══════════════════════════════════════════
+function triggerImport() {
+  document.getElementById('import-file').value = '';
+  document.getElementById('import-file').click();
+}
+function handleImport(e) {
+  const file = e.target.files[0]; if (!file) return;
+  if (!file.name.endsWith('.txt')) { showModal('请选择 .txt 格式的存档文件'); return; }
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const lines = ev.target.result.split('\n').map(l => l.trim()).filter(Boolean);
+      if (!lines.length) throw new Error('文件为空');
+      let maxX = 0, maxY = 0;
+      const entries = [];
+      for (const line of lines) {
+        const parts = line.split(/\s+/);
+        if (parts.length !== 4) throw new Error(`行格式不对: "${line}"`);
+        const [xs, ys, zs, img] = parts;
+        const x = parseInt(xs), y = parseInt(ys), z = parseInt(zs);
+        if (isNaN(x)||isNaN(y)||isNaN(z)) throw new Error(`坐标不是数字: "${line}"`);
+        if (z < 0 || z >= LAYERS) throw new Error(`图层超出范围(0~${LAYERS-1}): "${line}"`);
+        maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+        entries.push({x, y, z, img});
+      }
+      pushUndo();
+      cols = maxX+1; rows = maxY+1;
+      cells = Array.from({length: rows}, () => Array.from({length: cols}, makeCell));
+      for (const {x, y, z, img} of entries) {
+        if (img !== '_') cells[y][x].layers[z] = img;
+      }
+      buildMapTable();
+    } catch(err) {
+      showModal('存档格式错误:\n' + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ═══════════════════════════════════════════
+// EXPORT MAP (TXT)
+// ═══════════════════════════════════════════
+function exportMap() {
+  if (!rows||!cols) { showModal('没有地图可以导出'); return; }
+  const lines = [];
+  for (let y = 0; y < rows; y++)
+    for (let x = 0; x < cols; x++)
+      for (let z = 0; z < LAYERS; z++) {
+        const img = cells[y][x].layers[z];
+        if (img) lines.push(`${x} ${y} ${z} ${img}`);
+      }
+  if (!lines.length) { showModal('地图为空，无内容可导出'); return; }
+  const blob = new Blob([lines.join('\n')], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'map.txt'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════════
+// DIRECTION BUTTONS
+// ═══════════════════════════════════════════
+function addRow(side) {
+  pushUndo();
+  const newRow = Array.from({length:cols}, makeCell);
+  if (side==='top') cells.push(newRow); else cells.unshift(newRow);
+  rows++; buildMapTable();
+}
+function removeRow(side) {
+  if (rows<=1){showModal('地图至少需要 1 行');return;}
+  pushUndo();
+  if (side==='top') cells.pop(); else cells.shift();
+  rows--; buildMapTable();
+}
+function addCol(side) {
+  pushUndo();
+  cells.forEach(row => side==='left' ? row.unshift(makeCell()) : row.push(makeCell()));
+  cols++; buildMapTable();
+}
+function removeCol(side) {
+  if (cols<=1){showModal('地图至少需要 1 列');return;}
+  pushUndo();
+  cells.forEach(row => side==='left' ? row.shift() : row.pop());
+  cols--; buildMapTable();
+}
+
+// ═══════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════
+function showModal(msg) {
+  document.getElementById('modal-msg').textContent = msg;
+  document.getElementById('modal-ov').classList.add('show');
+}
+function closeModal() { document.getElementById('modal-ov').classList.remove('show'); }
+
+// ═══════════════════════════════════════════
+// INFO
+// ═══════════════════════════════════════════
+function updateInfo() {
+  document.getElementById('info-layer').textContent = activeLayer;
+  const m = activeMat || '无';
+  document.getElementById('info-mat').textContent = m.length > 7 ? m.slice(0,6)+'…' : m;
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+buildLayersUI();
+updateInfo();
+syncUndoUI();
+</script>
+</body>
+</html>

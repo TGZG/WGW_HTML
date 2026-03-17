@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>八字命盘 · 天机</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a0a00;
+    --paper: #f5eed8;
+    --aged: #e8dfc0;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --cinnabar: #c0392b;
+    --jade: #2e6b4f;
+    --heaven: #1c3a5e;
+    --smoke: rgba(26,10,0,0.08);
+    --seal: #9b2335;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--ink);
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(184,134,11,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(28,58,94,0.12) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    min-height: 100vh;
+    font-family: 'Noto Serif SC', serif;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .header::before {
+    content: '天';
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 100px;
+    color: rgba(184,134,11,0.07);
+    letter-spacing: 0;
+    pointer-events: none;
+  }
+
+  .title-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 8px;
+  }
+
+  .title-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .title-line.right {
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  h1 {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 2.8rem;
+    color: var(--gold-light);
+    letter-spacing: 0.3em;
+    text-shadow: 0 0 30px rgba(184,134,11,0.4);
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+    color: rgba(245,238,216,0.4);
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+  }
+
+  /* Card */
+  .card {
+    background: var(--paper);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    border-radius: 4px;
+    padding: 40px;
+    width: 100%;
+    max-width: 680px;
+    box-shadow:
+      0 2px 4px rgba(0,0,0,0.3),
+      0 8px 30px rgba(0,0,0,0.5),
+      inset 0 0 60px rgba(232,223,192,0.3);
+    position: relative;
+    border: 1px solid rgba(184,134,11,0.3);
+  }
+
+  .card::before, .card::after {
+    content: '';
+    position: absolute;
+    width: 24px; height: 24px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.5;
+  }
+  .card::before { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+  .card::after  { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+  /* Input section */
+  .input-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .input-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(184,134,11,0.4), transparent);
+  }
+
+  .input-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .pillar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .pillar-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: rgba(26,10,0,0.45);
+  }
+
+  .pillar-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    background: rgba(26,10,0,0.04);
+    border: 1px solid rgba(184,134,11,0.3);
+    border-radius: 2px;
+    padding: 10px 8px;
+    text-align: center;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.4rem;
+    color: var(--ink);
+    outline: none;
+    transition: all 0.2s;
+    caret-color: var(--cinnabar);
+  }
+  input[type="text"]:focus {
+    border-color: var(--gold);
+    background: rgba(184,134,11,0.05);
+    box-shadow: 0 0 0 3px rgba(184,134,11,0.1);
+  }
+  input[type="text"]::placeholder {
+    color: rgba(26,10,0,0.2);
+    font-size: 1rem;
+  }
+
+  .stem-input { border-bottom-color: var(--cinnabar) !important; }
+  .branch-input { border-bottom-color: var(--jade) !important; }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.65rem;
+    color: rgba(26,10,0,0.5);
+    letter-spacing: 0.1em;
+  }
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  /* Gender radio */
+  .gender-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .gender-opt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: rgba(26,10,0,0.6);
+    transition: color 0.2s;
+  }
+  .gender-opt input { display: none; }
+  .gender-mark {
+    width: 18px; height: 18px;
+    border: 1px solid rgba(184,134,11,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .gender-opt input:checked ~ .gender-mark {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .gender-mark::after {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--paper);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .gender-opt input:checked ~ .gender-mark::after { opacity: 1; }
+  .gender-opt:has(input:checked) { color: var(--gold); }
+
+  /* Button */
+  .btn-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  button {
+    background: linear-gradient(135deg, #8b6914, var(--gold), #8b6914);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    color: var(--paper);
+    border: none;
+    padding: 14px 56px;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.1rem;
+    letter-spacing: 0.5em;
+    cursor: pointer;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: background-position 0.4s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 3px 12px rgba(184,134,11,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  button::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  button:hover {
+    background-position: 0 0;
+    box-shadow: 0 5px 20px rgba(184,134,11,0.5);
+    transform: translateY(-1px);
+  }
+  button:active { transform: translateY(0); }
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 36px 0 28px;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(184,134,11,0.3), transparent);
+  }
+  .divider-icon {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.1rem;
+    color: rgba(184,134,11,0.5);
+    letter-spacing: 0.2em;
+  }
+
+  /* Result area */
+  #result-area {
+    min-height: 120px;
+    position: relative;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 0;
+    color: rgba(26,10,0,0.25);
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+  }
+  .empty-state .big-char {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 12px;
+    opacity: 0.3;
+  }
+
+  /* Loading */
+  .loading-state {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 0.4em;
+  }
+  .loading-dots {
+    display: inline-flex;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .loading-dots span {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 1.4s infinite ease-in-out;
+  }
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+
+  /* Mingpan display */
+  .mingpan {
+    animation: fadeIn 0.6s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* The four pillars visual */
+  .pillars-display {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(184,134,11,0.2);
+    border: 1px solid rgba(184,134,11,0.25);
+    margin-bottom: 28px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .pillar-cell {
+    background: var(--paper);
+    padding: 12px 8px;
+    text-align: center;
+    position: relative;
+  }
+  .pillar-cell:nth-child(odd) { background: rgba(232,223,192,0.4); }
+
+  .pillar-head {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: rgba(26,10,0,0.4);
+    margin-bottom: 8px;
+  }
+  .stem-char {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 2rem;
+    color: var(--cinnabar);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .branch-char {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 2rem;
+    color: var(--jade);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .element-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: rgba(26,10,0,0.35);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 4px;
+  }
+
+  /* Analysis sections */
+  .analysis-section {
+    margin-bottom: 22px;
+  }
+  .section-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '◆';
+    font-size: 0.5rem;
+    color: var(--cinnabar);
+  }
+
+  .analysis-text {
+    font-size: 0.85rem;
+    line-height: 2;
+    color: rgba(26,10,0,0.78);
+    border-left: 2px solid rgba(184,134,11,0.2);
+    padding-left: 14px;
+    white-space: pre-wrap;
+  }
+
+  /* Five elements balance */
+  .wuxing-bar {
+    margin-bottom: 22px;
+  }
+  .wuxing-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 7px;
+  }
+  .wuxing-label {
+    width: 28px;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+  .wuxing-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(26,10,0,0.07);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .wuxing-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+  }
+  .wuxing-pct {
+    font-size: 0.65rem;
+    color: rgba(26,10,0,0.4);
+    width: 30px;
+    text-align: right;
+  }
+
+  /* Seal stamp */
+  .seal {
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
+    width: 52px; height: 52px;
+    border: 2px solid var(--seal);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 0.75rem;
+    color: var(--seal);
+    letter-spacing: 0.1em;
+    opacity: 0.35;
+    transform: rotate(-8deg);
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  /* Error */
+  .error-msg {
+    text-align: center;
+    color: var(--cinnabar);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    padding: 20px 0;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(184,134,11,0.3); border-radius: 2px; }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .card { padding: 28px 20px; }
+    h1 { font-size: 2rem; }
+    .input-row { gap: 6px; }
+    input[type="text"] { font-size: 1.1rem; padding: 8px 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="title-wrap">
+    <div class="title-line"></div>
+    <h1>八字命盘</h1>
+    <div class="title-line right"></div>
+  </div>
+  <p class="subtitle">Bā Zì Ming Pán · 天机推演</p>
+</div>
+
+<div class="card">
+  <!-- Input -->
+  <div class="input-label">输入八字（天干 / 地支）</div>
+
+  <div class="input-row">
+    <div class="pillar-group">
+      <div class="pillar-title">年柱</div>
+      <div class="pillar-inputs">
+        <input type="text" class="stem-input" id="y-stem" maxlength="1" placeholder="干" />
+        <input type="text" class="branch-input" id="y-branch" maxlength="1" placeholder="支" />
+      </div>
+    </div>
+    <div class="pillar-group">
+      <div class="pillar-title">月柱</div>
+      <div class="pillar-inputs">
+        <input type="text" class="stem-input" id="m-stem" maxlength="1" placeholder="干" />
+        <input type="text" class="branch-input" id="m-branch" maxlength="1" placeholder="支" />
+      </div>
+    </div>
+    <div class="pillar-group">
+      <div class="pillar-title">日柱</div>
+      <div class="pillar-inputs">
+        <input type="text" class="stem-input" id="d-stem" maxlength="1" placeholder="干" />
+        <input type="text" class="branch-input" id="d-branch" maxlength="1" placeholder="支" />
+      </div>
+    </div>
+    <div class="pillar-group">
+      <div class="pillar-title">时柱</div>
+      <div class="pillar-inputs">
+        <input type="text" class="stem-input" id="h-stem" maxlength="1" placeholder="干" />
+        <input type="text" class="branch-input" id="h-branch" maxlength="1" placeholder="支" />
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--cinnabar)"></div>天干
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--jade)"></div>地支
+    </div>
+  </div>
+
+  <div class="gender-row">
+    <label class="gender-opt">
+      <input type="radio" name="gender" value="男" checked>
+      <div class="gender-mark"></div>
+      男命
+    </label>
+    <label class="gender-opt">
+      <input type="radio" name="gender" value="女">
+      <div class="gender-mark"></div>
+      女命
+    </label>
+  </div>
+
+  <div class="btn-wrap">
+    <button id="analyze-btn" onclick="analyze()">推　演　命　盘</button>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-icon">命 · 盘</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- Result -->
+  <div id="result-area">
+    <div class="empty-state">
+      <span class="big-char">命</span>
+      输入八字，点击推演
+    </div>
+  </div>
+
+  <div class="seal">天<br>机</div>
+</div>
+
+<script>
+const DEEPSEEK_API_KEY = 'sk-e834defb949544cf8d179660cfa415f4';
+
+const WUXING_COLORS = {
+  '木': '#2e6b4f',
+  '火': '#c0392b',
+  '土': '#a0522d',
+  '金': '#b8860b',
+  '水': '#1c3a5e',
+};
+
+const STEMS_MAP = {
+  '甲':'木','乙':'木','丙':'火','丁':'火','戊':'土',
+  '己':'土','庚':'金','辛':'金','壬':'水','癸':'水'
+};
+const BRANCHES_MAP = {
+  '子':'水','丑':'土','寅':'木','卯':'木','辰':'土',
+  '巳':'火','午':'火','未':'土','申':'金','酉':'金',
+  '戌':'土','亥':'水'
+};
+
+function getElement(char) {
+  return STEMS_MAP[char] || BRANCHES_MAP[char] || '？';
+}
+
+function renderPillars(bazi) {
+  const labels = ['年柱','月柱','日柱','时柱'];
+  return bazi.map((p, i) => {
+    const se = getElement(p.stem);
+    const be = getElement(p.branch);
+    return `
+    <div class="pillar-cell">
+      <div class="pillar-head">${labels[i]}</div>
+      <div class="stem-char">${p.stem || '？'}</div>
+      <div class="branch-char">${p.branch || '？'}</div>
+      <div class="element-tag">
+        <span>${se}</span>
+        <span>${be}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderWuxing(bazi) {
+  const count = {'木':0,'火':0,'土':0,'金':0,'水':0};
+  bazi.forEach(p => {
+    const se = getElement(p.stem);
+    const be = getElement(p.branch);
+    if (count[se] !== undefined) count[se]++;
+    if (count[be] !== undefined) count[be]++;
+  });
+  const total = Object.values(count).reduce((a,b)=>a+b, 0);
+  return Object.entries(count).map(([wx, n]) => {
+    const pct = total ? Math.round(n/total*100) : 0;
+    return `
+    <div class="wuxing-row">
+      <div class="wuxing-label" style="color:${WUXING_COLORS[wx]}">${wx}</div>
+      <div class="wuxing-track">
+        <div class="wuxing-fill" style="width:${pct}%;background:${WUXING_COLORS[wx]}"></div>
+      </div>
+      <div class="wuxing-pct">${pct}%</div>
+    </div>`;
+  }).join('');
+}
+
+function showLoading() {
+  document.getElementById('result-area').innerHTML = `
+    <div class="loading-state">
+      天机推演中
+      <div class="loading-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>`;
+}
+
+function showError(msg) {
+  document.getElementById('result-area').innerHTML = `
+    <div class="error-msg">⚠ ${msg}</div>`;
+}
+
+async function analyze() {
+  const fields = [
+    {id:'y-stem', label:'年干'},{id:'y-branch',label:'年支'},
+    {id:'m-stem', label:'月干'},{id:'m-branch',label:'月支'},
+    {id:'d-stem', label:'日干'},{id:'d-branch',label:'日支'},
+    {id:'h-stem', label:'时干'},{id:'h-branch',label:'时支'},
+  ];
+
+  const vals = fields.map(f => document.getElementById(f.id).value.trim());
+  const missing = vals.some(v => !v);
+  if (missing) {
+    showError('请填写完整的八字（八个字）');
+    return;
+  }
+
+  const bazi = [
+    {stem: vals[0], branch: vals[1]},
+    {stem: vals[2], branch: vals[3]},
+    {stem: vals[4], branch: vals[5]},
+    {stem: vals[6], branch: vals[7]},
+  ];
+
+  const gender = document.querySelector('input[name="gender"]:checked').value;
+  const baziStr = `${vals[0]}${vals[1]} ${vals[2]}${vals[3]} ${vals[4]}${vals[5]} ${vals[6]}${vals[7]}`;
+
+  const btn = document.getElementById('analyze-btn');
+  btn.disabled = true;
+  showLoading();
+
+  const prompt = `你是一位精通中国传统命理学的大师，精通八字命盘分析。
+请对以下八字进行详细分析，用传统命理学角度解读：
+
+八字：${baziStr}（年柱 月柱 日柱 时柱）
+性别：${gender}
+
+请按以下结构返回分析，每个部分用"【标题】"标注：
+
+【日主分析】
+分析日主天干的五行属性、强弱，以及命主的基本性格特征。
+
+【格局判断】
+判断命局格局（如正官格、七杀格、食神格等），说明格局特点。
+
+【五行喜用神】
+根据命局旺衰，分析喜用神和忌神，简要说明原因。
+
+【命运总评】
+综合分析命主的整体运势走向、性格优劣势、人生主要课题，语言简练而有深度。
+
+每个板块约100-150字，使用传统命理术语，语言典雅。`;
+
+  try {
+    const response = await fetch('https://api.deepseek.com/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 1200,
+        temperature: 0.7,
+      })
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.error?.message || `API 错误 ${response.status}`);
+    }
+
+    const data = await response.json();
+    const text = data.choices?.[0]?.message?.content || '';
+
+    // Parse sections
+    const sections = [];
+    const sectionRegex = /【(.+?)】\s*([\s\S]*?)(?=【|$)/g;
+    let match;
+    while ((match = sectionRegex.exec(text)) !== null) {
+      sections.push({ title: match[1].trim(), content: match[2].trim() });
+    }
+
+    // Render
+    const pillarHtml = renderPillars(bazi);
+    const wuxingHtml = renderWuxing(bazi);
+
+    const sectionsHtml = sections.length > 0
+      ? sections.map(s => `
+        <div class="analysis-section">
+          <div class="section-title">${s.title}</div>
+          <div class="analysis-text">${s.content}</div>
+        </div>`).join('')
+      : `<div class="analysis-section">
+          <div class="section-title">命盘解读</div>
+          <div class="analysis-text">${text}</div>
+         </div>`;
+
+    document.getElementById('result-area').innerHTML = `
+      <div class="mingpan">
+        <div class="pillars-display">${pillarHtml}</div>
+        <div class="wuxing-bar">
+          <div class="section-title" style="margin-bottom:12px">五行分布</div>
+          ${wuxingHtml}
+        </div>
+        ${sectionsHtml}
+      </div>`;
+
+  } catch (e) {
+    showError(e.message || '请求失败，请检查 API Key 或网络');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// Auto-advance on input
+document.querySelectorAll('input[type="text"]').forEach((el, i, arr) => {
+  el.addEventListener('input', () => {
+    if (el.value.length >= 1 && i < arr.length - 1) {
+      arr[i+1].focus();
+    }
+  });
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') analyze();
+    if (e.key === 'Backspace' && !el.value && i > 0) {
+      arr[i-1].focus();
+    }
+  });
+});
+</script>
+</body>
+</html>

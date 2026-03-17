@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>八字命盘 · 天机</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a0a00;
+  --paper: #f5eed8;
+  --aged: #e8dfc0;
+  --gold: #b8860b;
+  --gold-light: #d4a843;
+  --cinnabar: #c0392b;
+  --jade: #2e6b4f;
+  --heaven: #1c3a5e;
+  --seal: #9b2335;
+  --border: rgba(184,134,11,0.28);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background-color: var(--ink);
+  background-image:
+    radial-gradient(ellipse at 15% 15%, rgba(184,134,11,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 85%, rgba(28,58,94,0.1) 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.012'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  min-height:100vh;
+  font-family:'Noto Serif SC',serif;
+  color:var(--ink);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:40px 16px 100px;
+}
+
+/* ── Header ── */
+.header { text-align:center; margin-bottom:36px; }
+.title-wrap { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:6px; }
+.title-line { width:56px; height:1px; background:linear-gradient(90deg,transparent,var(--gold)); }
+.title-line.r { background:linear-gradient(90deg,var(--gold),transparent); }
+h1 { font-family:'Ma Shan Zheng',cursive; font-size:2.6rem; color:var(--gold-light); letter-spacing:.35em; text-shadow:0 0 28px rgba(184,134,11,.4); }
+.subtitle { font-size:.7rem; color:rgba(245,238,216,.38); letter-spacing:.5em; }
+
+/* ── Input Card ── */
+.input-card {
+  background:var(--paper);
+  border-radius:3px;
+  padding:30px 36px 26px;
+  width:100%; max-width:700px;
+  box-shadow:0 8px 36px rgba(0,0,0,.55), inset 0 0 60px rgba(232,223,192,.2);
+  border:1px solid var(--border);
+  position:relative;
+  margin-bottom:24px;
+}
+.input-card::before,.input-card::after {
+  content:''; position:absolute; width:20px; height:20px;
+  border-color:var(--gold); border-style:solid; opacity:.4;
+}
+.input-card::before { top:10px; left:10px; border-width:1px 0 0 1px; }
+.input-card::after  { bottom:10px; right:10px; border-width:0 1px 1px 0; }
+
+.field-label {
+  font-size:.68rem; letter-spacing:.4em; color:var(--gold);
+  margin-bottom:8px; display:flex; align-items:center; gap:10px;
+}
+.field-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(184,134,11,.35),transparent); }
+
+.hint { font-size:.64rem; color:rgba(26,10,0,.38); letter-spacing:.08em; margin-bottom:12px; line-height:1.7; }
+
+.bazi-input-wrap { position:relative; margin-bottom:18px; }
+#bazi-input {
+  width:100%;
+  background:rgba(26,10,0,.04);
+  border:1px solid rgba(184,134,11,.35);
+  border-radius:2px;
+  padding:13px 18px;
+  font-family:'Ma Shan Zheng',cursive;
+  font-size:2rem;
+  letter-spacing:.6em;
+  color:var(--ink);
+  outline:none;
+  transition:all .2s;
+  caret-color:var(--cinnabar);
+}
+#bazi-input:focus {
+  border-color:var(--gold);
+  background:rgba(184,134,11,.04);
+  box-shadow:0 0 0 3px rgba(184,134,11,.1);
+}
+#bazi-input::placeholder { color:rgba(26,10,0,.18); font-size:1.2rem; letter-spacing:.25em; }
+.char-counter {
+  position:absolute; right:12px; bottom:9px;
+  font-size:.62rem; color:rgba(26,10,0,.3); letter-spacing:.05em; font-family:'Noto Serif SC',serif;
+}
+.char-counter.ok  { color:var(--jade); }
+.char-counter.err { color:var(--cinnabar); }
+
+.input-bottom { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+
+.gender-row { display:flex; gap:20px; }
+.gender-opt { display:flex; align-items:center; gap:8px; cursor:pointer; font-size:.8rem; letter-spacing:.15em; color:rgba(26,10,0,.58); transition:color .2s; }
+.gender-opt input { display:none; }
+.gender-mark { width:17px; height:17px; border:1px solid rgba(184,134,11,.4); border-radius:50%; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+.gender-opt input:checked ~ .gender-mark { background:var(--gold); border-color:var(--gold); }
+.gender-mark::after { content:''; width:6px; height:6px; border-radius:50%; background:var(--paper); opacity:0; transition:opacity .2s; }
+.gender-opt input:checked ~ .gender-mark::after { opacity:1; }
+.gender-opt:has(input:checked) { color:var(--gold); }
+
+.right-group { display:flex; align-items:center; gap:16px; }
+.error-inline { color:var(--cinnabar); font-size:.7rem; letter-spacing:.06em; min-width:0; }
+
+.analyze-btn {
+  background:linear-gradient(135deg,#7a5c0e,var(--gold),#7a5c0e);
+  background-size:200% 100%; background-position:100% 0;
+  color:var(--paper); border:none;
+  padding:13px 44px;
+  font-family:'Ma Shan Zheng',cursive; font-size:1rem; letter-spacing:.5em;
+  cursor:pointer; border-radius:2px; position:relative; overflow:hidden;
+  transition:background-position .4s,transform .15s,box-shadow .2s;
+  box-shadow:0 3px 12px rgba(184,134,11,.3),inset 0 1px 0 rgba(255,255,255,.15);
+  white-space:nowrap;
+}
+.analyze-btn::before { content:''; position:absolute; inset:1px; border:1px solid rgba(255,255,255,.12); border-radius:2px; pointer-events:none; }
+.analyze-btn:hover { background-position:0 0; box-shadow:0 5px 20px rgba(184,134,11,.5); transform:translateY(-1px); }
+.analyze-btn:active { transform:translateY(0); }
+.analyze-btn:disabled { opacity:.45; cursor:not-allowed; transform:none; }
+
+/* ── Result Card ── */
+.result-card {
+  background:var(--paper);
+  border-radius:3px;
+  padding:40px 40px 56px;
+  width:100%; max-width:1120px;
+  box-shadow:0 8px 42px rgba(0,0,0,.6), inset 0 0 80px rgba(232,223,192,.18);
+  border:1px solid var(--border);
+  position:relative;
+  animation:slideIn .5s ease;
+}
+@keyframes slideIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+.result-card::before,.result-card::after {
+  content:''; position:absolute; width:26px; height:26px;
+  border-color:var(--gold); border-style:solid; opacity:.38;
+}
+.result-card::before { top:14px; left:14px; border-width:1px 0 0 1px; }
+.result-card::after  { bottom:14px; right:14px; border-width:0 1px 1px 0; }
+
+/* ── Mingpan heading ── */
+.mp-title { text-align:center; margin-bottom:30px; }
+.mp-title h2 { font-family:'Ma Shan Zheng',cursive; font-size:1.55rem; color:var(--gold); letter-spacing:.65em; margin-bottom:5px; }
+.mp-title .mp-sub { font-size:.65rem; color:rgba(26,10,0,.38); letter-spacing:.35em; }
+
+/* ── Section heading ── */
+.sec-head {
+  display:flex; align-items:center; gap:10px;
+  font-size:.68rem; letter-spacing:.4em; color:var(--gold);
+  margin:30px 0 14px;
+}
+.sec-head::before { content:'◆'; font-size:.45rem; color:var(--cinnabar); }
+.sec-head::after  { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(184,134,11,.3),transparent); }
+
+/* ══════════════════════════════
+   FOUR-PILLAR TABLE
+══════════════════════════════ */
+.table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+.mp-table { border-collapse:collapse; width:100%; min-width:580px; }
+.mp-table th, .mp-table td {
+  border:1px solid rgba(184,134,11,.22);
+  padding:9px 12px;
+  text-align:center;
+  vertical-align:middle;
+  font-size:.82rem;
+  line-height:1.55;
+}
+.mp-table th {
+  background:rgba(184,134,11,.1);
+  font-size:.62rem;
+  letter-spacing:.28em;
+  color:rgba(26,10,0,.5);
+  font-weight:600;
+}
+.mp-table td.rh {
+  background:rgba(184,134,11,.065);
+  font-size:.62rem;
+  letter-spacing:.22em;
+  color:rgba(26,10,0,.48);
+  text-align:right;
+  padding-right:14px;
+  white-space:nowrap;
+  font-weight:600;
+}
+.big-stem   { font-family:'Ma Shan Zheng',cursive; font-size:2.4rem; color:var(--cinnabar); line-height:1; display:block; }
+.big-branch { font-family:'Ma Shan Zheng',cursive; font-size:2.4rem; color:var(--jade);    line-height:1; display:block; }
+.el-badge {
+  display:inline-block; font-size:.58rem; letter-spacing:.04em;
+  padding:1px 7px; border-radius:10px; margin-top:4px;
+}
+.el-木 { background:rgba(46,107,79,.1);  color:#2e6b4f; border:1px solid rgba(46,107,79,.22); }
+.el-火 { background:rgba(192,57,43,.09); color:#c0392b; border:1px solid rgba(192,57,43,.18); }
+.el-土 { background:rgba(160,82,45,.1);  color:#8b5e3c; border:1px solid rgba(160,82,45,.2); }
+.el-金 { background:rgba(184,134,11,.1); color:#8b6914; border:1px solid rgba(184,134,11,.2); }
+.el-水 { background:rgba(28,58,94,.1);   color:#1c3a5e; border:1px solid rgba(28,58,94,.2); }
+
+.ss-cell { font-family:'Ma Shan Zheng',cursive; font-size:1.15rem; }
+.ss-ji   { color:var(--cinnabar); }
+.ss-xi   { color:var(--jade); }
+.ss-neu  { color:var(--heaven); }
+
+.hidden-stem-list { display:flex; flex-direction:column; gap:3px; align-items:center; }
+.hs-item { display:flex; align-items:center; gap:5px; font-size:.75rem; }
+.hs-char { font-family:'Ma Shan Zheng',cursive; font-size:1.05rem; }
+.hs-ss   { font-size:.6rem; color:rgba(26,10,0,.4); }
+
+/* ── Wuxing table ── */
+.wx-table { width:100%; border-collapse:collapse; }
+.wx-table td { border:1px solid rgba(184,134,11,.18); padding:8px 12px; vertical-align:middle; }
+.wx-name  { font-family:'Ma Shan Zheng',cursive; font-size:1.1rem; width:32px; text-align:center; }
+.wx-track { min-width:120px; }
+.wx-bar-outer { background:rgba(26,10,0,.07); border-radius:3px; height:9px; overflow:hidden; }
+.wx-bar-inner { height:100%; border-radius:3px; transition:width .9s cubic-bezier(.4,0,.2,1); }
+.wx-pct   { font-size:.65rem; color:rgba(26,10,0,.42); width:36px; text-align:right; white-space:nowrap; }
+.wx-chars { font-size:.7rem; color:rgba(26,10,0,.5); width:130px; }
+.wx-grade { font-size:.62rem; color:rgba(26,10,0,.38); width:60px; text-align:center; }
+
+/* ── Shensha ── */
+.shensha-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.ss-tag { padding:4px 13px; border-radius:2px; font-size:.72rem; letter-spacing:.15em; border:1px solid; }
+.ss-tag-ji { border-color:rgba(192,57,43,.35); color:var(--cinnabar); background:rgba(192,57,43,.06); }
+.ss-tag-xi { border-color:rgba(46,107,79,.35);  color:var(--jade);    background:rgba(46,107,79,.06); }
+.ss-tag-n  { border-color:rgba(184,134,11,.3);  color:var(--gold);    background:rgba(184,134,11,.05); }
+
+/* ── Analysis text ── */
+.analysis-block {
+  border-left:2px solid rgba(184,134,11,.2);
+  padding:12px 16px;
+  margin-bottom:4px;
+  font-size:.84rem; line-height:2.1; color:rgba(26,10,0,.76);
+  white-space:pre-wrap;
+}
+
+/* ── Loading ── */
+.loading-state { text-align:center; padding:70px 0; color:var(--gold); font-size:.8rem; letter-spacing:.4em; }
+.loading-dots { display:inline-flex; gap:7px; margin-top:14px; }
+.loading-dots span { width:7px; height:7px; border-radius:50%; background:var(--gold); animation:pulse 1.4s infinite ease-in-out; }
+.loading-dots span:nth-child(2){animation-delay:.2s}
+.loading-dots span:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,80%,100%{transform:scale(.55);opacity:.3}40%{transform:scale(1);opacity:1}}
+
+/* ── Seal ── */
+.seal {
+  position:absolute; bottom:18px; right:22px;
+  width:52px; height:52px;
+  border:2px solid var(--seal); border-radius:2px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Ma Shan Zheng',cursive; font-size:.72rem; color:var(--seal);
+  opacity:.26; transform:rotate(-8deg); text-align:center; line-height:1.4;
+}
+
+/* ── Divider ── */
+.mini-divider { height:1px; background:linear-gradient(90deg,transparent,rgba(184,134,11,.2),transparent); margin:8px 0; }
+
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(184,134,11,.3);border-radius:2px}
+
+@media(max-width:640px){
+  .input-card,.result-card{padding:22px 16px 28px}
+  h1{font-size:2rem}
+  #bazi-input{font-size:1.5rem;letter-spacing:.3em}
+  .input-bottom{flex-direction:column;align-items:flex-start}
+  .right-group{width:100%;justify-content:space-between}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="title-wrap">
+    <div class="title-line"></div>
+    <h1>八字命盘</h1>
+    <div class="title-line r"></div>
+  </div>
+  <p class="subtitle">Bā Zì Ming Pán · 天机推演</p>
+</div>
+
+<!-- Input Card -->
+<div class="input-card">
+  <div class="field-label">输入八字</div>
+  <p class="hint">按「年干支 月干支 日干支 时干支」顺序输入八个汉字，干支之间可加空格，例：甲子 丙寅 戊午 庚申</p>
+
+  <div class="bazi-input-wrap">
+    <input type="text" id="bazi-input" maxlength="16"
+      placeholder="甲子 丙寅 戊午 庚申" autocomplete="off" spellcheck="false"
+      oninput="onBaziInput()" onkeydown="if(event.key==='Enter')analyze()" />
+    <span class="char-counter" id="char-counter">0 / 8</span>
+  </div>
+
+  <div class="input-bottom">
+    <div class="gender-row">
+      <label class="gender-opt">
+        <input type="radio" name="gender" value="男" checked>
+        <div class="gender-mark"></div>男命
+      </label>
+      <label class="gender-opt">
+        <input type="radio" name="gender" value="女">
+        <div class="gender-mark"></div>女命
+      </label>
+    </div>
+    <div class="right-group">
+      <span class="error-inline" id="err-msg"></span>
+      <button class="analyze-btn" id="analyze-btn" onclick="analyze()">推　演　命　盘</button>
+    </div>
+  </div>
+</div>
+
+<!-- Result -->
+<div id="result-wrap" style="width:100%;max-width:1120px;display:none">
+  <div id="result-area"></div>
+</div>
+
+<script>
+const DEEPSEEK_API_KEY = 'sk-e834defb949544cf8d179660cfa415f4';
+
+/* ════════════ Lookup Data ════════════ */
+const STEMS    = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const BRANCHES = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+
+const STEM_EL   = {甲:'木',乙:'木',丙:'火',丁:'火',戊:'土',己:'土',庚:'金',辛:'金',壬:'水',癸:'水'};
+const BRANCH_EL = {子:'水',丑:'土',寅:'木',卯:'木',辰:'土',巳:'火',午:'火',未:'土',申:'金',酉:'金',戌:'土',亥:'水'};
+const STEM_YIN  = {甲:false,乙:true,丙:false,丁:true,戊:false,己:true,庚:false,辛:true,壬:false,癸:true};
+
+const WX_COLOR = {木:'#2e6b4f',火:'#c0392b',土:'#8b5e3c',金:'#8b6914',水:'#1c3a5e'};
+
+const HIDDEN_STEMS = {
+  子:['癸'],      丑:['己','癸','辛'], 寅:['甲','丙','戊'], 卯:['乙'],
+  辰:['戊','乙','癸'], 巳:['丙','庚','戊'], 午:['丁','己'],      未:['己','丁','乙'],
+  申:['庚','壬','戊'], 酉:['辛'],           戌:['戊','辛','丁'], 亥:['壬','甲']
+};
+
+const NAYIN = {
+  甲子:'海中金',乙丑:'海中金',丙寅:'炉中火',丁卯:'炉中火',戊辰:'大林木',己巳:'大林木',
+  庚午:'路旁土',辛未:'路旁土',壬申:'剑锋金',癸酉:'剑锋金',甲戌:'山头火',乙亥:'山头火',
+  丙子:'涧下水',丁丑:'涧下水',戊寅:'城头土',己卯:'城头土',庚辰:'白腊金',辛巳:'白腊金',
+  壬午:'杨柳木',癸未:'杨柳木',甲申:'泉中水',乙酉:'泉中水',丙戌:'屋上土',丁亥:'屋上土',
+  戊子:'霹雳火',己丑:'霹雳火',庚寅:'松柏木',辛卯:'松柏木',壬辰:'长流水',癸巳:'长流水',
+  甲午:'沙中金',乙未:'沙中金',丙申:'山下火',丁酉:'山下火',戊戌:'平地木',己亥:'平地木',
+  庚子:'壁上土',辛丑:'壁上土',壬寅:'金箔金',癸卯:'金箔金',甲辰:'覆灯火',乙巳:'覆灯火',
+  丙午:'天河水',丁未:'天河水',戊申:'大驿土',己酉:'大驿土',庚戌:'钗钏金',辛亥:'钗钏金',
+  壬子:'桑柘木',癸丑:'桑柘木',甲寅:'大溪水',乙卯:'大溪水',丙辰:'沙中土',丁巳:'沙中土',
+  戊午:'天上火',己未:'天上火',庚申:'石榴木',辛酉:'石榴木',壬戌:'大海水',癸亥:'大海水'
+};
+
+// 生克关系
+const WX = ['木','火','土','金','水'];
+const sheng = (a,b)=>(WX.indexOf(a)+1)%5 === WX.indexOf(b);
+const ke    = (a,b)=>(WX.indexOf(a)+2)%5 === WX.indexOf(b);
+
+function getShishen(targetStem, riZhuStem) {
+  if (targetStem === riZhuStem) return '比肩';
+  const ea = STEM_EL[targetStem], er = STEM_EL[riZhuStem];
+  const ya = STEM_YIN[targetStem], yr = STEM_YIN[riZhuStem];
+  const same = ya === yr;
+  if (!ea || !er) return '—';
+  if (ea === er)           return same ? '比肩' : '劫财';
+  if (sheng(ea, er))       return same ? '偏印' : '正印';
+  if (sheng(er, ea))       return same ? '食神' : '伤官';
+  if (ke(ea, er))          return same ? '七杀' : '正官';
+  if (ke(er, ea))          return same ? '偏财' : '正财';
+  return '—';
+}
+
+const SS_JI  = new Set(['七杀','劫财','伤官']);
+const SS_XI  = new Set(['正官','正印','正财','食神']);
+
+function ssClass(ss) {
+  if (SS_JI.has(ss)) return 'ss-ji';
+  if (SS_XI.has(ss)) return 'ss-xi';
+  return 'ss-neu';
+}
+
+function getXunkong(stem, branch) {
+  const si = STEMS.indexOf(stem), bi = BRANCHES.indexOf(branch);
+  if (si<0||bi<0) return '—';
+  const pairs = [['戌','亥'],['申','酉'],['午','未'],['辰','巳'],['寅','卯'],['子','丑']];
+  return pairs[Math.floor(si/2)%6].join('');
+}
+
+/* ════════════ Input Handler ════════════ */
+function getBaziChars() {
+  const raw = document.getElementById('bazi-input').value;
+  return raw.replace(/\s+/g,'').split('').filter(c=>STEMS.includes(c)||BRANCHES.includes(c));
+}
+
+function onBaziInput() {
+  const n = getBaziChars().length;
+  const cc = document.getElementById('char-counter');
+  cc.textContent = `${n} / 8`;
+  cc.className = 'char-counter'+(n===8?' ok':n>8?' err':'');
+  document.getElementById('err-msg').textContent = '';
+}
+
+function parseBazi() {
+  const chars = getBaziChars();
+  if (chars.length !== 8) return null;
+  return [
+    {stem:chars[0],branch:chars[1]},
+    {stem:chars[2],branch:chars[3]},
+    {stem:chars[4],branch:chars[5]},
+    {stem:chars[6],branch:chars[7]},
+  ];
+}
+
+/* ════════════ Analyze ════════════ */
+async function analyze() {
+  const bazi = parseBazi();
+  const errEl = document.getElementById('err-msg');
+  if (!bazi) { errEl.textContent = '⚠ 请输入完整的八字（八个有效汉字）'; return; }
+  const LABELS = ['年','月','日','时'];
+  for (let i=0;i<4;i++) {
+    if (!STEMS.includes(bazi[i].stem))   { errEl.textContent = `⚠ ${LABELS[i]}柱天干「${bazi[i].stem}」不合法`; return; }
+    if (!BRANCHES.includes(bazi[i].branch)) { errEl.textContent = `⚠ ${LABELS[i]}柱地支「${bazi[i].branch}」不合法`; return; }
+  }
+  errEl.textContent = '';
+
+  const gender  = document.querySelector('input[name="gender"]:checked').value;
+  const riZhu   = bazi[2].stem;
+  const baziStr = bazi.map(p=>p.stem+p.branch).join(' ');
+
+  const btn = document.getElementById('analyze-btn');
+  btn.disabled = true;
+
+  const rw = document.getElementById('result-wrap');
+  rw.style.display = 'block';
+  document.getElementById('result-area').innerHTML = `
+    <div class="result-card">
+      <div class="loading-state">天机推演中
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>`;
+  rw.scrollIntoView({behavior:'smooth',block:'start'});
+
+  /* ── Compute local data ── */
+  // Wuxing count (hidden stems count 0.5)
+  const wxCount = {木:0,火:0,土:0,金:0,水:0};
+  bazi.forEach(p=>{
+    wxCount[STEM_EL[p.stem]]   += 1;
+    wxCount[BRANCH_EL[p.branch]] += 1;
+    HIDDEN_STEMS[p.branch].forEach(hs=>{ wxCount[STEM_EL[hs]] += 0.5; });
+  });
+  const wxTotal = Object.values(wxCount).reduce((a,b)=>a+b,0);
+
+  // Shishens per pillar
+  const shishens = bazi.map((p,i)=>({
+    stemSS: i===2 ? '日元' : getShishen(p.stem, riZhu),
+    hiddenList: HIDDEN_STEMS[p.branch].map(hs=>({char:hs,el:STEM_EL[hs],ss:i===2&&hs===riZhu?'日元':getShishen(hs,riZhu)}))
+  }));
+
+  // Nayins & xunkong
+  const nayins  = bazi.map(p=>NAYIN[p.stem+p.branch]||'—');
+  const xunkongs= bazi.map(p=>getXunkong(p.stem,p.branch));
+
+  // Branch relationships: 三合, 六合, 相冲, 相刑 (simple checks)
+  const allBranches = bazi.map(p=>p.branch);
+
+  // 六合
+  const LIUHE = {子:'丑',丑:'子',寅:'亥',亥:'寅',卯:'戌',戌:'卯',辰:'酉',酉:'辰',巳:'申',申:'巳',午:'未',未:'午'};
+  const liuhe_pairs = [];
+  for(let i=0;i<4;i++) for(let j=i+1;j<4;j++) {
+    if(LIUHE[allBranches[i]]===allBranches[j]) liuhe_pairs.push(`${allBranches[i]}${allBranches[j]}六合`);
+  }
+  // 相冲
+  const XCHONG = {子:'午',午:'子',丑:'未',未:'丑',寅:'申',申:'寅',卯:'酉',酉:'卯',辰:'戌',戌:'辰',巳:'亥',亥:'巳'};
+  const chong_pairs = [];
+  for(let i=0;i<4;i++) for(let j=i+1;j<4;j++) {
+    if(XCHONG[allBranches[i]]===allBranches[j]) chong_pairs.push(`${allBranches[i]}${allBranches[j]}相冲`);
+  }
+  // 三合局
+  const SANHE = [[['申','子','辰'],'水局'],[['寅','午','戌'],'火局'],[['亥','卯','未'],'木局'],[['巳','酉','丑'],'金局']];
+  const sanhe_found = [];
+  SANHE.forEach(([set,name])=>{
+    const count = set.filter(b=>allBranches.includes(b)).length;
+    if(count===3) sanhe_found.push(`${set.join('')}三合${name}`);
+    else if(count===2) sanhe_found.push(`${set.filter(b=>allBranches.includes(b)).join('')}半合${name}`);
+  });
+
+  /* ── Shensha ── */
+  const TIANYI_MAP = {甲:['丑','未'],乙:['子','申'],丙:['亥','酉'],丁:['亥','酉'],戊:['丑','未'],己:['子','申'],庚:['丑','未'],辛:['寅','午'],壬:['卯','巳'],癸:['卯','巳']};
+  const WENCHANG_MAP = {甲:'巳',乙:'午',丙:'申',丁:'酉',戊:'申',己:'酉',庚:'亥',辛:'子',壬:'寅',癸:'卯'};
+  const YIMA_MAP = {寅:'申',申:'寅',巳:'亥',亥:'巳',子:'寅',午:'申',卯:'亥',酉:'巳',辰:'寅',戌:'申',丑:'亥',未:'巳'};
+  const TAOHUA_MAP = {子:'酉',午:'卯',卯:'子',酉:'午',寅:'卯',申:'酉',巳:'午',亥:'子',辰:'酉',戌:'卯',丑:'子',未:'午'};
+  const KUIGANG = ['庚辰','庚戌','壬辰','壬戌'];
+  const TIANDE_MAP = {寅:'丁',卯:'申',辰:'壬',巳:'辛',午:'亥',未:'甲',申:'癸',酉:'寅',戌:'丙',亥:'乙',子:'巳',丑:'庚'};
+
+  const nianB = bazi[0].branch, yueB = bazi[1].branch;
+  const shenshaTags = [];
+
+  // 天乙贵人
+  const ty = (TIANYI_MAP[riZhu]||[]);
+  if(allBranches.some(b=>ty.includes(b))) shenshaTags.push({label:'天乙贵人',type:'xi'});
+  // 文昌贵人
+  if(allBranches.includes(WENCHANG_MAP[riZhu])) shenshaTags.push({label:'文昌贵人',type:'xi'});
+  // 驿马
+  if(allBranches.includes(YIMA_MAP[nianB])||allBranches.includes(YIMA_MAP[yueB])) shenshaTags.push({label:'驿马星',type:'n'});
+  // 桃花
+  if(allBranches.filter(b=>b===TAOHUA_MAP[nianB]).length>0) shenshaTags.push({label:'桃花星',type:'n'});
+  // 魁罡
+  if(KUIGANG.includes(bazi[2].stem+bazi[2].branch)) shenshaTags.push({label:'魁罡',type:'n'});
+  // 天德
+  if(TIANDE_MAP[yueB] && (allBranches.includes(TIANDE_MAP[yueB])||bazi.some(p=>p.stem===TIANDE_MAP[yueB]))) shenshaTags.push({label:'天德贵人',type:'xi'});
+  // 羊刃
+  const YANGREN = {甲:'卯',丙:'午',戊:'午',庚:'酉',壬:'子'};
+  if(YANGREN[riZhu] && allBranches.includes(YANGREN[riZhu])) shenshaTags.push({label:'羊刃',type:'ji'});
+  // 华盖
+  const HUAGAI = {子:'辰',丑:'丑',寅:'戌',卯:'未',辰:'辰',巳:'丑',午:'戌',未:'未',申:'辰',酉:'丑',戌:'戌',亥:'未'};
+  if(allBranches.includes(HUAGAI[nianB])) shenshaTags.push({label:'华盖',type:'n'});
+
+  /* ── API Prompt ── */
+  const prompt = `你是精通子平八字的中国传统命理学大师。请对以下八字进行极其详尽、专业、有深度的命盘分析。
+
+八字：${baziStr}（年柱 月柱 日柱 时柱）
+性别：${gender}
+日主：${riZhu}（${STEM_EL[riZhu]}）
+已知地支关系：${[...liuhe_pairs,...chong_pairs,...sanhe_found].join('；')||'待分析'}
+
+请严格按照以下结构输出，每个部分用【标题】标注，内容务必详尽丰富，不少于指定字数：
+
+【日主强弱分析】
+分析日主${riZhu}（${STEM_EL[riZhu]}）的旺衰：月令是否得令、各柱是否得地得助、通根情况、综合判断身强身弱及程度。不少于200字。
+
+【格局判断与分析】
+判断命局属于何种格局，格局是否成立、清纯还是混杂，有无破格、救格，格局层次高低，并说明判断依据。不少于200字。
+
+【用神忌神体系】
+根据命局旺衰系统分析：用神（核心）、喜神（辅助）、忌神（克害）、仇神（帮忌神者），并说明五行流通关系与取用原则。不少于200字。
+
+【十神六亲详析】
+逐一分析各柱天干地支的十神含义，以及官杀（父、夫/妻）、财星（父、妻/夫）、印星（母）、食伤（子女/才华）、比劫（兄弟/竞争）各自的状态与命主缘分深浅。不少于220字。
+
+【地支关系与刑冲合害】
+详析命局中地支的六合、三合、半合、相冲、相刑、相害情况，各组合对命局产生的实际影响（合化是否成立、冲旺冲衰等）。不少于180字。
+
+【神煞吉凶详解】
+根据命局分析天乙贵人、文昌贵人、驿马、桃花、华盖、羊刃、魁罡、天德月德等神煞的实际作用与吉凶表现。不少于180字。
+
+【性格才能与处世风格】
+从日主五行、格局、十神综合分析命主的性格特征、思维模式、天赋才能、处世方式、优势与弱点。不少于200字。
+
+【事业方向与财运分析】
+分析命主适合的事业领域、打拼方式、财富模式（正财偏财）、财运高低起伏与财富积累方式。不少于180字。
+
+【婚姻感情与家庭】
+分析婚姻宫（日支）状态、配偶星（男看财、女看官杀）强弱、感情模式、婚姻质量、与配偶缘分及家庭生活状态。不少于180字。
+
+【大运流年推演】
+描述人生各阶段大运走势（早年、青年、中年、晚年各约20年），分析好运与坎坷时期，并对2024—2026年流年给出具体参考建议。不少于220字。
+
+【命局综评与人生建议】
+综合以上，评价命局格局层次、人生主题与课题，给出扬长避短、趋吉避凶的具体建议，语言典雅而有力。不少于200字。
+
+注意：语言使用传统命理术语，典雅庄重，内容深入，不可泛泛而谈。`;
+
+  try {
+    const response = await fetch('https://api.deepseek.com/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${DEEPSEEK_API_KEY}`},
+      body:JSON.stringify({model:'deepseek-chat',messages:[{role:'user',content:prompt}],max_tokens:4000,temperature:0.72})
+    });
+    if(!response.ok){
+      const err=await response.json().catch(()=>({}));
+      throw new Error(err.error?.message||`API 错误 ${response.status}`);
+    }
+    const data=await response.json();
+    const text=data.choices?.[0]?.message?.content||'';
+    const sections=[];
+    const re=/【(.+?)】\s*([\s\S]*?)(?=【|$)/g; let m;
+    while((m=re.exec(text))!==null) sections.push({title:m[1].trim(),content:m[2].trim()});
+
+    renderMingpan({bazi,gender,riZhu,shishens,nayins,xunkongs,wxCount,wxTotal,shenshaTags,liuhe_pairs,chong_pairs,sanhe_found,sections});
+  } catch(e) {
+    document.getElementById('result-area').innerHTML=`
+      <div class="result-card">
+        <div style="text-align:center;color:var(--cinnabar);padding:50px;font-size:.82rem;letter-spacing:.15em">
+          ⚠ ${e.message||'请求失败，请检查 API Key 或网络'}
+        </div>
+      </div>`;
+  } finally { btn.disabled=false; }
+}
+
+/* ════════════ Render ════════════ */
+function renderMingpan({bazi,gender,riZhu,shishens,nayins,xunkongs,wxCount,wxTotal,shenshaTags,liuhe_pairs,chong_pairs,sanhe_found,sections}) {
+  const LABELS = ['年柱','月柱','日柱','时柱'];
+  const baziStr = bazi.map(p=>p.stem+p.branch).join(' ');
+
+  /* ── Main four-pillar table ── */
+  const mainTable = `
+  <div class="table-scroll">
+  <table class="mp-table">
+    <thead><tr>
+      <th style="min-width:72px;width:72px"></th>
+      ${LABELS.map(l=>`<th style="min-width:120px">${l}</th>`).join('')}
+    </tr></thead>
+    <tbody>
+      <!-- 天干 -->
+      <tr>
+        <td class="rh">天干</td>
+        ${bazi.map(p=>`<td>
+          <span class="big-stem">${p.stem}</span>
+          <span class="el-badge el-${STEM_EL[p.stem]}">${STEM_EL[p.stem]} ${STEM_YIN[p.stem]?'阴':'阳'}</span>
+        </td>`).join('')}
+      </tr>
+      <!-- 地支 -->
+      <tr>
+        <td class="rh">地支</td>
+        ${bazi.map(p=>`<td>
+          <span class="big-branch">${p.branch}</span>
+          <span class="el-badge el-${BRANCH_EL[p.branch]}">${BRANCH_EL[p.branch]}</span>
+        </td>`).join('')}
+      </tr>
+      <!-- 天干十神 -->
+      <tr>
+        <td class="rh">天干十神</td>
+        ${shishens.map((s,i)=>`<td>
+          <span class="ss-cell ${ssClass(s.stemSS)}">${s.stemSS}</span>
+        </td>`).join('')}
+      </tr>
+      <!-- 藏干 & 十神 -->
+      <tr>
+        <td class="rh">藏干</td>
+        ${shishens.map(s=>`<td>
+          <div class="hidden-stem-list">
+            ${s.hiddenList.map(h=>`
+              <div class="hs-item">
+                <span class="hs-char" style="color:${WX_COLOR[h.el]}">${h.char}</span>
+                <span class="hs-ss ${ssClass(h.ss)}" style="font-size:.62rem">${h.ss}</span>
+              </div>`).join('')}
+          </div>
+        </td>`).join('')}
+      </tr>
+      <!-- 纳音 -->
+      <tr>
+        <td class="rh">纳音五行</td>
+        ${nayins.map(n=>`<td style="font-size:.78rem;color:rgba(26,10,0,.65)">${n}</td>`).join('')}
+      </tr>
+      <!-- 旬空 -->
+      <tr>
+        <td class="rh">旬空</td>
+        ${xunkongs.map(x=>`<td style="font-size:.82rem;color:var(--cinnabar);letter-spacing:.1em">${x}</td>`).join('')}
+      </tr>
+      <!-- 五行 -->
+      <tr>
+        <td class="rh">干支五行</td>
+        ${bazi.map(p=>`<td style="font-size:.75rem;line-height:2;color:rgba(26,10,0,.62)">
+          干 <span style="color:${WX_COLOR[STEM_EL[p.stem]]}">${STEM_EL[p.stem]}</span> ／
+          支 <span style="color:${WX_COLOR[BRANCH_EL[p.branch]]}">${BRANCH_EL[p.branch]}</span>
+        </td>`).join('')}
+      </tr>
+      <!-- 地支关系 -->
+      <tr>
+        <td class="rh">地支关系</td>
+        <td colspan="4" style="text-align:left;font-size:.76rem;color:rgba(26,10,0,.62);line-height:2;padding:10px 16px">
+          ${[...liuhe_pairs,...chong_pairs,...sanhe_found].length
+            ? [...liuhe_pairs,...chong_pairs,...sanhe_found].map(r=>`<span style="margin-right:16px">${r}</span>`).join('')
+            : '— 无明显三合六合相冲 —'}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>`;
+
+  /* ── Wuxing table ── */
+  const wxHtml = `
+  <table class="wx-table">
+    ${Object.entries(wxCount).map(([wx,n])=>{
+      const pct = wxTotal ? Math.round(n/wxTotal*100) : 0;
+      const chars = [];
+      bazi.forEach(p=>{
+        if(STEM_EL[p.stem]===wx)   chars.push(p.stem);
+        if(BRANCH_EL[p.branch]===wx) chars.push(p.branch);
+        HIDDEN_STEMS[p.branch].filter(hs=>STEM_EL[hs]===wx).forEach(hs=>chars.push(`(${hs})`));
+      });
+      const grade = n<1?'极弱':n<2?'偏弱':n<3?'中和':n<4?'偏旺':'极旺';
+      return `<tr>
+        <td class="wx-name" style="color:${WX_COLOR[wx]}">${wx}</td>
+        <td class="wx-track">
+          <div class="wx-bar-outer"><div class="wx-bar-inner" style="width:${pct}%;background:${WX_COLOR[wx]}"></div></div>
+        </td>
+        <td class="wx-pct">${pct}%</td>
+        <td class="wx-chars">${[...new Set(chars)].join('、')||'—'}</td>
+        <td class="wx-grade">${grade}</td>
+      </tr>`;
+    }).join('')}
+  </table>`;
+
+  /* ── Shensha ── */
+  const shenshaHtml = shenshaTags.length
+    ? shenshaTags.map(s=>`<span class="ss-tag ss-tag-${s.type}">${s.label}</span>`).join('')
+    : `<span style="font-size:.76rem;color:rgba(26,10,0,.32);letter-spacing:.1em">— 主要神煞见AI分析 —</span>`;
+
+  /* ── AI sections ── */
+  const aiHtml = sections.length > 0
+    ? sections.map(s=>`
+      <div class="sec-head">${s.title}</div>
+      <div class="analysis-block">${s.content}</div>
+      <div class="mini-divider"></div>
+    `).join('')
+    : `<div class="sec-head">AI解读</div><div class="analysis-block" style="color:var(--cinnabar)">AI解读返回内容为空，请检查 API Key 是否有效。</div>`;
+
+  document.getElementById('result-area').innerHTML = `
+  <div class="result-card">
+    <div class="mp-title">
+      <h2>八 字 命 盘</h2>
+      <div class="mp-sub">${baziStr} · ${gender} · 日主 ${riZhu}（${STEM_EL[riZhu]}）</div>
+    </div>
+
+    <div class="sec-head">四柱总表</div>
+    ${mainTable}
+
+    <div class="sec-head">五行力量分布</div>
+    ${wxHtml}
+
+    <div class="sec-head">命局神煞</div>
+    <div class="shensha-grid">${shenshaHtml}</div>
+
+    ${aiHtml}
+
+    <div class="seal">天<br>机</div>
+  </div>`;
+}
+
+onBaziInput();
+</script>
+</body>
+</html>

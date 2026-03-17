@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>道具表编辑器</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --bg2: #161b27;
+    --bg3: #1e2535;
+    --bg4: #252d3d;
+    --border: #2e3a50;
+    --accent: #4fc3f7;
+    --accent2: #81d4fa;
+    --accent-dim: rgba(79,195,247,0.12);
+    --danger: #ef5350;
+    --danger-dim: rgba(239,83,80,0.12);
+    --clone: #ffb74d;
+    --clone-dim: rgba(255,183,77,0.12);
+    --text: #e0e8f0;
+    --text2: #8899aa;
+    --text3: #556677;
+    --header-h: 48px;
+    --sidebar-w: 200px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  header {
+    height: var(--header-h);
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 8px;
+    flex-shrink: 0;
+    z-index: 100;
+  }
+  header h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-right: auto;
+    white-space: nowrap;
+  }
+  .header-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .header-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+  .mobile-menu-btn {
+    display: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    color: var(--text);
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+    transition: all .15s;
+  }
+  .mobile-menu-btn:hover, .mobile-menu-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+  .layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  aside {
+    width: var(--sidebar-w);
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    z-index: 50;
+  }
+  .sidebar-title {
+    padding: 10px 12px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-list { flex: 1; overflow-y: auto; padding: 4px 0; }
+  .sidebar-item {
+    padding: 9px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background .1s;
+    user-select: none;
+    border-left: 2px solid transparent;
+  }
+  .sidebar-item:hover { background: var(--bg3); }
+  .sidebar-item.active { background: var(--accent-dim); border-left-color: var(--accent); color: var(--accent); }
+  .sidebar-item .item-icon { font-size: 11px; color: var(--text3); flex-shrink: 0; }
+  .sidebar-add {
+    padding: 9px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-top: 1px solid var(--border);
+    transition: all .15s;
+  }
+  .sidebar-add:hover { color: var(--accent); background: var(--accent-dim); }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 49;
+  }
+
+  main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .table-header {
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2); flex-shrink: 0;
+  }
+  .table-name { font-size: 15px; font-weight: 700; color: var(--accent); }
+  .table-subtitle { font-size: 12px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+
+  .table-area { flex: 1; overflow: auto; padding: 16px; }
+  .table-wrap { min-width: max-content; }
+  table { border-collapse: collapse; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+  th, td { border: 1px solid var(--border); padding: 0; min-width: 100px; max-width: 240px; position: relative; }
+  th {
+    background: var(--bg3);
+    font-weight: 600; color: var(--text2);
+    font-size: 11px; letter-spacing: .5px;
+    text-align: center; height: 32px; white-space: nowrap;
+  }
+  th .col-header-inner {
+    display: flex; align-items: center; justify-content: center;
+    gap: 4px; padding: 0 6px; height: 100%;
+  }
+  th .col-unit { color: var(--accent); font-size: 10px; opacity: 0.85; }
+  th.col-act-hdr { background: transparent; border: none; }
+  .col-delete-btn {
+    background: none; border: none; color: var(--text3);
+    cursor: pointer; font-size: 13px; padding: 2px 4px;
+    border-radius: 3px; line-height: 1; transition: all .15s;
+  }
+  .col-delete-btn:hover { color: var(--danger); background: var(--danger-dim); }
+
+  td { background: var(--bg); height: 34px; }
+  tr:hover td { background: var(--bg2); }
+  td.id-cell { color: var(--accent2); }
+  td.act-cell {
+    background: var(--bg2); border-color: var(--border);
+    text-align: center; white-space: nowrap;
+    min-width: 28px; width: 28px;
+  }
+  td.act-cell-wide { min-width: 54px; width: 54px; }
+
+  .row-del-btn {
+    background: none; border: none; color: var(--text3);
+    cursor: pointer; font-size: 13px; padding: 2px 5px;
+    border-radius: 3px; transition: all .15s;
+  }
+  .row-del-btn:hover { color: var(--danger); background: var(--danger-dim); }
+  .row-clone-btn {
+    background: none; border: none; color: var(--text3);
+    cursor: pointer; font-size: 13px; padding: 2px 4px;
+    border-radius: 3px; transition: all .15s; line-height: 1;
+  }
+  .row-clone-btn:hover { color: var(--clone); background: var(--clone-dim); }
+
+  .cell-input {
+    width: 100%; height: 100%;
+    background: transparent; border: none; outline: none;
+    color: var(--text); font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; padding: 0 8px; cursor: default;
+  }
+  .cell-input:focus {
+    background: var(--bg4); cursor: text;
+    outline: 1px solid var(--accent); outline-offset: -1px;
+  }
+  td.id-cell .cell-input { color: var(--accent2); }
+
+  .add-row-tr td {
+    background: transparent; border-color: transparent;
+    border-top: 1px dashed var(--border);
+    text-align: center; padding: 4px;
+  }
+  .add-btn {
+    background: none; border: 1px dashed var(--border);
+    color: var(--text3); cursor: pointer;
+    font-size: 14px; padding: 2px 10px;
+    border-radius: 4px; transition: all .15s; font-family: monospace;
+  }
+  .add-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+  th.add-col-th { background: transparent; border-color: transparent; border-left: 1px dashed var(--border); }
+
+  .empty-state {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    height: 100%; gap: 12px; color: var(--text3);
+  }
+  .empty-state .big { font-size: 40px; }
+  .empty-state p { font-size: 14px; }
+
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.65); backdrop-filter: blur(2px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000; padding: 16px;
+  }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 22px;
+    width: 100%; max-width: 460px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
+  .modal p { font-size: 13px; color: var(--text2); margin-bottom: 10px; line-height: 1.6; }
+  .modal label { font-size: 12px; color: var(--text3); display: block; margin-bottom: 4px; margin-top: 10px; }
+  .modal label:first-of-type { margin-top: 0; }
+  .modal input, .modal select {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 4px; color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; padding: 8px 10px; outline: none;
+    margin-bottom: 2px; transition: border-color .15s;
+  }
+  .modal select option { background: var(--bg2); }
+  .modal input:focus, .modal select:focus { border-color: var(--accent); }
+  .modal-btns { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+  .modal-btn {
+    padding: 7px 18px; border-radius: 4px;
+    border: 1px solid var(--border); background: var(--bg3);
+    color: var(--text); font-size: 13px; cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif; transition: all .15s;
+  }
+  .modal-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .modal-btn.primary { background: var(--accent); color: #0f1117; border-color: var(--accent); font-weight: 600; }
+  .modal-btn.primary:hover { background: var(--accent2); }
+  .modal-btn.danger { background: var(--danger); color: #fff; border-color: var(--danger); font-weight: 600; }
+  .modal-btn.danger:hover { background: #ff6b6b; }
+  .warn-text { color: var(--danger); font-weight: 700; }
+
+  .ctx-menu {
+    position: fixed; background: var(--bg2);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 4px 0; box-shadow: 0 8px 24px rgba(0,0,0,.4);
+    z-index: 999; min-width: 160px;
+  }
+  .ctx-item { padding: 8px 14px; font-size: 13px; cursor: pointer; transition: background .1s; color: var(--text); }
+  .ctx-item:hover { background: var(--bg3); color: var(--accent); }
+  .ctx-item.danger:hover { color: var(--danger); }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--border); }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 700px) {
+    header h1 { font-size: 11px; letter-spacing: 1px; }
+    .header-btn { padding: 5px 8px; font-size: 12px; }
+    .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+
+    aside {
+      position: absolute;
+      top: 0; right: 0; height: 100%;
+      width: 220px;
+      transform: translateX(110%);
+      transition: transform .25s cubic-bezier(.4,0,.2,1);
+      border-right: none;
+      border-left: 1px solid var(--border);
+      box-shadow: -8px 0 32px rgba(0,0,0,.4);
+    }
+    aside.open { transform: translateX(0); }
+    .sidebar-backdrop { display: block; opacity: 0; pointer-events: none; transition: opacity .25s; }
+    .sidebar-backdrop.open { opacity: 1; pointer-events: auto; }
+
+    .table-area { padding: 8px; }
+    th, td { min-width: 78px; }
+    .cell-input { font-size: 12px; }
+    .modal { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⬡ 道具表编辑器</h1>
+  <button class="header-btn" onclick="importJSON()">📂 导入</button>
+  <button class="header-btn" onclick="exportJSON()">💾 导出</button>
+  <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" title="表格列表">☰</button>
+  <input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleFileImport(event)">
+</header>
+
+<div class="layout">
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeMobileMenu()"></div>
+  <aside id="sidebar">
+    <div class="sidebar-title">表格列表</div>
+    <div class="sidebar-list" id="sidebarList"></div>
+    <div class="sidebar-add" onclick="addTable()"><span>＋</span> 新建表</div>
+  </aside>
+  <main>
+    <div id="mainContent" style="display:flex;flex-direction:column;height:100%;overflow:hidden;"></div>
+  </main>
+</div>
+
+<div id="modalContainer"></div>
+<div id="ctxMenu" class="ctx-menu" style="display:none"></div>
+
+<script>
+// ================================================================
+// STATE
+// ================================================================
+let state = { tables: {}, activeTableId: null };
+const PROTOTYPE_ID = 'prototype';
+
+function initState() {
+  state.tables = {};
+  addPrototypeTable();
+  state.activeTableId = PROTOTYPE_ID;
+}
+
+function addPrototypeTable() {
+  state.tables[PROTOTYPE_ID] = {
+    name: '原型表',
+    columns: ['ID', '名称', '贴图'],
+    rows: [],
+  };
+}
+
+// ================================================================
+// UNIT HELPERS
+// Column "质量（kg）" or "质量(kg)" -> parsed = { base:"质量", unit:"kg" }
+// ================================================================
+function parseColUnit(colName) {
+  const m = colName.match(/^(.+?)[（(]([^）)]+)[）)]$/);
+  if (m && m[1].trim() && m[2].trim()) return { base: m[1].trim(), unit: m[2].trim() };
+  return null;
+}
+
+function colStoreName(colName) {
+  const p = parseColUnit(colName);
+  return p ? p.base : colName;
+}
+
+function colWithUnit(baseCol, unit) {
+  return unit ? `${baseCol}（${unit}）` : baseCol;
+}
+
+function stripTableSuffix(name) {
+  return name.replace(/表$/, '');
+}
+
+// ================================================================
+// ID UTILS
+// ================================================================
+function hexToNum(h) { return parseInt(h, 16); }
+function numToHex(n) { return n.toString(16).toUpperCase(); }
+function isValidHex(s) { return /^[0-9A-Fa-f]+$/.test(s.trim()); }
+
+// ================================================================
+// MOBILE MENU
+// ================================================================
+function toggleMobileMenu() {
+  const open = document.getElementById('sidebar').classList.contains('open');
+  if (open) closeMobileMenu(); else openMobileMenu();
+}
+function openMobileMenu() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarBackdrop').classList.add('open');
+  document.getElementById('mobileMenuBtn').classList.add('active');
+}
+function closeMobileMenu() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarBackdrop').classList.remove('open');
+  document.getElementById('mobileMenuBtn').classList.remove('active');
+}
+
+// ================================================================
+// RENDER
+// ================================================================
+function render() { renderSidebar(); renderMain(); }
+
+function renderSidebar() {
+  const el = document.getElementById('sidebarList');
+  el.innerHTML = '';
+  for (const [tid, tbl] of Object.entries(state.tables)) {
+    const div = document.createElement('div');
+    div.className = 'sidebar-item' + (tid === state.activeTableId ? ' active' : '');
+    div.innerHTML = `<span class="item-icon">${tid === PROTOTYPE_ID ? '⬡' : '◈'}</span><span>${escHtml(tbl.name)}</span>`;
+    div.onclick = () => { state.activeTableId = tid; closeMobileMenu(); render(); };
+    div.oncontextmenu = (e) => {
+      e.preventDefault();
+      if (tid === PROTOTYPE_ID) return;
+      showCtxMenu(e, [
+        { label: '✏️ 重命名', action: () => renameTable(tid) },
+        { label: '🗑️ 删除表', cls: 'danger', action: () => deleteTable(tid) },
+      ]);
+    };
+    el.appendChild(div);
+  }
+}
+
+function renderMain() {
+  const el = document.getElementById('mainContent');
+  const tid = state.activeTableId;
+  if (!tid || !state.tables[tid]) {
+    el.innerHTML = '<div class="empty-state"><div class="big">📋</div><p>选择左侧表格或新建一个</p></div>';
+    return;
+  }
+  const tbl = state.tables[tid];
+  const isProto = tid === PROTOTYPE_ID;
+  el.innerHTML = '';
+
+  // Table header bar
+  const hdr = document.createElement('div');
+  hdr.className = 'table-header';
+  hdr.innerHTML = `<span class="table-name">${escHtml(tbl.name)}</span><span class="table-subtitle">${tbl.rows.length} 行 · ${tbl.columns.length} 列</span>`;
+  el.appendChild(hdr);
+
+  const area = document.createElement('div');
+  area.className = 'table-area';
+  const wrap = document.createElement('div');
+  wrap.className = 'table-wrap';
+  const table = document.createElement('table');
+
+  // THEAD
+  const thead = document.createElement('thead');
+  const trHead = document.createElement('tr');
+
+  // action column header spacer
+  const thAct = document.createElement('th');
+  thAct.className = 'col-act-hdr';
+  thAct.style.minWidth = isProto ? '54px' : '28px';
+  thAct.style.width = isProto ? '54px' : '28px';
+  trHead.appendChild(thAct);
+
+  tbl.columns.forEach((col, ci) => {
+    const th = document.createElement('th');
+    const inner = document.createElement('div');
+    inner.className = 'col-header-inner';
+    const parsed = parseColUnit(col);
+    if (parsed) {
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = parsed.base;
+      inner.appendChild(nameSpan);
+      const unitSpan = document.createElement('span');
+      unitSpan.className = 'col-unit';
+      unitSpan.textContent = `(${parsed.unit})`;
+      inner.appendChild(unitSpan);
+    } else {
+      inner.textContent = col;
+    }
+    const canDelete = !(col === 'ID' || (isProto && col === '名称'));
+    const canRename = col !== 'ID';
+    if (canDelete) {
+      const btn = document.createElement('button');
+      btn.className = 'col-delete-btn';
+      btn.title = '删除此列';
+      btn.textContent = '×';
+      btn.onclick = (e) => { e.stopPropagation(); confirmDeleteColumn(tid, ci); };
+      inner.appendChild(btn);
+    }
+    th.appendChild(inner);
+    if (canRename) {
+      th.style.cursor = 'pointer';
+      th.title = '右键重命名';
+      th.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        const menuItems = [{ label: '✏️ 重命名列', action: () => renameColumn(tid, ci) }];
+        if (canDelete) menuItems.push({ label: '🗑️ 删除列', cls: 'danger', action: () => confirmDeleteColumn(tid, ci) });
+        showCtxMenu(e, menuItems);
+      });
+    }
+    trHead.appendChild(th);
+  });
+
+  const thAddCol = document.createElement('th');
+  thAddCol.className = 'add-col-th';
+  const addColBtn = document.createElement('button');
+  addColBtn.className = 'add-btn';
+  addColBtn.textContent = '+';
+  addColBtn.title = '新建列';
+  addColBtn.onclick = () => addColumn(tid);
+  thAddCol.appendChild(addColBtn);
+  trHead.appendChild(thAddCol);
+  thead.appendChild(trHead);
+  table.appendChild(thead);
+
+  // TBODY
+  const tbody = document.createElement('tbody');
+
+  tbl.rows.forEach((row, ri) => {
+    const tr = document.createElement('tr');
+
+    // action cell
+    const tdAct = document.createElement('td');
+    tdAct.className = 'act-cell' + (isProto ? ' act-cell-wide' : '');
+    const delBtn = document.createElement('button');
+    delBtn.className = 'row-del-btn';
+    delBtn.textContent = '×';
+    delBtn.title = '删除此行';
+    delBtn.onclick = () => confirmDeleteRow(tid, ri);
+    tdAct.appendChild(delBtn);
+    if (isProto) {
+      const cloneBtn = document.createElement('button');
+      cloneBtn.className = 'row-clone-btn';
+      cloneBtn.title = '克隆此行';
+      cloneBtn.textContent = '⧉';
+      cloneBtn.onclick = () => cloneRow(tid, ri);
+      tdAct.appendChild(cloneBtn);
+    }
+    tr.appendChild(tdAct);
+
+    tbl.columns.forEach((col, ci) => {
+      const td = document.createElement('td');
+      if (col === 'ID') td.className = 'id-cell';
+      const input = document.createElement('input');
+      input.className = 'cell-input';
+      input.type = 'text';
+
+      if (col === 'ID') {
+        if (isProto) {
+          input.value = row.id;
+        } else {
+          const pr = findProtoRow(row.id);
+          input.value = pr ? `${pr['名称']}(${row.id})` : `?(${row.id})`;
+          input.addEventListener('focus', () => { input.value = row.id; });
+          input.addEventListener('blur', () => {
+            const pr2 = findProtoRow(row.id);
+            input.value = pr2 ? `${pr2['名称']}(${row.id})` : `?(${row.id})`;
+          });
+        }
+        input.addEventListener('change', (e) => {
+          const newId = e.target.value.trim().toUpperCase();
+          if (!isValidHex(newId)) { alert('ID必须是十六进制'); e.target.value = row.id; return; }
+          if (newId === row.id) return;
+          if (tbl.rows.some((r, i) => r.id === newId && i !== ri)) { alert('ID重复'); e.target.value = row.id; return; }
+          if (isProto) updateIdInAllTables(row.id, newId);
+          row.id = newId;
+          render();
+        });
+        td.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
+          showCtxMenu(e, [{ label: '↕ 批量偏移ID...', action: () => offsetIds(tid, ri) }]);
+        });
+      } else {
+        input.value = row[col] !== undefined ? row[col] : '';
+        input.addEventListener('change', (e) => {
+          row[col] = e.target.value;
+          if (isProto && col === '名称') render();
+        });
+      }
+      td.appendChild(input);
+      tr.appendChild(td);
+    });
+
+    const tdE = document.createElement('td');
+    tdE.style.cssText = 'border:none;background:transparent;';
+    tr.appendChild(tdE);
+    tbody.appendChild(tr);
+  });
+
+  // ADD ROW row
+  const trAdd = document.createElement('tr');
+  trAdd.className = 'add-row-tr';
+  const tdAddAct = document.createElement('td'); trAdd.appendChild(tdAddAct);
+  const tdAdd = document.createElement('td');
+  tdAdd.colSpan = tbl.columns.length + 1;
+  const addRowBtn = document.createElement('button');
+  addRowBtn.className = 'add-btn';
+  addRowBtn.textContent = '+ 新建行';
+  addRowBtn.onclick = () => addRow(tid);
+  tdAdd.appendChild(addRowBtn);
+  trAdd.appendChild(tdAdd);
+  tbody.appendChild(trAdd);
+
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  area.appendChild(wrap);
+  el.appendChild(area);
+}
+
+function findProtoRow(id) {
+  return state.tables[PROTOTYPE_ID]?.rows.find(r => r.id === id);
+}
+
+function updateIdInAllTables(oldId, newId) {
+  for (const [tid, tbl] of Object.entries(state.tables)) {
+    if (tid === PROTOTYPE_ID) continue;
+    tbl.rows.forEach(r => { if (r.id === oldId) r.id = newId; });
+  }
+}
+
+// ================================================================
+// TABLE OPS
+// ================================================================
+function addTable() {
+  showInputModal('新建表', '请输入表名：', '', (name) => {
+    if (!name.trim()) return;
+    const tid = 't_' + Date.now();
+    state.tables[tid] = { name: name.trim(), columns: ['ID'], rows: [] };
+    state.activeTableId = tid;
+    render();
+  });
+}
+
+function renameTable(tid) {
+  const tbl = state.tables[tid];
+  showInputModal('重命名', '请输入新表名：', tbl.name, (name) => {
+    if (!name.trim()) return;
+    tbl.name = name.trim(); render();
+  });
+}
+
+function deleteTable(tid) {
+  showConfirmModal('删除表', `确认删除表【${escHtml(state.tables[tid].name)}】？此操作不可撤销。`, 'danger', () => {
+    delete state.tables[tid];
+    if (state.activeTableId === tid) state.activeTableId = PROTOTYPE_ID;
+    render();
+  });
+}
+
+// ================================================================
+// ADD ROW
+// ================================================================
+function addRow(tid) {
+  const tbl = state.tables[tid];
+  const isProto = tid === PROTOTYPE_ID;
+
+  if (isProto) {
+    const maxId = tbl.rows.reduce((m, r) => Math.max(m, hexToNum(r.id) || 0), 0x1000 - 1);
+    const newId = numToHex(maxId + 1);
+    const row = { id: newId };
+    tbl.columns.slice(1).forEach(c => row[c] = '');
+    tbl.rows.push(row);
+    render();
+  } else {
+    // Show combined select+manual modal
+    const protoRows = state.tables[PROTOTYPE_ID]?.rows || [];
+    const existIds = new Set(tbl.rows.map(r => r.id));
+    const available = protoRows.filter(r => !existIds.has(r.id));
+    showAddRowModal(available, (selId, manualId) => {
+      let finalId = (manualId && manualId.trim()) ? manualId.trim().toUpperCase() : selId;
+      if (!finalId) { alert('请选择或输入ID'); return; }
+      if (!isValidHex(finalId)) { alert('ID必须是十六进制'); return; }
+      if (tbl.rows.some(r => r.id === finalId)) { alert(`ID ${finalId} 已存在于此表中`); return; }
+      const row = { id: finalId };
+      tbl.columns.slice(1).forEach(c => row[c] = '');
+      tbl.rows.push(row);
+      render();
+    });
+  }
+}
+
+// ================================================================
+// ADD COLUMN
+// ================================================================
+function addColumn(tid) {
+  const tbl = state.tables[tid];
+  showInputModal2('新建列',
+    '列名（可含单位括号，如：质量（kg））：', '',
+    '已有行的默认值：', '',
+    (colName, defVal) => {
+      if (!colName.trim()) return;
+      if (tbl.columns.includes(colName.trim())) { alert('列名已存在'); return; }
+      tbl.columns.push(colName.trim());
+      tbl.rows.forEach(r => r[colName.trim()] = defVal);
+      render();
+    });
+}
+
+// ================================================================
+// DELETE COLUMN
+// ================================================================
+function confirmDeleteColumn(tid, ci) {
+  const tbl = state.tables[tid];
+  const colName = tbl.columns[ci];
+  showConfirmModal('删除列', `确认删除列【${escHtml(colName)}】？`, 'danger', () => {
+    tbl.columns.splice(ci, 1);
+    tbl.rows.forEach(r => delete r[colName]);
+    render();
+  });
+}
+
+// ================================================================
+// RENAME COLUMN
+// ================================================================
+function renameColumn(tid, ci) {
+  const tbl = state.tables[tid];
+  const oldName = tbl.columns[ci];
+  showInputModal('重命名列', `新列名（可含单位括号，如：质量（kg））：`, oldName, (newName) => {
+    newName = newName.trim();
+    if (!newName || newName === oldName) return;
+    if (tbl.columns.some((c, i) => c === newName && i !== ci)) { alert('列名已存在'); return; }
+    tbl.columns[ci] = newName;
+    tbl.rows.forEach(r => { r[newName] = r[oldName]; delete r[oldName]; });
+    render();
+  });
+}
+
+// ================================================================
+// DELETE ROW
+// ================================================================
+function confirmDeleteRow(tid, ri) {
+  const tbl = state.tables[tid];
+  const row = tbl.rows[ri];
+  const isProto = tid === PROTOTYPE_ID;
+
+  if (isProto) {
+    let affected = 0;
+    for (const [t2id, t2] of Object.entries(state.tables)) {
+      if (t2id === PROTOTYPE_ID) continue;
+      if (t2.rows.some(r => r.id === row.id)) affected++;
+    }
+    const warnMsg = affected > 0
+      ? `<br><span class="warn-text">⚠️ 此原型在 ${affected} 个其他表中存在，将同步删除！</span>` : '';
+    showConfirmModal('删除原型行', `确认删除原型【${escHtml(row['名称'] || row.id)}】？${warnMsg}`, 'danger', () => {
+      tbl.rows.splice(ri, 1);
+      for (const [t2id, t2] of Object.entries(state.tables)) {
+        if (t2id === PROTOTYPE_ID) continue;
+        t2.rows = t2.rows.filter(r => r.id !== row.id);
+      }
+      render();
+    });
+  } else {
+    showConfirmModal('删除行', `确认删除此行（ID: ${escHtml(row.id)}）？`, 'danger', () => {
+      tbl.rows.splice(ri, 1); render();
+    });
+  }
+}
+
+// ================================================================
+// CLONE ROW (prototype only)
+// ================================================================
+function cloneRow(tid, ri) {
+  const tbl = state.tables[tid];
+  const srcRow = tbl.rows[ri];
+  // find smallest ID > srcRow.id not already used across ALL tables
+  const allUsed = new Set();
+  for (const [, t] of Object.entries(state.tables)) t.rows.forEach(r => allUsed.add(hexToNum(r.id)));
+  let newNum = hexToNum(srcRow.id) + 1;
+  while (allUsed.has(newNum)) newNum++;
+  const newId = numToHex(newNum);
+
+  // insert into prototype right after ri
+  const newProtoRow = Object.assign({}, srcRow, { id: newId });
+  tbl.rows.splice(ri + 1, 0, newProtoRow);
+
+  // clone in all other tables where srcRow exists, insert right after
+  for (const [t2id, t2] of Object.entries(state.tables)) {
+    if (t2id === PROTOTYPE_ID) continue;
+    const srcIdx = t2.rows.findIndex(r => r.id === srcRow.id);
+    if (srcIdx !== -1) {
+      const cloned = Object.assign({}, t2.rows[srcIdx], { id: newId });
+      t2.rows.splice(srcIdx + 1, 0, cloned);
+    }
+  }
+  render();
+}
+
+// ================================================================
+// OFFSET IDs
+// ================================================================
+function offsetIds(tid, startRi) {
+  showInputModal('批量偏移ID', '请输入偏移量（正整数，十进制或 0x 十六进制）：', '', (val) => {
+    val = val.trim();
+    let offset;
+    if (/^0x/i.test(val)) offset = parseInt(val, 16);
+    else { offset = parseInt(val, 10); if (isNaN(offset)) offset = parseInt(val, 16); }
+    if (isNaN(offset) || offset <= 0) { alert('请输入正整数'); return; }
+
+    // auto export first
+    downloadJSON(buildExportJSON(), 'backup_before_offset.json');
+
+    setTimeout(() => {
+      const toChange = state.tables[tid].rows.slice(startRi).map(r => r.id);
+      const idMap = {};
+      toChange.forEach(oldId => { idMap[oldId] = numToHex(hexToNum(oldId) + offset); });
+      for (const [, t] of Object.entries(state.tables)) {
+        t.rows.forEach(r => { if (idMap[r.id]) r.id = idMap[r.id]; });
+      }
+      render();
+      alert(`偏移完成！共更改 ${toChange.length} 个ID，偏移量 +${offset}`);
+    }, 300);
+  });
+}
+
+// ================================================================
+// EXPORT
+// ================================================================
+function exportJSON() { downloadJSON(buildExportJSON(), 'items.json'); }
+
+function buildExportJSON() {
+  const protoTbl = state.tables[PROTOTYPE_ID];
+  const result = {};
+  const unitsSection = {};
+
+  protoTbl.rows.forEach(row => {
+    const obj = {};
+    // prototype non-ID columns
+    protoTbl.columns.slice(1).forEach(col => {
+      const sn = colStoreName(col);
+      obj[sn] = row[col] !== undefined ? row[col] : '';
+      // collect unit from prototype columns
+      const p = parseColUnit(col);
+      if (p) unitsSection['原型:' + p.base] = p.unit;
+    });
+    obj['性质'] = {};
+
+    for (const [tid, tbl] of Object.entries(state.tables)) {
+      if (tid === PROTOTYPE_ID) continue;
+      const tblRow = tbl.rows.find(r => r.id === row.id);
+      if (tblRow) {
+        const tname = stripTableSuffix(tbl.name);
+        const tblData = {};
+        tbl.columns.slice(1).forEach(col => {
+          const sn = colStoreName(col);
+          tblData[sn] = tblRow[col];
+          const p = parseColUnit(col);
+          if (p) unitsSection[tname + ':' + p.base] = p.unit;
+        });
+        obj['性质'][tname] = tblData;
+      }
+    }
+    result[row.id] = obj;
+  });
+
+  if (Object.keys(unitsSection).length > 0) result['__units__'] = unitsSection;
+  return JSON.stringify(result, null, 2);
+}
+
+function downloadJSON(json, filename) {
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ================================================================
+// IMPORT
+// ================================================================
+function importJSON() { document.getElementById('fileInput').click(); }
+
+function handleFileImport(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      loadFromJSON(data);
+      render();
+      alert('导入成功！');
+    } catch (err) { alert('JSON解析失败：' + err.message); }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function loadFromJSON(data) {
+  state.tables = {};
+  addPrototypeTable();
+
+  const unitsMap = data['__units__'] || {};
+  const itemData = Object.fromEntries(Object.entries(data).filter(([k]) => k !== '__units__'));
+  const protoTbl = state.tables[PROTOTYPE_ID];
+  const propTables = {}; // stripped name -> [col names with units]
+
+  for (const [id, item] of Object.entries(itemData)) {
+    for (const key of Object.keys(item)) {
+      if (key === '性质') continue;
+      const ukey = '原型:' + key;
+      const col = unitsMap[ukey] ? colWithUnit(key, unitsMap[ukey]) : key;
+      if (!protoTbl.columns.includes(col)) protoTbl.columns.push(col);
+    }
+    if (item['性质']) {
+      for (const [propName, propData] of Object.entries(item['性质'])) {
+        if (!propTables[propName]) propTables[propName] = [];
+        for (const col of Object.keys(propData)) {
+          const ukey = propName + ':' + col;
+          const fullCol = unitsMap[ukey] ? colWithUnit(col, unitsMap[ukey]) : col;
+          if (!propTables[propName].includes(fullCol)) propTables[propName].push(fullCol);
+        }
+      }
+    }
+  }
+
+  for (const [name, cols] of Object.entries(propTables)) {
+    const tid = 't_' + name;
+    state.tables[tid] = { name: name + '表', columns: ['ID', ...cols], rows: [] };
+  }
+
+  for (const [id, item] of Object.entries(itemData)) {
+    const row = { id: id.toUpperCase() };
+    protoTbl.columns.slice(1).forEach(col => {
+      const sn = colStoreName(col);
+      row[col] = item[sn] !== undefined ? item[sn] : '';
+    });
+    protoTbl.rows.push(row);
+
+    if (item['性质']) {
+      for (const [propName, propData] of Object.entries(item['性质'])) {
+        const tid = 't_' + propName;
+        if (state.tables[tid]) {
+          const pRow = { id: id.toUpperCase() };
+          state.tables[tid].columns.slice(1).forEach(col => {
+            const sn = colStoreName(col);
+            pRow[col] = propData[sn] !== undefined ? propData[sn] : '';
+          });
+          state.tables[tid].rows.push(pRow);
+        }
+      }
+    }
+  }
+
+  state.activeTableId = PROTOTYPE_ID;
+}
+
+// ================================================================
+// MODALS
+// ================================================================
+function showInputModal(title, label, defaultVal, callback) {
+  const c = document.getElementById('modalContainer');
+  c.innerHTML = `
+    <div class="modal-overlay" id="mo">
+      <div class="modal">
+        <h3>${escHtml(title)}</h3>
+        <label>${escHtml(label)}</label>
+        <input id="mi" type="text" value="${escHtml(String(defaultVal))}" />
+        <div class="modal-btns">
+          <button class="modal-btn" onclick="closeModal()">取消</button>
+          <button class="modal-btn primary" id="miOk">确认</button>
+        </div>
+      </div>
+    </div>`;
+  const inp = document.getElementById('mi');
+  inp.focus(); inp.select();
+  const ok = () => { const v = inp.value; closeModal(); callback(v); };
+  document.getElementById('miOk').onclick = ok;
+  inp.onkeydown = (e) => { if (e.key === 'Enter') ok(); };
+  document.getElementById('mo').onclick = (e) => { if (e.target.id === 'mo') closeModal(); };
+}
+
+function showInputModal2(title, label1, def1, label2, def2, callback) {
+  const c = document.getElementById('modalContainer');
+  c.innerHTML = `
+    <div class="modal-overlay" id="mo">
+      <div class="modal">
+        <h3>${escHtml(title)}</h3>
+        <label>${escHtml(label1)}</label>
+        <input id="mi1" type="text" value="${escHtml(def1)}" />
+        <label>${escHtml(label2)}</label>
+        <input id="mi2" type="text" value="${escHtml(def2)}" />
+        <div class="modal-btns">
+          <button class="modal-btn" onclick="closeModal()">取消</button>
+          <button class="modal-btn primary" id="miOk">确认</button>
+        </div>
+      </div>
+    </div>`;
+  const i1 = document.getElementById('mi1');
+  i1.focus();
+  document.getElementById('miOk').onclick = () => { const v1=i1.value, v2=document.getElementById('mi2').value; closeModal(); callback(v1,v2); };
+  document.getElementById('mo').onclick = (e) => { if (e.target.id === 'mo') closeModal(); };
+}
+
+function showConfirmModal(title, html, type, callback) {
+  const c = document.getElementById('modalContainer');
+  c.innerHTML = `
+    <div class="modal-overlay" id="mo">
+      <div class="modal">
+        <h3>${escHtml(title)}</h3>
+        <p>${html}</p>
+        <div class="modal-btns">
+          <button class="modal-btn" onclick="closeModal()">取消</button>
+          <button class="modal-btn ${type}" id="miOk">确认${type === 'danger' ? '删除' : ''}</button>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('miOk').onclick = () => { closeModal(); callback(); };
+  document.getElementById('mo').onclick = (e) => { if (e.target.id === 'mo') closeModal(); };
+}
+
+// Combined select + manual input for non-proto addRow
+function showAddRowModal(protoRows, callback) {
+  const hasProto = protoRows.length > 0;
+  const opts = hasProto
+    ? '<option value="">-- 不选择 --</option>' + protoRows.map(r => `<option value="${escHtml(r.id)}">${escHtml(r['名称'] || '')}(${escHtml(r.id)})</option>`).join('')
+    : '<option value="">（无可用原型）</option>';
+
+  const c = document.getElementById('modalContainer');
+  c.innerHTML = `
+    <div class="modal-overlay" id="mo">
+      <div class="modal">
+        <h3>新建行</h3>
+        <label>从原型选择（可选）：</label>
+        <select id="protoSel">${opts}</select>
+        <label>手动输入ID（优先级更高，十六进制）：</label>
+        <input id="manualId" type="text" placeholder="留空则使用上方选择的原型ID" />
+        <div class="modal-btns">
+          <button class="modal-btn" onclick="closeModal()">取消</button>
+          <button class="modal-btn primary" id="miOk">添加</button>
+        </div>
+      </div>
+    </div>`;
+  const doAdd = () => {
+    const sel = document.getElementById('protoSel').value;
+    const manual = document.getElementById('manualId').value;
+    closeModal(); callback(sel, manual);
+  };
+  document.getElementById('miOk').onclick = doAdd;
+  document.getElementById('manualId').onkeydown = (e) => { if (e.key === 'Enter') doAdd(); };
+  document.getElementById('mo').onclick = (e) => { if (e.target.id === 'mo') closeModal(); };
+}
+
+function closeModal() { document.getElementById('modalContainer').innerHTML = ''; }
+
+// ================================================================
+// CONTEXT MENU
+// ================================================================
+function showCtxMenu(e, items) {
+  const menu = document.getElementById('ctxMenu');
+  menu.innerHTML = '';
+  items.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'ctx-item' + (item.cls ? ' ' + item.cls : '');
+    div.textContent = item.label;
+    div.onclick = () => { hideCtxMenu(); item.action(); };
+    menu.appendChild(div);
+  });
+  menu.style.display = 'block';
+  menu.style.left = Math.min(e.clientX, window.innerWidth - 180) + 'px';
+  menu.style.top = Math.min(e.clientY, window.innerHeight - items.length * 36) + 'px';
+}
+function hideCtxMenu() { document.getElementById('ctxMenu').style.display = 'none'; }
+document.addEventListener('click', hideCtxMenu);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); hideCtxMenu(); } });
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ================================================================
+// INIT
+// ================================================================
+initState();
+render();
+</script>
+</body>
+</html>
